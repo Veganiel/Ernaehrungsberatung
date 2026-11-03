@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /scripts/
+
+# sitemap.xml nach Eintragung der endgültigen Domain erzeugen und hier die absolute URL ergänzen.

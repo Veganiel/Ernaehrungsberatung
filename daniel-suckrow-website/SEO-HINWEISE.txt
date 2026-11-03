@@ -1,0 +1,28 @@
+SEO- UND QUALITAETSUPDATE
+=========================
+
+Umgesetzt in dieser Version:
+- 20 eigenständige, statisch auslieferbare Blogartikel unter /blog/<slug>/ (besser crawlbar als nur JavaScript-Query-Parameter).
+- Fehler im bisherigen Blog-Renderer korrigiert (fehlerhafte Klammer und nicht maskierte HTML-Attribut-Anführungszeichen).
+- Individuelle Seitentitel und Meta-Descriptions überarbeitet.
+- Open-Graph- und Twitter-Metadaten auf den Inhaltsseiten vereinheitlicht/ergänzt.
+- BlogPosting-JSON-LD auf den einzelnen Artikelseiten; Person- und WebSite-Daten auf der Startseite.
+- Favicon, Web-App-Manifest, eigene 404-Seite und Netlify-Sicherheits-/Cache-Header.
+- Fokuszustände, Skip-Link, reduzierte Bewegung für Nutzer mit entsprechender Systemeinstellung.
+- Vorhandene Reveal-Animationen beibehalten; Challenges-Seite ergänzt.
+- Restaurantkarten-Reste und verwaisten Menülink entfernt.
+- Bilder erhalten asynchrones Decoding und Lazy Loading, wo passend.
+
+Noch domainabhaengig:
+1. Die endgültige Domain mitteilen. Danach Canonical-URLs, absolute Social-Sharing-Bild-URLs und sitemap.xml final erzeugen.
+2. Nach Veröffentlichung Google Search Console einrichten und sitemap.xml einreichen.
+3. Google Unternehmensprofil nur einrichten, wenn die realen Voraussetzungen (persönlicher Kundenkontakt und zulässige Geschäftsadresse/Servicegebiet) erfüllt sind.
+4. Impressum und Datenschutzerklärung vor Veröffentlichung rechtlich prüfen und vollständige Kontaktdaten ergänzen.
+
+SEO ist keine Garantie für Platz 1. Gute, eigenständige und verlässliche Inhalte sowie eine technisch zugängliche Website sind entscheidend.
+
+
+WICHTIG VOR DEM LIVEGANG:
+- Im Footer der Startseite sind Impressum/Datenschutz noch Platzhalter. Vollständige rechtliche Seiten fehlen im Paket. Bitte nicht als fertige rechtssichere Website veröffentlichen, bevor diese ergänzt und geprüft sind.
+- Die endgültige Domain wurde noch nicht mitgeteilt; Canonical-URLs, finale Sitemap und absolute og:image-URL sind daher bewusst noch nicht gesetzt.
+- Die Buchungsseite ist auf 30 Minuten angepasst, passend zum verwendeten Calendly-Link /30min.
