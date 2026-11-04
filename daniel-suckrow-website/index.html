@@ -267,6 +267,30 @@
       *,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
     }
 
+  
+    /* Veganiel hero refresh: only header branding and homepage hero */
+    .veganiel-brand{display:flex;flex-direction:column;align-items:flex-start;gap:0;font-size:30px;line-height:1.02;letter-spacing:-.6px}
+    .veganiel-brand small{font:600 10px "DM Sans",sans-serif;letter-spacing:1.8px;text-transform:uppercase;color:#829486;margin-top:7px}
+    .hero-grid{grid-template-columns:1fr 1fr;gap:58px;min-height:700px;padding-top:58px;padding-bottom:58px}
+    .hero-visual{max-width:none;margin:0;width:100%}
+    .hero-photo{height:590px;border-radius:28px;border:6px solid rgba(255,255,255,.13);box-shadow:0 28px 80px rgba(0,0,0,.25)}
+    .hero-photo img{object-fit:cover;object-position:50% 50%;filter:contrast(1.06) saturate(.94) brightness(1.02)}
+    .hero-photo:after{inset:10px;border-radius:18px}
+    .hero-caption{justify-content:flex-start}
+    @media(max-width:900px){
+      .hero-grid{gap:32px;min-height:620px}
+      .hero-photo{height:500px}
+    }
+    @media(max-width:700px){
+      .veganiel-brand{font-size:25px}
+      .veganiel-brand small{font-size:8px;letter-spacing:1.4px}
+      .hero-grid{grid-template-columns:1fr;gap:30px;padding-top:40px;padding-bottom:45px}
+      .hero-visual{grid-row:1}
+      .hero-photo{height:min(112vw,510px);max-width:460px;margin:0 auto;border-radius:22px}
+      .hero-caption{max-width:460px;margin:12px auto 0;font-size:9px}
+      .hero-grid>div:first-child{grid-row:2}
+    }
+
   </style>
 <script type="application/ld+json">
 {
@@ -311,11 +335,17 @@ img{max-width:100%;height:auto}
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"Daniel Suckrow – Ganzheitliche Ernährungsberatung","inLanguage":"de-DE","publisher":{"@type":"Person","name":"Daniel Suckrow"}}
 </script>
+<link rel="canonical" href="https://veganiel.com/">
+<meta property="og:url" content="https://veganiel.com/">
+<meta property="og:image" content="https://veganiel.com/veganiel-hero-daniel.jpg">
+<meta property="og:image:alt" content="Daniel Suckrow vor einer grünen Berglandschaft">
+<meta name="twitter:image" content="https://veganiel.com/veganiel-hero-daniel.jpg">
+<link rel="preload" as="image" href="/veganiel-hero-daniel.jpg" fetchpriority="high">
 </head>
 <body><a class="skip-link" href="#main-content">Zum Inhalt springen</a>
 <header>
   <div class="wrap nav">
-    <a class="brand" href="#home">Daniel Suckrow<small data-i18n="brandSub">Ganzheitliche Ernährungsberatung</small></a>
+    <a class="brand veganiel-brand" href="#home"><span>Veganiel</span><small>Daniel Suckrow</small></a>
     <nav id="nav">
       <a href="angebot.html">Beratung · 50 €</a><div class="nav-dropdown"><span class="nav-dropdown-label" data-i18n="navTools">Wissen &amp; Tools</span><div class="nav-dropdown-menu"><a href="longevity.html">Longevity</a><a href="supplement-rechner.html">Supplement-Rechner</a><a href="challenges.html">Challenges</a></div></div><a href="ueber-mich.html" target="_blank" rel="noopener" data-i18n="navAbout">Über mich</a><a href="blog-uebersicht.html" data-i18n="navKnowledge">Blog</a>
     </nav>
@@ -329,7 +359,7 @@ img{max-width:100%;height:auto}
     <p data-i18n="heroText">Entdecke eine Ernährung, die zu dir, deinem Alltag und deinen Werten passt – ganzheitlich, pflanzenbasiert und wissenschaftlich fundiert.</p>
     <div class="actions"><a class="btn btn-light" href="angebot.html" data-i18n="heroCta">Beratung entdecken</a><a class="btn btn-outline" href="#about" data-i18n="heroSecondary">Mehr über mich</a></div>
   </div>
-  <div class="hero-visual"><div class="hero-photo"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=88" alt="Frische pflanzliche Lebensmittel und eine ausgewogene Mahlzeit"></div><div class="hero-caption"><span class="caption-dot"></span><span data-i18n="heroCaption">Persönlich in Potsdam & Berlin · Online überall</span></div></div>
+  <div class="hero-visual"><div class="hero-photo"><img loading="eager" fetchpriority="high" decoding="async" width="1536" height="2048" src="veganiel-hero-daniel.jpg" alt="Daniel Suckrow sitzt auf einem Felsen vor einer grünen Berglandschaft"></div><div class="hero-caption"><span class="caption-dot"></span><span data-i18n="heroCaption">Persönlich in Potsdam & Berlin · Online überall</span></div></div>
 </div></section>
 <section class="intro"><div class="wrap"><div class="eyebrow" style="color:#78917b" data-i18n="introEyebrow">Individuell. Ganzheitlich. Alltagstauglich.</div><h2 data-i18n="introTitle">Dein Weg zu mehr Wohlbefinden – Schritt für Schritt.</h2><p data-i18n="introText">Ich begleite dich dabei, deine Ernährung bewusster zu gestalten und passende Routinen zu entwickeln. Im Mittelpunkt stehst du: deine Bedürfnisse, deine Ziele und ein Weg, der langfristig zu deinem Leben passt.</p></div></section>
 <section class="value-strip" aria-label="Beratungsansatz">
