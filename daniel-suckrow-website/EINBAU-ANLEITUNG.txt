@@ -1,0 +1,8 @@
+Veganiel Logo-Paket
+
+1. veganiel-logo-192.png in den Ordner daniel-suckrow-website hochladen.
+2. Neben dem Schriftzug Veganiel im Header einfügen:
+<img src="veganiel-logo-192.png" alt="Veganiel Logo" width="36" height="36" style="object-fit:contain;vertical-align:middle">
+3. Für das Favicon im <head> einfügen:
+<link rel="icon" type="image/png" href="veganiel-logo-64.png">
+Die PNG-Dateien haben einen transparenten Hintergrund.
