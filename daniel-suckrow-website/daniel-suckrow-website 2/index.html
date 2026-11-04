@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ganzheitliche Ernährungsberatung in Potsdam, Berlin und online: individuelle, pflanzenbasierte Ernährung, alltagstaugliche Empfehlungen und persönliche Begleitung.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Daniel Suckrow – Ganzheitliche Ernährungsberatung">
+<meta property="og:title" content="Ernährungsberatung in Potsdam & Berlin | Daniel Suckrow">
+<meta property="og:description" content="Ganzheitliche Ernährungsberatung in Potsdam, Berlin und online: individuelle, pflanzenbasierte Ernährung, alltagstaugliche Empfehlungen und persönliche Begleitung mit Daniel Suckrow.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ernährungsberatung in Potsdam & Berlin | Daniel Suckrow">
+<meta name="twitter:description" content="Ganzheitliche Ernährungsberatung in Potsdam, Berlin und online: individuelle, pflanzenbasierte Ernährung, alltagstaugliche Empfehlungen und persönliche Begleitung mit Daniel Suckrow.">
+  <meta name="theme-color" content="#244b39">
+  <title>Ernährungsberatung in Potsdam &amp; Berlin | Daniel Suckrow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--forest:#244b39;--deep:#18382b;--sage:#dce7dc;--pale:#f5f5ed;--cream:#fbfaf5;--ink:#26352d;--muted:#68766c;--line:#e3e8df;--white:#fff}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.65}
+    a{color:inherit;text-decoration:none} .wrap{width:min(1160px,calc(100% - 48px));margin:auto}
+    header{position:sticky;top:0;z-index:10;background:rgba(251,250,245,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(36,75,57,.09)}
+    .nav{height:82px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{font-family:"Playfair Display",serif;font-size:22px;font-weight:600;color:var(--forest);white-space:nowrap}
+    .brand small{display:block;font:10px "DM Sans",sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:-4px}
+    nav{display:flex;align-items:center;gap:27px;font-size:13px;font-weight:600;color:#46574b}
+    nav a:hover{color:var(--forest)} .nav-right{display:flex;align-items:center;gap:14px}
+    .lang{border:1px solid var(--line);background:transparent;border-radius:30px;padding:8px 12px;font:600 12px "DM Sans";color:var(--forest);cursor:pointer}
+    .menu-btn{display:none;border:0;background:none;font-size:24px;color:var(--forest)}
+    .hero{background:var(--forest);color:#fff;position:relative;overflow:hidden}
+    .hero:after{content:"";position:absolute;width:520px;height:520px;border:1px solid rgba(255,255,255,.12);border-radius:50%;right:-120px;top:-190px;box-shadow:0 0 0 55px rgba(255,255,255,.025),0 0 0 110px rgba(255,255,255,.02)}
+    .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;min-height:590px;align-items:center;gap:60px;padding-top:55px;padding-bottom:55px;position:relative;z-index:1}
+    .eyebrow{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;font-weight:700;color:#b9d0bc}
+    h1,h2,h3{font-family:"Playfair Display",serif;font-weight:500;line-height:1.12;margin:0}
+    h1{font-size:clamp(46px,5.5vw,72px);letter-spacing:-1.7px;margin:20px 0}
+    .hero p{font-size:17px;max-width:520px;color:#e1ebe1;margin:0 0 30px}
+    .actions{display:flex;gap:13px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;border-radius:3px;font-size:13px;font-weight:700;transition:.2s}
+    .btn-light{background:#f3f4e9;color:var(--forest)} .btn-light:hover{background:#fff;transform:translateY(-2px)}
+    .btn-outline{border:1px solid rgba(255,255,255,.55);color:#fff}.btn-outline:hover{background:rgba(255,255,255,.1)}
+    .hero-photo{height:440px;border-radius:48% 48% 4px 4px;overflow:hidden;border:8px solid rgba(255,255,255,.09);box-shadow:0 25px 70px rgba(0,0,0,.18)}
+    .hero-photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .intro{padding:100px 0 92px;text-align:center}
+    .intro h2{font-size:clamp(34px,4vw,49px);max-width:760px;margin:15px auto 22px;color:var(--forest)}
+    .intro p{max-width:760px;margin:0 auto;color:var(--muted);font-size:16px}
+    .section{padding:88px 0}.section-soft{background:var(--pale)} .section-head{max-width:700px;margin-bottom:42px}
+    .section-head h2{font-size:clamp(34px,4vw,48px);color:var(--forest);margin:12px 0 15px}
+    .section-head p{color:var(--muted);margin:0}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.blog-card-hidden{display:none!important}.blog-toggle-wrap{display:flex;justify-content:center;margin-top:30px}.blog-toggle{display:inline-flex;align-items:center;gap:10px;border:1px solid #cbd8ca;background:transparent;color:var(--forest);padding:12px 20px;border-radius:3px;font:700 13px "DM Sans",sans-serif;cursor:pointer;transition:.2s}.blog-toggle:hover{background:var(--sage)}.blog-toggle .arrow{font-size:17px;line-height:1}
+    .card{background:#fff;border:1px solid var(--line);padding:30px 27px;min-height:230px}
+    .card .num{font-family:"Playfair Display";font-size:28px;color:#9aaf9b}
+    .card h3{font-size:24px;color:var(--forest);margin:17px 0 12px}
+    .card p{font-size:14px;color:var(--muted);margin:0}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+    .about-photo{height:480px;overflow:hidden;border-radius:3px}
+    .about-photo img{width:100%;height:100%;object-fit:cover}
+    .split h2{font-size:clamp(34px,4vw,48px);color:var(--forest);margin:12px 0 20px}
+    .split p{color:var(--muted)}
+    .text-link{display:inline-block;color:var(--forest);font-weight:700;font-size:13px;border-bottom:1px solid #9bb29e;padding-bottom:5px;margin-top:12px}
+    .service-note{margin-top:28px;padding:28px 32px;background:var(--sage);color:var(--forest);border-left:4px solid #8aa58b}.service-note p{margin:8px 0 0;color:#53695a;font-size:14px;max-width:850px}.service-note strong{font-family:"Playfair Display",serif;font-size:23px;font-weight:500}.community{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .community-card{background:var(--forest);color:#fff;padding:38px;min-height:270px;position:relative;overflow:hidden}
+    .community-card:nth-child(2){background:#e5ecdf;color:var(--forest)}
+    .community-card h3{font-size:32px;margin:15px 0}
+    .community-card p{font-size:14px;max-width:430px;opacity:.86}
+    .community-card .text-link{color:inherit;border-color:currentColor}
+    .tag{font-size:10px;text-transform:uppercase;letter-spacing:2px;font-weight:700;opacity:.7}
+    .quote{padding:80px 0;text-align:center;background:#e8eee5;color:var(--forest)}
+    .quote blockquote{font:clamp(25px,3.2vw,38px)/1.3 "Playfair Display",serif;max-width:820px;margin:0 auto 18px}
+    .quote span{font-size:11px;letter-spacing:2px;text-transform:uppercase}
+    .contact{background:var(--deep);color:#fff;padding:85px 0}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .contact h2{font-size:clamp(36px,4vw,52px);margin:12px 0 20px}
+    .contact p{color:#d1dfd2;max-width:470px}
+    .contact .btn{background:#e9efe4;color:var(--forest);margin-top:14px}
+    footer{background:#122c21;color:#d5e0d5;padding:28px 0;font-size:12px}
+    .footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .footer-links{display:flex;gap:20px}
+    @media(max-width:900px){nav{gap:14px}.hero-grid{gap:30px}.cards{grid-template-columns:1fr 1fr}.split{gap:35px}}
+    @media(max-width:700px){.wrap{width:min(100% - 34px,560px)}.nav{height:70px}.menu-btn{display:block}nav{display:none;position:absolute;top:70px;left:0;right:0;background:var(--cream);padding:20px 26px 25px;flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--line)}nav.open{display:flex}.nav-right{margin-left:auto}.hero-grid{grid-template-columns:1fr;padding-top:65px;padding-bottom:55px}.hero-photo{height:330px;max-width:430px;width:100%;margin:auto}.hero p{font-size:15px}.intro{padding:70px 0}.section{padding:68px 0}.cards,.split,.community,.contact-grid{grid-template-columns:1fr}.cards{gap:13px}.card{min-height:0}.about-photo{height:340px;order:2}.split{gap:25px}.community-card{padding:30px}.contact-grid{gap:25px}.footer-row{flex-direction:column}}
+  
+    /* Premium visual refinement */
+    :root{--forest:#214a37;--deep:#173629;--sage:#e4ece2;--pale:#f3f5ef;--cream:#fcfbf7;--ink:#24352b;--muted:#66766b;--line:#e4e9e1;--accent:#b9c9ad;--shadow:0 18px 55px rgba(28,58,42,.09)}
+    html{scroll-padding-top:100px}
+    body{font-size:15px;letter-spacing:.005em}
+    .wrap{width:min(1200px,calc(100% - 64px))}
+    header{background:rgba(252,251,247,.91);border-bottom:1px solid rgba(33,74,55,.08);box-shadow:0 5px 24px rgba(20,45,31,.035)}
+    .nav{height:88px}
+    .brand{font-size:24px;letter-spacing:-.35px}
+    .brand small{font-size:9px;letter-spacing:2.15px;margin-top:0}
+    nav{gap:31px;font-size:12px;letter-spacing:.015em}
+    nav a{position:relative;padding:8px 0}
+    .nav-dropdown{position:relative;display:flex;align-items:center}
+    .nav-dropdown-label{display:inline-flex;align-items:center;gap:7px;padding:8px 0;color:inherit;font:inherit;background:none;border:0;cursor:default;white-space:nowrap}
+    .nav-dropdown-label:after{content:"⌄";font-size:12px;transition:transform .2s ease}
+    .nav-dropdown-menu{display:none;position:absolute;z-index:50;top:100%;left:-18px;min-width:210px;padding:9px;background:var(--cream);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 32px rgba(32,54,39,.12)}
+    .nav-dropdown-menu a{display:block;padding:10px 12px;border-radius:7px;white-space:nowrap}
+    .nav-dropdown-menu a:hover{background:rgba(120,145,123,.12)}
+    .nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown:focus-within .nav-dropdown-menu{display:block}
+    .nav-dropdown:hover .nav-dropdown-label:after,.nav-dropdown:focus-within .nav-dropdown-label:after{transform:rotate(180deg)}
+    nav a:after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--forest);transition:right .25s}
+    nav a:hover:after{right:0}
+    .nav-right{gap:16px}
+    .nav-cta{background:var(--forest);color:white;padding:12px 17px;border-radius:2px;font-size:11px;font-weight:700;letter-spacing:.03em;transition:transform .2s,background .2s}
+    .nav-cta:hover{background:var(--deep);transform:translateY(-1px)}
+    .lang{border-color:#d7e0d5;border-radius:2px;padding:10px 12px;background:#fff}
+    .hero{background:linear-gradient(115deg,#1c3f2e 0%,#28533d 58%,#315b43 100%)}
+    .hero:after{width:620px;height:620px;right:-190px;top:-240px;border-color:rgba(255,255,255,.09);box-shadow:0 0 0 70px rgba(255,255,255,.025),0 0 0 140px rgba(255,255,255,.018)}
+    .hero-grid{min-height:660px;grid-template-columns:1fr 1fr;gap:76px;padding-top:72px;padding-bottom:72px}
+    .hero .eyebrow{display:inline-flex;align-items:center;gap:11px;color:#c9d8c8;font-size:10px;letter-spacing:2.35px}
+    .hero .eyebrow:before{content:"";width:28px;height:1px;background:#b8c9b5}
+    h1{font-size:clamp(49px,5.6vw,76px);line-height:1.035;letter-spacing:-2.1px;max-width:620px;margin:24px 0}
+    .hero p{font-size:16px;line-height:1.85;max-width:510px;color:#e2eae1;margin-bottom:34px}
+    .actions{gap:14px}
+    .btn{padding:15px 23px;border-radius:2px;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+    .btn-light{background:#f5f4e9;color:var(--forest)}
+    .btn-outline{border-color:rgba(255,255,255,.48)}
+    .hero-visual{position:relative;max-width:560px;margin-left:auto;width:100%}
+    .hero-photo{height:485px;border-radius:48% 48% 3px 3px;border:7px solid rgba(255,255,255,.12);box-shadow:0 28px 80px rgba(0,0,0,.22);position:relative}
+    .hero-photo:after{content:"";position:absolute;inset:12px;border:1px solid rgba(255,255,255,.34);pointer-events:none}
+    .hero-photo img{filter:saturate(.86);transition:transform .8s}
+    .hero-visual:hover .hero-photo img{transform:scale(1.035)}
+    .hero-caption{display:flex;align-items:center;justify-content:flex-end;gap:9px;margin-top:17px;color:#dce6da;font-size:10px;letter-spacing:.09em;text-transform:uppercase}
+    .caption-dot{width:6px;height:6px;border-radius:50%;background:#c5d5bd}
+    .intro{padding:112px 0 88px}
+    .intro .eyebrow,.section .eyebrow{font-size:10px;letter-spacing:2.35px}
+    .intro h2{font-size:clamp(36px,4.4vw,54px);line-height:1.12;letter-spacing:-.9px;max-width:800px;margin:18px auto 22px}
+    .intro p{font-size:15px;line-height:1.9;max-width:740px}
+    .value-strip{background:#f0f3ec;border-top:1px solid #e7ece4;border-bottom:1px solid #e7ece4;padding:26px 0}
+    .value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+    .value-item{display:flex;align-items:flex-start;gap:15px}
+    .value-mark{font-family:"Playfair Display",serif;font-size:19px;color:#8ea58e;line-height:1.3}
+    .value-item strong{display:block;color:var(--forest);font-family:"Playfair Display",serif;font-weight:500;font-size:17px;margin-bottom:3px}
+    .value-item span:last-child{display:block;color:var(--muted);font-size:11px;line-height:1.55}
+    .section{padding:108px 0}
+    .section-soft{background:#f3f5ef}
+    .section-head{max-width:760px;margin-bottom:48px}
+    .section-head h2,.split h2{font-size:clamp(36px,4.3vw,53px);letter-spacing:-.8px;line-height:1.12;margin:16px 0 18px}
+    .section-head p{font-size:14px;line-height:1.85;max-width:660px}
+    .subsection-heading{margin:34px 0 18px;max-width:760px}
+    .subsection-heading h3{font-family:var(--serif);font-size:clamp(25px,3vw,34px);font-weight:500;line-height:1.2;margin:0 0 8px;color:var(--forest)}
+    .subsection-heading p{margin:0;color:var(--muted);max-width:680px}
+    .support-section-title{margin-top:0}
+    .support-overview{margin:8px 0 42px;padding:30px 0 34px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .support-heading{display:flex;align-items:baseline;justify-content:space-between;gap:28px;margin-bottom:24px}
+    .support-heading .eyebrow{color:#78917b;flex:0 0 auto}
+    .support-heading p{max-width:470px;margin:0;color:var(--muted);font-size:12px;line-height:1.7}
+    /* Editoriale Themenliste statt weiterer Kachelreihe: klarer Kontrast zu den Ablauf-Karten darunter */
+    .support-list{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid #dfe6dc}
+    .support-item{display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;align-items:start;padding:20px 8px;border:0;border-bottom:1px solid #dfe6dc;border-radius:0;background:transparent;min-height:0;align-content:start;box-shadow:none;transition:background .2s,padding .2s}
+    .support-item:hover{transform:none;box-shadow:none;border-color:#dfe6dc;background:rgba(255,255,255,.48);padding-left:14px;padding-right:14px}
+    .support-number{font-family:"Playfair Display",serif;font-size:25px;line-height:1;color:#9bad98;letter-spacing:-.5px;padding-top:1px}
+    .support-item h3{font-family:"Playfair Display",serif;font-size:20px;line-height:1.25;font-weight:500;color:var(--forest);margin:0 0 5px}
+    .support-item p{font-size:12px;line-height:1.75;color:var(--muted);margin:0;max-width:760px}
+    .service-meta{display:flex;flex-wrap:wrap;gap:12px 25px;margin:0 0 31px;padding:17px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .service-meta span{display:flex;align-items:center;gap:8px;color:#52685a;font-size:11px}
+    .service-meta i{font-style:normal;color:#8da58e;font-size:15px}
+    .service-meta b{font-weight:600}
+    .cards{gap:17px}
+    .card{position:relative;background:#fff;border:1px solid #e7ebe4;padding:29px 27px 31px;min-height:235px;box-shadow:0 5px 20px rgba(25,53,37,.025);transition:transform .25s,box-shadow .25s,border-color .25s}
+    .card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:#d5dfd2}
+    .card .num{font-family:"DM Sans",sans-serif;font-size:10px;letter-spacing:1.7px;font-weight:700;color:#8da58e}
+    .card h3{font-size:23px;line-height:1.2;letter-spacing:-.25px;margin:19px 0 13px}
+    .card p{font-size:12px;line-height:1.8;color:#6a786e}
+    .service-steps .card{min-height:250px;padding-top:27px}
+    .service-steps .card .num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid #dce6d9;border-radius:50%;font-size:10px;letter-spacing:.5px}
+    .service-steps .card h3{font-size:21px}
+    .service-note{margin-top:34px;padding:32px 36px;background:linear-gradient(120deg,#e7eee3,#f0f3eb);border-left:2px solid #8fa78d}
+    .service-note strong{font-size:25px}
+    .service-note p{font-size:13px;line-height:1.85}
+    #beratung .btn{margin-top:4px}
+    .split{gap:85px}
+    .about-photo{height:530px;border-radius:2px;position:relative;box-shadow:var(--shadow)}
+    .about-photo:after{content:"";position:absolute;left:18px;bottom:-18px;width:70%;height:70%;border:1px solid #bdcdb9;z-index:-1}
+    .about-photo img{filter:saturate(.82)}
+    .split p{font-size:14px;line-height:1.9}
+    .text-link{font-size:11px;letter-spacing:.04em;text-transform:uppercase;border-bottom-color:#9caf9a}
+    .quote{padding:100px 0;background:#e9efe6;position:relative;overflow:hidden}
+    .quote:before{content:"“";position:absolute;left:8%;top:-70px;font:260px "Playfair Display",serif;color:rgba(33,74,55,.055)}
+    .quote blockquote{font-size:clamp(27px,3.6vw,43px);line-height:1.28;letter-spacing:-.5px;position:relative}
+    .quote span{font-size:10px;letter-spacing:2.5px;color:#647969}
+    #blog .card{min-height:255px;display:flex;flex-direction:column;align-items:flex-start}
+    #blog .card h3{font-size:21px}
+    #blog .card .text-link{margin-top:auto;padding-top:22px}
+    .blog-toggle{border-radius:2px;padding:14px 22px;font-size:10px;letter-spacing:.07em;text-transform:uppercase;background:#fff;border-color:#dce5d9}
+    .blog-toggle:hover{background:#e9efe6}
+    .community{gap:18px}
+    .community-card{padding:42px;min-height:285px;border-radius:2px}
+    .community-card:first-child{background:linear-gradient(135deg,#214a37,#2d5a42)}
+    .community-card:nth-child(2){background:#e5ece1}
+    .community-card h3{font-size:35px;letter-spacing:-.4px}
+    .community-card p{font-size:13px;line-height:1.85}
+    .tag{font-size:9px;letter-spacing:2.1px}
+    .contact{padding:100px 0;background:linear-gradient(115deg,#183629,#214a37)}
+    .contact-grid{gap:85px}
+    .contact h2{font-size:clamp(39px,4.6vw,58px);letter-spacing:-.8px;line-height:1.1}
+    .contact p{font-size:14px;line-height:1.85}
+    .contact .btn{background:#f3f4e9}
+    footer{background:#11291f;padding:32px 0}
+    .footer-row{align-items:center;font-size:10px;letter-spacing:.03em}
+    .footer-links a{opacity:.8;transition:opacity .2s}
+    .footer-links a:hover{opacity:1}
+    a:focus-visible,button:focus-visible{outline:3px solid #b4c9a9;outline-offset:4px}
+    @media(max-width:1000px){
+      .wrap{width:min(100% - 48px,900px)}
+      .nav{height:78px}
+      nav{gap:17px}
+      .nav-cta{padding:11px 12px;font-size:10px}
+      .hero-grid{min-height:590px;gap:42px}
+      .hero-photo{height:420px}
+      .split{gap:48px}
+    }
+    @media(max-width:760px){
+      .wrap{width:min(100% - 36px,600px)}
+      .nav{height:72px}
+      .brand{font-size:21px}
+      .nav-cta{display:none}
+      .menu-btn{display:block;font-size:0;width:36px;height:36px;position:relative}
+      .menu-btn:before,.menu-btn:after{content:"";position:absolute;left:7px;width:22px;height:1.5px;background:var(--forest)}
+      .menu-btn:before{top:13px;box-shadow:0 7px 0 var(--forest)}
+      .menu-btn:after{top:27px;width:14px}
+      nav{display:none;position:absolute;top:72px;left:0;right:0;background:var(--cream);padding:18px 24px 24px;flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--line);box-shadow:0 16px 24px rgba(22,48,32,.08)}
+      nav.open{display:flex}
+      nav a{padding:8px 0}
+      .nav-dropdown{width:100%;display:block}
+      .nav-dropdown-label{padding:8px 0}
+      .nav-dropdown-menu{display:block;position:static;min-width:0;padding:0 0 4px 13px;border:0;border-radius:0;box-shadow:none;background:transparent}
+      .nav-dropdown-menu a{padding:8px 10px}
+      .hero-grid{grid-template-columns:1fr;gap:34px;padding-top:66px;padding-bottom:48px;min-height:0}
+      h1{font-size:clamp(43px,11vw,62px);letter-spacing:-1.5px}
+      .hero p{font-size:14px;line-height:1.8}
+      .hero-visual{max-width:440px;margin:0 auto}
+      .hero-photo{height:350px}
+      .hero-caption{font-size:8px}
+      .intro{padding:74px 0 66px}
+      .intro h2{font-size:clamp(34px,9vw,45px)}
+      .value-grid{grid-template-columns:1fr;gap:17px}
+      .value-item{gap:12px}
+      .section{padding:76px 0}
+      .section-head{margin-bottom:32px}
+      .section-head h2,.split h2{font-size:clamp(34px,9vw,45px)}
+      .cards,.split,.community,.contact-grid{grid-template-columns:1fr}
+      .cards{gap:13px}
+      .card{min-height:0;padding:25px 23px}
+      .service-steps .card{min-height:0}
+      .service-meta{gap:10px 16px}
+      .support-heading{display:block;margin-bottom:16px}
+      .support-heading p{margin-top:8px}
+      .support-list{grid-template-columns:1fr}
+      .support-item{grid-template-columns:42px minmax(0,1fr);gap:12px;padding:17px 4px;min-height:0}
+      .support-item:hover{padding-left:8px;padding-right:8px}
+      .support-number{font-size:22px}
+      .service-note{padding:25px 24px}
+      .service-note strong{font-size:22px}
+      .about-photo{height:340px;order:2;margin:0 12px 12px 0}
+      .split{gap:28px}
+      .quote{padding:75px 0}
+      .quote blockquote{font-size:29px}
+      .community-card{padding:30px;min-height:0}
+      .contact{padding:76px 0}
+      .contact-grid{gap:24px}
+      .footer-row{flex-direction:column;align-items:flex-start}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+    }
+
+  
+    /* Veganiel hero refresh: only header branding and homepage hero */
+    .veganiel-brand{display:flex;flex-direction:column;align-items:flex-start;gap:0;font-size:30px;line-height:1.02;letter-spacing:-.6px}
+    .veganiel-brand small{font:600 10px "DM Sans",sans-serif;letter-spacing:1.8px;text-transform:uppercase;color:#829486;margin-top:7px}
+    .hero-grid{grid-template-columns:1fr 1fr;gap:58px;min-height:700px;padding-top:58px;padding-bottom:58px}
+    .hero-visual{max-width:none;margin:0;width:100%}
+    .hero-photo{height:590px;border-radius:28px;border:6px solid rgba(255,255,255,.13);box-shadow:0 28px 80px rgba(0,0,0,.25)}
+    .hero-photo img{object-fit:cover;object-position:50% 50%;filter:contrast(1.06) saturate(.94) brightness(1.02)}
+    .hero-photo:after{inset:10px;border-radius:18px}
+    .hero-caption{justify-content:flex-start}
+    @media(max-width:900px){
+      .hero-grid{gap:32px;min-height:620px}
+      .hero-photo{height:500px}
+    }
+    @media(max-width:700px){
+      .veganiel-brand{font-size:25px}
+      .veganiel-brand small{font-size:8px;letter-spacing:1.4px}
+      .hero-grid{grid-template-columns:1fr;gap:30px;padding-top:40px;padding-bottom:45px}
+      .hero-visual{grid-row:1}
+      .hero-photo{height:min(112vw,510px);max-width:460px;margin:0 auto;border-radius:22px}
+      .hero-caption{max-width:460px;margin:12px auto 0;font-size:9px}
+      .hero-grid>div:first-child{grid-row:2}
+    }
+
+  </style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Person",
+  "name":"Daniel Suckrow",
+  "jobTitle":"Ganzheitlicher Ernährungsberater",
+  "description":"Staatlich anerkannter Sozialarbeiter und ausgebildeter ganzheitlicher Ernährungsberater der Akademie der Naturheilkunde (AKN).",
+  "alumniOf":{"@type":"EducationalOrganization","name":"Akademie der Naturheilkunde"},
+  "knowsAbout":["Ganzheitliche Ernährungsberatung","Pflanzenbasierte Ernährung","Vegane Ernährung","Nachhaltigkeit","Longevity"],
+  "areaServed":[{"@type":"City","name":"Potsdam"},{"@type":"City","name":"Berlin"}]
+}
+</script>
+
+<style id="professional-motion">
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:no-preference){
+  html.motion-ready [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .72s cubic-bezier(.2,.7,.2,1),transform .72s cubic-bezier(.2,.7,.2,1);transition-delay:var(--reveal-delay,0ms)}
+  html.motion-ready [data-reveal].is-visible{opacity:1;transform:translateY(0)}
+  .card,.community-card,.step,.service-card,.nav-cta,.text-link,.blog-toggle,button{transition:transform .28s ease,box-shadow .28s ease,background-color .28s ease,border-color .28s ease}
+  .card:hover,.community-card:hover,.step:hover,.service-card:hover{transform:translateY(-5px);box-shadow:0 16px 36px rgba(31,58,42,.10)}
+  .nav a:not(.nav-cta),nav a{position:relative}
+  .nav a:not(.nav-cta)::after,nav a:not(.nav-cta)::after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:1px;background:currentColor;transition:right .25s ease}
+  .nav a:not(.nav-cta):hover::after,nav a:not(.nav-cta):hover::after{right:0}
+  .hero img,.hero-image{animation:heroFloat 9s ease-in-out infinite alternate}
+  @keyframes heroFloat{from{transform:translateY(0)}to{transform:translateY(-7px)}}
+  .nav-cta:hover,button:hover,.blog-toggle:hover{transform:translateY(-2px)}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+
+<style id="footer-certification-style">.footer-certification{width:76px;height:auto;display:block;flex:0 0 auto;align-self:center;margin-right:12px}@media(max-width:700px){.footer-certification{width:64px;margin:0 auto 10px}.footer-row{justify-content:center;text-align:center;flex-wrap:wrap;gap:12px}}</style><style id="resource-four-card-layout">#ressourcen .cards{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}#ressourcen .card{padding:27px 23px}@media(max-width:900px){#ressourcen .cards{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){#ressourcen .cards{grid-template-columns:1fr}}</style><meta name="author" content="Daniel Suckrow"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="manifest" href="site.webmanifest"><style id="sitewide-quality-refinements">
+:focus-visible{outline:3px solid #b08d47;outline-offset:3px}
+img{max-width:100%;height:auto}
+.skip-link{position:absolute;left:12px;top:-60px;z-index:9999;background:#fff;color:#173629;padding:11px 15px;border:2px solid #214a37}
+.skip-link:focus{top:12px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Daniel Suckrow – Ganzheitliche Ernährungsberatung","inLanguage":"de-DE","publisher":{"@type":"Person","name":"Daniel Suckrow"}}
+</script>
+<link rel="canonical" href="https://veganiel.com/">
+<meta property="og:url" content="https://veganiel.com/">
+<meta property="og:image" content="https://veganiel.com/veganiel-hero-daniel.jpg">
+<meta property="og:image:alt" content="Daniel Suckrow vor einer grünen Berglandschaft">
+<meta name="twitter:image" content="https://veganiel.com/veganiel-hero-daniel.jpg">
+<link rel="preload" as="image" href="/veganiel-hero-daniel.jpg" fetchpriority="high">
+<style id="veganiel-logo-style">a.brand.veganiel-logo-brand{display:inline-flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;flex-shrink:0;line-height:1.15;text-decoration:none;white-space:nowrap}a.brand.veganiel-logo-brand .veganiel-logo-image{width:42px;height:42px;object-fit:contain;display:block;flex-shrink:0}a.brand.veganiel-logo-brand .veganiel-logo-text{display:flex;flex-direction:column!important;align-items:flex-start;justify-content:center;min-width:0;line-height:1.12}a.brand.veganiel-logo-brand .veganiel-logo-text small{display:block}@media(max-width:600px){a.brand.veganiel-logo-brand{gap:7px!important}a.brand.veganiel-logo-brand .veganiel-logo-image{width:33px;height:33px}}</style><link rel="icon" type="image/png" sizes="32x32" href="veganiel-logo-32.png"><link rel="apple-touch-icon" sizes="192x192" href="veganiel-logo-192.png"></head>
+<body><a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+<header>
+  <div class="wrap nav">
+    <a class="brand veganiel-brand veganiel-logo-brand" href="#home"><img class="veganiel-logo-image" src="veganiel-logo-192.png" alt="" width="42" height="42"><span class="veganiel-logo-text"><span>Veganiel</span><small>Daniel Suckrow</small></span></a>
+    <nav id="nav">
+      <a href="angebot.html">Beratung · 50 €</a><div class="nav-dropdown"><span class="nav-dropdown-label" data-i18n="navTools">Wissen &amp; Tools</span><div class="nav-dropdown-menu"><a href="longevity.html">Longevity</a><a href="supplement-rechner.html">Supplement-Rechner</a><a href="challenges.html">Challenges</a><a href="quiz.html">Quizwelt</a></div></div><a href="ueber-mich.html" data-i18n="navAbout">Über mich</a><a href="blog-uebersicht.html" data-i18n="navKnowledge">Blog</a>
+    </nav>
+    <div class="nav-right"><a class="nav-cta" href="kennenlernen.html" data-i18n="navCta">Erstgespräch anfragen</a><button class="lang" id="langBtn" aria-label="Switch language">EN</button><button class="menu-btn" id="menuBtn" aria-label="Menü öffnen">☰</button></div>
+  </div>
+</header>
+<main id="main-content">
+<section class="hero" id="home"><div class="wrap hero-grid">
+  <div><div class="eyebrow" data-i18n="heroEyebrow">Ernährung · Wohlbefinden · Nachhaltigkeit</div>
+    <h1 data-i18n="heroTitle">Gesundheit beginnt mit dem, was uns nährt.</h1>
+    <p data-i18n="heroText">Entdecke eine Ernährung, die zu dir, deinem Alltag und deinen Werten passt – ganzheitlich, pflanzenbasiert und wissenschaftlich fundiert.</p>
+    <div class="actions"><a class="btn btn-light" href="angebot.html" data-i18n="heroCta">Beratung entdecken</a><a class="btn btn-outline" href="#about" data-i18n="heroSecondary">Mehr über mich</a></div>
+  </div>
+  <div class="hero-visual"><div class="hero-photo"><img loading="eager" fetchpriority="high" decoding="async" width="1536" height="2048" src="veganiel-hero-daniel.jpg" alt="Daniel Suckrow sitzt auf einem Felsen vor einer grünen Berglandschaft"></div><div class="hero-caption"><span class="caption-dot"></span><span data-i18n="heroCaption">Persönlich in Potsdam & Berlin · Online überall</span></div></div>
+</div></section>
+<section class="intro"><div class="wrap"><div class="eyebrow" style="color:#78917b" data-i18n="introEyebrow">Individuell. Ganzheitlich. Alltagstauglich.</div><h2 data-i18n="introTitle">Dein Weg zu mehr Wohlbefinden – Schritt für Schritt.</h2><p data-i18n="introText">Ich begleite dich dabei, deine Ernährung bewusster zu gestalten und passende Routinen zu entwickeln. Im Mittelpunkt stehst du: deine Bedürfnisse, deine Ziele und ein Weg, der langfristig zu deinem Leben passt.</p></div></section>
+<section class="value-strip" aria-label="Beratungsansatz">
+  <div class="wrap value-grid">
+    <div class="value-item"><span class="value-mark">01</span><div><strong data-i18n="value1Title">Individuell statt Schema F</strong><span data-i18n="value1Text">Deine Bedürfnisse und Gewohnheiten geben die Richtung vor.</span></div></div>
+    <div class="value-item"><span class="value-mark">02</span><div><strong data-i18n="value2Title">Wissen verständlich erklärt</strong><span data-i18n="value2Text">Fundierte Informationen, übersetzt in praktische Schritte.</span></div></div>
+    <div class="value-item"><span class="value-mark">03</span><div><strong data-i18n="value3Title">Veränderung, die bleibt</strong><span data-i18n="value3Text">Realistische Impulse, die in deinen Alltag passen.</span></div></div>
+  </div>
+</section>
+
+<section class="section" id="beratung"><div class="wrap">
+  <div class="section-head"><div class="eyebrow" style="color:#78917b" data-i18n="serviceEyebrow">Deine persönliche Begleitung</div><h2 data-i18n="serviceTitle">Ganzheitliche Beratung für Ernährung, Wohlbefinden und Alltag.</h2><p data-i18n="serviceIntro">Wir schauen nicht nur darauf, was auf deinem Teller liegt, sondern auf dich als ganzen Menschen. Ziel ist eine Ernährung, die deine Gesundheit unterstützt und gleichzeitig zu deinen Vorlieben, Routinen und deinem Alltag passt. Die Beratung ist in Potsdam und Berlin sowie flexibel online möglich.</p></div>
+  <div class="subsection-heading"><h3 data-i18n="processHeading">Ablauf deiner Ernährungsberatung</h3><p data-i18n="processIntro">Von unserem ersten Gespräch bis zur persönlichen Auswertung – Schritt für Schritt und transparent.</p></div>
+  <div class="service-meta"><span><i>◷</i><b data-i18n="serviceMeta1">15–30 Min. Kennenlernen</b></span><span><i>⌁</i><b data-i18n="serviceMeta2">Eine Woche Dokumentation</b></span><span><i>↗</i><b data-i18n="serviceMeta3">Persönliche PDF-Auswertung</b></span></div><div class="cards service-steps">
+    <article class="card"><div class="num">01</div><h3 data-i18n="serviceStep1Title">Unverbindliches Kennenlernen</h3><p data-i18n="serviceStep1Text">In einem ersten Online-Gespräch von etwa 15–30 Minuten sprechen wir über deine Anliegen, Wünsche und Ziele. So lernen wir uns kennen und klären, ob die Beratung zu dir passt.</p></article>
+    <article class="card"><div class="num">02</div><h3 data-i18n="serviceStep2Title">Eine Woche Ernährungserfassung</h3><p data-i18n="serviceStep2Text">Du dokumentierst eine Woche lang deine Mahlzeiten und Getränke. In derselben Woche empfehle ich dir, beim Hausarzt oder bei der Hausärztin eine Blutuntersuchung durchführen zu lassen. So können Ernährung und Blutwerte zeitlich zusammen betrachtet werden.</p></article>
+    <article class="card"><div class="num">03</div><h3 data-i18n="serviceStep3Title">Auswertung deiner Blutwerte</h3><p data-i18n="serviceStep3Text">Im Anschluss werte ich dein Ernährungsprotokoll und die ärztlich erhobenen Blutwerte gemeinsam aus. Beide Ergebnisse fließen in deine persönliche PDF-Auswertung ein. Die Auswertung ersetzt keine ärztliche Diagnostik oder Behandlung.</p></article>
+    <article class="card"><div class="num">04</div><h3 data-i18n="serviceStep4Title">Dein personalisiertes PDF</h3><p data-i18n="serviceStep4Text">Du erhältst eine individuelle PDF-Auswertung mit konkreten Empfehlungen und alltagstauglichen Impulsen – abgestimmt auf deine Ernährung, Bedürfnisse und bisherigen Gewohnheiten.</p></article>
+    <article class="card"><div class="num">05</div><h3 data-i18n="serviceStep5Title">Abschlussgespräch (Online-Call)</h3><p data-i18n="serviceStep5Text">In einem abschließenden Online-Gespräch von etwa 30 Minuten besprechen wir deine Auswertung, beantworten offene Fragen und schauen gemeinsam, wie du die Empfehlungen realistisch in deinen Alltag integrieren kannst.</p></article>
+    <article class="card"><div class="num">06</div><h3 data-i18n="serviceStep6Title">Auch nach der Beratung für dich da</h3><p data-i18n="serviceStep6Text">Auch über die Ernährungsberatung hinaus kannst du dich bei weiteren Fragen per E-Mail an mich wenden. Ich bleibe gerne dein Ansprechpartner, wenn nach der Auswertung noch etwas offen ist.</p></article>
+  </div>
+
+  <div class="support-overview"><div class="subsection-heading support-section-title"><h3 data-i18n="contentHeading">Inhalte deiner persönlichen Begleitung</h3></div><div class="support-heading"><span class="eyebrow" data-i18n="supportEyebrow">Was dich unterstützen kann</span><p data-i18n="supportIntro">Die Beratung kann verschiedene Bereiche verbinden – orientiert an deinen persönlichen Fragen und Zielen.</p></div><div class="support-list">
+    <article class="support-item"><span class="support-number">01</span><div><h3 data-i18n="card1Title">Ganzheitliche Ernährungsberatung</h3><p data-i18n="card1Text">Individuelle Gespräche zu Essgewohnheiten, Lebensstil und persönlichen Zielen – wertschätzend und ohne starre Regeln.</p></div></article>
+    <article class="support-item"><span class="support-number">02</span><div><h3 data-i18n="card2Title">Individuelle Ernährungspläne</h3><p data-i18n="card2Text">Alltagstaugliche Orientierung und passende Ideen, abgestimmt auf deine Vorlieben, Bedürfnisse und deinen Tagesablauf.</p></div></article>
+    <article class="support-item"><span class="support-number">03</span><div><h3 data-i18n="card3Title">Pflanzliche Ernährung</h3><p data-i18n="card3Text">Wissen und praktische Tipps für eine ausgewogene vegane oder pflanzenbetonte Ernährung.</p></div></article>
+    <article class="support-item"><span class="support-number">04</span><div><h3 data-i18n="card4Title">Wohlbefinden & Routinen</h3><p data-i18n="card4Text">Impulse zu Essverhalten, Alltag, Achtsamkeit und Gewohnheiten, die dein Wohlbefinden unterstützen können.</p></div></article>
+    <article class="support-item"><span class="support-number">05</span><div><h3 data-i18n="card5Title">Ernährungswissen</h3><p data-i18n="card5Text">Verständliche Einordnung aktueller Erkenntnisse rund um Ernährung, Gesundheit und Nachhaltigkeit.</p></div></article>
+  </div></div>
+  <div class="service-note"><strong data-i18n="servicePromiseTitle">Veränderung ohne Verzicht auf dich selbst.</strong><p data-i18n="servicePromise">Deine Ernährung soll zu deinem Leben passen – nicht umgekehrt. Deshalb berücksichtige ich deine persönlichen Vorlieben und bestehenden Routinen. Es geht um sinnvolle, nachhaltige Anpassungen und nicht darum, deine gewohnten Essgewohnheiten vollständig über Bord zu werfen.</p></div>
+  <div style="margin-top:30px"><a class="btn" style="background:var(--forest);color:white" href="kennenlernen.html" data-i18n="serviceCta">Beratung anfragen</a></div>
+</div></section>
+
+<section class="section" id="about"><div class="wrap split">
+  <div class="about-photo"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1000&q=85" alt="Frische Zutaten und pflanzliche Lebensmittel"></div>
+  <div><div class="eyebrow" style="color:#78917b" data-i18n="aboutEyebrow">Lerne mich kennen</div><h2 data-i18n="aboutTitle">Ernährung mit Wissen, Haltung und Freude.</h2>
+  <p data-i18n="aboutText">Ich bin Daniel Suckrow. Als Sozialarbeiter und ausgebildeter ganzheitlicher Ernährungsberater verbinde ich einen Blick auf den Menschen mit meiner Begeisterung für Ernährung, pflanzliche Lebensweisen und Nachhaltigkeit.</p>
+  <p data-i18n="aboutText2">Mir ist wichtig, Wissen verständlich zu vermitteln und Veränderungen zu ermöglichen, die realistisch, genussvoll und langfristig umsetzbar sind.</p>
+  <a class="text-link" href="kennenlernen.html" data-i18n="aboutLink">Lass uns ins Gespräch kommen →</a></div>
+</div></section>
+<section class="quote"><div class="wrap"><blockquote data-i18n="quote">„Es geht nicht um Perfektion, sondern darum, jeden Tag Entscheidungen zu treffen, die uns guttun.“</blockquote><span data-i18n="quoteBy">Daniel Suckrow</span></div></section>
+
+<section class="section section-soft" id="ressourcen"><div class="wrap"><div class="section-head"><div class="eyebrow">Wissen & Tools</div><h2>Mehr Klarheit für deinen Alltag.</h2><p>Vertiefe dein Wissen mit meinem Longevity-Protokoll, dem Supplement-Rechner und fünf interaktiven Wissensquizzen.</p></div><div class="cards">
+<a class="card" href="longevity.html"><div class="num">01 · Longevity</div><h3>Longevity-Protokoll</h3><p>Ein strukturierter Überblick über Routinen, Ernährung, Regeneration und Gesundheitsmonitoring.</p><span class="text-link">Protokoll ansehen · 1,00 € →</span></a>
+<a class="card" href="supplement-rechner.html"><div class="num">02 · Interaktiv</div><h3>Supplement-Rechner</h3><p>Lege dein monatliches Budget fest und erhalte eine transparente, priorisierte Beispielauswahl.</p><span class="text-link">Rechner öffnen →</span></a>
+<a class="card" href="angebot.html"><div class="num">03 · Persönlich</div><h3>Ernährungsberatung</h3><p>Ein klarer Ablauf mit Ernährungsprotokoll, Blutwerten, persönlicher PDF und Abschlussgespräch.</p><span class="text-link">Beratung für 50 € ansehen →</span></a>
+<a class="card" id="challenge-card" href="challenges.html"><div class="num">04 · Motivation</div><h3>Challenges</h3><p>Kleine, motivierende Herausforderungen helfen dir, neue Gewohnheiten auszuprobieren und mehr Gesundheit in deinen Alltag zu integrieren.</p><span class="text-link">Challenges entdecken →</span></a>
+<a class="card" href="quiz.html"><div class="num">05 · Wissenstest</div><h3>Quizwelt</h3><p>Fünf Quizze mit jeweils zehn Fragen zu Gesundheit, Supplementen, Antioxidantien, Langlebigkeit und pflanzlicher Ernährung.</p><span class="text-link">Quiz auswählen →</span></a>
+</div></div></section>
+
+<section class="section" id="blog"><div class="wrap"><div class="section-head"><div class="eyebrow" style="color:#78917b" data-i18n="postsEyebrow">Ausgewählte Beiträge</div><h2 data-i18n="postsTitle">Wissen, das weiterbringt.</h2><p data-i18n="postsIntro">Eine Auswahl meiner bisherigen Artikel zu Ernährung, pflanzlicher Lebensweise, Gesundheit und Ethik.</p></div>
+<div class="cards" id="blogCards">
+<a class="card" href="blog/achtsames-spazieren-im-wald/index.html"><div class="num">22 · Achtsamkeit</div><h3>Achtsames Spazieren im Wald: Den Moment bewusst wahrnehmen</h3><p>Sieben Impulse, um die Sinne zu öffnen, zur Ruhe zu kommen und die Natur bewusster zu erleben.</p><span class="text-link">Beitrag lesen ↗</span></a>
+
+<a class="card" href="blog/zusatzstoffe-nahrungsmitteln/index.html"><div class="num">21 · Ernährung</div><h3>Zusatzstoffe in Lebensmitteln: Was ist bedenklich und worauf kommt es an?</h3><p>Was E-Nummern bedeuten, wie Zusatzstoffe bewertet werden und wie Apps wie Yuka einzuordnen sind.</p><span class="text-link">Beitrag lesen ↗</span></a>
+
+<a class="card" href="blog/umgang-mit-stress/index.html"><div class="num">20 · Gesundheit</div><h3>Umgang mit Stress: Ursachen verstehen und besser damit umgehen</h3><p>Wie Stress entsteht, welche Funktion er hat und welche Strategien im Alltag helfen können.</p><span class="text-link">Beitrag lesen ↗</span></a>
+
+<a class="card" href="blog/darmreinigung-sanierung/index.html"><div class="num">19 · Gesundheit</div><h3>Darmgesundheit statt Darmreinigung: Was wirklich hilft</h3><p>Warum Detox-Kuren nicht nötig sind und was Verdauung und Darmmikrobiom tatsächlich unterstützt.</p><span class="text-link">Beitrag lesen ↗</span></a>
+
+<a class="card" href="blog/achtsamkeit/index.html"><div class="num">18 · Lifestyle</div><h3>Achtsamkeit: Den Moment bewusster wahrnehmen</h3><p>Wie du im Alltag innehalten, deine Aufmerksamkeit schulen und achtsamer leben kannst.</p><span class="text-link">Beitrag lesen ↗</span></a>
+
+<a class="card" href="blog/antioxidantien/index.html"><div class="num">17 · Ernährung</div><h3>Antioxidantien: Wirkung, oxidative Prozesse und gute Lebensmittelquellen</h3><p>Was Antioxidantien leisten und warum Vielfalt wichtiger ist als ORAC-Werte.</p><span class="text-link">Beitrag lesen ↗</span></a>
+
+<a class="card" href="blog/omega-3-6-verhaeltnis/index.html"><div class="num">16 · Ernährung</div><h3>Omega-3 und Omega-6: Verhältnis, Quellen und was wirklich zählt</h3><p>Warum beide Fettsäuren wichtig sind und weshalb das Verhältnis allein nicht entscheidend ist.</p><span class="text-link">Beitrag lesen ↗</span></a>
+
+<a class="card" href="blog/kritische-naehrstoffe-vegan/index.html"><div class="num">15 · Ernährung</div><h3>Kritische Nährstoffe bei veganer Ernährung: Worauf kommt es an?</h3><p>Welche Nährstoffe besondere Aufmerksamkeit verdienen und wie eine bedarfsgerechte Versorgung gelingt.</p><span class="text-link">Beitrag lesen ↗</span></a>
+
+<a class="card" href="blog/antiangiogenese/index.html"><div class="num">14 · Gesundheit</div><h3>Antiangiogenese und Krebs: Was Ernährung tatsächlich bewirken kann</h3><p>Wie Medikamente die Gefäßneubildung hemmen – und was über Lebensmittel wirklich bekannt ist.</p><span class="text-link">Beitrag lesen ↗</span></a>
+
+<a class="card" href="blog/ballaststoffe/index.html"><div class="num">13 · Ernährung</div><h3>Ballaststoffe: Bedeutung für Darm, Mikrobiom und Gesundheit</h3><p>Wie Ballaststoffe Verdauung und Darmmikrobiom unterstützen und wie du 30 Gramm täglich erreichst.</p><span class="text-link">Beitrag lesen ↗</span></a>
+
+<a class="card" href="blog/karottensaft/index.html"><div class="num">01 · Ernährung</div><h3>Karottensaft: Nährstoffe, Beta-Carotin und lilafarbene Karotten</h3><p>Was Karottensaft auszeichnet und worauf es bei der Zubereitung ankommt.</p><span class="text-link">Beitrag lesen ↗</span></a>
+<a class="card" href="blog/vitamin-b12/index.html"><div class="num">02 · Nährstoffe</div><h3>Vitamin B12 und vegane Ernährung: Was ist wirklich wichtig?</h3><p>Aufklärung und Empfehlungen zur Vitamin-B12-Versorgung.</p><span class="text-link">Beitrag lesen ↗</span></a>
+<a class="card" href="blog/diskriminierung/index.html"><div class="num">03 · Ethik</div><h3>Diskriminierung: Wenn Körper bewertet und Interessen übersehen werden</h3><p>Über Empfindungsfähigkeit, Ungleichbehandlung und Ernährungsgerechtigkeit.</p><span class="text-link">Beitrag lesen ↗</span></a>
+<a class="card" href="blog/bioaktive-verbindungen/index.html"><div class="num">04 · Vegane Ernährung</div><h3>Meat-based Bioactive Compounds</h3><p>Ein Blick auf bioaktive Verbindungen und ihre Bedeutung bei veganer Ernährung.</p><span class="text-link">Beitrag lesen ↗</span></a>
+<a class="card" href="blog/veganismus-chancen-herausforderungen/index.html"><div class="num">05 · Perspektiven</div><h3>Veganismus: Chancen und Herausforderungen</h3><pEine kritische und differenzierte Auseinandersetzung mit veganer Lebensweise.</p><span class="text-link">Beitrag lesen ↗</span></a>
+<a class="card" href="blog/telomere/index.html"><div class="num">06 · Zellgesundheit</div><h3>Was sind Telomere und Telomerase – und wofür sind sie wichtig?</h3><p>Was diese Strukturen sind und welche Rolle sie für unsere Zellen spielen.</p><span class="text-link">Beitrag lesen ↗</span></a>
+<a class="card" href="blog/supplemente/index.html"><div class="num">07 · Supplemente</div><h3>Drei wichtige Nahrungsergänzungsmittel: Omega-3, Vitamin D und Vitamin C</h3><p>Ein Beitrag über ausgewählte Supplemente und ihre mögliche Bedeutung.</p><span class="text-link">Beitrag lesen ↗</span></a>
+<a class="card" href="blog/weniger-salz/index.html"><div class="num">08 · Alltagstipps</div><h3>Weniger salzen – das geht!</h3><p>Praktische Ideen, um den Salzkonsum zu reduzieren und Geschmack zu bewahren.</p><span class="text-link">Beitrag lesen ↗</span></a>
+<a class="card" href="blog/ballaststoffe/index.html"><div class="num">09 · Verdauung</div><h3>Die Bedeutung von Ballaststoffen</h3><p>Welche Arten es gibt und wie Ballaststoffe den Körper unterstützen.</p><span class="text-link">Beitrag lesen ↗</span></a>
+<a class="card" href="blog/antiangiogenese/index.html"><div class="num">10 · Forschung</div><h3>Antiangiogenese und Ernährung</h3><p>Einordnung eines Forschungsansatzes an der Schnittstelle von Ernährung und Krebs.</p><span class="text-link">Beitrag lesen ↗</span></a>
+<a class="card" href="blog/kritische-naehrstoffe/index.html"><div class="num">11 · Vegane Ernährung</div><h3>Kritische Nährstoffe in veganer Ernährung</h3><p>Worauf bei einer gut geplanten pflanzlichen Ernährung zu achten ist.</p><span class="text-link">Beitrag lesen ↗</span></a>
+<a class="card" href="blog/omega-fettsaeuren/index.html"><div class="num">12 · Fettsäuren</div><h3>Das Omega-3- und Omega-6-Verhältnis</h3><p>Grundlagen zu Fettsäuren und ihrer Bedeutung in der Ernährung.</p><span class="text-link">Beitrag lesen ↗</span></a>
+</div><div class="blog-toggle-wrap"><button class="blog-toggle" id="blogToggle" type="button" aria-expanded="false"><span data-i18n="blogMore">Alle Beiträge anzeigen</span><span class="arrow" aria-hidden="true">↓</span></button><a class="text-link" href="blog-uebersicht.html" style="margin-left:18px" data-i18n="blogArchive">Zum Blog-Archiv →</a></div></div></section>
+
+<section class="contact" id="kontakt"><div class="wrap contact-grid"><div><div class="eyebrow" data-i18n="contactEyebrow">Der erste Schritt</div><h2 data-i18n="contactTitle">Lass uns über deine Ziele sprechen.</h2><p data-i18n="contactText">Du möchtest deine Ernährung verändern oder Themen wie Stress und Bewegung bzw. Sport einbeziehen? Je nach Bedarf berücksichtigen wir auch diese Bereiche in deiner Beratung. Schreib mir – ich freue mich darauf, von dir zu hören.</p></div><div><p><strong data-i18n="contactLocation">Potsdam · Berlin · Online</strong><br><span data-i18n="contactFormat">Persönliche und digitale Ernährungsberatung</span></p><a class="btn" href="kennenlernen.html" data-i18n="contactButton">Kontakt aufnehmen</a></div></div></section>
+</main>
+<footer><div class="wrap footer-row"><img decoding="async" class="footer-certification" src="akn-zertifiziert-durch-akademie-der-naturheilkunde.png" alt="Zertifizierung durch die Akademie der Naturheilkunde" loading="lazy"><span>© <span id="year"></span> Daniel Suckrow</span><div class="footer-links"><a href="#" data-i18n="imprint">Impressum</a><a href="#" data-i18n="privacy">Datenschutz</a></div><span data-i18n="footerLine">Ganzheitliche Ernährungsberatung · Potsdam & Berlin</span></div></footer>
+<script>
+const copy={
+de:{brandSub:"Ganzheitliche Ernährungsberatung",navCta:"Kostenlos kennenlernen",value1Title:"Individuell statt Schema F",value1Text:"Deine Bedürfnisse und Gewohnheiten geben die Richtung vor.",value2Title:"Wissen verständlich erklärt",value2Text:"Fundierte Informationen, übersetzt in praktische Schritte.",value3Title:"Veränderung, die bleibt",value3Text:"Realistische Impulse, die in deinen Alltag passen.",heroCaption:"Persönlich in Potsdam & Berlin · Online überall",navOffer:"Ernährungsberatung",navTools:"Wissen & Tools",serviceEyebrow:"Deine persönliche Begleitung",serviceMeta1:"15–30 Min. Kennenlernen",serviceMeta2:"Eine Woche Dokumentation",serviceMeta3:"Persönliche PDF-Auswertung",serviceTitle:"Ganzheitliche Beratung für Ernährung, Wohlbefinden und Alltag.",serviceIntro:"Wir schauen nicht nur darauf, was auf deinem Teller liegt, sondern auf dich als ganzen Menschen. Ziel ist eine Ernährung, die deine Gesundheit unterstützt und gleichzeitig zu deinen Vorlieben, Routinen und deinem Alltag passt. Die Beratung ist in Potsdam und Berlin sowie flexibel online möglich.",processHeading:"Ablauf deiner Ernährungsberatung",processIntro:"Von unserem ersten Gespräch bis zur persönlichen Auswertung – Schritt für Schritt und transparent.",contentHeading:"Inhalte deiner persönlichen Begleitung",supportEyebrow:"Was dich unterstützen kann",supportIntro:"Die Beratung kann verschiedene Bereiche verbinden – orientiert an deinen persönlichen Fragen und Zielen.",serviceStep1Title:"Unverbindliches Kennenlernen",serviceStep1Text:"In einem ersten Online-Gespräch von etwa 15–30 Minuten sprechen wir über deine Anliegen, Wünsche und Ziele. So lernen wir uns kennen und klären, ob die Beratung zu dir passt.",serviceStep2Title:"Eine Woche Ernährungserfassung",serviceStep2Text:"Du dokumentierst eine Woche lang deine Mahlzeiten und Getränke. In derselben Woche empfehle ich dir, beim Hausarzt oder bei der Hausärztin eine Blutuntersuchung durchführen zu lassen. So können Ernährung und Blutwerte zeitlich zusammen betrachtet werden.",serviceStep3Title:"Auswertung deiner Blutwerte",serviceStep3Text:"Im Anschluss werte ich dein Ernährungsprotokoll und die ärztlich erhobenen Blutwerte gemeinsam aus. Beide Ergebnisse fließen in deine persönliche PDF-Auswertung ein. Die Auswertung ersetzt keine ärztliche Diagnostik oder Behandlung.",serviceStep4Title:"Dein personalisiertes PDF",serviceStep4Text:"Du erhältst eine individuelle PDF-Auswertung mit konkreten Empfehlungen und alltagstauglichen Impulsen – abgestimmt auf deine Ernährung, Bedürfnisse und bisherigen Gewohnheiten.",serviceStep5Title:"Abschlussgespräch (Online-Call)",serviceStep5Text:"In einem abschließenden Online-Gespräch von etwa 30 Minuten besprechen wir deine Auswertung, beantworten offene Fragen und schauen gemeinsam, wie du die Empfehlungen realistisch in deinen Alltag integrieren kannst.",serviceStep6Title:"Auch nach der Beratung für dich da",serviceStep6Text:"Auch über die Ernährungsberatung hinaus kannst du dich bei weiteren Fragen per E-Mail an mich wenden. Ich bleibe gerne dein Ansprechpartner, wenn nach der Auswertung noch etwas offen ist.",servicePromiseTitle:"Veränderung ohne Verzicht auf dich selbst.",servicePromise:"Deine Ernährung soll zu deinem Leben passen – nicht umgekehrt. Deshalb berücksichtige ich deine persönlichen Vorlieben und bestehenden Routinen. Es geht um sinnvolle, nachhaltige Anpassungen und nicht darum, deine gewohnten Essgewohnheiten vollständig über Bord zu werfen.",serviceCta:"Kostenloses Kennenlernen buchen",navAbout:"Über mich",navKnowledge:"Blog",postsEyebrow:"Ausgewählte Beiträge",postsTitle:"Wissen, das weiterbringt.",postsIntro:"Eine Auswahl meiner bisherigen Artikel zu Ernährung, pflanzlicher Lebensweise, Gesundheit und Ethik.",navContact:"Kontakt",heroEyebrow:"Ernährung · Wohlbefinden · Nachhaltigkeit",heroTitle:"Gesundheit beginnt mit dem, was uns nährt.",heroText:"Entdecke eine Ernährung, die zu dir, deinem Alltag und deinen Werten passt – ganzheitlich, pflanzenbasiert und wissenschaftlich fundiert.",heroCta:"Beratung entdecken",heroSecondary:"Mehr über mich",introEyebrow:"Individuell. Ganzheitlich. Alltagstauglich.",introTitle:"Dein Weg zu mehr Wohlbefinden – Schritt für Schritt.",introText:"Ich begleite dich dabei, deine Ernährung bewusster zu gestalten und passende Routinen zu entwickeln. Im Mittelpunkt stehst du: deine Bedürfnisse, deine Ziele und ein Weg, der langfristig zu deinem Leben passt.",offerEyebrow:"Wie ich dich unterstützen kann",offerTitle:"Beratung, die den ganzen Menschen sieht.",offerText:"Von der ersten Orientierung bis zu konkreten Veränderungen im Alltag – wir finden gemeinsam heraus, was dich stärkt.",card1Title:"Ganzheitliche Ernährungsberatung",card1Text:"Individuelle Gespräche zu Essgewohnheiten, Lebensstil und persönlichen Zielen – wertschätzend und ohne starre Regeln.",card2Title:"Individuelle Ernährungspläne",card2Text:"Alltagstaugliche Orientierung und passende Ideen, abgestimmt auf deine Vorlieben, Bedürfnisse und deinen Tagesablauf.",card3Title:"Pflanzliche Ernährung",card3Text:"Wissen und praktische Tipps für eine ausgewogene vegane oder pflanzenbetonte Ernährung.",card4Title:"Wohlbefinden & Routinen",card4Text:"Impulse zu Essverhalten, Alltag, Achtsamkeit und Gewohnheiten, die dein Wohlbefinden unterstützen können.",card5Title:"Ernährungswissen",card5Text:"Verständliche Einordnung aktueller Erkenntnisse rund um Ernährung, Gesundheit und Nachhaltigkeit.",card6Title:"Auch nach der Beratung für dich da",card6Text:"Auch über die Ernährungsberatung hinaus kannst du dich bei weiteren Fragen per E-Mail an mich wenden. Ich bleibe gerne dein Ansprechpartner, wenn nach der Auswertung noch etwas offen ist.",aboutEyebrow:"Lerne mich kennen",aboutTitle:"Ernährung mit Wissen, Haltung und Freude.",aboutText:"Ich bin Daniel Suckrow. Als Sozialarbeiter und ausgebildeter ganzheitlicher Ernährungsberater verbinde ich einen Blick auf den Menschen mit meiner Begeisterung für Ernährung, pflanzliche Lebensweisen und Nachhaltigkeit.",aboutText2:"Mir ist wichtig, Wissen verständlich zu vermitteln und Veränderungen zu ermöglichen, die realistisch, genussvoll und langfristig umsetzbar sind.",aboutLink:"Lass uns kostenlos ins Gespräch kommen →",quote:"„Es geht nicht um Perfektion, sondern darum, jeden Tag Entscheidungen zu treffen, die uns guttun.“",quoteBy:"Daniel Suckrow",communityEyebrow:"Wissen & Tools",communityTitle:"Mehr Klarheit für deinen Alltag.",blogTag:"Wissen & Austausch",blogTitle:"Der Blog",blogText:"Lies Beiträge rund um Ernährung, vegane Lebensweise und Wohlbefinden. Perspektivisch kannst du ein eigenes Profil erstellen und deine Erfahrungen in Beiträgen teilen.",blogLink:"Mehr erfahren →",challengeTag:"Motivation im Alltag",challengeTitle:"Challenges",challengeText:"Kleine, motivierende Herausforderungen helfen dir, neue Gewohnheiten auszuprobieren und mehr Gesundheit in deinen Alltag zu integrieren.",challengeLink:"Challenges entdecken →",contactEyebrow:"Der erste Schritt",contactTitle:"Lass uns über deine Ziele sprechen.",contactText:"Du möchtest deine Ernährung verändern oder Themen wie Stress und Bewegung bzw. Sport einbeziehen? Je nach Bedarf berücksichtigen wir auch diese Bereiche in deiner Beratung. Schreib mir – ich freue mich darauf, von dir zu hören.",contactLocation:"Potsdam · Berlin · Online",contactFormat:"Persönliche und digitale Ernährungsberatung",contactButton:"Kostenloses Kennenlerngespräch buchen",emailNote:"Bitte vor Veröffentlichung deine E-Mail-Adresse einsetzen.",imprint:"Impressum",privacy:"Datenschutz",footerLine:"Ganzheitliche Ernährungsberatung · Potsdam & Berlin",blogMore:"Weitere Beiträge anzeigen",blogLess:"Weniger Beiträge anzeigen",blogArchive:"Zum Blog-Archiv →"},
+en:{brandSub:"Holistic Nutrition Consulting",navCta:"Book an introductory call",value1Title:"Personal, never one-size-fits-all",value1Text:"Your needs and habits shape the approach.",value2Title:"Knowledge made practical",value2Text:"Evidence-informed guidance translated into everyday steps.",value3Title:"Change that can last",value3Text:"Realistic ideas that fit into your life.",heroCaption:"In person in Potsdam & Berlin · Online worldwide",navOffer:"Nutrition consulting",navTools:"Knowledge & Tools",serviceEyebrow:"Personal support",serviceMeta1:"15–30 min introduction",serviceMeta2:"One week of tracking",serviceMeta3:"Personalised PDF review",serviceTitle:"Holistic nutrition consulting – tailored to you and everyday life.",serviceIntro:"We look beyond what is on your plate and consider you as a whole person. The aim is an approach to food that supports your wellbeing while respecting your preferences, routines and everyday life. Consultations are available in Potsdam and Berlin, as well as online.",processHeading:"How your nutrition consultation works",processIntro:"From our first conversation to your personalised review – clear, transparent and step by step.",contentHeading:"Topics covered in your personal support",supportEyebrow:"Areas we can explore together",supportIntro:"Your consultation can bring together different areas, guided by your individual questions and goals.",serviceStep1Title:"Introductory conversation",serviceStep1Text:"In an initial online conversation of around 15–30 minutes, we discuss your questions, wishes and goals. We get to know each other and explore whether the consultation is right for you.",serviceStep2Title:"One week of food tracking",serviceStep2Text:"For one week, you record your meals and drinks. During the same week, I recommend arranging a blood test with your doctor. This allows your eating habits and blood results to be considered in the same time period.",serviceStep3Title:"Review of your blood results",serviceStep3Text:"I then review your food diary and the blood results from your doctor together. Both are incorporated into your personalised PDF. This review does not replace medical diagnosis or treatment.",serviceStep4Title:"Your personalised PDF",serviceStep4Text:"You receive an individual PDF with practical recommendations and ideas tailored to your diet, needs and existing habits.",serviceStep5Title:"Final review conversation (online, around 30 minutes)",serviceStep5Text:"In a final online conversation of around 30 minutes, we discuss your assessment, answer open questions and explore how to integrate the recommendations into your everyday life.",serviceStep6Title:"Here for you beyond the consultation",serviceStep6Text:"You can also contact me by email with further questions beyond the nutrition consultation. I am happy to remain your point of contact if anything is still unclear after the assessment.",servicePromiseTitle:"Positive change without losing what works for you.",servicePromise:"Your way of eating should fit your life – not the other way around. I take your preferences and existing routines into account. The focus is on meaningful, sustainable adjustments, not on turning your familiar eating habits upside down.",serviceCta:"Enquire about consulting",navAbout:"About me",navKnowledge:"Blog",postsEyebrow:"Selected articles",postsTitle:"Knowledge that moves you forward.",postsIntro:"A selection of my articles on nutrition, plant-based living, health and ethics.",navContact:"Contact",heroEyebrow:"Nutrition · Wellbeing · Sustainability",heroTitle:"Wellbeing begins with what nourishes us.",heroText:"Discover an approach to food that fits you, your everyday life and your values – holistic, plant-focused and grounded in science.",heroCta:"Explore consulting",heroSecondary:"About me",introEyebrow:"Personal. Holistic. Practical.",introTitle:"Your path to greater wellbeing, one step at a time.",introText:"I support you in making more conscious food choices and building routines that work for you. Your needs, your goals and a sustainable approach to everyday life are at the centre.",offerEyebrow:"How I can support you",offerTitle:"Nutrition consulting that sees the whole person.",offerText:"From initial guidance to practical everyday changes, we explore what helps you feel your best.",card1Title:"Holistic nutrition consulting",card1Text:"Personal conversations about eating habits, lifestyle and individual goals – supportive, practical and free from rigid rules.",card2Title:"Personal nutrition plans",card2Text:"Practical guidance and ideas tailored to your preferences, needs and daily routine.",card3Title:"Plant-based nutrition",card3Text:"Knowledge and practical tips for a balanced vegan or plant-focused diet.",card4Title:"Wellbeing & routines",card4Text:"Ideas around eating habits, everyday life, mindfulness and routines that may support your wellbeing.",card5Title:"Nutrition knowledge",card5Text:"Clear explanations of current insights into nutrition, health and sustainability.",card6Title:"Here for you beyond the consultation",card6Text:"You can also contact me by email with any further questions after the nutrition consultation. I am happy to remain your point of contact if anything is still unclear after your assessment.",aboutEyebrow:"Get to know me",aboutTitle:"Nutrition guided by knowledge, values and curiosity.",aboutText:"I'm Daniel Suckrow. As a social worker and trained holistic nutrition consultant, I combine a person-centred perspective with my enthusiasm for nutrition, plant-based living and sustainability.",aboutText2:"I believe in making knowledge accessible and supporting changes that are realistic, enjoyable and sustainable in the long term.",aboutLink:"Let's talk →",quote:"“It is not about perfection. It is about making choices every day that help us feel good.”",quoteBy:"Daniel Suckrow",communityEyebrow:"Learn and grow together",communityTitle:"Share knowledge. Try something new.",communityText:"Nutrition is diverse, and everyone brings their own experiences. Discover new ideas and share what you know with others.",blogTag:"Knowledge & exchange",blogTitle:"The blog",blogText:"Explore articles about nutrition, plant-based living and wellbeing. In a future community area, you will be able to create a profile and share your experience through posts.",blogLink:"Find out more →",challengeTag:"Everyday motivation",challengeTitle:"Challenges",challengeText:"Small, motivating challenges can help you explore new habits and bring more healthy routines into your everyday life.",challengeLink:"Explore challenges →",contactEyebrow:"A first step",contactTitle:"Let's talk about your goals.",contactText:"Would you like to change your eating habits or learn more about nutrition consulting? Send me a message – I'd love to hear from you.",contactLocation:"Potsdam · Berlin · Online",contactFormat:"In-person and online nutrition consulting",contactButton:"Get in touch",emailNote:"Please add your email address before publishing.",imprint:"Legal notice",privacy:"Privacy",footerLine:"Holistic nutrition consulting · Potsdam & Berlin",blogMore:"Show more articles",blogLess:"Show fewer articles",blogArchive:"Open blog archive →"}
+};
+let language="de";
+function setLanguage(next){
+  const cards=document.querySelectorAll("#blogCards .card");
+  const enCards=[
+    ["01 · Nutrition","The benefits of carrot juice","What makes carrot juice special and what to consider when preparing it.","Read article ↗"],
+    ["02 · Nutrients","The vitamin B12 myth","Information and recommendations on vitamin B12.","Read article ↗"],
+    ["03 · Ethics","Discrimination: when bodies are judged","On sentience, unequal treatment and food justice.","Read article ↗"],
+    ["04 · Plant-based nutrition","Meat-based bioactive compounds","A look at bioactive compounds and their relevance to vegan nutrition.","Read article ↗"],
+    ["05 · Perspectives","Veganism: opportunities and challenges","A critical and nuanced look at a vegan lifestyle.","Read article ↗"],
+    ["06 · Cellular health","Telomeres and telomerase","What these structures are and how they relate to our cells.","Read article ↗"],
+    ["07 · Supplements","An overview of supplements","A look at selected supplements and their potential relevance.","Read article ↗"],
+    ["08 · Everyday tips","Less salt – it can be done!","Practical ideas for reducing salt while keeping food flavourful.","Read article ↗"],
+    ["09 · Digestion","The importance of dietary fibre","Different types of fibre and how they support the body.","Read article ↗"],
+    ["10 · Research","Anti-angiogenesis and nutrition","An overview of a research approach at the intersection of nutrition and cancer.","Read article ↗"],
+    ["11 · Plant-based nutrition","Potentially critical nutrients in vegan diets","What to consider when planning a balanced plant-based diet.","Read article ↗"],
+    ["12 · Fatty acids","The omega-3 to omega-6 ratio","The basics of fatty acids and their role in nutrition.","Read article ↗"]
+  ];
+  const deCards=[
+    ["01 · Ernährung","Die Wunderwirkung von Karottensaft","Was Karottensaft auszeichnet und worauf es bei der Zubereitung ankommt.","Beitrag lesen ↗"],
+    ["02 · Nährstoffe","Der Vitamin-B12-Mythos","Aufklärung und Empfehlungen zur Vitamin-B12-Versorgung.","Beitrag lesen ↗"],
+    ["03 · Ethik","Diskriminierung: Wenn Körper bewertet und Interessen übersehen werden","Über Empfindungsfähigkeit, Ungleichbehandlung und Ernährungsgerechtigkeit.","Beitrag lesen ↗"],
+    ["04 · Vegane Ernährung","Meat-based Bioactive Compounds","Ein Blick auf bioaktive Verbindungen und ihre Bedeutung bei veganer Ernährung.","Beitrag lesen ↗"],
+    ["05 · Perspektiven","Veganismus: Chancen und Herausforderungen","Eine kritische und differenzierte Auseinandersetzung mit veganer Lebensweise.","Beitrag lesen ↗"],
+    ["06 · Zellgesundheit","Was sind Telomere und Telomerase – und wofür sind sie wichtig?","Was diese Strukturen sind und welche Rolle sie für unsere Zellen spielen.","Beitrag lesen ↗"],
+    ["07 · Supplemente","Drei wichtige Nahrungsergänzungsmittel: Omega-3, Vitamin D und Vitamin C","Ein Beitrag über ausgewählte Supplemente und ihre mögliche Bedeutung.","Beitrag lesen ↗"],
+    ["08 · Alltagstipps","Weniger salzen – das geht!","Praktische Ideen, um den Salzkonsum zu reduzieren und Geschmack zu bewahren.","Beitrag lesen ↗"],
+    ["09 · Verdauung","Die Bedeutung von Ballaststoffen","Welche Arten es gibt und wie Ballaststoffe den Körper unterstützen.","Beitrag lesen ↗"],
+    ["10 · Forschung","Antiangiogenese und Ernährung","Einordnung eines Forschungsansatzes an der Schnittstelle von Ernährung und Krebs.","Beitrag lesen ↗"],
+    ["11 · Vegane Ernährung","Kritische Nährstoffe in veganer Ernährung","Worauf bei einer gut geplanten pflanzlichen Ernährung zu achten ist.","Beitrag lesen ↗"],
+    ["12 · Fettsäuren","Das Omega-3- und Omega-6-Verhältnis","Grundlagen zu Fettsäuren und ihrer Bedeutung in der Ernährung.","Beitrag lesen ↗"]
+  ];
+  cards.forEach((card,i)=>{const d=(next==="en"?enCards:deCards)[i];if(d){card.children[0].textContent=d[0];card.children[1].textContent=d[1];card.children[2].textContent=d[2];card.children[3].textContent=d[3];}});
+  language=next;document.documentElement.lang=next;document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(copy[next][k])el.textContent=copy[next][k]});document.getElementById("langBtn").textContent=next==="de"?"EN":"DE"}
+const blogToggle=document.getElementById("blogToggle");
+const blogCards=[...document.querySelectorAll("#blogCards .card")];
+let blogExpanded=false;
+function updateBlogCards(){
+  blogCards.forEach((card,i)=>card.classList.toggle("blog-card-hidden",!blogExpanded && i>=6));
+  blogToggle.setAttribute("aria-expanded",String(blogExpanded));
+  blogToggle.querySelector("[data-i18n]").textContent=copy[language][blogExpanded?"blogLess":"blogMore"];
+  blogToggle.querySelector(".arrow").textContent=blogExpanded?"↑":"↓";
+}
+blogToggle.addEventListener("click",()=>{blogExpanded=!blogExpanded;updateBlogCards();});
+updateBlogCards();
+document.getElementById("langBtn").addEventListener("click",()=>setLanguage(language==="de"?"en":"de"));
+document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("nav").classList.toggle("open"));
+document.querySelectorAll("nav a").forEach(a=>a.addEventListener("click",()=>document.getElementById("nav").classList.remove("open")));
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+
+<script id="professional-motion-script">
+(function(){
+  const reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) return;
+  document.documentElement.classList.add('motion-ready');
+  const selector='.hero-grid > div,.section-head,.cards .card,.community-card,.contact-grid > div,.about-grid > *,.service-card,.step,.feature-card,.offer-card,.content-card,main > section > .wrap > *';
+  function prepare(root){
+    const nodes=root.querySelectorAll ? root.querySelectorAll(selector) : [];
+    nodes.forEach((el)=>{
+      if(el.hasAttribute('data-reveal')) return;
+      el.setAttribute('data-reveal','');
+      if(el.classList.contains('card') || el.classList.contains('community-card')){
+        const siblings=[...el.parentElement.children].filter(n=>n.matches('.card,.community-card'));
+        el.style.setProperty('--reveal-delay',Math.min(siblings.indexOf(el),5)*85+'ms');
+      }
+    });
+  }
+  prepare(document);
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:.12,rootMargin:'0px 0px -35px 0px'});
+  function observe(root){
+    prepare(root);
+    root.querySelectorAll('[data-reveal]').forEach(el=>observer.observe(el));
+  }
+  observe(document);
+  const mo=new MutationObserver(records=>{
+    records.forEach(r=>r.addedNodes.forEach(n=>{
+      if(n.nodeType===1) observe(n);
+    }));
+  });
+  mo.observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+
+</body></html>

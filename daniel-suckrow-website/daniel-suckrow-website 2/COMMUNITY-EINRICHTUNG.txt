@@ -1,0 +1,33 @@
+COMMUNITY-FUNKTIONEN – EINRICHTUNG
+==================================
+
+Enthaltene Funktionen
+- E-Mail/Passwort-Konten mit E-Mail-Bestätigung (Supabase Auth).
+- Anzeigename und optionales Profilbild.
+- Kommentare mit Konto (Name + Profilbild) oder anonym.
+- Kommentare werden zunächst moderiert (is_approved=false) und erst nach Freigabe öffentlich angezeigt.
+- Likes nur für angemeldete Konten; pro Konto und Artikel ein Like.
+- Optionales Newsletter-Opt-in wird mit Zeitstempel gespeichert.
+
+STATUS: Die Website ist jetzt mit deinem Supabase-Projekt und dem bereitgestellten Publishable Key vorkonfiguriert. Die Datenbanktabellen und Sicherheitsregeln müssen noch einmalig im SQL Editor angelegt werden; danach müssen Auth-URLs eingestellt und die Website neu veröffentlicht werden.
+
+1) Supabase-Projekt erstellen: https://supabase.com/
+2) Im Supabase SQL Editor den vollständigen Inhalt von community/schema.sql ausführen.
+3) In Supabase Authentication > URL Configuration die echte Website-Domain als Site URL und Redirect URL eintragen.
+4) Die Project URL und den Publishable Key sind bereits in community/config.js eingetragen. Der Publishable Key ist für Browser-Apps vorgesehen und darf öffentlich ausgeliefert werden, sofern RLS korrekt aktiviert ist. Niemals einen sb_secret_- oder service_role-Key in die Website schreiben.
+5) Im Supabase SQL Editor den vollständigen Inhalt von community/schema.sql ausführen (falls noch nicht geschehen).
+6) Unter Authentication > URL Configuration die endgültige Website-Adresse als Site URL und passende Redirect URLs eintragen. Bis dahin können lokale Tests über localhost ergänzt werden.
+7) E-Mail-Bestätigung in Supabase Auth aktiviert lassen und E-Mail-Vorlage/Absender konfigurieren.
+8) Website neu bei Netlify veröffentlichen und die Community auf einem veröffentlichten Blogartikel testen.
+
+MODERATION
+Neue Kommentare bleiben standardmäßig unsichtbar (is_approved=false). Zum Freigeben im Supabase Table Editor in public.comments den Wert is_approved für den jeweiligen Kommentar auf true setzen. Vor dem öffentlichen Start sollte ein klarer Moderationsprozess bestehen.
+
+NEWSLETTER
+Das Opt-in wird getrennt vom öffentlichen Profil mit Einwilligungszeitpunkt gespeichert; nur der Kontoinhaber kann seine Präferenz lesen oder ändern. Es versendet noch keine Newsletter. Für echten Versand bitte einen Newsletter-Anbieter (z.B. Brevo oder Mailchimp) mit Double-Opt-in anbinden. Nicht ohne separate Einwilligung importieren/anschreiben. Datenschutztext, Widerruf und Anbieter-Auftragsverarbeitung vor Livegang ergänzen.
+
+DATENSCHUTZ / RECHT
+Vor Livegang Datenschutzerklärung um Supabase, Auth, Speicherung von Kommentaren/Profilbildern, Cookies/Local Storage soweit genutzt, Newsletter-Anbieter und Lösch-/Widerrufswege ergänzen. Eine Rechtsprüfung ist sinnvoll. Anonyme Kommentare können personenbezogene Inhalte enthalten; Moderation und Meldefunktion sollten ergänzt werden, bevor viel Traffic kommt.
+
+HINWEIS ZU PROFILEN
+Der öffentliche Profil-Lesezugriff ist auf Anzeigename und Avatar ausgelegt. In der profiles-Tabelle sollten keine privaten Daten außer den notwendigen Angaben gespeichert werden. E-Mail-Adressen werden nicht öffentlich abgefragt.
