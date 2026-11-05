@@ -7,7 +7,8 @@
   let saved;
   try { saved = localStorage.getItem(storageKey); } catch (_) { /* Storage may be disabled. */ }
   const requested = new URL(location.href).searchParams.get('lang');
-  let language = supported(requested) ? requested : supported(saved) ? saved : 'de';
+  const explicitLanguage = supported(requested) ? requested : supported(saved) ? saved : null;
+  let language = explicitLanguage || 'en';
   if (supported(requested)) { try { localStorage.setItem(storageKey, requested); } catch (_) {} }
   let dictionary = {}, fragments = null, observer, scheduled = false;
   const textState = new WeakMap(), attributeState = new WeakMap();
@@ -97,10 +98,27 @@
     window[method] = message => native(translate(String(message)));
   }
 
-  api.ready = fetch(new URL('locales/en.json', scriptURL)).then(response => {
+  async function getDefaultLanguage() {
+    if (explicitLanguage) return explicitLanguage;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3000);
+    try {
+      const response = await fetch(new URL('/language-default', scriptURL), {
+        cache: 'no-store', signal: controller.signal
+      });
+      if (!response.ok) return 'en';
+      const data = await response.json();
+      return supported(data.language) ? data.language : 'en';
+    } catch (_) { return 'en'; }
+    finally { clearTimeout(timeout); }
+  }
+
+  const translations = fetch(new URL('locales/en.json', scriptURL)).then(response => {
     if (!response.ok) throw new Error('English translations could not be loaded');
     return response.json();
-  }).then(data => {
+  });
+  api.ready = Promise.all([translations, getDefaultLanguage()]).then(([data, initialLanguage]) => {
+    language = initialLanguage;
     dictionary = data;
     const keys = Object.keys(data).filter(key => key !== data[key] && key.length >= 3)
       .sort((a, b) => b.length - a.length);
