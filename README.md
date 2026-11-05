@@ -14,6 +14,12 @@ Beim ersten Besuch bestimmt `netlify/edge-functions/language-default.js` anhand 
 
 `/.netlify/functions/checkout` erstellt und prüft PayPal-Bestellungen serverseitig: Guide 2 EUR (DE/EN), Beratung 50 EUR. PDF-Versand nach bestätigter Zahlung über Resend; Beratung mit Bestätigung an den Käufer und Kopie an info@veganiel.com, Terminvereinbarung anschließend per E-Mail. Der bestehende kostenlose Kennenlernkalender bleibt verfügbar.
 
-Erforderliche geschützte Netlify-Variablen: PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PAYPAL_WEBHOOK_ID, PAYPAL_MODE=live, RESEND_API_KEY, PDF_ENCRYPTION_KEY. Der Webhook abonniert PAYMENT.CAPTURE.COMPLETED. Die verschlüsselten PDFs liegen außerhalb des Publish-Verzeichnisses; der Schlüssel gehört niemals ins Repository. Downloads erfordern eine signierte, zeitlich begrenzte Berechtigung und eine erneut geprüfte Bestellung. Preise werden ausschließlich serverseitig festgelegt. PayPal wird im Browser erst nach aktivem Start geladen.
+Erforderliche geschützte Netlify-Variablen: PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PAYPAL_WEBHOOK_ID, RESEND_API_KEY, PDF_ENCRYPTION_KEY. Der Webhook abonniert PAYMENT.CAPTURE.COMPLETED. Die verschlüsselten PDFs liegen außerhalb des Publish-Verzeichnisses; der Schlüssel gehört niemals ins Repository. Downloads erfordern eine signierte, zeitlich begrenzte Berechtigung und eine erneut geprüfte Bestellung. Preise werden ausschließlich serverseitig festgelegt. PayPal wird im Browser erst nach aktivem Start geladen.
 
 Prüfung: `node --test tests/*.test.cjs`. Ein echter Zahlungstest erfordert die Freigabe durch einen Käufer im PayPal-Checkout.
+
+### PayPal-Modus und Netlify Secret-Scanning
+
+`PAYPAL_MODE` ist eine normale, nicht geheime Umgebungsvariable: `live` für Produktion, `sandbox` für Tests. Beim Anlegen darf „Contains secret values“ hierfür nicht aktiviert werden. Netlify scannt sonst das häufige Wort `live` als vermeintliches Geheimnis und blockiert normale Inhalte. Bei einer bereits als geheim markierten Variable muss diese neu angelegt werden, da Netlify die Kennzeichnung nicht nachträglich ändern lässt.
+
+Der Sicherheitscheck bleibt vollständig aktiv; keine SECRETS_SCAN-Ausnahmen setzen. PAYPAL_CLIENT_SECRET, RESEND_API_KEY und PDF_ENCRYPTION_KEY bleiben geheime serverseitige Variablen. Nur die öffentliche PayPal-Client-ID wird für das Browser-SDK ausgeliefert.
