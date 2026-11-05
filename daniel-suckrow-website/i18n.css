@@ -1,0 +1,11 @@
+.veganiel-language-button{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-width:42px;min-height:42px;padding:8px 10px;border:1px solid #ccd8cc;border-radius:2px;background:transparent;color:#214a37;font:700 13px/1.2 "DM Sans",Arial,sans-serif;cursor:pointer;white-space:nowrap}
+.veganiel-language-button:hover{background:#eaf0e7}
+.veganiel-language-button:focus-visible{outline:3px solid #a88347;outline-offset:3px}
+.veganiel-language-floating{position:fixed;top:16px;right:16px;background:#fcfbf7;z-index:50}
+.english-only{display:none}
+html[lang="en"] .english-only{display:block}
+header .nav>.veganiel-language-button{margin-left:10px}
+@media(max-width:650px){.veganiel-language-button{min-width:38px;min-height:38px;padding:7px;font-size:12px}header .nav{gap:10px}header .nav>.back,header .nav>a:not(.brand){min-width:0}header .nav>.veganiel-language-button{margin-left:0}}
+
+.veganiel-header-actions{display:flex;align-items:center;justify-content:flex-end;gap:14px;min-width:0}
+@media(max-width:650px){.veganiel-header-actions{gap:8px}.veganiel-header-actions>a{min-width:0;font-size:10px;line-height:1.4}.veganiel-header-actions>.veganiel-language-button{margin-left:0}}
