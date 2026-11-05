@@ -1,0 +1,7 @@
+# Keep the existing Netlify publish directory; only configure the payment function.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[functions.checkout]
+  included_files = ["private-products/*.enc"]

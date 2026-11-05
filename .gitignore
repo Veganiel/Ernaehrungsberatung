@@ -1,0 +1,6 @@
+.env
+.env.*
+!.env.example
+*.key
+.netlify/
+node_modules/
