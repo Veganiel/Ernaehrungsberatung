@@ -22,6 +22,8 @@
   const ui = () => document.documentElement.lang === 'de' ? 'de' : 'en';
   const t = key => copy[ui()][key];
   function render() {
+    const cover = document.querySelector('.guide-cover');
+    if (cover) cover.src = ui() === 'en' ? 'longevity-guide-cover-en.png' : 'longevity-guide-cover.png';
     root.querySelectorAll('[data-copy]').forEach(el => { el.textContent = t(el.dataset.copy); });
     if (!selected && !locked) language.value = ui();
     start.disabled = !ready || !consent.checked || locked;
