@@ -28,6 +28,7 @@
 #blog .blog-toggle{border-radius:40px;background:#214a37;color:white;padding:15px 26px;border-color:#214a37}
 #blog .blog-toggle-wrap>a{margin:0!important;font-size:13px}
 .blog-magazine{background:#f6f5ef}
+.blog-magazine header{background:#fbfaf5}
 .blog-magazine main{padding-top:62px}
 .journal-hero{border-bottom:1px solid #d9e1d2;padding:14px 0 42px;max-width:none;margin-bottom:30px;position:relative}
 .journal-hero h1{font-size:clamp(56px,9vw,108px);letter-spacing:-4px;margin:20px 0 22px;line-height:1.02;max-width:780px}

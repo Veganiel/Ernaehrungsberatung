@@ -1,5 +1,15 @@
 (() => {
   'use strict';
+  function articleSlug(href, base) {
+    try {
+      const parts = new URL(href, base).pathname.split('/').filter(Boolean);
+      const blog = parts.indexOf('blog');
+      return blog < 0 ? null : parts[blog + 1] || null;
+    } catch (_) { return null; }
+  }
+  if (typeof module !== 'undefined') module.exports = { articleSlug };
+  if (typeof document === 'undefined') return;
+  const photoBase = new URL('../assets/blog/', document.currentScript.src);
   const archive = document.querySelector('.blog-magazine');
   const grid = document.querySelector(archive ? '.journal-grid' : '#blogCards');
   if (!grid) return;
@@ -87,7 +97,7 @@
   };
   const cards = [...grid.querySelectorAll('.card')];
   cards.forEach((card, index) => {
-    const slug = card.getAttribute('href').split('/')[1];
+    const slug = articleSlug(card.getAttribute('href'), location.href);
     const photo = photos[slug];
     if (!photo) return;
     const theme = photo.theme;
@@ -96,7 +106,7 @@
     cover.className = 'journal-cover';
     cover.setAttribute('aria-hidden', 'true');
     const image = document.createElement('img');
-    image.src = 'assets/blog/' + slug + '.jpg';
+    image.src = new URL(slug + '.jpg', photoBase).href;
     image.alt = ''; // Decorative: the adjoining article heading names the linked content.
     image.width = 1200;
     image.height = 800;
