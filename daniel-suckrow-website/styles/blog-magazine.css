@@ -8,8 +8,8 @@
 .journal-grid .card,#blogCards .card{padding:0;overflow:hidden;border:1px solid #dce2d6;border-radius:16px;background:#fff;display:flex;flex-direction:column;align-items:stretch;min-width:0;min-height:0;box-shadow:0 4px 14px #193e2410;transition:transform .25s,box-shadow .25s}
 .journal-grid .card:hover,#blogCards .card:hover{transform:translateY(-5px);box-shadow:0 20px 38px #193e241a}
 .journal-cover{height:190px;overflow:hidden;position:relative;background:var(--journal-bg,#dce5d5);flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.journal-cover svg{height:100%;width:100%;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-.card:hover .journal-cover svg{transform:scale(1.04)}
+.journal-cover img{height:100%;width:100%;display:block;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.card:hover .journal-cover img{transform:scale(1.04)}
 .journal-body{padding:24px;display:flex;flex:1;flex-direction:column;align-items:flex-start}
 .journal-grid .num,#blogCards .num{font-size:10px;font-weight:700;letter-spacing:1.4px;color:#59715b;text-transform:uppercase}
 .journal-grid .card h3,#blogCards .card h3{font-family:"Playfair Display",serif;color:#214a37;line-height:1.25;letter-spacing:-.4px;font-size:23px;margin:14px 0 12px}
@@ -49,4 +49,4 @@
 :is(.blog-magazine,#blog) :focus-visible{outline:3px solid #b08d47;outline-offset:4px}
 @media(max-width:900px){.journal-grid,#blogCards{grid-template-columns:repeat(2,minmax(0,1fr))}#blogCards .card:first-child{grid-row:auto}#blogCards .card:nth-child(2) .journal-cover,#blogCards .card:nth-child(3) .journal-cover{height:190px}#blogCards .card:nth-child(2) p,#blogCards .card:nth-child(3) p{display:block}}
 @media(max-width:600px){#blog{padding:60px 0}.journal-grid,#blogCards{grid-template-columns:minmax(0,1fr);gap:20px}.journal-grid .card:first-child,#blogCards .card:first-child{grid-column:auto;display:flex}#blogCards .card:first-child .journal-cover,.journal-grid .card:first-child .journal-cover{height:230px;min-height:0}.journal-body,#blogCards .card:first-child .journal-body{padding:23px}.journal-hero h1{letter-spacing:-2px}.journal-toolbar{align-items:stretch}.journal-search{width:100%}#blog .section-head h2{letter-spacing:-1px}.journal-cover{height:190px}}
-@media(prefers-reduced-motion:reduce){.journal-cover svg,.journal-grid .card,#blogCards .card{transition:none}}
+@media(prefers-reduced-motion:reduce){.journal-cover img,.journal-grid .card,#blogCards .card{transition:none}}

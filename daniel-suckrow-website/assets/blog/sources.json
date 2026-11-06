@@ -1,0 +1,186 @@
+{
+  "license": "https://www.pexels.com/license/",
+  "note": "One individual photograph per article. Repeated cards linking to the same article use that article's photo.",
+  "photos": [
+    {
+      "slug": "achtsames-spazieren-im-wald",
+      "id": 27680752,
+      "source": "https://www.pexels.com/photo/27680752/",
+      "file": "achtsames-spazieren-im-wald.jpg",
+      "theme": "nature",
+      "alt": "Ein sonnenbeschienener Weg durch einen grünen Wald",
+      "en": "Sunlight on a path through a green forest"
+    },
+    {
+      "slug": "zusatzstoffe-nahrungsmitteln",
+      "id": 10907746,
+      "source": "https://www.pexels.com/photo/10907746/",
+      "file": "zusatzstoffe-nahrungsmitteln.jpg",
+      "theme": "science",
+      "alt": "Verpackte Lebensmittel in einem Supermarktregal",
+      "en": "Packaged foods on supermarket shelves"
+    },
+    {
+      "slug": "umgang-mit-stress",
+      "id": 4226218,
+      "source": "https://www.pexels.com/photo/4226218/",
+      "file": "umgang-mit-stress.jpg",
+      "theme": "calm",
+      "alt": "Eine Frau macht eine Pause am Laptop",
+      "en": "A woman pausing at her laptop"
+    },
+    {
+      "slug": "darmreinigung-sanierung",
+      "id": 40687784,
+      "source": "https://www.pexels.com/photo/40687784/",
+      "file": "darmreinigung-sanierung.jpg",
+      "theme": "food",
+      "alt": "Gläser mit eingelegtem Gemüse",
+      "en": "Jars of preserved vegetables"
+    },
+    {
+      "slug": "achtsamkeit",
+      "id": 8455499,
+      "source": "https://www.pexels.com/photo/8455499/",
+      "file": "achtsamkeit.jpg",
+      "theme": "nature",
+      "alt": "Eine Frau meditiert am See",
+      "en": "A woman meditating by a lake"
+    },
+    {
+      "slug": "antioxidantien",
+      "id": 22431220,
+      "source": "https://www.pexels.com/photo/22431220/",
+      "file": "antioxidantien.jpg",
+      "theme": "food",
+      "alt": "Frische Heidelbeeren in einer Schale",
+      "en": "Fresh blueberries in a bowl"
+    },
+    {
+      "slug": "omega-3-6-verhaeltnis",
+      "id": 5987873,
+      "source": "https://www.pexels.com/photo/5987873/",
+      "file": "omega-3-6-verhaeltnis.jpg",
+      "theme": "food",
+      "alt": "Leinsamen als pflanzliche Omega-3-Quelle",
+      "en": "Flaxseeds, a plant source of omega-3"
+    },
+    {
+      "slug": "kritische-naehrstoffe-vegan",
+      "id": 9628833,
+      "source": "https://www.pexels.com/photo/9628833/",
+      "file": "kritische-naehrstoffe-vegan.jpg",
+      "theme": "science",
+      "alt": "Eine Fachperson untersucht eine Blutprobe im Labor",
+      "en": "A scientist examining a blood sample"
+    },
+    {
+      "slug": "antiangiogenese",
+      "id": 8442567,
+      "source": "https://www.pexels.com/photo/8442567/",
+      "file": "antiangiogenese.jpg",
+      "theme": "science",
+      "alt": "Eine Wissenschaftlerin untersucht Proben unter dem Mikroskop",
+      "en": "A scientist examining samples with a microscope"
+    },
+    {
+      "slug": "ballaststoffe",
+      "id": 8108181,
+      "source": "https://www.pexels.com/photo/8108181/",
+      "file": "ballaststoffe.jpg",
+      "theme": "food",
+      "alt": "Getreide und Hülsenfrüchte in Schalen",
+      "en": "Grains and legumes in bowls"
+    },
+    {
+      "slug": "karottensaft",
+      "id": 4443513,
+      "source": "https://www.pexels.com/photo/4443513/",
+      "file": "karottensaft.jpg",
+      "theme": "food",
+      "alt": "Frischer Karottensaft wird in ein Glas gegossen",
+      "en": "Fresh carrot juice being poured into a glass"
+    },
+    {
+      "slug": "vitamin-b12",
+      "id": 29041993,
+      "source": "https://www.pexels.com/photo/29041993/",
+      "file": "vitamin-b12.jpg",
+      "theme": "science",
+      "alt": "Vitaminpräparat und Tabletten als Symbolbild zur Supplementierung",
+      "en": "Vitamin bottle and tablets representing supplementation"
+    },
+    {
+      "slug": "diskriminierung",
+      "id": 16682142,
+      "source": "https://www.pexels.com/photo/16682142/",
+      "file": "diskriminierung.jpg",
+      "theme": "calm",
+      "alt": "Eine Kuh auf einer grünen Weide",
+      "en": "A cow in a green pasture"
+    },
+    {
+      "slug": "bioaktive-verbindungen",
+      "id": 4518583,
+      "source": "https://www.pexels.com/photo/4518583/",
+      "file": "bioaktive-verbindungen.jpg",
+      "theme": "science",
+      "alt": "Tofu und Sojabohnen auf einer hellen Fläche",
+      "en": "Tofu and soybeans on a light surface"
+    },
+    {
+      "slug": "veganismus-chancen-herausforderungen",
+      "id": 15062131,
+      "source": "https://www.pexels.com/photo/15062131/",
+      "file": "veganismus-chancen-herausforderungen.jpg",
+      "theme": "food",
+      "alt": "Frisches Gemüse auf einem Marktstand",
+      "en": "Fresh vegetables at a market stall"
+    },
+    {
+      "slug": "telomere",
+      "id": 3825527,
+      "source": "https://www.pexels.com/photo/3825527/",
+      "file": "telomere.jpg",
+      "theme": "science",
+      "alt": "Hände halten ein Molekülmodell im Labor",
+      "en": "Hands holding a molecular model in a laboratory"
+    },
+    {
+      "slug": "supplemente",
+      "id": 29300543,
+      "source": "https://www.pexels.com/photo/29300543/",
+      "file": "supplemente.jpg",
+      "theme": "science",
+      "alt": "Nahrungsergänzungskapseln neben einem Flaschenverschluss",
+      "en": "Supplement capsules beside a bottle cap"
+    },
+    {
+      "slug": "weniger-salz",
+      "id": 4871159,
+      "source": "https://www.pexels.com/photo/4871159/",
+      "file": "weniger-salz.jpg",
+      "theme": "food",
+      "alt": "Verschiedene Kräuter und Gewürze mit Salz",
+      "en": "A selection of herbs, spices and salt"
+    },
+    {
+      "slug": "kritische-naehrstoffe",
+      "id": 13612369,
+      "source": "https://www.pexels.com/photo/13612369/",
+      "file": "kritische-naehrstoffe.jpg",
+      "theme": "food",
+      "alt": "Hülsenfrüchte und Getreide auf einem Markt",
+      "en": "Legumes and grains at a market"
+    },
+    {
+      "slug": "omega-fettsaeuren",
+      "id": 9013291,
+      "source": "https://www.pexels.com/photo/9013291/",
+      "file": "omega-fettsaeuren.jpg",
+      "theme": "food",
+      "alt": "Walnüsse in einer Schale auf einem Holztisch",
+      "en": "Walnuts in a bowl on a wooden table"
+    }
+  ]
+}
