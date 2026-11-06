@@ -11,7 +11,7 @@ function estimate(method,v){
  return finite(n,5,90)?Math.round(n*10)/10:null;
 }
 const reference={male:[[40.1,48,55.2,61.8],[35.9,42.4,49,56.5],[31.9,37.8,45,52.1],[27.1,32.6,39.7,45.6],[23.7,28.2,34.5,40.3],[20.4,24.4,30.4,36.6]],female:[[30.5,37.6,44.7,51.3],[25.3,30.2,36.1,41.4],[22.1,26.7,32.4,38.4],[19.9,23.4,27.6,32],[17.2,20,23.8,27],[15.6,18.3,20.8,23.1]]};
-function classify(value,age,sex){if(!Number.isFinite(value)||!Number.isInteger(age)||age<20||age>79||!['0','1'].includes(String(sex)))return null;const row=reference[sex==='1'?'male':'female'][Math.min(5,Math.max(0,Math.floor(age/10)-2))];const band=row.filter(x=>value>=x).length;const labels=document.documentElement.lang==='en'?['Below average','Average','Good','Very good','Excellent']:['Unterdurchschnittlich','Durchschnittlich','Gut','Sehr gut','Ausgezeichnet'];return {label:labels[Math.min(4,band)],age,sex};}
+function classify(value,age,sex){if(!Number.isFinite(value)||!Number.isInteger(age)||age<20||age>79||!['0','1'].includes(String(sex)))return null;const row=reference[sex==='1'?'male':'female'][Math.min(5,Math.max(0,Math.floor(age/10)-2))];const band=row.filter(x=>value>=x).length;const labels=typeof document!=='undefined'&&document.documentElement.lang==='en'?['Below average','Average','Good','Very good','Excellent']:['Unterdurchschnittlich','Durchschnittlich','Gut','Sehr gut','Ausgezeichnet'];return {label:labels[Math.min(4,band)],age,sex};}
 if(typeof module!=='undefined')module.exports={estimate,classify};
 if(typeof document==='undefined')return;
 window.VeganielCalculators=window.VeganielCalculators||{};window.VeganielCalculators.vo2=estimate;
