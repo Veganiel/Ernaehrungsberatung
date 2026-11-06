@@ -1,6 +1,8 @@
 (function(){'use strict';
 function calculate(height,waist,weight){if(![[height,100,250],[waist,30,250],[weight,25,350]].every(([v,a,b])=>Number.isFinite(v)&&v>=a&&v<=b))return null;const ratio=waist/height,bmi=weight/(height/100)**2;return {ratio,bmi,category:bmi>=35?'highBMI':ratio<.4?'below':ratio<.5?'normal':ratio<.6?'increased':'high'};}
 if(typeof module!=='undefined')module.exports={calculate};if(typeof document==='undefined')return;
+window.VeganielCalculators=window.VeganielCalculators||{};window.VeganielCalculators.waist=calculate;
+if(!document.getElementById('waist-form'))return;
 const f=document.getElementById('waist-form'),r=document.getElementById('result'),err=document.getElementById('error');let current=null;
 const messages={highBMI:'Keine Einordnung bei BMI ab 35. Bitte individuell medizinisch einschätzen lassen.',below:'Unterhalb des hier eingeordneten Bereichs (0,40). Kein pauschales Gesundheitsurteil ableitbar.',normal:'Kein erhöhtes Risiko durch zentrale Fettverteilung nach dieser Einteilung.',increased:'Erhöhtes Risiko durch zentrale Fettverteilung nach dieser Einteilung.',high:'Weiter erhöhtes Risiko durch zentrale Fettverteilung nach dieser Einteilung.'};
 function render(){if(!current)return;const lang=document.documentElement.lang;document.getElementById('ratio').textContent=current.ratio.toLocaleString(lang,{minimumFractionDigits:3,maximumFractionDigits:3});document.getElementById('bmi').textContent=current.bmi.toLocaleString(lang,{minimumFractionDigits:1,maximumFractionDigits:1});}

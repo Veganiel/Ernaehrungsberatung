@@ -12,6 +12,8 @@ function estimate(method,v){
 }
 if(typeof module!=='undefined')module.exports={estimate};
 if(typeof document==='undefined')return;
+window.VeganielCalculators=window.VeganielCalculators||{};window.VeganielCalculators.vo2=estimate;
+if(!document.getElementById('vo2-form'))return;
 const form=document.getElementById('vo2-form'),method=document.getElementById('method'),result=document.getElementById('result'),error=document.getElementById('error');
 method.addEventListener('change',()=>{for(const id of ['cooper','rockport']){const el=document.getElementById(id);el.hidden=el.disabled=id!==method.value;}result.hidden=true;error.hidden=true;});
 form.addEventListener('input',()=>{result.hidden=true;error.hidden=true;});

@@ -15,6 +15,8 @@
   }
   if (typeof module !== 'undefined' && module.exports) module.exports = { calculateZones };
   if (typeof document === 'undefined') return;
+window.VeganielCalculators=window.VeganielCalculators||{};window.VeganielCalculators.heart=calculateZones;
+if(!document.getElementById('heart-form'))return;
   const form = document.getElementById('heart-form');
   form.addEventListener('submit', event => {
     event.preventDefault();
