@@ -113,7 +113,7 @@
     finally { clearTimeout(timeout); }
   }
 
-  const translations = fetch(new URL('locales/en.json', scriptURL)).then(response => {
+  const translations = fetch(new URL('locales/en.json', scriptURL), { cache: 'no-cache' }).then(response => {
     if (!response.ok) throw new Error('English translations could not be loaded');
     return response.json();
   });
