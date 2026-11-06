@@ -43,5 +43,5 @@ function selectSupplements(limit,{winter=false,eggs=false,prices={}}={}){
  return {chosen,base,removed,upgradeCost};
 }
 
-if(typeof module!=='undefined')module.exports={selectSupplements};if(typeof window!=='undefined'){window.VeganielCalculators=window.VeganielCalculators||{};window.VeganielCalculators.supplements=selectSupplements;}
+if(typeof module!=='undefined')module.exports={selectSupplements,supplements};if(typeof window!=='undefined'){window.VeganielCalculators=window.VeganielCalculators||{};window.VeganielCalculators.supplements=selectSupplements;window.VeganielCalculators.supplementItems=supplements;}
 })();
