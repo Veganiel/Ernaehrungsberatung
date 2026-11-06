@@ -43,7 +43,7 @@ exports.handler = async event => {
     if (action === 'create') {
       if (!shop.LANGS.includes(body.lang) || (body.product === 'consulting' ? body.serviceConsent !== true : body.digitalConsent !== true)) return json(400, { error: 'Language and consent required' });
       const product = body.product === 'consulting' ? shop.CONSULTING : shop.PRODUCT;
-      const price = product === shop.CONSULTING ? '50.00' : '2.00';
+      const price = product === shop.CONSULTING ? '79.00' : '2.00';
       const nonce = crypto.randomUUID();
       const order = await shop.paypal('/v2/checkout/orders', 'POST', {
         intent: 'CAPTURE', purchase_units: [{ reference_id: product, custom_id: shop.metadata(body.lang, nonce, product), description: product === shop.CONSULTING ? 'Veganiel Ernährungsberatung / Nutrition consultation' : `Veganiel Longevity & Health Full Protocol · ${body.lang.toUpperCase()} · PDF`, amount: { currency_code: 'EUR', value: price } }],

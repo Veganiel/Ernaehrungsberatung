@@ -61,7 +61,7 @@ function verifyOrder(order) {
   const [product, lang, nonce, signature, extra] = (unit.custom_id || '').split(':');
   const value = `${product}:${lang}:${nonce}`;
   if (extra || ![PRODUCT, CONSULTING].includes(product) || !LANGS.includes(lang) || !nonce || signature !== sign(value)) throw fail(403, 'Wrong product');
-  const price = product === CONSULTING ? '50.00' : '2.00';
+  const price = product === CONSULTING ? '79.00' : '2.00';
   const captures = unit.payments?.captures || [];
   const capture = captures.find(c => c.status === 'COMPLETED');
   if (order.status !== 'COMPLETED' || captures.length !== 1 || !capture || capture.amount?.value !== price || capture.amount?.currency_code !== 'EUR' || unit.amount?.value !== price || unit.amount?.currency_code !== 'EUR') throw fail(409, 'Payment not completed');
@@ -75,9 +75,9 @@ async function deliver(order) {
   if (product === CONSULTING) {
     const english = lang === 'en';
     const text = english
-      ? `Thank you for booking your Veganiel nutrition consultation (€50). Your payment reference: ${capture.id}. Please reply to this email to arrange your appointment and the next steps. Please do not send medical records through PayPal.
+      ? `Thank you for booking your Veganiel nutrition consultation (€79). Your payment reference: ${capture.id}. Please reply to this email to arrange your appointment and the next steps. Please do not send medical records through PayPal.
 Daniel Suckrow · info@veganiel.com`
-      : `Vielen Dank für die Buchung deiner Veganiel-Ernährungsberatung (50 €). Deine Zahlungsreferenz: ${capture.id}. Antworte bitte auf diese E-Mail, um deinen Termin und die nächsten Schritte zu vereinbaren. Bitte sende keine medizinischen Unterlagen über PayPal.
+      : `Vielen Dank für die Buchung deiner Veganiel-Ernährungsberatung (79 €). Deine Zahlungsreferenz: ${capture.id}. Antworte bitte auf diese E-Mail, um deinen Termin und die nächsten Schritte zu vereinbaren. Bitte sende keine medizinischen Unterlagen über PayPal.
 Daniel Suckrow · info@veganiel.com`;
     const response = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json', 'Idempotency-Key': `${CONSULTING}/${capture.id}` }, body: JSON.stringify({ from: 'Veganiel <info@veganiel.com>', to: [email], bcc: ['info@veganiel.com'], reply_to: 'info@veganiel.com', subject: english ? 'Your Veganiel nutrition consultation' : 'Deine Veganiel-Ernährungsberatung', text }), signal: AbortSignal.timeout(15000) });
     if (!response.ok) throw fail(502, 'Email delivery pending');

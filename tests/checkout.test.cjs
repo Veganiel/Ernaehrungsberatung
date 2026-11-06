@@ -90,10 +90,10 @@ test('email failure after completed payment returns a download, never asks for a
     assert.equal(response.statusCode, 200); assert.equal(body.paid, true); assert.equal(body.emailed, false); assert.match(body.downloadUrl, /token=/); assert.equal(captured, false);
   } finally { global.fetch = original; }
 });
-test('consultation requires exactly EUR 50 and sends booking confirmation without a PDF', async () => {
+test('consultation requires exactly EUR 79 and sends booking confirmation without a PDF', async () => {
   const o = order('de');
   o.purchase_units[0].custom_id = shop.metadata('de', 'consultation', shop.CONSULTING);
-  o.purchase_units[0].amount.value = o.purchase_units[0].payments.captures[0].amount.value = '50.00';
+  o.purchase_units[0].amount.value = o.purchase_units[0].payments.captures[0].amount.value = '79.00';
   assert.equal(shop.verifyOrder(o).product, shop.CONSULTING);
   const originalFetch = global.fetch;
   let sent;
