@@ -10,7 +10,7 @@
     <h2>Diskussion & Community</h2><p class="community-intro">Teile deine Gedanken, like den Beitrag oder tausche dich mit anderen aus. Kommentare sind auch ohne Konto möglich.</p>
     <div class="community-user" id="community-user" hidden></div>
     <div class="community-grid">
-      <section class="community-panel" aria-label="Konto und Anmeldung">
+      <section class="community-panel" aria-label="Konto und Anmeldung" hidden>
         <h3 style="margin:0 0 8px">Dein Konto</h3>
         <div id="community-auth">
           <label for="community-email">E-Mail-Adresse</label><input id="community-email" type="email" autocomplete="email" placeholder="name@beispiel.de">
@@ -30,7 +30,7 @@
           <button id="community-save-profile">Profil speichern</button><button id="community-logout" class="secondary">Abmelden</button>
         </div>
         <p class="community-status" id="community-status" role="status" aria-live="polite"></p>
-        <p class="community-small">Für Likes ist ein Konto erforderlich. Kommentare können auch anonym abgegeben werden.</p>
+        <p class="community-small">Likes und Kommentare sind ohne Konto möglich. Kommentare werden vor der Veröffentlichung moderiert.</p>
       </section>
       <section class="community-panel" aria-label="Kommentar schreiben">
         <h3 style="margin:0 0 8px">Kommentar schreiben</h3>
@@ -44,7 +44,9 @@
 
   if (!cfgReady || !window.supabase) { status('Community ist vorbereitet. Für Konten, Likes und Kommentare muss noch ein Supabase-Projekt verbunden werden.'); $('community-login').disabled = true; $('community-register').disabled = true; $('community-send-comment').disabled = true; $('community-like').disabled = true; $('community-comments').innerHTML = '<p class="community-small">Die Community wird nach der technischen Einrichtung verfügbar sein.</p>'; return; }
   const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_PUBLISHABLE_KEY);
-  let currentUser = null, profile = null, liked = false;
+  let currentUser = null, profile = null, liked = false, anonymousLiked = false;
+  const anonymousLikeKey = `veganiel-anonymous-like-${slug}`;
+  try { anonymousLiked = localStorage.getItem(anonymousLikeKey) === '1'; } catch (_) {}
   const initials = name => (name || 'A').trim().split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase();
   const avatar = (url, name) => url ? `<img class="community-avatar" src="${escapeHtml(url)}" alt="Profilbild von ${escapeHtml(name)}">` : `<span class="community-avatar" aria-hidden="true">${escapeHtml(initials(name))}</span>`;
   async function refreshAuth() {
@@ -57,12 +59,12 @@
       $('community-profile-newsletter').checked = !!newsPref?.opted_in;
       $('community-user').innerHTML = `${avatar(profile.avatar_url,profile.display_name)} <span>Angemeldet als <strong>${escapeHtml(profile.display_name)}</strong></span>`;
       $('community-like').disabled = false;
-    } else { profile = null; $('community-like').disabled = true; }
+    } else { profile = null; $('community-like').disabled = false; }
     await refreshLikes();
   }
   async function refreshLikes(){
     const {count} = await sb.from('likes').select('*',{count:'exact',head:true}).eq('article_slug',slug);
-    $('community-like-count').textContent = `${count || 0} Likes`;
+    $('community-like-count').textContent = `${(count || 0) + (!currentUser && anonymousLiked ? 1 : 0)} Likes`;
     if(currentUser){ const {data} = await sb.from('likes').select('id').eq('article_slug',slug).eq('user_id',currentUser.id).maybeSingle(); liked=!!data; }
     else liked=false;
     $('community-like').textContent = liked ? '♥ Gefällt mir' : '♡ Gefällt mir'; $('community-like').setAttribute('aria-pressed',String(liked));
@@ -97,7 +99,7 @@
   $('community-logout').addEventListener('click',async()=>{await sb.auth.signOut();status('Du wurdest abgemeldet.');await refreshAuth();});
   $('community-save-profile').addEventListener('click',async()=>{try{const name=$('community-profile-name').value.trim()||'Mitglied';const url=await uploadAvatar($('community-profile-avatar').files[0]);const opted=$('community-profile-newsletter').checked;const {error}=await sb.from('profiles').upsert({id:currentUser.id,display_name:name,avatar_url:url,updated_at:new Date().toISOString()});if(error){status(error.message);return;}const {error:newsError}=await sb.from('newsletter_subscriptions').upsert({user_id:currentUser.id,opted_in:opted,consent_at:opted?new Date().toISOString():null,updated_at:new Date().toISOString()});status(newsError?newsError.message:'Profil gespeichert.');await refreshAuth();}catch(e){status(e.message);}});
   $('community-send-comment').addEventListener('click',async()=>{const content=$('community-comment-input').value.trim();if(content.length<2){status('Bitte schreibe einen etwas längeren Kommentar.');return;}const name=currentUser?(profile?.display_name||'Mitglied'):($('community-anon-name').value.trim()||'Anonym');const payload={article_slug:slug,content,author_id:currentUser?.id||null,author_name:name,avatar_url:currentUser?profile?.avatar_url||null:null};const {error}=await sb.from('comments').insert(payload);if(error){status(error.message);return;}$('community-comment-input').value='';status('Danke! Dein Kommentar wurde eingesendet und erscheint nach der Freigabe.');});
-  $('community-like').addEventListener('click',async()=>{if(!currentUser){status('Bitte melde dich an, um Beiträge zu liken.');return;}const q=sb.from('likes');const result=liked?await q.delete().eq('article_slug',slug).eq('user_id',currentUser.id):await q.insert({article_slug:slug,user_id:currentUser.id});if(result.error)status(result.error.message);else await refreshLikes();});
+  $('community-like').addEventListener('click',async()=>{if(!currentUser){anonymousLiked=!anonymousLiked;try{if(anonymousLiked)localStorage.setItem(anonymousLikeKey,'1');else localStorage.removeItem(anonymousLikeKey);}catch (_){}$('community-like').textContent=anonymousLiked?'♥ Gefällt dir':'♡ Gefällt mir';$('community-like').setAttribute('aria-pressed',String(anonymousLiked));await refreshLikes();return;}const q=sb.from('likes');const result=liked?await q.delete().eq('article_slug',slug).eq('user_id',currentUser.id):await q.insert({article_slug:slug,user_id:currentUser.id});if(result.error)status(result.error.message);else await refreshLikes();});
   sb.auth.onAuthStateChange(()=>{setTimeout(refreshAuth,0);});
   refreshAuth();loadComments();
 })();
