@@ -14,6 +14,7 @@
 .veganiel-global-header .vn-menu:hover .vn-submenu,.veganiel-global-header .vn-menu:focus-within .vn-submenu,.veganiel-global-header .vn-menu.is-open .vn-submenu{display:block}
 .veganiel-global-header .vn-submenu a{display:block;padding:10px 12px;color:#46574b;text-decoration:none;white-space:nowrap;font:700 12px/1.4 Arial,sans-serif}
 .veganiel-global-header .vn-submenu a:hover,.veganiel-global-header .vn-submenu a:focus-visible{background:#edf3eb;color:#214a37;border-radius:5px}
+.veganiel-global-header .shop-nav-link[hidden]{display:none!important}
 .veganiel-global-header .vn-actions{display:flex;align-items:center;gap:10px}
 .veganiel-global-header .vn-language,.veganiel-global-header .vn-toggle{background:transparent;border:1px solid #c8d5c8;color:#214a37;border-radius:4px;padding:9px 11px;cursor:pointer;font:700 12px/1 Arial,sans-serif;margin:0}
 .veganiel-global-header .vn-toggle{display:none;font-size:19px;padding:5px 10px}
