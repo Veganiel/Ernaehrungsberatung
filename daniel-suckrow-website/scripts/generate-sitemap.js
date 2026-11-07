@@ -1,23 +1,35 @@
-// Finalize canonical URLs, Open Graph URLs, robots.txt and sitemap after the real domain is known.
-// Usage: node scripts/generate-sitemap.js https://www.example.de
-const fs = require('fs'); const path = require('path');
-const base = (process.argv[2] || process.env.SITE_URL || '').replace(/\/$/, '');
-if (!/^https?:\/\//i.test(base)) { console.error('Bitte die endgültige Website-Domain angeben, z. B. https://www.example.de'); process.exit(1); }
+// Generate the sitemap from the public canonical URLs in the HTML.
+const fs = require('node:fs');
+const path = require('node:path');
+
 const root = path.resolve(__dirname, '..');
-const pages = [];
-for (const file of fs.readdirSync(root)) if (file.endsWith('.html') && !['404.html','blog.html'].includes(file)) pages.push({file, route:file === 'index.html' ? '/' : '/' + file});
-const blogRoot = path.join(root,'blog');
-for (const slug of fs.readdirSync(blogRoot)) if (fs.existsSync(path.join(blogRoot,slug,'index.html'))) pages.push({file:path.join('blog',slug,'index.html'), route:'/blog/' + slug + '/'});
-for (const page of pages) {
-  const full = base + page.route; const file = path.join(root,page.file); let html = fs.readFileSync(file,'utf8');
-  html = html.replace(/<link rel="canonical" href="[^"]*">\s*/i,'');
-  html = html.replace(/<meta property="og:url" content="[^"]*">\s*/i,'');
-  html = html.replace(/<meta property="og:image" content="[^"]*">\s*/i,'');
-  const tags = '<link rel="canonical" href="' + full + '">\n<meta property="og:url" content="' + full + '">\n<meta property="og:image" content="' + base + '/daniel-suckrow-portrait.jpg">';
-  html = html.replace('</head>', tags + '\n</head>'); fs.writeFileSync(file,html);
+const base = new URL(process.argv[2] || process.env.SITE_URL || 'https://veganiel.com');
+const output = path.join(root, 'sitemap.xml');
+const previous = fs.existsSync(output) ? fs.readFileSync(output, 'utf8') : '';
+const dates = new Map([...previous.matchAll(/<loc>([^<]+)<\/loc>\s*<lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod>/g)]
+  .map(([, url, date]) => [url, date]));
+const urls = new Set();
+
+for (const entry of fs.readdirSync(root, { recursive: true })) {
+  if (!entry.endsWith('.html')) continue;
+  const html = fs.readFileSync(path.join(root, entry), 'utf8');
+  const head = html.split(/<\/head>/i)[0];
+  if (/<meta\s+name="robots"\s+content="[^"]*\bnoindex\b/i.test(head)) continue;
+  const canonical = head.match(/<link\s+rel="canonical"\s+href="([^"]+)"/i)?.[1];
+  if (!canonical) throw new Error('Missing canonical URL: ' + entry);
+  const url = new URL(canonical);
+  if (url.origin !== base.origin || url.search || url.hash) {
+    throw new Error('Invalid canonical URL: ' + canonical);
+  }
+  urls.add(url.href);
 }
-const urls = pages.map(p => base + p.route).sort();
-const xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls.map(u => '  <url><loc>' + u + '</loc></url>').join('\n') + '\n</urlset>\n';
-fs.writeFileSync(path.join(root,'sitemap.xml'),xml);
-fs.writeFileSync(path.join(root,'robots.txt'),'User-agent: *\nAllow: /\nDisallow: /scripts/\n\nSitemap: ' + base + '/sitemap.xml\n');
-console.log('Canonical-URLs, Social-Metadaten und Sitemap erstellt:', urls.length, 'URLs');
+
+const entries = [...urls].sort().map(url => {
+  const loc = url.replaceAll('&', '&amp;');
+  const lastmod = dates.has(url) ? '<lastmod>' + dates.get(url) + '</lastmod>' : '';
+  return '  <url><loc>' + loc + '</loc>' + lastmod + '</url>';
+});
+fs.writeFileSync(output, '<?xml version="1.0" encoding="UTF-8"?>\n' +
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+  entries.join('\n') + '\n</urlset>\n');
+console.log(entries.length + ' canonical URLs written to sitemap.xml');
