@@ -16,6 +16,8 @@
     ]
   };
 
+  const frontViews = new Set();
+
   const render = () => {
     const en = document.documentElement.lang === 'en';
     for (const [kind, items] of Object.entries(collection)) {
@@ -27,8 +29,10 @@
         const mockup = document.createElement('div');
         mockup.className = 'product-photo';
         const photo = document.createElement('img');
-        photo.src = '/assets/shop/' + kind + (revised ? '-revised' : '') + '.jpg';
-        photo.alt = name + ' · ' + (en ? english : de);
+        const backPhoto = '/assets/shop/' + kind + (revised ? '-revised' : '') + '.jpg';
+        const backAlt = name + ' · ' + (en ? english : de);
+        photo.src = backPhoto;
+        photo.alt = backAlt;
         photo.loading = index < 2 && kind === 'shirts' ? 'eager' : 'lazy';
         photo.style.left = (-100 * index) + '%';
         mockup.append(photo);
@@ -42,6 +46,29 @@
         const description = document.createElement('p');
         description.textContent = en ? english : de;
         info.append(tag, title, description);
+        if (kind === 'hoodies') {
+          const toggle = document.createElement('button');
+          toggle.type = 'button';
+          toggle.className = 'product-view-toggle';
+          const updateView = () => {
+            const front = frontViews.has(name);
+            photo.src = front ? '/assets/shop/hoodies-front.jpg' : backPhoto;
+            photo.alt = front
+              ? name + (en ? ' · Front with small left chest design' : ' · Vorderseite mit kleinem Motiv links auf der Brust')
+              : backAlt;
+            toggle.textContent = front
+              ? (en ? 'Show back' : 'Rückseite ansehen')
+              : (en ? 'Show front' : 'Vorderseite ansehen');
+            toggle.setAttribute('aria-label', toggle.textContent + ' · ' + name);
+          };
+          toggle.addEventListener('click', () => {
+            if (frontViews.has(name)) frontViews.delete(name);
+            else frontViews.add(name);
+            updateView();
+          });
+          updateView();
+          info.append(toggle);
+        }
         card.append(mockup, info);
         return card;
       });
