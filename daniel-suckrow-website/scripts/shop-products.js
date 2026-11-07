@@ -18,10 +18,18 @@
 
   const frontViews = new Set();
 
+  const renderStaticCopy = () => {
+    const language = document.documentElement.lang === 'en' ? 'en' : 'de';
+    document.querySelectorAll('[data-de][data-en]').forEach(element => {
+      element.textContent = element.dataset[language];
+    });
+  };
+
   const render = () => {
     const en = document.documentElement.lang === 'en';
     for (const [kind, items] of Object.entries(collection)) {
       const cards = items.map(([name, de, english, revised], index) => {
+        if (kind === 'hoodies' && index === 0) return null;
         const card = document.createElement('article');
         card.className = 'product';
         card.setAttribute('translate', 'no');
@@ -71,11 +79,16 @@
         }
         card.append(mockup, info);
         return card;
-      });
+      }).filter(Boolean);
       document.getElementById(kind).replaceChildren(...cards);
     }
   };
 
-  document.addEventListener('veganiel:languagechange', render);
+  document.addEventListener('veganiel:languagechange', () => {
+    renderStaticCopy();
+    render();
+  });
+  window.VeganielI18n?.ready.then(renderStaticCopy);
+  renderStaticCopy();
   render();
 })();
