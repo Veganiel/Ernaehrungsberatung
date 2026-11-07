@@ -1,0 +1,48 @@
+(() => {
+  const script = document.currentScript;
+  const base = new URL('../', script.src);
+  const page = path => new URL(path, base).href;
+  const header = document.querySelector('body > header');
+  if (!header) return;
+  header.className = 'veganiel-global-header';
+  header.innerHTML = `<div class="vn-inner"><a class="vn-brand" href="${page('index.html')}"><img src="${page('veganiel-logo-192.png')}" alt="" width="42" height="42"><span class="vn-brand-text">Veganiel<small>Daniel Suckrow</small></span></a><nav class="vn-links" id="veganiel-global-links" aria-label="Main navigation"><a href="${page('angebot.html')}" data-vn-de="Beratung" data-vn-en="Consulting">Beratung</a><div class="vn-menu"><button type="button" aria-expanded="false" data-vn-de="Wissen" data-vn-en="Knowledge">Wissen</button><div class="vn-submenu"><a href="${page('longevity.html')}">Longevity</a><a href="${page('challenges.html')}">Challenges</a><a href="${page('quiz.html')}" data-vn-de="Quizwelt" data-vn-en="Quiz world">Quizwelt</a></div></div><div class="vn-menu"><button type="button" aria-expanded="false" data-vn-de="Rechner" data-vn-en="Calculators">Rechner</button><div class="vn-submenu"><a href="${page('gesundheits-check.html')}" data-vn-de="Gesundheits-Check" data-vn-en="Health check">Gesundheits-Check</a><a href="${page('supplement-rechner.html')}" data-vn-de="Supplement-Rechner" data-vn-en="Supplement calculator">Supplement-Rechner</a><a href="${page('herzfrequenz-rechner.html')}" data-vn-de="Herzfrequenz-Zonen-Rechner" data-vn-en="Heart-rate zone calculator">Herzfrequenz-Zonen-Rechner</a><a href="${page('vo2max-rechner.html')}" data-vn-de="VO₂max-Rechner" data-vn-en="VO₂max calculator">VO₂max-Rechner</a><a href="${page('taille-rechner.html')}" data-vn-de="Taille-Größe-Rechner (BMI)" data-vn-en="Waist-to-height calculator (BMI)">Taille-Größe-Rechner (BMI)</a></div></div><a href="${page('ueber-mich.html')}" data-vn-de="Über mich" data-vn-en="About me">Über mich</a><a href="${page('blog-uebersicht.html')}">Blog</a></nav><div class="vn-actions"><button class="vn-language" id="langBtn" type="button" aria-label="Switch language">EN</button><button class="vn-toggle" type="button" aria-label="Menü öffnen" aria-controls="veganiel-global-links" aria-expanded="false">☰</button></div></div>`;
+  const nav = header.querySelector('.vn-links');
+  const toggle = header.querySelector('.vn-toggle');
+  const languageButton = header.querySelector('.vn-language');
+  const updateLanguage = () => {
+    const lang = document.documentElement.lang === 'en' ? 'en' : 'de';
+    header.querySelectorAll('[data-vn-de]').forEach(el => { el.textContent = el.getAttribute(`data-vn-${lang}`); });
+    languageButton.textContent = lang === 'en' ? 'DE' : 'EN';
+    languageButton.setAttribute('aria-label', lang === 'en' ? 'Auf Deutsch wechseln' : 'Switch to English');
+    nav.setAttribute('aria-label', lang === 'en' ? 'Main navigation' : 'Hauptnavigation');
+  };
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  nav.addEventListener('click', event => {
+    if (event.target.closest('a')) {
+      nav.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+  header.querySelectorAll('.vn-menu>button').forEach(button => button.addEventListener('click', () => {
+    const menu = button.parentElement;
+    const open = menu.classList.toggle('is-open');
+    button.setAttribute('aria-expanded', String(open));
+    header.querySelectorAll('.vn-menu').forEach(other => {
+      if (other !== menu) {
+        other.classList.remove('is-open');
+        other.querySelector('button').setAttribute('aria-expanded', 'false');
+      }
+    });
+  }));
+  languageButton.addEventListener('click', () => {
+    const next = document.documentElement.lang === 'en' ? 'de' : 'en';
+    if (window.VeganielI18n) window.VeganielI18n.setLanguage(next);
+    else document.documentElement.lang = next;
+    updateLanguage();
+  });
+  document.addEventListener('veganiel:languagechange', updateLanguage);
+  updateLanguage();
+})();

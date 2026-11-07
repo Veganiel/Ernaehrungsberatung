@@ -141,7 +141,7 @@
     button.type = 'button';
     button.classList.add('veganiel-language-button');
     button.setAttribute('translate', 'no');
-    button.addEventListener('click', () => setLanguage(language === 'de' ? 'en' : 'de'));
+    if (!button.classList.contains('vn-language')) button.addEventListener('click', () => setLanguage(language === 'de' ? 'en' : 'de'));
     render();
     observer = new MutationObserver(() => {
       if (scheduled) return;
