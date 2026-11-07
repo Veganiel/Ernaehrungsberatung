@@ -46,7 +46,32 @@ const source=document.getElementById('sources');source.replaceChildren(el('h2',t
 for(const [name,url] of [['FRIEND 2015 · VO₂max-Referenzwerte / Reference values','https://pmc.ncbi.nlm.nih.gov/articles/PMC4919021/'],['WHO · Bewegung / Activity','https://www.who.int/initiatives/behealthy/physical-activity'],['CDC · Schlaf / Sleep','https://www.cdc.gov/heart-disease/about/sleep-and-heart-health.html'],['WHO · Ernährung / Diet','https://www.who.int/news-room/fact-sheets/detail/healthy-diet'],['NHS · Vegan & B12','https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/the-vegan-diet/'],['NHS · B12: Diagnostik / Diagnosis','https://www.nhs.uk/conditions/vitamin-b12-or-folate-deficiency-anaemia/diagnosis/'],['WHO · Stress','https://www.who.int/news-room/questions-and-answers/item/stress'],['WHO · Alkohol / Alcohol','https://www.who.int/news-room/fact-sheets/detail/alcohol'],['WHO · Tabak / Tobacco','https://www.who.int/news-room/fact-sheets/detail/tobacco'],[t('Taille: Methode & Quellen','Waist: method & sources'),'taille-rechner.html'],[t('VO₂max: Methoden & Quellen','VO₂max: methods & sources'),'vo2max-rechner.html'],[t('Herzfrequenz: Methode & Quellen','Heart rate: method & sources'),'herzfrequenz-rechner.html'],[t('Supplement-Preise & Annahmen','Supplement prices & assumptions'),'supplement-rechner.html']]){const a=el('a',name);a.href=url;a.target='_blank';a.rel='noopener noreferrer';source.append(a);}sync();}
 const cooperNoteDe='Cooper: Laufe nach dem Aufwärmen genau 12 Minuten lang so schnell bzw. so weit wie du kannst. Miss die gesamte Strecke und trage anschließend die zurückgelegten Meter ein. Es geht nicht darum, eine Zielzeit für eine bestimmte Strecke einzugeben. Nur bereits vorliegende Testwerte verwenden; keine Aufforderung zu einem maximalen Belastungstest.';
 const cooperNoteEn='Cooper: after warming up, run for exactly 12 minutes as fast or as far as you can. Measure the total distance and then enter the metres covered. You do not enter a target time for a set distance. Use existing test results only; this is not an instruction to perform a maximal exercise test.';
-function sync(){const method=document.getElementById('method').value;for(const id of ['distance','sex','minutes','seconds','pulse']){const input=document.getElementById(id);const active=id==='sex'?['cooper','rockport'].includes(method):id==='distance'?method==='cooper':method==='rockport';input.disabled=!active;input.parentElement.hidden=!active;}const enduranceNote=document.querySelector('[data-group="1"] .note');if(enduranceNote)enduranceNote.textContent=method==='cooper'?t(cooperNoteDe,cooperNoteEn):'';const b=document.getElementById('b12');b.disabled=document.getElementById('diet').value!=='vegan';b.parentElement.hidden=b.disabled;const follow=document.getElementById('deficiencies');follow.disabled=document.getElementById('bloodTests').value!=='yes';follow.parentElement.hidden=follow.disabled;}
+const rockportNoteDe='Rockport-Gehtest: Gehe 1.609 Meter (1 Meile) auf einer ebenen, abgemessenen Strecke so zügig wie möglich, ohne zu joggen. Stoppe deine Gehzeit und miss deinen Puls direkt im Ziel. Trage die Zeit in Minuten und zusätzlichen Sekunden (auch 0) sowie den Endpuls in Schlägen pro Minute ein. Für die Schätzung nutzt der Rechner außerdem dein Alter (30–69 Jahre), dein Gewicht und die Geschlechtskategorie.';
+const rockportNoteEn='Rockport walk test: Walk 1,609 metres (1 mile) on a flat, measured course as briskly as possible without jogging. Time the walk and record your heart rate immediately at the finish. Enter your time in minutes and additional seconds (enter 0 if needed), plus your finishing heart rate in beats per minute. The estimate also uses your age (30–69 years), weight and sex category.';
+function sync(){
+  const methodInput=document.getElementById('method');
+  const method=methodInput.value;
+  for(const id of ['distance','sex','minutes','seconds','pulse']){
+    const input=document.getElementById(id);
+    const active=id==='sex'?['cooper','rockport'].includes(method):id==='distance'?method==='cooper':method==='rockport';
+    input.disabled=!active;
+    input.parentElement.hidden=!active;
+  }
+  const enduranceNote=methodInput.closest('details').querySelector('.note');
+  const guidance=method==='cooper'?t(cooperNoteDe,cooperNoteEn):method==='rockport'?t(rockportNoteDe,rockportNoteEn):'';
+  enduranceNote.id='endurance-method-note';
+  enduranceNote.classList.add('method-note');
+  enduranceNote.hidden=!guidance;
+  if(enduranceNote.textContent!==guidance)enduranceNote.textContent=guidance;
+  if(guidance)methodInput.setAttribute('aria-describedby',enduranceNote.id);
+  else methodInput.removeAttribute('aria-describedby');
+  const b=document.getElementById('b12');
+  b.disabled=document.getElementById('diet').value!=='vegan';
+  b.parentElement.hidden=b.disabled;
+  const follow=document.getElementById('deficiencies');
+  follow.disabled=document.getElementById('bloodTests').value!=='yes';
+  follow.parentElement.hidden=follow.disabled;
+}
 function read(){const d={};for(const f of fields){const input=document.getElementById(f.id);d[f.id]=input.disabled||input.value===''?null:f.options?input.value:Number(input.value);}return d;}
 function report(d,a){const area=document.getElementById('analysis');area.replaceChildren(el('div',t('Dein persönlicher Überblick','Your personal overview'),'eyebrow'),el('h2',t('Werte verstehen. Nächste Schritte finden.','Understand your results. Find your next steps.')),el('p',t('Diese regelbasierte Übersicht verbindet deine Angaben. Sie kann Erkrankungen weder erkennen noch ausschließen. Ausdauerwerte gleichen Risiken durch Rauchen oder Alkohol nicht aus.','This rules-based overview connects your inputs. It cannot detect or rule out disease. Fitness results do not cancel out risks from smoking or alcohol.'),'note'));const focus=el('div',undefined,'focus');focus.append(el('h3',t('Deine nächsten Schritte','Your next steps')));const priorities=el('ul');focus.append(priorities);area.append(focus);const cards=el('div',undefined,'cards');area.append(cards);let count=0;
 const next=(de,en)=>{count++;priorities.append(el('li',t(de,en)));};const card=(title,metric,text,status='')=>{const n=el('article',undefined,'result-card');if(status)n.append(el('div',status,'tag'));n.append(el('h3',title));if(metric)n.append(el('div',metric,'metric'));n.append(el('p',text));cards.append(n);return n;};const unknown=t('Nicht beurteilbar','Not assessed'),num=(v,n=1)=>v.toLocaleString(lang,{minimumFractionDigits:n,maximumFractionDigits:n});
