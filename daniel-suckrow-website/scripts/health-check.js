@@ -86,6 +86,13 @@ function report(d,a){const area=document.getElementById('analysis');area.replace
 const next=(de,en)=>{count++;priorities.append(el('li',t(de,en)));};const card=(title,metric,text,status='')=>{const n=el('article',undefined,'result-card');if(status)n.append(el('div',status,'tag'));n.append(el('h3',title));if(metric)n.append(el('div',metric,'metric'));n.append(el('p',text));cards.append(n);return n;};const unknown=t('Nicht beurteilbar','Not assessed'),num=(v,n=1)=>v.toLocaleString(lang,{minimumFractionDigits:n,maximumFractionDigits:n});
 const score=el('section',undefined,'focus habit-score');score.append(el('h3',t('Dein Gewohnheiten-Score','Your habits score')),el('div',a.score.value==null?'— / 100':a.score.value+' / 100','metric'));
 if(a.score.value!=null){const meter=el('meter');meter.min=0;meter.max=100;meter.value=a.score.value;meter.setAttribute('aria-label',t('Gewohnheiten-Score','Habits score'));score.append(meter);}
+if(a.score.value!=null&&a.score.value<=50){
+  const support=el('div',undefined,'result-encouragement');
+  support.append(el('strong',t('Ein kleiner Schritt reicht für den Anfang','One small step is enough to start')),
+    el('p',t('Manche Gewohnheiten sind im Alltag schwerer umzusetzen als andere. Such dir aus den Vorschlägen unten einen Schritt aus, der gerade machbar ist. Du musst nicht alles auf einmal ändern.',
+      'Some habits are harder to fit into everyday life than others. Pick one suggestion below that feels manageable right now. You don’t have to change everything at once.')));
+  score.append(support);
+}
 score.append(el('p',t('Die Skala reicht von 0 bis 100. Sie zeigt, wie deine Angaben nach den Regeln dieses Rechners bewertet werden.','The 0–100 scale shows how your answers score under this calculator’s rules.')),el('p',t('Redaktioneller, nicht medizinisch validierter Orientierungswert: Acht Kriterien zählen je 0 oder 10 Punkte. Für Alkohol und Zigaretten starten wir mit je 10 Punkten und ziehen abhängig von der Menge Punkte ab. Die Schwellen sind Rechenregeln und keine gesundheitlich sicheren Mengen. Bluttests, Supplements, Stress und Körpermaße geben keine Bonuspunkte. VO₂max erhält einen separat ausgewiesenen Fitnessbonus.','Editorial guidance score, not medically validated: Eight criteria contribute 0 or 10 points each. Alcohol and cigarettes each start at 10 points, with deductions based on amount. These are scoring rules and do not define safe levels. Blood tests, supplements, stress and body measurements do not add bonus points. VO₂max receives a separately displayed fitness bonus.'),'note'));
 if(a.score.value==null)score.append(el('p',a.restricted?t('Für deinen Anwendungskontext wird kein allgemeiner Score vergeben.','No general score is assigned for your eligibility context.'):t('Für einen Score fehlen noch Angaben: ','More information is needed for a score: ')+(10-a.score.answered)+' / 10. '+t('Fehlende Antworten zählen nicht als null Punkte.','Missing answers do not count as zero points.')));
 const fitness=el('div',undefined,'fitness-bonus');fitness.append(el('h3',t('VO₂max-Fitnessbonus','VO₂max fitness bonus')),el('div',a.fitness?'+'+a.fitness.points+' / 30':t('Nicht bewertet','Not assessed'),'metric'));
@@ -107,6 +114,9 @@ const voCard=card('VO₂max',a.vo2==null?'—':num(a.vo2)+' ml/kg/min',
   a.vo2==null?unknown:t('Feldtest-Schätzung','Field-test estimate'));
 if(a.fitness){
   voCard.append(el('p',t('Deine ungefähre Einordnung: ','Your approximate ranking: ')+rankingText(a.fitness,lang),'vo2-ranking'));
+  const support=el('div',undefined,'result-encouragement');
+  C.showVo2Encouragement(support,a.fitness,lang);
+  if(!support.hidden)voCard.append(support);
   voCard.append(el('p',t('Der Vergleich beruht auf US-Labortests der FRIEND-Studie von 2015. Dein Wert stammt aus einem Feldtest, deshalb ist die Einordnung nur ungefähr.',
     'The comparison uses US laboratory tests from the 2015 FRIEND study. Your value comes from a field test, so this ranking is approximate.'),'note'));
 }else if(a.vo2!=null){

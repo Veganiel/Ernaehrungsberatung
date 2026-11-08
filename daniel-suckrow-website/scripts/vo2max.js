@@ -35,13 +35,25 @@ function rankingText(rating,lang){
   if(lang==='en')return (rating.band===0?'Bottom ':'Top ')+percent+'% of your age group ('+(rating.sex==='1'?'men':'women')+', ages '+ages+').';
   return (rating.band===0?'Untere ':'Top ')+percent+' % deiner Altersgruppe ('+(rating.sex==='1'?'Männer':'Frauen')+', '+ages+' Jahre).';
 }
+function showVo2Encouragement(container,rating,lang){
+  container.replaceChildren();
+  container.hidden=!rating||rating.band>=2;
+  if(container.hidden)return;
+  const title=document.createElement('strong');
+  title.textContent=lang==='en'?'Start where you are':'Du darfst da anfangen, wo du gerade stehst';
+  const message=document.createElement('p');
+  message.textContent=lang==='en'
+    ? 'This estimate is a snapshot. Give yourself time to find a kind of movement you enjoy. If it feels right for you, start with a short walk at your own pace. There’s no need to catch up with anyone.'
+    : 'Dein geschätzter Wert ist eine Momentaufnahme. Lass dir Zeit, eine Bewegung zu finden, die dir Freude macht. Wenn es für dich passt, fang mit einem kurzen Spaziergang in deinem Tempo an. Du musst niemanden einholen.';
+  container.append(title,message);
+}
 if(typeof module!=='undefined')module.exports={estimate,classify,rankingText};
 if(typeof document==='undefined')return;
-window.VeganielCalculators=window.VeganielCalculators||{};window.VeganielCalculators.vo2=estimate;window.VeganielCalculators.vo2Classify=classify;window.VeganielCalculators.vo2RankingText=rankingText;
+window.VeganielCalculators=window.VeganielCalculators||{};window.VeganielCalculators.vo2=estimate;window.VeganielCalculators.vo2Classify=classify;window.VeganielCalculators.vo2RankingText=rankingText;window.VeganielCalculators.showVo2Encouragement=showVo2Encouragement;
 if(!document.getElementById('vo2-form'))return;
 const form=document.getElementById('vo2-form'),method=document.getElementById('method'),result=document.getElementById('result'),error=document.getElementById('error');
 method.addEventListener('change',()=>{for(const id of ['cooper','rockport']){const el=document.getElementById(id);el.hidden=el.disabled=id!==method.value;}result.hidden=true;error.hidden=true;});
 form.addEventListener('input',()=>{result.hidden=true;error.hidden=true;});
 form.addEventListener('invalid',()=>{result.hidden=true;error.hidden=false;},true);
-form.addEventListener('submit',e=>{e.preventDefault();const v={};for(const [k,x] of new FormData(form))v[k]=x.trim()===''?NaN:Number(x);const n=estimate(method.value,v),rating=classify(n,v.age,String(v.sex));error.hidden=n!==null;result.hidden=n===null;if(n!==null){document.getElementById('value').textContent=n.toLocaleString(document.documentElement.lang,{minimumFractionDigits:1});document.getElementById('used').textContent=(method.value==='cooper'?'Cooper · 12 min':'Rockport · 1 mi');document.getElementById('rating').textContent=rating?rankingText(rating,document.documentElement.lang):(document.documentElement.lang==='en'?'No age- and sex-specific comparison available.':'Keine alters- und geschlechtsbezogene Einordnung verfügbar.');}});
+form.addEventListener('submit',e=>{e.preventDefault();const v={};for(const [k,x] of new FormData(form))v[k]=x.trim()===''?NaN:Number(x);const n=estimate(method.value,v),rating=classify(n,v.age,String(v.sex));error.hidden=n!==null;result.hidden=n===null;showVo2Encouragement(document.getElementById('vo2-encouragement'),rating,document.documentElement.lang);if(n!==null){document.getElementById('value').textContent=n.toLocaleString(document.documentElement.lang,{minimumFractionDigits:1});document.getElementById('used').textContent=(method.value==='cooper'?'Cooper · 12 min':'Rockport · 1 mi');document.getElementById('rating').textContent=rating?rankingText(rating,document.documentElement.lang):(document.documentElement.lang==='en'?'No age- and sex-specific comparison available.':'Keine alters- und geschlechtsbezogene Einordnung verfügbar.');}});
 })();

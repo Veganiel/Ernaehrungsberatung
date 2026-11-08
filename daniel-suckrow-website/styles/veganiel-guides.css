@@ -248,3 +248,13 @@
 @media print {
   .calculator-edition .calculator-hero { display: none; }
 }
+
+.result-encouragement {
+  margin-block: 16px;
+  padding: 16px 18px;
+  background: #f7f5e9;
+  color: #254735;
+  border: 1px solid #d9dfcd;
+  border-radius: 12px;
+}
+.result-encouragement p { margin: 6px 0 0; }
