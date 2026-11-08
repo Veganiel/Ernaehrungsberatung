@@ -1,0 +1,15 @@
+{
+  "asset": "assets/home/nourish-1120.webp",
+  "responsiveVariant": "assets/home/nourish-640.webp",
+  "created": "2026-11-08",
+  "method": "Built-in image_gen image generation; resized and encoded as WebP for the website.",
+  "prompt": "Use case: photorealistic-natural. Asset type: premium nutrition counselling website hero photograph, portrait 4:5 composition, high resolution. Create an extraordinary editorial still-life photograph for a sophisticated plant-forward nutrition brand. A large handmade off-white shallow ceramic bowl of vibrant plant-based food: earthy chickpeas, fresh arugula, green edamame, delicately fanned avocado, segments of blood orange, thin magenta radicchio, toasted pumpkin seeds, fresh herbs, a little quinoa. Art-directed but appetizing and realistic, not overfilled or arranged like concentric rainbow rings. Bowl slightly right of center and occupies about 70 percent of the frame. A beautifully textured dark forest green tabletop, pale olive folded linen partly beneath bowl at lower left, one loose blood orange half near upper left, one fine olive branch near lower right. Camera overhead with a slight angle, macro details, directional Mediterranean morning sunlight from top left creating tangible soft shadows. Natural tactile materials, elegant and warm, restrained high-end Kinfolk food magazine photography. Strong forest green and pistachio against orange and cream. No people, no writing, no logos, no watermarks, no collage, no UI. The bowl and all key ingredients fully visible with breathing room around the edge. It must feel like one genuinely beautiful photograph, not a stock food spread.",
+  "portrait": {
+    "source": "daniel-suckrow-portrait.jpg",
+    "outputs": [
+      "assets/home/daniel-portrait.webp",
+      "assets/home/daniel-avatar.webp"
+    ],
+    "method": "Existing photograph, resized and encoded; identity and content unaltered."
+  }
+}
