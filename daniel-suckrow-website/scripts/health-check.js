@@ -1,6 +1,7 @@
 /* Inputs stay in this page's memory. No storage, analytics, requests or medical health score. */
 (function(){'use strict';
 const C=typeof window!=='undefined'?window.VeganielCalculators:{heart:require('./heart-rate.js').calculateZones,vo2:require('./vo2max.js').estimate,waist:require('./waist.js').calculate,supplements:require('./supplement-core.js').selectSupplements};
+const {classify:classifyVo2,rankingText}=typeof document==='undefined'?require('./vo2max.js'):{classify:C.vo2Classify,rankingText:C.vo2RankingText};
 const N=(id,de,en,min,max,step=1)=>({id,de,en,min,max,step});
 const S=(id,de,en,options)=>({id,de,en,options});
 const yesno=[['no','Nein','No'],['yes','Ja','Yes']];
@@ -34,17 +35,13 @@ return {items,answered,total:items.length,alcoholDeduction,cigaretteDeduction,
   value:answered===items.length&&d.context==='general'?Math.max(0,points):null};
 
 }
-// FRIEND 2015, Table 3, treadmill CPX: P25, P50, P75, P90; ages 20–79.
-// Editorial points are separate from published reference data and are not clinically validated.
-const fitnessReference={
-'1':[[40.1,48,55.2,61.8],[35.9,42.4,49.2,56.5],[31.9,37.8,45,52.1],[27.1,32.6,39.7,45.6],[23.7,28.2,34.5,40.3],[20.4,24.4,30.4,36.6]],
-'0':[[30.5,37.6,44.7,51.3],[25.3,30.2,36.1,41.4],[22.1,26.7,32.4,38.4],[19.9,23.4,27.6,32],[17.2,20,23.8,27],[15.6,18.3,20.8,23.1]]};
-// FRIEND 2015, Table 3: P95 by age decade, 20–29 through 70–79.
-const fitnessTopFive = {
-  '1': [66.3, 59.8, 55.6, 50.7, 43, 39.7],
-  '0': [56, 45.8, 41.7, 35.9, 29.4, 24.1]
-};
-function fitnessBonus(value,age,sex){if(!Number.isFinite(value)||value<=0||!Number.isInteger(age)||age<20||age>79||!['0','1'].includes(sex))return null;const index=Math.floor(age/10)-2,thresholds=fitnessReference[sex][index];const band=thresholds.filter(x=>value>=x).length;const referencePoints=band*5,extra=value>=60?10:value>=50?5:0;return {topFive:value>=fitnessTopFive[sex][index],points:referencePoints+extra,referencePoints,extra,band,thresholds,ageFrom:(index+2)*10,ageTo:(index+2)*10+9};}
+function fitnessBonus(value,age,sex){
+  const comparison=classifyVo2(value,age,sex);
+  if(!comparison)return null;
+  const referencePoints=comparison.band*5;
+  const extra=value>=60?10:value>=50?5:0;
+  return {...comparison,points:referencePoints+extra,referencePoints,extra};
+}
 function analyze(d,month=new Date().getMonth()){const errors=validate(d);if(errors.length)return {errors};const restricted=d.context!=='general';const pulseAllowed=!restricted&&d.medical==='no';const result={errors:[],restricted,pulseAllowed,score:habitScore(d),heart:pulseAllowed?C.heart(d.age,d.rest??null,d.max??null):null,waist:!restricted&&[d.height,d.weight,d.waist].every(Number.isFinite)?C.waist(d.height,d.waist,d.weight):null,vo2:pulseAllowed?(d.method==='cooper'&&Number.isFinite(d.distance)?C.vo2('cooper',{distance:d.distance}):d.method==='rockport'&&[d.weight,d.minutes,d.seconds,d.pulse].every(Number.isFinite)&&['0','1'].includes(d.sex)?C.vo2('rockport',{age:d.age,weight:d.weight,sex:Number(d.sex),minutes:d.minutes,seconds:d.seconds,pulse:d.pulse}):null):null,supplements:Number.isFinite(d.budget)?{budget:d.budget,winter:[10,11,0,1,2].includes(month),...C.supplements(d.budget,{winter:[10,11,0,1,2].includes(month),eggs:false,prices:{}})}:null,activity:[d.moderate,d.vigorous].every(Number.isFinite)?d.moderate+2*d.vigorous:null};result.fitness=fitnessBonus(result.vo2,d.age,d.sex);result.totalPoints=result.score.value==null?null:result.score.value+(result.fitness?.points??0);return result;}
 if(typeof module!=='undefined')module.exports={analyze,validate,habitScore,fitnessBonus};if(typeof document==='undefined')return;
 let lang=document.documentElement.lang==='de'?'de':'en',last=null;const form=document.getElementById('health-form');const t=(de,en)=>lang==='de'?de:en;const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
@@ -109,12 +106,7 @@ const voCard=card('VO₂max',a.vo2==null?'—':num(a.vo2)+' ml/kg/min',
     'VO₂max shows how much oxygen your body can use during very hard exercise. A higher value usually means better endurance. The unit tells you how much oxygen you use per minute per kilogram of body weight.'),
   a.vo2==null?unknown:t('Feldtest-Schätzung','Field-test estimate'));
 if(a.fitness){
-  const ranges=[['Untere 25 %','Bottom 25%'],['Top 50–75 %','Top 50–75%'],['Top 25–50 %','Top 25–50%'],['Top 10–25 %','Top 10–25%'],['Top 5–10 %','Top 5–10%']];
-  const ranking=a.fitness.topFive?t('Top 5 %','Top 5%'):t(...ranges[a.fitness.band]);
-  const group=t(d.sex==='1'?'Männer':'Frauen',d.sex==='1'?'Men':'Women');
-  const ageRange=a.fitness.ageFrom+'–'+a.fitness.ageTo;
-  voCard.append(el('p',t(`Deine ungefähre Einordnung: ${ranking} deiner Altersgruppe (${group}, ${ageRange} Jahre).`,
-    `Your approximate ranking: ${ranking} of your age group (${group}, ages ${ageRange}).`),'vo2-ranking'));
+  voCard.append(el('p',t('Deine ungefähre Einordnung: ','Your approximate ranking: ')+rankingText(a.fitness,lang),'vo2-ranking'));
   voCard.append(el('p',t('Der Vergleich beruht auf US-Labortests der FRIEND-Studie von 2015. Dein Wert stammt aus einem Feldtest, deshalb ist die Einordnung nur ungefähr.',
     'The comparison uses US laboratory tests from the 2015 FRIEND study. Your value comes from a field test, so this ranking is approximate.'),'note'));
 }else if(a.vo2!=null){
