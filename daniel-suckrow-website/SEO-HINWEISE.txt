@@ -17,12 +17,11 @@ Noch domainabhaengig:
 1. Die endgültige Domain mitteilen. Danach Canonical-URLs, absolute Social-Sharing-Bild-URLs und sitemap.xml final erzeugen.
 2. Nach Veröffentlichung Google Search Console einrichten und sitemap.xml einreichen.
 3. Google Unternehmensprofil nur einrichten, wenn die realen Voraussetzungen (persönlicher Kundenkontakt und zulässige Geschäftsadresse/Servicegebiet) erfüllt sind.
-4. Impressum und Datenschutzerklärung vor Veröffentlichung rechtlich prüfen und vollständige Kontaktdaten ergänzen.
+4. Impressum und Datenschutzerklärung bei Änderungen an Diensten, Kontaktdaten oder Recht prüfen und aktualisieren.
 
 SEO ist keine Garantie für Platz 1. Gute, eigenständige und verlässliche Inhalte sowie eine technisch zugängliche Website sind entscheidend.
 
 
-WICHTIG VOR DEM LIVEGANG:
-- Im Footer der Startseite sind Impressum/Datenschutz noch Platzhalter. Vollständige rechtliche Seiten fehlen im Paket. Bitte nicht als fertige rechtssichere Website veröffentlichen, bevor diese ergänzt und geprüft sind.
-- Die endgültige Domain wurde noch nicht mitgeteilt; Canonical-URLs, finale Sitemap und absolute og:image-URL sind daher bewusst noch nicht gesetzt.
+RECHTLICHE SEITEN:
+- Impressum und Datenschutzerklärung sind im Footer aller Seiten verlinkt. Inhalt und tatsächliche Datenflüsse sollten fachlich geprüft werden.
 - Die Buchungsseite ist auf 30 Minuten angepasst, passend zum verwendeten Calendly-Link /30min.
