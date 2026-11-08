@@ -51,3 +51,22 @@
 @media(max-width:900px){.journal-grid,#blogCards{grid-template-columns:repeat(2,minmax(0,1fr))}#blogCards .card:first-child{grid-row:auto}#blogCards .card:nth-child(2) .journal-cover,#blogCards .card:nth-child(3) .journal-cover{height:190px}#blogCards .card:nth-child(2) p,#blogCards .card:nth-child(3) p{display:block}}
 @media(max-width:600px){#blog{padding:60px 0}.journal-grid,#blogCards{grid-template-columns:minmax(0,1fr);gap:20px}.journal-grid .card:first-child,#blogCards .card:first-child{grid-column:auto;display:flex}#blogCards .card:first-child .journal-cover,.journal-grid .card:first-child .journal-cover{height:230px;min-height:0}.journal-body,#blogCards .card:first-child .journal-body{padding:23px}.journal-hero h1{letter-spacing:-2px}.journal-toolbar{align-items:stretch}.journal-search{width:100%}#blog .section-head h2{letter-spacing:-1px}.journal-cover{height:190px}}
 @media(prefers-reduced-motion:reduce){.journal-cover img,.journal-grid .card,#blogCards .card{transition:none}}
+
+/* Keep the editorial pattern visible around the reading area. */
+body.blog-magazine {
+  --blog-reading-pattern: url("../assets/blog-reading-pattern.svg");
+  background-color: #f6f5ef;
+  background-image:
+    linear-gradient(90deg, transparent, rgba(250, 249, 243, .82) 26%, rgba(250, 249, 243, .82) 74%, transparent),
+    var(--blog-reading-pattern),
+    linear-gradient(155deg, #e7eee3, #f5eee0 53%, #e9eee5);
+  background-position: center top;
+}
+@media (max-width: 640px) {
+  body.blog-magazine {
+    background-image:
+      linear-gradient(rgba(250, 249, 243, .6), rgba(250, 249, 243, .6)),
+      var(--blog-reading-pattern),
+      linear-gradient(155deg, #e7eee3, #f5eee0 53%, #e9eee5);
+  }
+}
