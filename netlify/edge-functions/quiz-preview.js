@@ -10,10 +10,14 @@ function escapeAttribute(value) {
 
 export default async function quizPreview(request, context) {
   const url = new URL(request.url);
-  const name = url.searchParams.get('quiz') ?? '';
+  const version = url.searchParams.get('version');
+  let name = url.searchParams.get('quiz') ?? '';
+  if (name === 'Ernährung & Umwelt · Schwer' && version !== '2') {
+    name = 'Ernährung & Umwelt · Mittel';
+  }
   const [topic, difficulty, extra] = name.split(' · ');
   const response = await context.next();
-  if (!topics.has(topic) || !['Leicht', 'Schwer'].includes(difficulty) || extra !== undefined ||
+  if (!topics.has(topic) || !['Leicht', 'Mittel', 'Schwer'].includes(difficulty) || extra !== undefined ||
       request.method !== 'GET' || response.status !== 200 ||
       !response.headers.get('content-type')?.includes('text/html')) return response;
 
@@ -24,6 +28,7 @@ export default async function quizPreview(request, context) {
     : 'Teste dein Wissen mit 10 Fragen.';
   const previewUrl = new URL('https://veganiel.com/quiz.html');
   previewUrl.searchParams.set('quiz', name);
+  if (name === 'Ernährung & Umwelt · Schwer') previewUrl.searchParams.set('version', '2');
   if (/^(?:[0-9]|10)$/.test(score)) previewUrl.searchParams.set('punkte', score);
   const html = (await response.text())
     .replace(/<title>[^<]*<\/title>/, () => '<title>' + escapeAttribute(title) + '</title>')
