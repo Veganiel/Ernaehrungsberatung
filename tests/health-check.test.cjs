@@ -1,5 +1,5 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
-const {analyze,validate}=require('../daniel-suckrow-website/scripts/health-check.js');
+const {analyze,validate,fitnessBonus}=require('../daniel-suckrow-website/scripts/health-check.js');
 const basics={age:45,context:'general',medical:'no'};
 test('missing data stays unknown and never becomes zero or reassuring',()=>{const a=analyze(basics);assert.equal(a.waist,null);assert.equal(a.vo2,null);assert.equal(a.activity,null);assert.equal(a.supplements,null);assert.ok(a.heart);assert.equal(analyze({age:45,context:'general'}).heart,null);});
 test('shared weight and age drive Rockport, BMI, and pulse ranges consistently',()=>{const a=analyze({...basics,height:180,waist:90,weight:80,rest:60,max:200,method:'rockport',sex:'1',minutes:15,seconds:0,pulse:130,moderate:100,vigorous:25});assert.equal(a.vo2,38.8);assert.equal(a.waist.ratio,.5);assert.equal(a.waist.category,'increased');assert.equal(a.activity,150);assert.deepEqual(a.heart.zones[0],{lower:130,upper:144});});
@@ -25,4 +25,12 @@ test('alcohol and cigarette deductions use the highest reached tier and preserve
   assert.equal(analyze({...good,alcohol:20,cigarettes:10}).score.value,75);
   assert.equal(analyze({...good,cigarettes:null}).score.value,null);
   assert.equal(analyze({...good,alcohol:null}).score.value,null);
+});
+
+test('top five percent follows the published age and sex thresholds without changing the bonus',()=>{
+  assert.equal(fitnessBonus(66.2,25,'1').topFive,false);
+  assert.equal(fitnessBonus(66.3,25,'1').topFive,true);
+  assert.equal(fitnessBonus(59.8,35,'1').topFive,true);
+  assert.equal(fitnessBonus(45.8,35,'0').topFive,true);
+  assert.equal(fitnessBonus(45.8,35,'0').points,20);
 });
