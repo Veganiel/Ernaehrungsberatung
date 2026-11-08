@@ -27,6 +27,25 @@
 .share-link { display: block; width: 100%; padding: 10px; margin-top: 12px; }
 @media (max-width: 880px) { .topics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 570px) { .topics { grid-template-columns: minmax(0, 1fr); } }
+
+/* A quiet quiz pattern behind the existing cards. */
+body {
+  --quiz-pattern: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22260%22%20height%3D%22220%22%20viewBox%3D%220%200%20260%20220%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%23436b54%22%20stroke-width%3D%221.5%22%20opacity%3D%22.16%22%3E%0A%3Crect%20x%3D%2224%22%20y%3D%2227%22%20width%3D%2237%22%20height%3D%2242%22%20rx%3D%229%22%20transform%3D%22rotate%28-12%2042%2048%29%22%2F%3E%0A%3Cpath%20d%3D%22M34%2046c0-10%2017-12%2017-2%200%206-7%205-7%2011m0%205v2%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Ccircle%20cx%3D%22167%22%20cy%3D%22138%22%20r%3D%2217%22%2F%3E%3Cpath%20d%3D%22m160%20138%205%205%209-10%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M110%2014v14m-7-7h14m110%2057v16m-8-8h16m-211%2097v12m-6-6h12%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22m84%20128%207%207-7%207-7-7zm140%2066%205%205-5%205-5-5z%22%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%22%23a57945%22%20opacity%3D%22.22%22%3E%3Ccircle%20cx%3D%22105%22%20cy%3D%2279%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%22204%22%20cy%3D%2235%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%22130%22%20cy%3D%22194%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2215%22%20cy%3D%22112%22%20r%3D%222%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-color: #f4f6ed;
+  background-image:
+    linear-gradient(90deg, transparent, rgba(250, 249, 242, .87) 25%, rgba(250, 249, 242, .87) 75%, transparent),
+    var(--quiz-pattern),
+    linear-gradient(155deg, #e4eee0, #f5eee0 54%, #e8eee5);
+  background-position: center top;
+}
+@media (max-width: 640px) {
+  body {
+    background-image:
+      linear-gradient(rgba(250, 249, 242, .65), rgba(250, 249, 242, .65)),
+      var(--quiz-pattern),
+      linear-gradient(155deg, #e4eee0, #f5eee0 54%, #e8eee5);
+  }
+}
 </style><link rel="stylesheet" href="branding.css?v=2"><link rel="icon" type="image/png" sizes="32x32" href="veganiel-logo-32.png"><link rel="apple-touch-icon" sizes="192x192" href="veganiel-logo-192.png"><link rel="stylesheet" href="i18n.css"><script src="i18n.js" defer></script><meta property="og:site_name" content="Veganiel">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ernährungsquiz &amp; Gesundheitsquiz: 180 Fragen | Veganiel">
