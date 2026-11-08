@@ -19,7 +19,7 @@ test('alcohol and cigarette deductions use the highest reached tier and preserve
   for(const [alcohol,points] of [[9.9,100],[10,95],[14.9,95],[15,90],[19.9,90],[20,85]]) {
     assert.equal(analyze({...good,alcohol}).score.value,points);
   }
-  for(const [cigarettes,points] of [[4.9,100],[5,95],[9.9,95],[10,90]]) {
+  for(const [cigarettes,points] of [[4.9,100],[5,95],[9.9,95],[10,90],[15,90],[15.1,85]]) {
     assert.equal(analyze({...good,cigarettes}).score.value,points);
   }
   assert.equal(analyze({...good,alcohol:20,cigarettes:10}).score.value,75);
