@@ -1,0 +1,243 @@
+/* Editorial layout for the quiz and health check. */
+.interactive-studio {
+  --studio-ink: #173c2e;
+  --studio-muted: #526557;
+  --studio-paper: #fffdf7;
+  --studio-cream: #f8f6ee;
+  --studio-lime: #d5e99b;
+  --studio-line: #d9ded0;
+  --studio-serif: "Playfair Display", Georgia, serif;
+  background: var(--studio-cream);
+  color: var(--studio-ink);
+  font-family: "DM Sans", Arial, sans-serif;
+}
+.interactive-studio .wrap { width: min(1240px, calc(100% - 88px)); }
+.interactive-studio main.wrap { padding-top: clamp(24px, 4vw, 60px); }
+.interactive-studio :is(.quiz-hero, .calculator-hero) {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(24px, 5vw, 72px);
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  color: var(--studio-ink);
+  background: none;
+  box-shadow: none;
+  overflow: visible;
+}
+.interactive-studio :is(.quiz-hero, .calculator-hero)::before { display: none; }
+.interactive-studio :is(.quiz-hero, .calculator-hero) h1 {
+  max-width: 10ch;
+  margin: 14px 0 20px;
+  color: var(--studio-ink);
+  font: 500 clamp(46px, 6.7vw, 104px)/.99 var(--studio-serif);
+  letter-spacing: -.065em;
+  overflow-wrap: normal;
+}
+.interactive-studio .quiz-hero h1 em { color: #547341; font-weight: 500; }
+.interactive-studio :is(.quiz-hero, .calculator-hero) .lead {
+  max-width: 43ch;
+  color: var(--studio-muted);
+  font-size: clamp(15px, 1.65vw, 19px);
+}
+.interactive-studio :is(.quiz-hero, .calculator-hero) .eyebrow {
+  color: #416245;
+  font-weight: 700;
+  letter-spacing: .15em;
+}
+.quiz-studio .hero-stats { margin-block: 25px; }
+.quiz-studio .hero-stats span { border-color: #b8c6ab; }
+.quiz-studio .edition-button, .studio-health-start {
+  background: var(--studio-ink);
+  color: white;
+  border-radius: 999px;
+  padding-inline: 22px;
+}
+.quiz-studio .edition-button:hover, .studio-health-start:hover { background: #305a42; }
+.quiz-studio .edition-button:focus-visible { outline-color: #89592e; }
+
+.studio-quiz-art, .studio-health-art {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  aspect-ratio: 1.18;
+  border-radius: 24px;
+}
+.studio-quiz-art {
+  background: radial-gradient(ellipse at 73% 20%, #3e6c54, #173c2e 68%, #102e23);
+  color: var(--studio-lime);
+}
+.studio-art-caption {
+  position: absolute;
+  z-index: 2;
+  inset: 20px 22px auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: #edf2d9;
+  font-size: clamp(8px, 1vw, 11px);
+  font-weight: 700;
+  letter-spacing: .15em;
+}
+.quiz-orbits {
+  position: absolute;
+  inset: 12% 16%;
+  border: 1px solid #dbedc04d;
+  border-radius: 50%;
+  box-shadow: 0 0 0 18px #dbedc014, 0 0 0 48px #dbedc00a;
+  transform: rotate(-24deg);
+}
+.quiz-play-card {
+  position: absolute;
+  width: 40%;
+  height: 62%;
+  padding: clamp(8px, 2vw, 23px);
+  border-radius: 9%;
+  box-shadow: 0 22px 45px #071b1859;
+  font-size: clamp(7px, 1vw, 11px);
+  letter-spacing: .15em;
+}
+.quiz-play-back {
+  top: 18%;
+  left: 23%;
+  display: flex;
+  justify-content: space-between;
+  transform: rotate(-16deg);
+  background: repeating-linear-gradient(140deg, #bbc98d 0 1px, transparent 1px 8px), #d8e5af;
+  color: #234433;
+}
+.quiz-play-front {
+  top: 16%;
+  left: 39%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  transform: rotate(11deg);
+  background: #f5ecdc;
+  color: var(--studio-ink);
+}
+.quiz-play-front strong {
+  justify-self: center;
+  align-self: center;
+  font: 500 clamp(64px, 13vw, 182px)/.74 var(--studio-serif);
+}
+.quiz-play-front span:last-child { justify-self: end; }
+.quiz-answer-chip {
+  position: absolute;
+  inset: auto 11% 14% auto;
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 50px;
+  background: #112c23;
+  box-shadow: 0 10px 30px #091d1590;
+}
+.quiz-answer-chip span {
+  padding: 4px clamp(7px, 1vw, 15px);
+  color: #edf2d9;
+  font-size: clamp(9px, 1.4vw, 15px);
+}
+.quiz-answer-chip .is-solved { background: var(--studio-lime); color: #173c2e; border-radius: 50px; font-weight: 700; }
+.studio-art-star { position: absolute; bottom: 13%; left: 10%; font-size: clamp(22px, 5vw, 58px); }
+
+.quiz-studio .edition-section-heading { margin-top: clamp(40px, 7vw, 100px); scroll-margin-top: 100px; }
+.interactive-studio :is(.edition-section-heading, .health-form-heading, #analysis) > h2 {
+  margin: 6px 0 18px;
+  font: 500 clamp(30px, 4.6vw, 62px)/1.07 var(--studio-serif);
+  letter-spacing: -.045em;
+}
+.quiz-studio .quizfilters { padding: 0; border: 0; background: none; box-shadow: none; }
+.quiz-studio .topic {
+  border: 1px solid var(--studio-line);
+  border-radius: 20px;
+  background: var(--studio-paper);
+  padding: clamp(19px, 2.4vw, 30px);
+}
+.quiz-studio .topic:hover { border-color: #8b9d75; box-shadow: 0 16px 34px #173c2e13; }
+.quiz-studio .topic .go {
+  width: 100%;
+  border-top: 1px solid var(--studio-line);
+  padding-top: 13px;
+}
+.quiz-studio .quiz { background: var(--studio-paper); border-radius: 24px; }
+.quiz-studio .answer { border-radius: 14px; }
+.quiz-studio .btn { border-radius: 999px; }
+
+.health-studio .calculator-hero h1 { max-width: 9ch; }
+.health-studio .calculator-hero #intro .eyebrow { color: #416245; border-color: var(--studio-line); }
+.health-studio .calculator-hero #intro .privacy {
+  max-width: 52ch;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  color: var(--studio-muted);
+  border-color: var(--studio-line);
+}
+.studio-health-start {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+#health-form-title { scroll-margin-top: 112px; }
+.studio-health-art { background: #142f25; }
+.studio-health-art svg { display: block; width: 100%; height: 100%; }
+.health-art-pills {
+  position: absolute;
+  inset: auto 22px 20px;
+  display: flex;
+  gap: 7px;
+}
+.health-art-pills span {
+  border: 1px solid #c9e3a9a3;
+  border-radius: 50px;
+  padding: 3px 12px;
+  color: #edf2d9;
+  font-size: 12px;
+}
+.health-form-heading { margin-top: clamp(38px, 7vw, 88px); }
+.health-form-heading .eyebrow { margin-bottom: 0; }
+.health-studio :is(#fields, #analysis, #sources, #health-form) { scroll-margin-top: 100px; }
+.health-studio #fields details {
+  border-radius: 18px;
+  border-color: var(--studio-line);
+  background: var(--studio-paper);
+  box-shadow: 0 7px 22px #18372b08;
+}
+.health-studio #fields summary { font-size: clamp(16px, 2vw, 21px); color: var(--studio-ink); }
+.health-studio #fields details[open] > summary { background: #e8eddf; margin-bottom: 22px; }
+.health-studio #fields :is(input, select) { border-radius: 10px; }
+.health-studio #fields select { white-space: nowrap; text-overflow: ellipsis; }
+.health-studio #fields .grid > label { min-width: 0; }
+.health-studio #health-form .actions button, .health-studio #analysis .actions button { border-radius: 999px; }
+.health-studio #analyze { background: var(--studio-ink); }
+.health-studio #analysis .focus, .health-studio #analysis .result-card { border-radius: 18px; }
+.health-studio #analysis .habit-score { background: #e4ecdb; border: 1px solid #d1dec5; }
+.health-studio #analysis .habit-score > .metric { font: 500 clamp(44px, 7vw, 82px)/1 var(--studio-serif); }
+.health-studio #analysis .fitness-bonus { border-radius: 14px; }
+.health-studio #analysis .result-card { background: var(--studio-paper); border-color: var(--studio-line); }
+
+@media (max-width: 860px) {
+  .interactive-studio .wrap { width: calc(100% - 42px); }
+}
+@media (max-width: 650px) {
+  .interactive-studio .wrap { width: calc(100% - 32px); }
+  .interactive-studio :is(.quiz-hero, .calculator-hero) { grid-template-columns: minmax(0, 1fr); }
+  .studio-quiz-art, .studio-health-art { aspect-ratio: 1.4; border-radius: 18px; }
+  .studio-art-caption { inset: 14px 16px auto; }
+  .quiz-play-front strong { font-size: clamp(65px, 22vw, 140px); }
+  .health-art-pills { inset: auto 16px 14px; }
+  .interactive-studio :is(.quiz-hero, .calculator-hero) h1 { margin-block: 10px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .quiz-studio :is(.topic,.bar) { transition: none; }
+}
+@media print {
+  .health-studio :is(.calculator-hero, .health-form-heading, .seo-context) { display: none; }
+  .health-studio main.wrap { width: 100%; padding: 0; }
+}
