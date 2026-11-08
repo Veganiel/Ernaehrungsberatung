@@ -1,0 +1,250 @@
+/* Compact calculator introductions keep the forms near the top of the page. */
+.calculator-edition {
+  background: radial-gradient(ellipse at 85% 10%, #e7eee1, transparent 43rem), #f8f7ef;
+}
+
+.calculator-edition main.wrap { padding-top: clamp(22px, 4vw, 48px); }
+
+.calculator-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(125px, 21vw, 205px);
+  align-items: center;
+  gap: clamp(18px, 4vw, 42px);
+  padding: clamp(23px, 4vw, 42px);
+  margin-bottom: 23px;
+  border-radius: 24px;
+  box-shadow: var(--edition-shadow);
+}
+
+.calculator-hero .edition-copy h1 {
+  max-width: 24ch;
+  font-size: clamp(35px, 4.7vw, 54px);
+  margin-bottom: 13px;
+}
+
+.calculator-hero .lead { margin: 0; font-size: clamp(14px, 1.7vw, 16px); line-height: 1.6; }
+
+.calculator-hero #intro .eyebrow {
+  display: inline-block;
+  padding: 6px 11px;
+  border: 1px solid #cee2b165;
+  border-radius: 100px;
+  color: #e5efd0;
+  font-weight: 700;
+}
+
+.calculator-hero #intro .privacy {
+  margin: 13px 0 0;
+  padding: 10px 0 0;
+  border-color: #d8e5cc45;
+  font-size: 12px;
+}
+
+.calculator-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.calculator-art .edition-orbit { inset: 0; }
+
+.calculator-tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 67%;
+  aspect-ratio: 1;
+  border: 1px solid #f0f1df;
+  border-radius: 21%;
+  background: linear-gradient(145deg, #e7f1be, #c8dc93);
+  color: #214735;
+  box-shadow: 0 12px 27px #081e1690;
+  transform: rotate(-10deg);
+}
+
+.calculator-tile svg { width: 72%; height: auto; }
+.calculator-spark { position: absolute; top: 4%; right: 3%; color: var(--edition-lime); font-size: 27px; line-height: 1; }
+
+.calculator-edition .panel,
+.calculator-edition #health-form #fields > details,
+.calculator-edition .result-card {
+  border-radius: 16px;
+  border-color: var(--edition-rule);
+  box-shadow: 0 7px 23px #173c2510;
+}
+
+.calculator-edition .panel > h2:first-child,
+.calculator-edition .info > h2:first-child { font-family: var(--edition-serif); letter-spacing: -.025em; }
+
+.calculator-edition .calculate,
+.calculator-edition #analyze { min-height: 44px; border-radius: 9px; background-color: var(--edition-deep); }
+
+.calculator-edition input:focus-visible,
+.calculator-edition select:focus-visible,
+.calculator-edition summary:focus-visible { outline: 2px solid #52724a; outline-offset: 3px; }
+
+.calculator-edition input[type="range"] { accent-color: #315640; }
+
+/* About: frame Daniel's portrait and give the biography more visual rhythm. */
+.profile-edition .hero { padding-block: clamp(42px, 6vw, 76px); }
+.profile-edition .hero-grid { gap: clamp(24px, 5vw, 76px); }
+.profile-edition .hero .edition-copy h1 { font-size: clamp(46px, 6.6vw, 88px); }
+.profile-edition .hero .edition-copy p { color: #e0e9de; }
+.profile-edition .hero-grid > div[data-reveal] { opacity: 1; transform: none; }
+
+.profile-stage {
+  position: relative;
+  isolation: isolate;
+  padding: 4px 19px 22px 8px;
+}
+
+.profile-stage::before {
+  position: absolute;
+  z-index: -1;
+  inset: 18px 10px 14px 24px;
+  content: "";
+  border-radius: 24px;
+  background: linear-gradient(140deg, #e5edb5, #9fb78b);
+  transform: rotate(5deg);
+}
+
+.profile-stage .edition-orbit { z-index: -2; inset: -20px; }
+
+.profile-edition .portrait {
+  min-height: 0;
+  height: clamp(310px, 39vw, 460px);
+  border: 1px solid #e1ebc3;
+  border-radius: 22px;
+  box-shadow: 0 18px 45px #081d1580;
+}
+
+.profile-edition .portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 38%; animation: none; }
+
+.profile-caption {
+  position: absolute;
+  bottom: 9px;
+  left: 0;
+  display: grid;
+  gap: 2px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #e0e7d3;
+  background: #fffdf3;
+  color: var(--edition-ink);
+  box-shadow: 0 7px 22px #132c2250;
+  font-size: 12px;
+  line-height: 1.35;
+}
+.profile-caption strong { font-size: 15px; }
+.profile-edition .section h2 { font-family: var(--edition-serif); letter-spacing: -.04em; }
+.profile-edition .credential,
+.profile-edition .value { border-radius: 15px; box-shadow: 0 8px 24px #143b2210; }
+.profile-edition .section-soft { background: #eaf0e2; }
+.profile-edition .music-panel { border-radius: 21px; }
+
+/* Longevity: present the existing bilingual cover like a book on a stand. */
+.guide-edition { background: #f8f7ef; }
+.guide-edition main.wrap { width: min(1090px, calc(100% - 44px)); padding-top: clamp(23px, 4vw, 48px); }
+.guide-edition .product {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+  gap: clamp(25px, 5vw, 62px);
+  padding: clamp(24px, 4vw, 45px);
+  border-radius: 24px;
+  box-shadow: var(--edition-shadow);
+}
+.guide-edition .product h1 { font-size: clamp(37px, 4.7vw, 56px); }
+.guide-edition .product .btn {
+  background: var(--edition-lime);
+  color: var(--edition-deep);
+  border-radius: 9px;
+  min-height: 44px;
+}
+.guide-edition .product .btn:hover { background: #edf8c5; }
+.guide-stage { position: relative; display: grid; place-items: center; padding: 16px 24px; isolation: isolate; }
+.guide-stage .edition-orbit { z-index: -2; inset: -8px 0; }
+.guide-stage::before {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  width: 79%;
+  height: 78%;
+  background: #dbe9a6;
+  border-radius: 17px;
+  transform: rotate(9deg);
+}
+.guide-edition .guide-cover {
+  width: min(100%, 255px);
+  height: auto;
+  margin: auto;
+  border: 1px solid #dfe5ce;
+  border-radius: 6px;
+  box-shadow: 0 15px 40px #071a1475;
+  transform: rotate(-6deg);
+}
+.guide-edition .panel { border-radius: 16px; box-shadow: 0 8px 22px #153b2510; }
+.guide-edition #kaufen { scroll-margin-top: 98px; }
+
+/* Challenges: three distinct entry points with stable anchors to the downloads. */
+.challenges-edition .hero { padding-block: clamp(36px, 7vw, 84px); }
+.challenges-edition .hero::after { display: none; }
+.challenges-edition .hero[data-reveal] { opacity: 1; transform: none; }
+.challenges-edition .hero-inner { max-width: 1160px; }
+.challenges-edition .hero h1 { font: 500 clamp(43px, 6.5vw, 82px)/1 var(--edition-serif); letter-spacing: -.06em; }
+.challenge-picker { position: relative; display: grid; gap: 11px; isolation: isolate; }
+.challenge-picker .edition-orbit { z-index: -1; inset: -28px -16px; }
+
+.challenge-picker a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+  border: 1px solid #f7f7e490;
+  border-radius: 13px;
+  background: #ecf1d9;
+  color: #193729;
+  font-weight: 750;
+  box-shadow: 0 9px 19px #091e1660;
+  transition: transform .2s ease;
+}
+
+.challenge-picker a:nth-of-type(2) { background: #f0e7f6; color: #3d3050; }
+.challenge-picker a:nth-of-type(3) { background: #f4e7d3; color: #513b2c; }
+.challenge-picker a:hover { transform: translateX(-4px); }
+.challenge-index { padding: 6px; font-size: 12px; border: 1px solid currentColor; border-radius: 6px; }
+.challenges-edition :is(#fasten, #vegan, #abendritual) { scroll-margin-top: 86px; }
+.challenges-edition .section-head h2 { font-family: var(--edition-serif); letter-spacing: -.035em; }
+.challenges-edition :is(.challenge, .recipe-card, .benefit-card) { border-radius: 15px; }
+.challenges-edition .challenge-pdf-download { border-radius: 8px; }
+
+@media (max-width: 760px) {
+  .profile-edition .hero-grid { grid-template-columns: 1fr; }
+  .profile-stage { width: min(100%, 470px); justify-self: center; }
+  .guide-edition .product { grid-template-columns: 1fr; }
+  .guide-stage { width: min(100%, 315px); justify-self: center; }
+  .guide-edition .guide-cover { width: min(100%, 195px); }
+  .challenges-edition .hero-inner { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .calculator-hero { display: block; position: relative; padding: 20px; border-radius: 18px; }
+  .calculator-hero .edition-copy .eyebrow { max-width: calc(100% - 57px); }
+  .calculator-hero .edition-copy h1 { font-size: clamp(31px, 8.1vw, 43px); }
+  .calculator-art { position: absolute; top: 11px; right: 12px; width: 58px; }
+  .calculator-art .edition-orbit { display: none; }
+  .calculator-spark { top: 1px; right: 0; font-size: 13px; }
+  .profile-edition .portrait { height: clamp(245px, 70vw, 340px); }
+  .guide-edition .product { border-radius: 18px; }
+  .challenge-picker a { min-height: 56px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .challenge-picker a { transition: none; }
+  .challenge-picker a:hover { transform: none; }
+}
+
+@media print {
+  .calculator-edition .calculator-hero { display: none; }
+}
