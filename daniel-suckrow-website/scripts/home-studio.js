@@ -5,6 +5,21 @@
   const dropdowns = [...document.querySelectorAll('.nav-dropdown')];
   const quizLink = nav.querySelector('.nav-dropdown-menu a[href="quiz.html"]');
   quizLink?.parentElement.prepend(quizLink);
+  const knowledgeMenu = quizLink?.parentElement;
+  if (knowledgeMenu && !knowledgeMenu.querySelector('a[href="saisonkalender.html"]')) {
+    const calendarLink = document.createElement('a');
+    calendarLink.href = 'saisonkalender.html';
+    calendarLink.textContent = 'Saisonkalender';
+    knowledgeMenu.append(calendarLink);
+  }
+  const strip = document.querySelector('.approach-strip');
+  if (strip && !document.querySelector('.weekly-impulse')) {
+    const impulse = document.createElement('section');
+    impulse.className = 'weekly-impulse';
+    impulse.setAttribute('aria-label', 'Dein Wochenimpuls');
+    impulse.innerHTML = '<div class="wrap weekly-impulse-inner"><div><p class="eyebrow">DEIN WOCHENIMPULS</p><h2>Ein kleiner Schritt,<br><em>der bleiben darf.</em></h2></div><div class="weekly-impulse-task"><span aria-hidden="true">01</span><p><strong>Diese Woche:</strong> Baue zu einer Mahlzeit bewusst eine pflanzliche Proteinquelle ein – etwa Linsen, Bohnen, Tofu oder Tempeh.</p><a href="challenges.html">Impulse entdecken <span aria-hidden="true">↗</span></a></div></div>';
+    strip.after(impulse);
+  }
   const closeDropdowns = except => dropdowns.forEach(item => {
     if (item === except) return;
     item.classList.remove('is-open');
