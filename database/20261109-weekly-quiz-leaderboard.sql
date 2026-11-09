@@ -93,19 +93,25 @@ returns void language plpgsql security definer set search_path='' as $$
 declare current_week date := date_trunc('week', timezone('Europe/Berlin', now()))::date;
 begin
   with event_weeks as (
-    select user_id, quiz_key, score, time_bonus, occurred_at,
+    select user_id, quiz_key, score, time_bonus, event_id, occurred_at,
       date_trunc('week', timezone('Europe/Berlin', occurred_at))::date as week_start
     from public.quiz_weekly_events
   ), first_per_quiz as (
     select distinct on (week_start, user_id, quiz_key) week_start, user_id, quiz_key, score, time_bonus, occurred_at as first_played_at
     from event_weeks
-    where week_start < current_week
+    where week_start < current_week and quiz_key <> 'Blitzrunde'
     order by week_start, user_id, quiz_key, occurred_at asc, event_id asc
+  ), best_sprint as (
+    select distinct on (week_start, user_id) week_start, user_id, quiz_key, score, time_bonus, occurred_at as first_played_at
+    from event_weeks where week_start < current_week and quiz_key = 'Blitzrunde'
+    order by week_start, user_id, (score + time_bonus) desc, occurred_at asc, event_id asc
+  ), scored_rounds as (
+    select * from first_per_quiz union all select * from best_sprint
   ), totals as (
     select week_start, user_id, sum(score + time_bonus)::integer as points,
       count(*) filter (where score = 10)::integer as perfect_scores,
       min(first_played_at) as first_played_at
-    from first_per_quiz
+    from scored_rounds
     group by week_start, user_id
   ), ranked as (
     select week_start, user_id, points, perfect_scores, first_played_at,
@@ -132,18 +138,24 @@ begin
   perform public.finalize_closed_quiz_leaderboards();
   return (
     with event_weeks as (
-      select user_id, quiz_key, score, time_bonus, occurred_at,
+      select user_id, quiz_key, score, time_bonus, event_id, occurred_at,
         date_trunc('week', timezone('Europe/Berlin', occurred_at))::date as week_start
       from public.quiz_weekly_events
     ), first_per_quiz as (
       select distinct on (user_id, quiz_key) user_id, quiz_key, score, time_bonus, occurred_at as first_played_at
-      from event_weeks where week_start = current_week
+      from event_weeks where week_start = current_week and quiz_key <> 'Blitzrunde'
       order by user_id, quiz_key, occurred_at asc, event_id asc
+    ), best_sprint as (
+      select distinct on (user_id) user_id, quiz_key, score, time_bonus, occurred_at as first_played_at
+      from event_weeks where week_start = current_week and quiz_key = 'Blitzrunde'
+      order by user_id, (score + time_bonus) desc, occurred_at asc, event_id asc
+    ), scored_rounds as (
+      select * from first_per_quiz union all select * from best_sprint
     ), totals as (
       select user_id, sum(score + time_bonus)::integer as points,
         count(*) filter (where score = 10)::integer as perfect_scores,
         min(first_played_at) as first_played_at
-      from first_per_quiz group by user_id
+      from scored_rounds group by user_id
     ), live_ranked as (
       select t.*, row_number() over (order by t.points desc, t.perfect_scores desc, t.first_played_at asc, t.user_id) as placement
       from totals t join public.quiz_leaderboard_preferences pref on pref.user_id=t.user_id and pref.participates

@@ -1,6 +1,8 @@
 (() => {
   const sb=window.VeganielMember?.client, $=id=>document.getElementById(id);
   if(!$('weekly-leaders')) return;
+  const intro=document.querySelector('.leaderboard-intro');
+  if(intro) intro.textContent='Bei Themen-Quizzen zählt dein erster Versuch. In der Blitzrunde zählt dein bestes Wochen-Ergebnis inklusive Zeitbonus – und jede Woche beginnt neu.';
   if(!sb){$('weekly-leaders').innerHTML='<li class="leaderboard-empty">Die Kontoverbindung wird gerade nicht geladen.</li>';$('leaderboard-status').textContent='Bitte lade die Seite einmal neu. Deine Quizdaten bleiben erhalten.';return;}
   const medal={gold:'🥇',silver:'🥈',bronze:'🥉'};
   const safeText=value=>String(value??'').slice(0,80);
