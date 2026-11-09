@@ -2,6 +2,9 @@
   const script = document.currentScript;
   const base = new URL('../', script.src);
   const page = path => new URL(path, base).href;
+  const wellbeing=document.createElement('script');
+  wellbeing.src=page('scripts/wellbeing-history.js');
+  document.head.append(wellbeing);
   const header = document.querySelector('body > header');
   if (!header) return;
   header.className = 'veganiel-global-header';
