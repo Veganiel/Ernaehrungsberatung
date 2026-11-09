@@ -97,6 +97,8 @@
   };
   const cards = [...grid.querySelectorAll('.card')];
   cards.forEach((card, index) => {
+    const number=card.querySelector('.num');
+    if(number){const category=number.textContent.split('·').slice(1).join('·').trim();number.textContent=String(index+1).padStart(2,'0')+' · '+category;}
     const slug = articleSlug(card.getAttribute('href'), location.href);
     const photo = photos[slug];
     if (!photo) return;
