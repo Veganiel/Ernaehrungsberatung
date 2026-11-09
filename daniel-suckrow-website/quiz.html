@@ -807,8 +807,9 @@ function renderTopics(filter='Alle'){
  Object.entries(INFO).forEach(([name,meta],themeIndex)=>LEVELS.forEach(level=>{
  const key=name+' · '+level;if((filter!=='Alle'&&filter!==level)||!(name+' '+meta.description).toLocaleLowerCase('de').includes(search)||($('unplayed').checked&&records[key]))return;
  const b=document.createElement('button');b.className='topic';b.dataset.difficulty=level;b.dataset.theme=themeIndex%4;b.type='button';
- b.innerHTML='<div class="topic-top"><span class="symbol" aria-hidden="true">'+meta.icon+'</span><span class="level-pill">'+level+'</span></div><div class="meta">10 Fragen · ca. 5 Minuten</div><h3>'+name+'</h3><p>'+meta.description+'</p><span class="go">Entdecken & spielen <span aria-hidden="true">↗</span></span>';
- const saved=records[key];if(saved){const badge=document.createElement('span');badge.className='quiz-best';badge.textContent='✓ Bestwert: '+saved.best+' / 10';b.append(badge)}
+ const saved=records[key];
+ b.innerHTML='<div class="topic-top"><span class="symbol" aria-hidden="true">'+meta.icon+'</span><span class="level-pill'+(saved?' is-complete':'')+'">'+level+'</span></div><div class="meta">10 Fragen · ca. 5 Minuten</div><h3>'+name+'</h3><p>'+meta.description+'</p><span class="go">Entdecken & spielen <span aria-hidden="true">↗</span></span>';
+ if(saved){const badge=document.createElement('span');badge.className='quiz-best';badge.textContent='✓ Bestwert: '+saved.best+' / 10';b.append(badge)}
  b.addEventListener('click',()=>start(key));topics.append(b);
  }));$('quiz-count').textContent=topics.children.length+' passende Quizze';$('no-quizzes').classList.toggle('hidden',topics.children.length!==0);
 }
@@ -897,7 +898,7 @@ function openChallenge() {
   start(name, valid ? Number(score) : null);
 }
 function choose(){stopSprint();renderTopics(document.querySelector('[data-level][aria-pressed="true"]').dataset.level);$('quiz').classList.add('hidden');$('landing').classList.remove('hidden');window.scrollTo({top:0,behavior:'instant'})}
-$('shareQuiz').addEventListener('click',shareQuiz);$('quit').addEventListener('click',choose);$('choose').addEventListener('click',choose);$('retry').addEventListener('click',()=>start(current,target,mixSeed,{mode:roundMode}));
+$('shareQuiz').addEventListener('click',shareQuiz);$('quit').addEventListener('click',choose);$('choose').addEventListener('click',choose);$('retry').addEventListener('click',()=>start(current,target,roundMode==='sprint'?null:mixSeed,{mode:roundMode}));
 $('copyQuiz').addEventListener('click',copyChallenge);
 function renderReview(){
  const holder=$('review');holder.replaceChildren();const heading=document.createElement('h3');heading.textContent='Deine Aha-Momente zum Mitnehmen';holder.append(heading);
