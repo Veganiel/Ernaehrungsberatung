@@ -2,8 +2,8 @@
  if(!window.VeganielMember?.client)return;
  const sb=window.VeganielMember.client,ui=window.VeganielQuizUI,$=id=>document.getElementById(id);
  const guest=QuizProgress.create();let active=null;
- const accountStatus=$('quiz-account-status'),accountLink=$('quiz-account-link'),accountNote=document.querySelector?.('.quiz-account-note'),heading=document.querySelector?.('#quiz-themen');
- if(heading&&document.createElement){const accountActions=document.createElement('div');accountActions.className='quiz-account-actions';heading.append(accountActions);accountActions.append(accountStatus,accountLink,$('import-local'),$('retry-sync'));accountNote?.remove();}
+ const accountStatus=$('quiz-account-status'),accountLink=$('quiz-account-link'),accountNote=document.querySelector?.('.quiz-account-note'),quizButton=document.querySelector?.('.edition-button');
+ if(quizButton&&document.createElement){const heroActions=document.createElement('div'),accountActions=document.createElement('div');heroActions.className='quiz-hero-actions';accountActions.className='quiz-account-actions';quizButton.before(heroActions);heroActions.append(quizButton,accountActions);accountActions.append(accountStatus,accountLink,$('import-local'),$('retry-sync'));accountNote?.remove();}
  const status=t=>{accountStatus.textContent=active?'Angemeldet als '+active.displayName: t;accountLink.hidden=!!active;$('storage-note').textContent=active?'Mit Anmeldung werden Bestwerte und Abzeichen im Konto gespeichert. Auf gemeinsam genutzten Geräten bitte abmelden.':'Bestwerte bleiben nur in diesem Browser. Beim Löschen der Browserdaten gehen sie verloren.';};
  function persist(ctx){try{localStorage.setItem(ctx.queueKey,JSON.stringify(ctx.queue));}catch{ctx.durable=false;}}
  async function request(ctx,path,body){const r=await fetch(window.SUPABASE_URL+'/rest/v1/'+path,{method:body?'POST':'GET',headers:{apikey:window.SUPABASE_PUBLISHABLE_KEY,Authorization:'Bearer '+ctx.token,'Content-Type':'application/json'},...(body?{body:JSON.stringify(body)}:{}),cache:'no-store'});if(!r.ok)throw Error('Sync failed');return r.status===204?null:r.json();}
