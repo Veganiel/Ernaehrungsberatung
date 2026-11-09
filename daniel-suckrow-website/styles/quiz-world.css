@@ -1,5 +1,6 @@
 /* A calm, playful learning space, with controls kept distinct from decoration. */
 .quiz-studio{background-color:#f7f5ec;background-image:radial-gradient(ellipse at 0 8%,#dce5cb88,transparent 45%),radial-gradient(ellipse at 100% 35%,#e4dcef66,transparent 38%);position:relative;isolation:isolate;overflow-x:clip}.quiz-studio::before{content:'?  !  ✧  ✓  ✦  B  ?  !  C  ✓  A  D  ?  !  A  ✦  ✓  C  ?';position:fixed;inset:102px -10vw 0;z-index:0;pointer-events:none;white-space:pre-wrap;font:700 clamp(44px,7vw,108px)/2.7 Georgia,serif;letter-spacing:.28em;color:#376942;opacity:.075;transform:rotate(-8deg);word-spacing:.45em;-webkit-mask-image:linear-gradient(90deg,#000 0 23%,transparent 43% 57%,#000 77% 100%);mask-image:linear-gradient(90deg,#000 0 23%,transparent 43% 57%,#000 77% 100%)}.quiz-studio>header,.quiz-studio>main,.quiz-studio>footer{position:relative;z-index:1}
+.quiz-studio .studio-art-caption{display:none!important}
 .quiz-studio main.wrap{padding-bottom:70px}
 .quiz-studio .quiz-hero{padding-block:20px 44px}
 .quiz-studio .quiz-hero h1{font-size:clamp(56px,7.7vw,112px)}
