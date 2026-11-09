@@ -19,6 +19,6 @@ Redirect allow-list: the above and https://veganiel.com/konto.html?recovery=1
 
 ## Release gate
 
-Custom SMTP is NOT yet saved/verified. Resend fields are prepared in the dashboard (smtp.resend.com, 465, username resend, sender info@veganiel.com). Owner must enter the secret API key and save. Do not describe signup or recovery as live until a real confirmation email and password-recovery flow have been verified. Email confirmation remains required. Never disable it to work around SMTP.
+Custom SMTP is saved in the dashboard (smtp.resend.com, 465, username resend, sender info@veganiel.com). The owner entered the secret API key. The sending domain veganiel.com is verified in Resend. Do not describe signup or recovery as live until a real confirmation email and password-recovery flow have been verified. Email confirmation remains required. Never disable it to work around SMTP.
 
-Run `node --test tests/*.test.cjs` from the repository root. 37 tests passed during implementation, including guest/account separation, retry persistence and idempotent imports. Desktop/mobile account layout, DE/EN switch, blog account link and guest quiz render checked locally. Full authenticated browser flow awaits working SMTP and an owner-created test account.
+Run `node --test tests/*.test.cjs` from the repository root. 37 tests passed during implementation, including guest/account separation, retry persistence and idempotent imports. Desktop/mobile account layout, DE/EN switch, blog account link and guest quiz render checked locally. Full authenticated browser flow awaits an owner-created test account and actual email delivery verification.
