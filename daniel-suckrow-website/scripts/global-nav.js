@@ -6,6 +6,8 @@
   wellbeing.src=page('scripts/wellbeing-history.js');
   document.head.append(wellbeing);
   const accountStyle=document.createElement('link');accountStyle.rel='stylesheet';accountStyle.href=page('styles/nav-account.css');document.head.append(accountStyle);
+  const profileStyle=document.createElement('link');profileStyle.rel='stylesheet';profileStyle.href=page('styles/nav-profile.css');document.head.append(profileStyle);
+  const profileScript=document.createElement('script');profileScript.src=page('scripts/nav-profile.js');profileScript.defer=true;document.head.append(profileScript);
   const header = document.querySelector('body > header');
   if (!header) return;
   header.className = 'veganiel-global-header';

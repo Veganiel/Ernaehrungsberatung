@@ -1,0 +1,3 @@
+.account-nav,.veganiel-global-header .vn-links>a.vn-account-link{display:inline-flex;align-items:center;gap:7px}
+.account-nav .vn-account-avatar,.vn-account-avatar{display:grid;place-items:center;flex:0 0 auto;width:23px;height:23px;border-radius:50%;overflow:hidden;background:#e5eddc;color:#315540;font:700 10px Arial}
+.account-nav .vn-account-avatar img,.vn-account-avatar img{width:100%;height:100%;object-fit:cover}
