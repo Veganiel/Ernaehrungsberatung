@@ -49,11 +49,32 @@
     const rainbow=weather==='rainbow'?['#d57c78','#dfb873','#e2d687','#95b59b','#8baac2'].map((c,i)=>`<path d="M224 140a${65-i*4} ${65-i*4} 0 0 1 ${130-i*8} 0" stroke="${c}" stroke-width="4" fill="none" opacity=".65"/>`).join(''):'';
     return `<svg class="season-landscape" viewBox="0 0 360 220" role="img" aria-label="${label}" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="${id}-light"><stop stop-color="#fff9dd" stop-opacity=".65"/><stop offset="1" stop-color="#fff9dd" stop-opacity="0"/></radialGradient><linearGradient id="${id}" x2="0" y2="1"><stop stop-color="${sky}"/><stop offset="1" stop-color="${horizon}"/></linearGradient></defs><rect width="360" height="220" fill="url(#${id})"/>${dot(287,sunY,weather==='heat'?36:24,'#fff2b7','class="sun-halo" opacity=".6"')}${dot(287,sunY,weather==='heat'?22:15,weather==='heat'?'#ffd16b':'#fff6d9')}<ellipse cx="287" cy="${sunY}" rx="110" ry="80" fill="url(#${id}-light)"/>${rainbow}<g class="cloud" fill="#fff" opacity=".38"><ellipse cx="65" cy="43" rx="48" ry="13"/><ellipse cx="91" cy="37" rx="27" ry="15"/></g><path d="M0 168Q50 116 110 153T240 142T360 160V220H0Z" fill="#7d9990" opacity=".22"/><path d="M0 172Q110 140 210 164T360 150V220H0Z" fill="#6a8b77" opacity=".18"/><path d="M0 177Q80 147 165 172T360 161V220H0Z" fill="${ground}"/><path d="M0 207Q130 170 360 203V220H0Z" fill="${ground}" opacity=".6"/><ellipse cx="183" cy="201" rx="63" ry="7" fill="#344f3b" opacity=".12"/><g class="crown"><g fill="none" stroke="#695440" stroke-linecap="round">${branches}<path d="M180 200Q176 151 181 100" stroke-width="7"/></g>${leaves}</g>${flowers}<g class="weather">${particles}</g></svg>`;
   }
+  const scenesToLoad=new Map();
   document.querySelectorAll('.month').forEach((card,i)=>{
-    card.querySelector('.season-scene').innerHTML=scene(i);
+    const holder=card.querySelector('.season-scene');
+    holder.replaceChildren();
+    scenesToLoad.set(holder,()=>scene(i));
     const caption=document.createElement('p');caption.className='month-poetry';caption.textContent=months[i][0];card.querySelector('h3').after(caption);
   });
-  const now=new Date().getMonth();document.querySelector('.now-art').innerHTML=scene(now,'hero');document.querySelector('.now-art').removeAttribute('aria-hidden');
+  const now=new Date().getMonth(), heroArt=document.querySelector('.now-art');
+  heroArt.replaceChildren();
+  scenesToLoad.set(heroArt,()=>scene(now,'hero'));
+  heroArt.removeAttribute('aria-hidden');
+  // Build detailed SVGs only near the viewport; animate only visible landscapes.
+  if('IntersectionObserver' in window){
+    const loader=new IntersectionObserver(entries=>entries.forEach(entry=>{
+      if(!entry.isIntersecting)return;
+      entry.target.innerHTML=scenesToLoad.get(entry.target)();
+      scenesToLoad.delete(entry.target);
+      loader.unobserve(entry.target);
+    }),{rootMargin:'180px'});
+    const animator=new IntersectionObserver(entries=>entries.forEach(entry=>{
+      entry.target.classList.toggle('scene-visible',entry.isIntersecting);
+    }));
+    scenesToLoad.forEach((render,holder)=>{loader.observe(holder);animator.observe(holder);});
+  }else scenesToLoad.forEach((render,holder)=>{holder.innerHTML=render();holder.classList.add('scene-visible');});
+  const updateVisibility=()=>document.body.classList.toggle('season-page-hidden',document.hidden);
+  document.addEventListener('visibilitychange',updateVisibility);updateVisibility();
   document.querySelector('.hero h1').innerHTML='Mit den Jahreszeiten <em>genießen.</em>';
   document.querySelector('.section-head h2').innerHTML='Zwölf Monate.<br><em>Immer neu entdecken.</em>';
   const fruitSelection=[
@@ -76,7 +97,10 @@
     fruitSelection[i].forEach(name=>{const li=document.createElement('li');li.className='fruit';li.textContent=name;list.append(li);});
     // Rhabarber is botanically a vegetable and remains available under the vegetable filter.
     if(i>=3&&i<=5){const li=document.createElement('li');li.textContent='Rhabarber';list.append(li);}
+    const seen=new Set();list.querySelectorAll('li').forEach(item=>{if(seen.has(item.textContent))item.remove();else seen.add(item.textContent);});
   });
+  // The feature panel uses the completed current-month list, including all fruit additions.
+  document.getElementById('now-picks').textContent=Array.from(document.querySelectorAll('.month')[now].querySelectorAll('li'),item=>item.textContent).join(' · ');
   const reference=document.createElement('p');reference.className='season-caption';
   reference.innerHTML='Obst aus deutschem Anbau: typische Erntezeit oder ausdrücklich markierte Lagerware. Im Winter ist die regionale Obstauswahl kleiner. Saisonbeginn und Verfügbarkeit variieren nach Region, Sorte und Wetter. Orientierung: <a href="https://www.bzfe.de/kueche-und-alltag/einkaufen/der-saisonkalender/">Saisonkalender des Bundeszentrums für Ernährung</a>.';
   document.querySelector('#month-grid').after(reference);
