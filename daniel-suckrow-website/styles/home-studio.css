@@ -28,6 +28,8 @@ header{position:sticky;top:0;z-index:50;background:#f8f6eef5;border-bottom:1px s
 .nav-right{display:flex;align-items:center;gap:12px}
 .nav-cta{display:inline-flex;align-items:center;min-height:43px;border:1px solid var(--forest);border-radius:50px;padding:9px 17px;font-size:11px;font-weight:600;transition:background .2s,color .2s}
 .nav-cta:hover{background:var(--forest);color:white}
+.account-nav{display:inline-flex;align-items:center;min-height:43px;border:1px solid var(--forest);border-radius:50px;padding:9px 17px;font-size:11px;font-weight:600;transition:background .2s,color .2s}
+.account-nav:hover{background:var(--forest);color:white}
 .nav-right .lang{min-height:40px;min-width:40px;border:0;background:transparent;border-radius:50%;font:600 12px "DM Sans",sans-serif}
 .nav-right .lang:hover{background:var(--sage)}
 .nav-dropdown{position:relative}
