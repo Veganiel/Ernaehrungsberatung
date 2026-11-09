@@ -17,17 +17,19 @@ export default async function quizPreview(request, context) {
   }
   const [topic, difficulty, extra] = name.split(' · ');
   const response = await context.next();
-  if (!topics.has(topic) || !['Leicht', 'Mittel', 'Schwer'].includes(difficulty) || extra !== undefined ||
+  const mixed=name==='Wissensmix' && /^(?:0|[1-9][0-9]{0,9})$/.test(url.searchParams.get('mix')??'') && Number(url.searchParams.get('mix'))<=4294967295;
+  if ((!mixed && (!topics.has(topic) || !['Leicht', 'Mittel', 'Schwer'].includes(difficulty) || extra !== undefined)) ||
       request.method !== 'GET' || response.status !== 200 ||
       !response.headers.get('content-type')?.includes('text/html')) return response;
 
-  const title = topic + ' · ' + difficulty + ' | Veganiel Quiz';
+  const title = mixed ? 'Wissensmix · gemischte Schwierigkeit | Veganiel Quiz' : topic + ' · ' + difficulty + ' | Veganiel Quiz';
   const score = url.searchParams.get('punkte') ?? '';
   const description = /^(?:[0-9]|10)$/.test(score)
     ? 'Deine Herausforderung: ' + score + ' von 10 Punkten. Schaffst du mehr?'
     : 'Teste dein Wissen mit 10 Fragen.';
   const previewUrl = new URL('https://veganiel.com/quiz.html');
   previewUrl.searchParams.set('quiz', name);
+  if(mixed)previewUrl.searchParams.set('mix',url.searchParams.get('mix'));
   if (name === 'Ernährung & Umwelt · Schwer') previewUrl.searchParams.set('version', '2');
   if (/^(?:[0-9]|10)$/.test(score)) previewUrl.searchParams.set('punkte', score);
   const html = (await response.text())

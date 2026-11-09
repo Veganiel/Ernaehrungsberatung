@@ -1,0 +1,5 @@
+(function(root){
+ function mix(pool,seed,count=10){let n=seed>>>0;const random=()=>{n=(Math.imul(n,1664525)+1013904223)>>>0;return n/4294967296;};const seen=new Set(),unique=pool.filter(q=>!seen.has(q.q)&&seen.add(q.q));for(let i=unique.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[unique[i],unique[j]]=[unique[j],unique[i]];}return unique.slice(0,count);}
+ function badges(records,keys){const done=keys.filter(k=>records[k]);const themes=new Set(done.map(k=>k.split(' · ')[0]));return [{icon:'✦',name:'Neugier geweckt',detail:'Ein Quiz abschließen',earned:done.length>=1},{icon:'❧',name:'Horizont erweitert',detail:'Drei Themen ausprobieren',earned:themes.size>=3},{icon:'✧',name:'Punktlandung',detail:'Einmal 10 von 10 erreichen',earned:done.some(k=>records[k].best===10)},{icon:'♜',name:'Tief eingetaucht',detail:'Drei schwere Quizze abschließen',earned:done.filter(k=>k.endsWith(' · Schwer')).length>=3}];}
+ const api={mix,badges};if(typeof module!=='undefined')module.exports=api;else root.QuizWorld=api;
+})(typeof window!=='undefined'?window:globalThis);
