@@ -3322,5 +3322,10 @@
   "Schon ein Veganiel-Konto?": "Already have a Veganiel account?",
   "Beratungsanfrage mit deinen Kontodaten vorbereiten ↗": "Prepare a consultation enquiry with your account details ↗",
   "gespeicherte Quiz-Bestwerte.": "saved quiz best scores.",
-  "Die Kontoverbindung konnte nicht geladen werden. Bitte lade die Seite erneut. Quizze bleiben ohne Konto verfügbar.": "The account connection could not be loaded. Please reload the page. Quizzes remain available without an account."
+  "Die Kontoverbindung konnte nicht geladen werden. Bitte lade die Seite erneut. Quizze bleiben ohne Konto verfügbar.": "The account connection could not be loaded. Please reload the page. Quizzes remain available without an account.",
+  "Bitte prüfe, ob deine E-Mail-Adresse vollständig und richtig geschrieben ist.": "Please check that your email address is complete and spelled correctly.",
+  "Das Passwort ist noch zu schwach. Verwende mindestens zwölf Zeichen und vermeide leicht erratbare Wörter.": "The password is still too weak. Use at least twelve characters and avoid easily guessed words.",
+  "Für diese E-Mail-Adresse besteht bereits ein Konto. Nutze die Anmeldung oder „Passwort vergessen“.": "An account already exists for this email address. Sign in or use “Forgot password”.",
+  "Es wurden gerade zu viele E-Mails angefordert. Bitte warte einige Minuten und versuche es dann erneut.": "Too many emails were requested just now. Please wait a few minutes and try again.",
+  "Die Bestätigungs-E-Mail konnte gerade nicht versendet werden. Bitte versuche es in einigen Minuten erneut.": "The confirmation email could not be sent right now. Please try again in a few minutes."
 }
