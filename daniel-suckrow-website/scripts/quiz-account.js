@@ -8,7 +8,7 @@
  async function flush(ctx){
   if(ctx.busy)return ctx.busy;
   ctx.busy=(async()=>{try{
-   while(ctx.queue.length){const event=ctx.queue[0];if(!event.leagueOnly)await request(ctx,'rpc/record_quiz_result',event);await request(ctx,'rpc/record_weekly_quiz_score',{event:event.event,quiz:event.quiz,score:event.score,time_bonus:event.timeBonus||0});ctx.queue.shift();persist(ctx);window.VeganielQuizLeaderboard?.refresh();}
+   while(ctx.queue.length){const event=ctx.queue[0];if(!event.leagueOnly)await request(ctx,'rpc/record_quiz_result',{event:event.event,quiz:event.quiz,score:event.score});await request(ctx,'rpc/record_weekly_quiz_score',{event:event.event,quiz:event.quiz,score:event.score,time_bonus:event.timeBonus||0});ctx.queue.shift();persist(ctx);window.VeganielQuizLeaderboard?.refresh();}
    const rows=await request(ctx,'quiz_results?select=quiz_key,best,attempts');
    if(active!==ctx)return;
    // A completion arriving during the read must be sent before applying server state.
