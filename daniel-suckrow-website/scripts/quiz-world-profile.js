@@ -6,7 +6,7 @@
     const value=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};
     const daily=[...new Set(Array.isArray(value.daily)?value.daily.filter(isDay):[])].sort((a,b)=>a-b).slice(-90);
     const sprint=value.sprint&&typeof value.sprint==='object'?value.sprint:{};
-    return {daily,sprint:{plays:Math.max(0,Math.min(999,Number.isInteger(sprint.plays)?sprint.plays:0)),best:Math.max(0,Math.min(8,Number.isInteger(sprint.best)?sprint.best:0))},duels:Math.max(0,Math.min(999,Number.isInteger(value.duels)?value.duels:0))};
+    return {daily,sprint:{plays:Math.max(0,Math.min(999,Number.isInteger(sprint.plays)?sprint.plays:0)),best:Math.max(0,Math.min(10,Number.isInteger(sprint.best)?sprint.best:0))},duels:Math.max(0,Math.min(999,Number.isInteger(value.duels)?value.duels:0))};
   }
   function streak(days,today){
     const set=new Set(days);let total=0;for(let day=today;set.has(day);day--)total++;return total;
@@ -26,7 +26,7 @@
     return [
       {icon:'☀',name:'Erster Impuls',detail:'Tagesfrage beantworten',earned:profile.daily.length>=1},
       {icon:'⚡',name:'Blitzstart',detail:'Eine Blitzrunde spielen',earned:profile.sprint.plays>=1},
-      {icon:'⏱',name:'Schnelldenker:in',detail:'6 von 8 in der Blitzrunde',earned:profile.sprint.best>=6},
+      {icon:'⏱',name:'Schnelldenker:in',detail:'8 von 10 in der Blitzrunde',earned:profile.sprint.best>=8},
       {icon:'↗',name:'Duell eröffnet',detail:'Eine Herausforderung teilen',earned:profile.duels>=1},
       {icon:'☘',name:'Drei-Tage-Flow',detail:'3 Tage in Folge die Tagesfrage',earned:streak(profile.daily,today)>=3},
       {icon:'✦',name:'Wissensfunke',detail:'Level Entdecker:in erreichen',earned:value.xp>=160}
@@ -36,7 +36,7 @@
     let persistent=true,data;
     try{storage=storage||root.localStorage;data=clean(JSON.parse(storage.getItem(key)||'{}'));storage.setItem(key,JSON.stringify(data));}catch{persistent=false;data=clean({});}
     const save=()=>{try{if(persistent)storage.setItem(key,JSON.stringify(data));}catch{persistent=false;}};
-    return {get persistent(){return persistent;},data:()=>JSON.parse(JSON.stringify(data)),recordDaily(day){if(!isDay(day))return false;if(data.daily.includes(day))return false;data.daily=[...data.daily,day].sort((a,b)=>a-b).slice(-90);save();return true;},recordSprint(score){if(!Number.isInteger(score)||score<0||score>8)return;data.sprint.plays=Math.min(999,data.sprint.plays+1);data.sprint.best=Math.max(data.sprint.best,score);save();},recordDuel(){data.duels=Math.min(999,data.duels+1);save();},streak(today){return streak(data.daily,today);}};
+    return {get persistent(){return persistent;},data:()=>JSON.parse(JSON.stringify(data)),recordDaily(day){if(!isDay(day))return false;if(data.daily.includes(day))return false;data.daily=[...data.daily,day].sort((a,b)=>a-b).slice(-90);save();return true;},recordSprint(score){if(!Number.isInteger(score)||score<0||score>10)return;data.sprint.plays=Math.min(999,data.sprint.plays+1);data.sprint.best=Math.max(data.sprint.best,score);save();},recordDuel(){data.duels=Math.min(999,data.duels+1);save();},streak(today){return streak(data.daily,today);}};
   }
   const api={create,rank,achievements,streak};if(typeof module!=='undefined')module.exports=api;else root.QuizWorldProfile=api;
 })(typeof window!=='undefined'?window:globalThis);
