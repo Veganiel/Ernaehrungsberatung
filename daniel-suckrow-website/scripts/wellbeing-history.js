@@ -14,6 +14,12 @@
         const total=[...document.querySelectorAll('.fitness-bonus strong')].map(x=>x.textContent).join(' ').match(/Gesamt:\s*(\d+)/)?.[1];
         const vo2=[...document.querySelectorAll('#analysis .result-card')].find(x=>x.querySelector('h3')?.textContent.includes('VO₂max'))?.querySelector('.metric')?.textContent?.match(/[\d,.]+/)?.[0];
         if(score)add('health',{score:Number(score),total:total?Number(total):null,vo2:vo2?Number(String(vo2).replace(',','.')):null});
+        const analysisCards=[...document.querySelectorAll('#analysis .result-card')];
+        const findCard=label=>analysisCards.find(card=>card.querySelector('h3')?.textContent.includes(label));
+        if(vo2){const value=Number(String(vo2).replace(',','.'));if(Number.isFinite(value))add('vo2',{value,method:'Gesundheits-Check'});}
+        const body=findCard('Körpermaße');const bodyMetric=body?.querySelector('.metric')?.textContent||'';const ratio=bodyMetric.match(/Taille\s*\/\s*Größe:\s*([\d,.]+)/)?.[1],bmi=bodyMetric.match(/BMI\s*([\d,.]+)/)?.[1];if(ratio&&bmi)add('waist',{ratio:Number(ratio.replace(',','.')),bmi:Number(bmi.replace(',','.')),category:'Aus Gesundheits-Check'});
+        const heart=findCard('Herzfrequenzzonen');const maximum=heart?.querySelector('.metric')?.textContent?.match(/\d+/)?.[0];if(maximum)add('heart',{maximum:Number(maximum),zones:[...heart.querySelectorAll('p')].map(p=>p.textContent.match(/Zone \d+:\s*([^\s]+)/)?.[1]).filter(Boolean),method:'Gesundheits-Check'});
+        const selection=findCard('Deine Beispiel-Supplements');const supplementTotal=selection?.querySelector('.metric')?.textContent?.match(/[\d,.]+/)?.[0];if(supplementTotal)add('supplements',{total:Number(supplementTotal.replace(',','.')),products:[...selection.querySelectorAll('.row span:first-child')].map(x=>x.textContent).filter(Boolean)});
       }
       if(form.id==='heart-form'&&!document.getElementById('heart-results')?.hidden){add('heart',{maximum:Number(text('max-hr')),zones:[1,2,3,4].map(i=>text('zone-'+i)),method:text('method')});}
       if(form.id==='vo2-form'&&!document.getElementById('result')?.hidden){const value=Number(text('value').replace(',','.'));if(Number.isFinite(value))add('vo2',{value,method:text('used'),ranking:text('rating')});}
