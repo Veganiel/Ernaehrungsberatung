@@ -119,8 +119,9 @@ footer { border-top: 1px solid var(--about-line); }
   .about-portrait { width: min(100%, 440px); margin-inline: auto; padding-right: 14px; }
   .portrait-frame { aspect-ratio: 1; }
   .about-ribbon { padding-block: 18px; }
-  .about-ribbon .wrap { flex-wrap: wrap; justify-content: center; font-size: 18px; gap: 8px 12px; }
-  .about-ribbon span[aria-hidden] { font-size: 13px; }
+  .about-ribbon .wrap { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:center; gap:6px; font-size:clamp(9px,2.7vw,12px); text-align:center; }
+  .about-ribbon span[aria-hidden] { display:none; }
+  .about-ribbon .wrap > span:not([aria-hidden]) { white-space:nowrap; }
   .about-background,.about-closing { grid-template-columns: 1fr; padding-block: 65px; gap: 30px; }
   .body-lead { font-size: 18px; }
   .about-values { padding-block: 55px; }
