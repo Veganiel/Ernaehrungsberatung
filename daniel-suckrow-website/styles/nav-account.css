@@ -1,0 +1,4 @@
+.veganiel-global-header .vn-links>a.vn-account-link{display:inline-flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid #9eb59e;border-radius:999px;color:#214a37}
+.vn-account-avatar{display:grid;place-items:center;width:23px;height:23px;border-radius:50%;overflow:hidden;background:#e5eddc;color:#315540;font:700 10px Arial}
+.vn-account-avatar img{width:100%;height:100%;object-fit:cover}
+@media(max-width:760px){.veganiel-global-header .vn-links>a.vn-account-link{width:max-content;padding:8px 10px}}

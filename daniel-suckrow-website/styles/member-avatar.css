@@ -1,0 +1,3 @@
+.profile-avatar{position:relative;overflow:visible}
+.profile-avatar img{border-radius:50%}
+.profile-avatar-plus{position:absolute;right:-2px;bottom:-2px;display:grid;place-items:center;width:23px;height:23px;border:2px solid #fffdf8;border-radius:50%;background:#91ae62;color:#183b2a;font:700 20px/1 Arial}
