@@ -145,7 +145,7 @@ begin
         min(first_played_at) as first_played_at
       from first_per_quiz group by user_id
     ), live_ranked as (
-      select t.*, row_number() over (order by points desc, perfect_scores desc, first_played_at asc, user_id) as placement
+      select t.*, row_number() over (order by t.points desc, t.perfect_scores desc, t.first_played_at asc, t.user_id) as placement
       from totals t join public.quiz_leaderboard_preferences pref on pref.user_id=t.user_id and pref.participates
     ), history as (
       select r.week_start, r.placement, r.points, r.perfect_scores, p.display_name
