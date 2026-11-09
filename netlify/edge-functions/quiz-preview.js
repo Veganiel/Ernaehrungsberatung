@@ -1,6 +1,6 @@
 const topics = new Set([
   'Allgemeine Gesundheit', 'Nahrungsergänzungsmittel', 'Antioxidantien',
-  'Langlebigkeit', 'Pflanzliche Ernährung', 'Ernährung & Umwelt',
+  'Schlaf & Regeneration', 'Langlebigkeit', 'Pflanzliche Ernährung', 'Ernährung & Umwelt',
 ]);
 
 function escapeAttribute(value) {
