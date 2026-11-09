@@ -3,6 +3,8 @@
   const nav = document.getElementById('nav');
   const menuButton = document.getElementById('menuBtn');
   const dropdowns = [...document.querySelectorAll('.nav-dropdown')];
+  const quizLink = nav.querySelector('.nav-dropdown-menu a[href="quiz.html"]');
+  quizLink?.parentElement.prepend(quizLink);
   const closeDropdowns = except => dropdowns.forEach(item => {
     if (item === except) return;
     item.classList.remove('is-open');
