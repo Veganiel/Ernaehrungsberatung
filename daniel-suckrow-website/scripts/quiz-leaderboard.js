@@ -27,11 +27,10 @@
   async function load(){
     const note=$('leaderboard-status');
     const current=await session();
-    $('leaderboard-signin').hidden=!!current;$('leaderboard-settings').hidden=!current;
-    if(current){$('quiz-account-link').hidden=true;if($('quiz-account-status').textContent.startsWith('Ohne Konto'))$('quiz-account-status').textContent='Angemeldet. Deine Quizdaten werden mit deinem Konto verbunden.';$('leaderboard-settings-copy').textContent='Aktiviere die Teilnahme, damit deine kommenden Quizrunden für die Wochenliga zählen.';}
-    try {const {data,error}=await sb.rpc('get_quiz_leaderboard',{history_weeks:12});if(error)throw error;writeLeaders(data?.leaders||[]);writeHistory(data?.history||[]);writeMedals(data?.viewer_medals);if(current){$('leaderboard-opt-in').checked=!!data?.viewer_participates;$('leaderboard-settings-copy').textContent=data?.viewer_participates?'Du spielst diese Woche mit. Dein öffentlicher Anzeigename ist in der Top 10 sichtbar.':'Aktiviere die Teilnahme, damit deine kommenden Quizrunden für die Wochenliga zählen.';}note.textContent='Diese Woche endet Sonntag um Mitternacht. Die nächste Woche beginnt direkt danach.';}catch{note.textContent='Die Rangliste ist gerade nicht erreichbar. Deine Quizrunde bleibt davon unberührt.';}
+    $('leaderboard-settings')?.remove();$('leaderboard-signin').hidden=!!current;
+    if(current){$('quiz-account-link').hidden=true;if($('quiz-account-status').textContent.startsWith('Ohne Konto'))$('quiz-account-status').textContent='Angemeldet. Deine Quizdaten werden mit deinem Konto verbunden.';if(current.user.user_metadata?.leaderboard_opt_in)await sb.rpc('set_quiz_leaderboard_participation',{enabled:true});}
+    try {const {data,error}=await sb.rpc('get_quiz_leaderboard',{history_weeks:12});if(error)throw error;writeLeaders(data?.leaders||[]);writeHistory(data?.history||[]);writeMedals(data?.viewer_medals);note.textContent='Diese Woche endet Sonntag um Mitternacht. Die nächste Woche beginnt direkt danach.';}catch{note.textContent='Die Rangliste ist gerade nicht erreichbar. Deine Quizrunde bleibt davon unberührt.';}
   }
-  $('leaderboard-settings')?.addEventListener('submit',async event=>{event.preventDefault();const button=$('leaderboard-save');button.disabled=true;try{const {error}=await sb.rpc('set_quiz_leaderboard_participation',{enabled:$('leaderboard-opt-in').checked});if(error)throw error;await load();}catch{$('leaderboard-settings-copy').textContent='Die Einstellung konnte gerade nicht gespeichert werden. Bitte versuche es erneut.';}finally{button.disabled=false;}});
   window.VeganielQuizLeaderboard={refresh:load};
   sb.auth.onAuthStateChange(()=>setTimeout(load,0));load();
 })();
