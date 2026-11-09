@@ -791,6 +791,7 @@ function updateGameLab(){
 }
 function updateProgress(){
  const records=Object.entries(progressStore.records()).filter(([key])=>Object.hasOwn(QUIZZES,key));
+ const unplayed=$('unplayed');if(records.length===quizKeys.length&&unplayed.checked)unplayed.checked=false;
  $('saved-progress').textContent=records.length+' von '+Object.keys(QUIZZES).length+' Quizzen abgeschlossen · '+records.reduce((sum,[,r])=>sum+r.attempts,0)+' gespielte Runden';
  renderBadges();
  updateGameLab();
@@ -814,6 +815,7 @@ function renderTopics(filter='Alle'){
  }));$('quiz-count').textContent=topics.children.length+' passende Quizze';$('no-quizzes').classList.toggle('hidden',topics.children.length!==0);
 }
 renderTopics();
+document.querySelector('.unplayed').append(' (wird zurückgesetzt, sobald alle Quizze gespielt sind)');
 $('quiz-search').addEventListener('input',refreshTopics);$('unplayed').addEventListener('change',refreshTopics);
 document.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-level]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));refreshTopics()}));
 function renderBadges(){const holder=$('badges');holder.replaceChildren();QuizWorld.badges(progressStore.records(),quizKeys).forEach(b=>{const card=document.createElement('div');card.className='world-badge'+(b.earned?' earned':'');const icon=document.createElement('span');icon.className='badge-icon';icon.setAttribute('aria-hidden','true');icon.textContent=b.icon;const title=document.createElement('h3');title.textContent=b.name;const detail=document.createElement('p');detail.textContent=b.detail;const state=document.createElement('small');state.textContent=b.earned?'✓ Freigeschaltet':'Noch zu entdecken';card.append(icon,title,detail,state);holder.append(card)})}
