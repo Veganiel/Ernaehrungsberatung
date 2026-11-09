@@ -13,7 +13,7 @@
         const score=document.querySelector('.habit-score .metric')?.textContent?.match(/(\d+)\s*\/\s*100/)?.[1];
         const total=[...document.querySelectorAll('.fitness-bonus strong')].map(x=>x.textContent).join(' ').match(/Gesamt:\s*(\d+)/)?.[1];
         const vo2=[...document.querySelectorAll('#analysis .result-card')].find(x=>x.querySelector('h3')?.textContent.includes('VO₂max'))?.querySelector('.metric')?.textContent?.match(/[\d,.]+/)?.[0];
-        if(score)add('health',{score:Number(score),total:total?Number(total):null,vo2:vo2?Number(String(vo2).replace(',','.')):null});
+        if(score)add('health',{score:Number(score),total:total===undefined?null:Number(total),vo2:vo2?Number(String(vo2).replace(',','.')):null});
         const analysisCards=[...document.querySelectorAll('#analysis .result-card')];
         const findCard=label=>analysisCards.find(card=>card.querySelector('h3')?.textContent.includes(label));
         if(vo2){const value=Number(String(vo2).replace(',','.'));if(Number.isFinite(value))add('vo2',{value,method:'Gesundheits-Check'});}
