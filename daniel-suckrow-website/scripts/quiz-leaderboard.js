@@ -1,6 +1,7 @@
 (() => {
   const sb=window.VeganielMember?.client, $=id=>document.getElementById(id);
-  if(!sb || !$('weekly-leaders')) return;
+  if(!$('weekly-leaders')) return;
+  if(!sb){$('weekly-leaders').innerHTML='<li class="leaderboard-empty">Die Kontoverbindung wird gerade nicht geladen.</li>';$('leaderboard-status').textContent='Bitte lade die Seite einmal neu. Deine Quizdaten bleiben erhalten.';return;}
   const medal={gold:'🥇',silver:'🥈',bronze:'🥉'};
   const safeText=value=>String(value??'').slice(0,80);
   function weekLabel(value){
@@ -29,7 +30,7 @@
     const current=await session();
     $('leaderboard-settings')?.remove();$('leaderboard-signin').hidden=!!current;
     if(current){$('quiz-account-link').hidden=true;if($('quiz-account-status').textContent.startsWith('Ohne Konto'))$('quiz-account-status').textContent='Angemeldet. Deine Quizdaten werden mit deinem Konto verbunden.';if(current.user.user_metadata?.leaderboard_opt_in)await sb.rpc('set_quiz_leaderboard_participation',{enabled:true});}
-    try {const {data,error}=await sb.rpc('get_quiz_leaderboard',{history_weeks:12});if(error)throw error;writeLeaders(data?.leaders||[]);writeHistory(data?.history||[]);writeMedals(data?.viewer_medals);note.textContent='Diese Woche endet Sonntag um Mitternacht. Die nächste Woche beginnt direkt danach.';}catch{note.textContent='Die Rangliste ist gerade nicht erreichbar. Deine Quizrunde bleibt davon unberührt.';}
+    try {const {data,error}=await sb.rpc('get_quiz_leaderboard',{history_weeks:12});if(error)throw error;writeLeaders(data?.leaders||[]);writeHistory(data?.history||[]);writeMedals(data?.viewer_medals);note.textContent='Diese Woche endet Sonntag um Mitternacht. Die nächste Woche beginnt direkt danach.';}catch{writeLeaders([]);writeHistory([]);note.textContent='Die Rangliste ist gerade nicht erreichbar. Deine Quizrunde bleibt davon unberührt.';}
   }
   window.VeganielQuizLeaderboard={refresh:load};
   sb.auth.onAuthStateChange(()=>setTimeout(load,0));load();
