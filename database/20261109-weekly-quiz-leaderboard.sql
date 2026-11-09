@@ -12,6 +12,7 @@ create table if not exists public.quiz_weekly_events (
   event_id uuid not null,
   quiz_key text not null check (char_length(quiz_key) between 1 and 120),
   score integer not null check (score between 0 and 10),
+  time_bonus integer not null default 0 check (time_bonus between 0 and 75),
   occurred_at timestamptz not null default now(),
   primary key (user_id, event_id)
 );
@@ -70,6 +71,21 @@ begin
 end;
 $$;
 
+create or replace function public.record_weekly_quiz_score(event uuid, quiz text, score integer, time_bonus integer)
+returns void language plpgsql security definer set search_path='' as $$
+declare owner_id uuid := auth.uid();
+begin
+  if owner_id is null then raise exception 'Authentication required'; end if;
+  if event is null or score is null or score < 0 or score > 10 or time_bonus is null or time_bonus < 0 or time_bonus > 75
+     or quiz is null or char_length(quiz) not between 1 and 120 or (quiz <> 'Blitzrunde' and quiz !~ ' · (Leicht|Mittel|Schwer)$') then
+    raise exception 'Invalid result';
+  end if;
+  if not exists (select 1 from public.quiz_leaderboard_preferences where user_id = owner_id and participates) then return; end if;
+  insert into public.quiz_weekly_events(user_id, event_id, quiz_key, score, time_bonus)
+  values (owner_id, event, quiz, score, time_bonus) on conflict do nothing;
+end;
+$$;
+
 -- This is intentionally idempotent. It runs whenever the public board is read,
 -- so a Monday board resets at midnight Berlin time without a separate cron secret.
 create or replace function public.finalize_closed_quiz_leaderboards()
@@ -77,16 +93,16 @@ returns void language plpgsql security definer set search_path='' as $$
 declare current_week date := date_trunc('week', timezone('Europe/Berlin', now()))::date;
 begin
   with event_weeks as (
-    select user_id, quiz_key, score, occurred_at,
+    select user_id, quiz_key, score, time_bonus, occurred_at,
       date_trunc('week', timezone('Europe/Berlin', occurred_at))::date as week_start
     from public.quiz_weekly_events
   ), first_per_quiz as (
-    select distinct on (week_start, user_id, quiz_key) week_start, user_id, quiz_key, score, occurred_at as first_played_at
+    select distinct on (week_start, user_id, quiz_key) week_start, user_id, quiz_key, score, time_bonus, occurred_at as first_played_at
     from event_weeks
     where week_start < current_week
     order by week_start, user_id, quiz_key, occurred_at asc, event_id asc
   ), totals as (
-    select week_start, user_id, sum(score)::integer as points,
+    select week_start, user_id, sum(score + time_bonus)::integer as points,
       count(*) filter (where score = 10)::integer as perfect_scores,
       min(first_played_at) as first_played_at
     from first_per_quiz
@@ -116,15 +132,15 @@ begin
   perform public.finalize_closed_quiz_leaderboards();
   return (
     with event_weeks as (
-      select user_id, quiz_key, score, occurred_at,
+      select user_id, quiz_key, score, time_bonus, occurred_at,
         date_trunc('week', timezone('Europe/Berlin', occurred_at))::date as week_start
       from public.quiz_weekly_events
     ), first_per_quiz as (
-      select distinct on (user_id, quiz_key) user_id, quiz_key, score, occurred_at as first_played_at
+      select distinct on (user_id, quiz_key) user_id, quiz_key, score, time_bonus, occurred_at as first_played_at
       from event_weeks where week_start = current_week
       order by user_id, quiz_key, occurred_at asc, event_id asc
     ), totals as (
-      select user_id, sum(score)::integer as points,
+      select user_id, sum(score + time_bonus)::integer as points,
         count(*) filter (where score = 10)::integer as perfect_scores,
         min(first_played_at) as first_played_at
       from first_per_quiz group by user_id
@@ -155,7 +171,7 @@ begin
 end;
 $$;
 
-revoke all on function public.set_quiz_leaderboard_participation(boolean), public.record_weekly_quiz_score(uuid,text,integer), public.finalize_closed_quiz_leaderboards(), public.get_quiz_leaderboard(integer) from public, anon;
-grant execute on function public.set_quiz_leaderboard_participation(boolean), public.record_weekly_quiz_score(uuid,text,integer) to authenticated;
+revoke all on function public.set_quiz_leaderboard_participation(boolean), public.record_weekly_quiz_score(uuid,text,integer), public.record_weekly_quiz_score(uuid,text,integer,integer), public.finalize_closed_quiz_leaderboards(), public.get_quiz_leaderboard(integer) from public, anon;
+grant execute on function public.set_quiz_leaderboard_participation(boolean), public.record_weekly_quiz_score(uuid,text,integer), public.record_weekly_quiz_score(uuid,text,integer,integer) to authenticated;
 grant execute on function public.get_quiz_leaderboard(integer) to anon, authenticated;
 commit;
