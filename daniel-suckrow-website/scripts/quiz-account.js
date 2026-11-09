@@ -2,7 +2,7 @@
  if(!window.VeganielMember?.client)return;
  const sb=window.VeganielMember.client,ui=window.VeganielQuizUI,$=id=>document.getElementById(id);
  const guest=QuizProgress.create();let active=null;
- const status=t=>{$('quiz-account-status').textContent=t;$('storage-note').textContent=active?'Mit Anmeldung werden Bestwerte und Abzeichen im Konto gespeichert. Auf gemeinsam genutzten Geräten bitte abmelden.':'Bestwerte bleiben nur in diesem Browser. Beim Löschen der Browserdaten gehen sie verloren.';};
+ const status=t=>{$('quiz-account-status').textContent=(active?'Angemeldet als '+active.displayName+'. ':'')+t;$('quiz-account-link').hidden=!!active;$('storage-note').textContent=active?'Mit Anmeldung werden Bestwerte und Abzeichen im Konto gespeichert. Auf gemeinsam genutzten Geräten bitte abmelden.':'Bestwerte bleiben nur in diesem Browser. Beim Löschen der Browserdaten gehen sie verloren.';};
  function persist(ctx){try{localStorage.setItem(ctx.queueKey,JSON.stringify(ctx.queue));}catch{ctx.durable=false;}}
  async function request(ctx,path,body){const r=await fetch(window.SUPABASE_URL+'/rest/v1/'+path,{method:body?'POST':'GET',headers:{apikey:window.SUPABASE_PUBLISHABLE_KEY,Authorization:'Bearer '+ctx.token,'Content-Type':'application/json'},...(body?{body:JSON.stringify(body)}:{}),cache:'no-store'});if(!r.ok)throw Error('Sync failed');return r.status===204?null:r.json();}
  async function flush(ctx){
@@ -18,9 +18,11 @@
   finally{ctx.busy=null;if(ctx.again){ctx.again=false;setTimeout(()=>flush(ctx),0);}}})();return ctx.busy;
  }
  async function change(next){const id=next?.user?.id;if(id&&active?.id===id){active.token=next.access_token;return;}if(!id){active=null;ui.setStore(guest);$('import-local').hidden=true;$('retry-sync').hidden=true;status('Ohne Konto spielst du lokal. Mit Konto bleiben deine Bestwerte auf deinen Geräten verfügbar.');return;}
- const ctx={id,token:next.access_token,store:QuizProgress.create(undefined,'veganiel.quiz-account.'+id),queueKey:'veganiel.quiz-pending.'+id,queue:[],durable:true,busy:null};
+ const fallbackName=next.user.user_metadata?.display_name||next.user.email?.split('@')[0]||'Mitglied';
+ const ctx={id,token:next.access_token,displayName:fallbackName,store:QuizProgress.create(undefined,'veganiel.quiz-account.'+id),queueKey:'veganiel.quiz-pending.'+id,queue:[],durable:true,busy:null};
  try{const raw=JSON.parse(localStorage.getItem(ctx.queueKey)||'[]');ctx.queue=Array.isArray(raw)?raw.filter(e=>e&&/^[a-f0-9-]{36}$/i.test(e.event)&&ui.keys.includes(e.quiz)&&Number.isInteger(e.score)&&e.score>=0&&e.score<=10):[];}catch{ctx.durable=false;}
- active=ctx;ui.setStore(ctx.store);$('import-local').hidden=!Object.keys(guest.records()).some(k=>ui.keys.includes(k));status('Deine Quiz-Bestwerte werden geladen …');await flush(ctx);
+ active=ctx;ui.setStore(ctx.store);$('import-local').hidden=!Object.keys(guest.records()).some(k=>ui.keys.includes(k));status('Deine Quiz-Bestwerte werden geladen …');
+ try{const profile=await sb.from('profiles').select('display_name').eq('id',id).maybeSingle();if(active!==ctx)return;if(!profile.error&&profile.data?.display_name)ctx.displayName=profile.data.display_name;}catch{}if(active!==ctx)return;status('Deine Quiz-Bestwerte werden geladen …');await flush(ctx);
  }
  window.addEventListener('veganiel:quiz-finished',event=>{const ctx=active;if(!ctx)return;ctx.queue.push({event:crypto.randomUUID(),quiz:event.detail.key,score:event.detail.score});persist(ctx);flush(ctx).then(()=>{if(ctx.queue.length&&active===ctx&&!ctx.busy)$('retry-sync').hidden=false;});});
  $('retry-sync').addEventListener('click',()=>{if(active)flush(active);});
