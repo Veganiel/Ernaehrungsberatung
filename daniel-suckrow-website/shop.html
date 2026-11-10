@@ -20,16 +20,17 @@
   <link rel="stylesheet" href="branding.css?v=2">
   <link rel="stylesheet" href="styles/global-nav.css?v=3">
   <link rel="stylesheet" href="i18n.css">
-  <link rel="stylesheet" href="styles/shop.css?v=editorial-2">
+  <link rel="stylesheet" href="styles/shop.css?v=editorial-3">
   <script src="i18n.js" defer></script>
   <script src="scripts/global-nav.js?v=4" defer></script>
   <script src="scripts/shop-visibility.js" defer></script>
-  <script src="scripts/shop-gallery.js?v=2" defer></script>
+  <script src="scripts/shop-gallery.js?v=3" defer></script>
 <link rel="stylesheet" href="styles/legal-footer.css"></head>
 <body class="shop-editorial">
   <a class="shop-skip" href="#main">Zum Inhalt springen</a>
   <header class="shop-fallback-header"><a href="index.html">Veganiel</a></header>
   <main id="main">
+    <div class="shop-hero-backdrop">
     <section class="shop-hero shop-shell" aria-labelledby="shop-title">
       <div class="hero-copy">
         <p class="shop-kicker"><span class="status-dot"></span> Veganiels Shop · Die Kollektion</p>
@@ -38,27 +39,23 @@
         <a class="shop-button hero-button" href="#kollektion">Kollektion entdecken <span aria-hidden="true">↘</span></a>
         <div class="hero-footnote"><span class="small-leaf" aria-hidden="true">❧</span><p>Kleidung mit Bio-Baumwolle.<br>Druck &amp; Versand durch Spreadshop.</p></div>
       </div>
-      <div class="hero-stage" data-feature="shirt">
-        <span class="stage-edition shop-kicker">Zwei Motive. Eine Haltung.</span>
-        <svg class="stage-botanical" viewBox="0 0 480 600" fill="none" aria-hidden="true"><path d="M220 600C160 420 250 170 370 20M218 474C30 420 16 320 30 274C142 302 218 358 218 474ZM222 405C398 394 456 290 446 237C324 256 249 318 222 405ZM245 295C104 255 107 147 123 116C214 139 249 210 245 295ZM286 195C405 178 452 91 426 46C354 68 309 119 286 195Z" stroke="currentColor" stroke-width="1.3"/></svg>
-        <a class="hero-product hero-product-shirt" data-hero-view="shirt" href="#make-the-connection" aria-label="Make the Connection T-Shirt ansehen">
-          <img src="assets/shop/make-the-connection-spreadshop.webp" width="1200" height="1200" alt="Make the Connection Bio-T-Shirt in Lavendel mit Blattmotte und Sternen" fetchpriority="high" decoding="async">
-        </a>
-        <a class="hero-product hero-product-hoodie" data-hero-view="hoodie" href="#end-speciesism" aria-label="End Speciesism Hoodie ansehen" hidden>
+      <div class="hero-duo">
+        <div class="duo-orbits" aria-hidden="true"></div>
+        <span class="duo-star" aria-hidden="true">✳</span>
+        <a class="duo-card duo-hoodie" href="#end-speciesism" aria-label="End Speciesism Hoodie ansehen">
+          <span class="duo-type shop-kicker">01 / Hoodie</span>
           <img src="assets/shop/end-speciesism-back.webp" width="350" height="350" alt="End Speciesism Hoodie in Navy, Rückseite mit Tiermotiv" decoding="async">
+          <span class="duo-label"><strong translate="no">End Speciesism</strong><span aria-hidden="true">↗</span></span>
         </a>
-        <span class="stage-star" aria-hidden="true">✳</span>
-        <span class="stage-vertical shop-kicker" aria-hidden="true">Wear your values</span>
-        <div class="stage-bottom">
-          <div class="stage-label" data-hero-label="shirt"><span class="shop-kicker">01 / T-Shirt</span><strong translate="no">Make the Connection</strong></div>
-          <div class="stage-label" data-hero-label="hoodie" hidden><span class="shop-kicker">02 / Hoodie</span><strong translate="no">End Speciesism</strong></div>
-          <div class="hero-switch" role="group" aria-label="Produktvorschau wählen" hidden>
-            <button type="button" data-hero-show="shirt" aria-pressed="true" aria-label="T-Shirt anzeigen">01</button>
-            <button type="button" data-hero-show="hoodie" aria-pressed="false" aria-label="Hoodie anzeigen">02</button>
-          </div>
-        </div>
+        <a class="duo-card duo-shirt" href="#make-the-connection" aria-label="Make the Connection T-Shirt ansehen">
+          <span class="duo-type shop-kicker">02 / T-Shirt</span>
+          <img src="assets/shop/make-the-connection-spreadshop.webp" width="1200" height="1200" alt="Make the Connection Bio-T-Shirt in Lavendel mit Blattmotte und Sternen" fetchpriority="high" decoding="async">
+          <span class="duo-label"><strong translate="no">Make the Connection</strong><span aria-hidden="true">↗</span></span>
+        </a>
+        <span class="duo-caption shop-kicker">Zwei Motive. Eine Haltung.</span>
       </div>
     </section>
+    </div>
 
     <div class="shop-ribbon" aria-label="Die Idee hinter der Kollektion">
       <div class="shop-shell"><span>Für Tiere.</span><i aria-hidden="true">✳</i><span>Für Natur.</span><i aria-hidden="true">✳</i><span>Für dich.</span><i aria-hidden="true">✳</i><span translate="no">Wear your values.</span></div>

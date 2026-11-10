@@ -17,21 +17,6 @@ for (const gallery of document.querySelectorAll('[data-shop-gallery]')) {
   controls.hidden = false;
 }
 
-// Keep the original shop images: previews are never recoloured or reconstructed.
-const heroStage = document.querySelector('.hero-stage');
-const heroSwitch = document.querySelector('.hero-switch');
-if (heroStage && heroSwitch) {
-  for (const button of heroSwitch.querySelectorAll('[data-hero-show]')) {
-    button.addEventListener('click', () => {
-      const view = button.dataset.heroShow;
-      heroStage.dataset.feature = view;
-      heroStage.querySelectorAll('[data-hero-view]').forEach(item => { item.hidden = item.dataset.heroView !== view; });
-      heroStage.querySelectorAll('[data-hero-label]').forEach(item => { item.hidden = item.dataset.heroLabel !== view; });
-      heroSwitch.querySelectorAll('button').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-    });
-  }
-  heroSwitch.hidden = false;
-}
 
 const lightbox = document.querySelector('.shop-lightbox');
 if (lightbox && typeof lightbox.showModal === 'function') {
