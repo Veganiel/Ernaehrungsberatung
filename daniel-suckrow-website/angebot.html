@@ -94,6 +94,10 @@ main h1 em,main h2 em{font-style:italic;color:var(--forest)}
 .tl-item:last-child::before{display:none}
 .tl-num{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--cream);border:1px solid var(--line-strong);font:400 22px "Playfair Display",serif;color:var(--forest)}
 .tl-body{padding-top:12px}
+.tl-item.is-full-only .tl-num{background:var(--deep);border-color:var(--deep);color:#fff}
+.tl-only{font-size:.62em;font-family:"DM Sans",sans-serif;font-weight:600;color:var(--forest);white-space:nowrap;vertical-align:middle}
+.tl-legend{display:flex;align-items:center;gap:10px;margin:0 0 22px;font-size:14px;color:var(--muted)}
+.tl-legend-dot{width:16px;height:16px;flex:0 0 16px;border-radius:50%;background:var(--deep)}
 .tl-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 .tl-body h3{font-size:clamp(23px,2.2vw,28px);margin:0 0 10px}
 .tl-body p{margin:0;font-size:16px;max-width:560px}
@@ -301,7 +305,7 @@ html{scroll-behavior:smooth}
       <h1><span>Ernährung verstehen.</span> <em>Gesundheit bewusst gestalten.</em></h1>
       <p class="lead">Eine persönliche Auswertung deiner Ernährungsgewohnheiten und deiner ärztlich erhobenen Blutwerte – mit konkreten Empfehlungen, die zu deinem Alltag passen. Ohne starre Pläne und ohne liebgewonnene Gewohnheiten pauschal aufzugeben.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#buchen"><span>Beratung buchen · ab 49 €</span><span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn-primary" href="#paket"><span>Beratung buchen · ab 49 €</span><span class="arrow" aria-hidden="true">→</span></a>
         <a class="btn btn-ghost" href="kennenlernen.html">Kostenloses Kennenlerngespräch</a>
       </div>
       <ul class="hero-facts">
@@ -346,15 +350,16 @@ html{scroll-behavior:smooth}
         <h2>Alles in einem persönlichen Paket.</h2>
         <p>Vom ersten Gespräch bis zu deinem persönlichen Leitfaden – Schritt für Schritt.</p>
       </div>
-      <a class="btn btn-primary" href="#paket"><span>Zum Paket</span><span class="arrow" aria-hidden="true">→</span></a>
+      <p class="tl-legend"><span class="tl-legend-dot" aria-hidden="true"></span><span>Grün markierte Schritte sind nur im Komplett-Paket enthalten.</span></p>
+      <a class="btn btn-primary" href="#paket"><span>Zu den Paketen</span><span class="arrow" aria-hidden="true">→</span></a>
     </div>
     <ol class="timeline">
-      <li class="tl-item"><span class="tl-num">1</span><div class="tl-body"><span class="tl-tag">Optional · kostenlos</span><h3>Optionales Kennenlerngespräch · kostenlos, 15 Minuten</h3><p><span>Wenn du vor der Buchung Fragen hast, kannst du ein kostenloses, unverbindliches Online-Kennenlerngespräch von etwa 15 Minuten buchen. Es ist optional und gehört nicht zum gebuchten Beratungspaket.</span> <span>Im Komplett-Paket ist trotzdem ein persönliches Kennenlernen per Video von etwa 30 Minuten enthalten. Im Kompakt-Paket ersetzen Unterlagen zum Ausfüllen das Kennenlernen.</span></p><a class="text-link" href="kennenlernen.html">Kostenloses Kennenlerngespräch buchen →</a></div></li>
+      <li class="tl-item is-full-only"><span class="tl-num">1</span><div class="tl-body"><span class="tl-tag">Optional · kostenlos</span><h3><span>Optionales Kennenlerngespräch · kostenlos, 15 Minuten</span> <span class="tl-only">(nur im Komplett-Paket)</span></h3><p><span>Wenn du vor der Buchung Fragen hast, kannst du ein kostenloses, unverbindliches Online-Kennenlerngespräch von etwa 15 Minuten buchen. Es ist optional und gehört nicht zum gebuchten Beratungspaket.</span> <span>Im Komplett-Paket ist trotzdem ein persönliches Kennenlernen per Video von etwa 30 Minuten enthalten. Im Kompakt-Paket ersetzen Unterlagen zum Ausfüllen das Kennenlernen.</span></p><a class="text-link" href="kennenlernen.html">Kostenloses Kennenlerngespräch buchen →</a></div></li>
       <li class="tl-item"><span class="tl-num">2</span><div class="tl-body"><span class="tl-tag">Eine Woche</span><h3>Eine Woche Ernährungserfassung</h3><p><span>Du dokumentierst eine Woche lang deine Mahlzeiten und Getränke, ohne deine gewohnte Ernährung künstlich zu verändern.</span> <span>Das Dokument zur Erfassung stelle ich dir bereit.</span></p></div></li>
       <li class="tl-item"><span class="tl-num">3</span><div class="tl-body"><span class="tl-tag">Zeitnah</span><h3>Ärztliche Blutuntersuchung</h3><p>Ich empfehle dir, während derselben Woche beim Hausarzt oder bei der Hausärztin eine Blutuntersuchung durchführen zu lassen. Organisation und mögliche Kosten der Untersuchung liegen bei dir.</p></div></li>
       <li class="tl-item"><span class="tl-num">4</span><div class="tl-body"><span class="tl-tag">Auswertung</span><h3>Individuelle Auswertung</h3><p>Ich betrachte dein Ernährungsprotokoll und die von dir bereitgestellten ärztlichen Blutwerte im Zusammenhang.</p></div></li>
       <li class="tl-item"><span class="tl-num">5</span><div class="tl-body"><span class="tl-tag">Dein Ergebnis</span><h3>Personalisierte PDF</h3><p>Du erhältst eine individuelle PDF mit verständlichen Ergebnissen und konkreten, alltagstauglichen Empfehlungen – abgestimmt auf deine Vorlieben und Routinen.</p></div></li>
-      <li class="tl-item"><span class="tl-num">6</span><div class="tl-body"><span class="tl-tag">Nur im Komplett-Paket</span><h3>Persönliches Auswertungsgespräch · etwa 30 Minuten</h3><p><span>Im Komplett-Paket ist ein abschließender Online-Call von etwa 30 Minuten enthalten. Wir besprechen darin deine Auswertung und offenen Fragen.</span> <span>Im Kompakt-Paket klären wir Rückfragen per E-Mail.</span></p></div></li>
+      <li class="tl-item is-full-only"><span class="tl-num">6</span><div class="tl-body"><span class="tl-tag">Nur im Komplett-Paket</span><h3><span>Persönliches Auswertungsgespräch · etwa 30 Minuten</span> <span class="tl-only">(nur im Komplett-Paket)</span></h3><p><span>Im Komplett-Paket ist ein abschließender Online-Call von etwa 30 Minuten enthalten. Wir besprechen darin deine Auswertung und offenen Fragen.</span> <span>Im Kompakt-Paket klären wir Rückfragen per E-Mail.</span></p></div></li>
       <li class="tl-item"><span class="tl-num">7</span><div class="tl-body"><span class="tl-tag">Auch danach</span><h3>Kontakt bei weiteren Fragen</h3><p>Auch über die Beratung hinaus kannst du dich bei weiteren Fragen per E-Mail an mich wenden.</p><a class="text-link" href="mailto:info@veganiel.com">info@veganiel.com</a></div></li>
     </ol>
   </div>
