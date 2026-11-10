@@ -3,7 +3,10 @@
   avatarStyle.rel = "stylesheet";
   avatarStyle.href = "styles/member-avatar.css";
   document.head.append(avatarStyle);
-  if (!window.VeganielMember?.client) return;
+  if (!window.VeganielMember?.client) {
+    document.body.classList.remove("member-pending");
+    return;
+  }
   const sb = window.VeganielMember.client,
     $ = (id) => document.getElementById(id);
   let user = null,
@@ -668,6 +671,7 @@
     $("member-auth").hidden = !!user || recovery;
     $("member-home").hidden = !user || recovery;
     $("recovery-panel").hidden = !recovery;
+    document.body.classList.remove("member-pending");
     if (!user || recovery) {
       $("profile-form").reset();
       $("account-email").textContent = "";
