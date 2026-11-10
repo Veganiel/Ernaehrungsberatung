@@ -1,0 +1,188 @@
+/* Quiz world: "Fakt oder Fake" format, game effects and motion polish. */
+.quiz-studio{--fx-ease:cubic-bezier(.2,.75,.2,1);--fx-forest:#1a3f31;--fx-lime:#d6e99d;--fx-cream:#f8f5e8;--fx-gold:#b08d47}
+
+/* Contrast fixes: these headlines were dark green on dark green */
+.quiz-studio .leaderboard-main h2,.quiz-studio .sprint-card h2{color:var(--fx-cream)}
+
+/* ── Feature card ───────────────────────────────────────────────────────── */
+.factcheck-feature{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,56px);align-items:center;margin:0 0 72px;padding:clamp(28px,4vw,52px);border-radius:28px;background:radial-gradient(900px 420px at 90% 0%,#2e5a45 0%,transparent 60%),#16352a;color:var(--fx-cream)}
+.factcheck-feature::before{content:"";position:absolute;inset:0;z-index:-1;background-image:linear-gradient(#d9e4bf0d 1px,transparent 1px),linear-gradient(90deg,#d9e4bf0d 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(90deg,transparent 30%,#000)}
+.factcheck-feature .world-kicker{display:flex;justify-content:flex-start;align-items:center;gap:10px;color:#c7daa1}
+.fc-new{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--fx-lime);color:#173629;font-weight:800;letter-spacing:.08em}
+.factcheck-feature h2{margin:16px 0;font:500 clamp(36px,4.6vw,60px)/1.02 'Playfair Display',Georgia,serif;letter-spacing:-.04em;color:var(--fx-cream)}
+.factcheck-feature h2 em{color:var(--fx-lime);font-style:italic}
+.fc-feature-text{max-width:46ch;color:#dce8d7;font-size:15.5px;line-height:1.7}
+.fc-levels{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 14px}
+.fc-level-btn{display:grid;gap:2px;min-width:132px;padding:14px 20px;border:1px solid #d6e99d55;border-radius:16px;background:#ffffff0d;color:var(--fx-cream);text-align:left;cursor:pointer;font:inherit;transition:transform .25s var(--fx-ease),background-color .25s,border-color .25s}
+.fc-level-btn:hover{transform:translateY(-3px);background:var(--fx-lime);border-color:var(--fx-lime);color:#173629}
+.fc-level-name{font:600 18px/1.2 'Playfair Display',Georgia,serif}
+.fc-level-btn small{font-size:12px;opacity:.8}
+.fc-league-note{color:#c4d3be;margin:0}
+.fc-demo{position:relative;height:320px;display:grid;place-items:center}
+.fc-demo-card{position:absolute;width:min(78%,300px);height:220px;border-radius:22px;background:var(--fx-cream);box-shadow:0 30px 60px -30px #00000099}
+.fc-demo-3{transform:translateY(22px) scale(.88);background:#e9e2c9;opacity:.6}
+.fc-demo-2{transform:translateY(11px) scale(.94);background:#f1ebd6;opacity:.85}
+.fc-demo-1{display:flex;flex-direction:column;justify-content:center;gap:12px;padding:26px;color:#173629}
+.fc-demo-kicker{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#6b7f41}
+.fc-demo-1 strong{font:500 24px/1.2 'Playfair Display',Georgia,serif}
+.fc-demo-stamp{position:absolute;top:20px;right:20px;padding:4px 12px;border:3px solid #2f7a4d;border-radius:8px;color:#2f7a4d;font-weight:800;letter-spacing:.12em;text-transform:uppercase;transform:rotate(12deg);opacity:0}
+.fc-demo-hint{position:absolute;bottom:4px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#c4d3be}
+.fc-demo-left{left:8%}.fc-demo-right{right:8%}
+
+/* ── Game view ──────────────────────────────────────────────────────────── */
+.factcheck{max-width:760px;margin:24px auto 80px}
+.factcheck.hidden,.fc-result.hidden,.fc-play.hidden{display:none}
+.factcheck.is-finished .fc-clock,.factcheck.is-finished .fc-meta,.factcheck.is-finished .fc-progress{display:none}
+.fc-top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.fc-quit{border:0;background:none;color:#214a37;font:700 14px 'DM Sans',sans-serif;cursor:pointer;padding:10px 0}
+.fc-title{font:600 18px 'Playfair Display',Georgia,serif;color:#183c2d;text-align:center}
+.fc-clock{position:relative;width:58px;height:58px;display:grid;place-items:center;color:#183c2d}
+.fc-clock svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.fc-clock circle{fill:none;stroke:#dfe6d2;stroke-width:4}
+.fc-clock .fc-clock-ring{stroke:#214a37;stroke-dasharray:119.4;stroke-dashoffset:0;stroke-linecap:round;transition:stroke-dashoffset 1s linear,stroke .3s}
+.fc-clock b{font:700 17px 'DM Sans',sans-serif;font-variant-numeric:tabular-nums}
+.fc-clock.is-urgent .fc-clock-ring{stroke:#c0563a}
+.fc-clock.is-urgent{animation:fc-tick 1s ease-in-out infinite}
+.fc-meta{display:flex;align-items:center;gap:18px;margin:14px 0 10px;font-size:14px;color:#4d6553}
+.fc-points{font-weight:700;color:#183c2d}
+.fc-combo{margin-left:auto;font:700 15px 'DM Sans',sans-serif;color:#b0602f}
+.fc-combo.is-pop{animation:fc-pop .45s var(--fx-ease)}
+.fc-progress{height:6px;border-radius:9px;background:#e3e9d6;overflow:hidden}
+.fc-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#214a37,#6b8f4a);border-radius:inherit;transition:width .4s var(--fx-ease)}
+.fc-play{display:grid;justify-items:center;gap:18px;margin-top:26px}
+.fc-stack{position:relative;width:min(100%,520px);height:340px}
+.fc-card{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:clamp(24px,4vw,40px);border-radius:26px;background:#fffdf7;border:1px solid #dfe4d3;box-shadow:0 30px 60px -32px #17332766;touch-action:none;user-select:none;cursor:grab;transition:transform .35s var(--fx-ease),opacity .35s;--fact:0;--fake:0;outline-offset:6px}
+.fc-card.is-dragging{transition:none;cursor:grabbing}
+.fc-card[data-depth="1"]{transform:translateY(14px) scale(.95);opacity:.75;pointer-events:none}
+.fc-card[data-depth="2"]{transform:translateY(28px) scale(.9);opacity:.45;pointer-events:none}
+.fc-card[data-depth="0"]{animation:fc-enter .35s var(--fx-ease)}
+.fc-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 3px rgba(47,122,77,var(--fact)),inset 0 0 0 3px rgba(192,86,58,var(--fake));background:linear-gradient(90deg,rgba(192,86,58,calc(var(--fake)*.12)),transparent 40%,transparent 60%,rgba(47,122,77,calc(var(--fact)*.12)))}
+.fc-card-topic{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#6b7f41}
+.fc-card-question{margin:0;font-size:16px;line-height:1.5;color:#4d6553}
+.fc-card-label{margin-top:8px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8a9a83}
+.fc-card-claim{font:500 clamp(24px,3.4vw,34px)/1.18 'Playfair Display',Georgia,serif;color:#183c2d;letter-spacing:-.02em}
+.fc-stamp{position:absolute;top:22px;padding:5px 14px;border:3px solid;border-radius:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:15px;pointer-events:none}
+.fc-stamp-fact{right:22px;color:#2f7a4d;transform:rotate(12deg);opacity:var(--fact)}
+.fc-stamp-fake{left:22px;color:#c0563a;transform:rotate(-12deg);opacity:var(--fake)}
+.fc-card.fly-right{transform:translate(140%,-6%) rotate(24deg)!important;opacity:0}
+.fc-card.fly-left{transform:translate(-140%,-6%) rotate(-24deg)!important;opacity:0}
+.fc-card.fly-right .fc-stamp-fact,.fc-card.fly-left .fc-stamp-fake{opacity:1}
+.fc-actions{display:flex;gap:16px}
+.fc-btn{display:inline-flex;align-items:center;gap:10px;min-width:150px;justify-content:center;min-height:58px;padding:0 26px;border-radius:999px;border:2px solid;font:700 16px 'DM Sans',sans-serif;cursor:pointer;background:#fff;transition:transform .2s var(--fx-ease),background-color .2s,color .2s}
+.fc-btn span{font-size:20px}
+.fc-btn-fake{color:#c0563a;border-color:#e7b4a5}
+.fc-btn-fake:hover{background:#c0563a;color:#fff;border-color:#c0563a;transform:translateY(-2px)}
+.fc-btn-fact{color:#2f7a4d;border-color:#a9d1b5}
+.fc-btn-fact:hover{background:#2f7a4d;color:#fff;border-color:#2f7a4d;transform:translateY(-2px)}
+.fc-keys{margin:0;color:#6b7a70}
+.fc-feedback{min-height:52px;max-width:560px;text-align:center;font-size:15px;line-height:1.5;color:#4d6553}
+.fc-feedback.is-right{color:#2f7a4d}
+.fc-feedback.is-wrong{color:#b0472f}
+.fc-feedback:not(:empty){animation:fc-fade .3s var(--fx-ease)}
+
+/* Result */
+.fc-result-head{display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,4vw,44px);align-items:center;margin:28px 0;padding:clamp(24px,4vw,40px);border-radius:26px;background:#16352a;color:var(--fx-cream)}
+.fc-score{--p:0;position:relative;width:170px;height:170px;border-radius:50%;display:grid;place-content:center;text-align:center;background:conic-gradient(var(--fx-lime) calc(var(--p)*360deg),#ffffff1c 0);animation:fc-pop .7s var(--fx-ease)}
+.fc-score::before{content:"";position:absolute;inset:12px;border-radius:50%;background:#16352a}
+.fc-score>*{position:relative}
+.fc-score-num{font:600 38px 'Playfair Display',Georgia,serif}
+.fc-score span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#c7daa1}
+.fc-result-copy .world-kicker{color:#c7daa1}
+.fc-result-copy h2{margin:8px 0 18px;font:500 clamp(26px,3.2vw,38px)/1.1 'Playfair Display',Georgia,serif;color:var(--fx-cream)}
+.fc-stats{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0 0 14px;padding:0}
+.fc-stats li{display:grid;gap:2px;padding:12px 16px;border-radius:14px;background:#ffffff12;min-width:110px}
+.fc-stats span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#c4d3be}
+.fc-stats strong{font:600 22px 'DM Sans',sans-serif}
+.fc-result-note{color:#c4d3be}
+.fc-result-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.fc-result-actions .btn{background:var(--fx-lime);border-color:var(--fx-lime);color:#173629}
+.fc-result-actions .btn.secondary{background:transparent;color:var(--fx-cream);border-color:#ffffff55}
+.fc-review h3{font:500 24px 'Playfair Display',Georgia,serif;color:#183c2d;margin:0 0 12px}
+.fc-review-item{border-bottom:1px solid #dfe4d3;padding:4px 0}
+.fc-review-item summary{display:flex;gap:12px;align-items:baseline;padding:12px 0;cursor:pointer;font-size:15px;line-height:1.5;color:#183c2d}
+.fc-review-mark{flex:0 0 22px;font-weight:800}
+.is-right .fc-review-mark{color:#2f7a4d}.is-wrong .fc-review-mark{color:#c0563a}
+.fc-review-item p{margin:0 0 10px 34px;font-size:14.5px;line-height:1.7;color:#4d6553}
+.fc-review-item a{display:inline-block;margin:0 0 12px 34px;font-size:13px;font-weight:700;color:#214a37;text-decoration:underline}
+
+/* ── Effects ────────────────────────────────────────────────────────────── */
+.fx-confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9998}
+.fx-toasts{position:fixed;right:20px;bottom:20px;z-index:9999;display:grid;gap:10px;max-width:min(360px,calc(100vw - 40px))}
+.fx-toast{display:flex;gap:14px;align-items:center;padding:14px 18px;border-radius:18px;background:#16352a;color:var(--fx-cream);box-shadow:0 24px 50px -20px #000a;animation:fx-toast-in .5s var(--fx-ease) both}
+.fx-toast.is-leaving{animation:fx-toast-out .5s var(--fx-ease) both}
+.fx-toast-icon{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;border-radius:50%;background:var(--fx-lime);color:#173629;font-size:20px}
+.fx-toast strong{display:block;font-size:14px}
+.fx-toast p{margin:2px 0 0;font-size:13px;color:#dce8d7}
+.player-card{position:relative}
+.fx-xp-gain{position:absolute;right:26px;top:24px;padding:6px 12px;border-radius:999px;background:#183c2d;color:var(--fx-lime);font:700 14px 'DM Sans',sans-serif;animation:fx-float-up 1.8s var(--fx-ease) both;pointer-events:none}
+#xp-bar,#mission-bar{transition:width 1s var(--fx-ease)}
+.world-badge.is-new{animation:fx-glow 2.4s ease-out 2}
+
+@media (prefers-reduced-motion:no-preference){
+  /* Hero stage comes alive */
+  .quiz-studio .quiz-orbits{animation:fx-spin 60s linear infinite}
+  .quiz-studio .quiz-play-front{animation:fx-float 6s ease-in-out infinite}
+  .quiz-studio .quiz-play-back{animation:fx-float 7s ease-in-out .8s infinite reverse}
+  .quiz-studio .studio-art-star{animation:fx-twinkle 4s ease-in-out infinite;display:inline-block}
+  .quiz-studio .quiz-answer-chip .is-solved{animation:fx-solved 3.2s ease-in-out infinite}
+  /* Demo card swipes on its own */
+  .fc-demo-1{animation:fc-demo 4.8s var(--fx-ease) infinite}
+  .fc-demo-1 .fc-demo-stamp{animation:fc-demo-stamp 4.8s var(--fx-ease) infinite}
+  /* Classic quiz feedback */
+  .quiz-studio .answer.correct{animation:fc-pop .45s var(--fx-ease)}
+  .quiz-studio .answer.wrong{animation:fx-shake .45s ease}
+  .quiz-studio .daily-answer.correct{animation:fc-pop .45s var(--fx-ease)}
+  .quiz-studio .daily-answer.wrong{animation:fx-shake .45s ease}
+  .quiz-studio #questionView.fx-enter{animation:fc-fade .4s var(--fx-ease)}
+  .quiz-studio #explanation:not(.hidden){animation:fc-fade .35s var(--fx-ease)}
+  .quiz-studio .player-card.fx-pulse{animation:fx-card-pulse .9s var(--fx-ease)}
+  /* Lists */
+  .quiz-studio .topics .topic{animation:fc-rise .55s var(--fx-ease) both;animation-delay:calc(var(--fx-i,0)*1ms)}
+  .quiz-studio .weekly-leaders li{animation:fc-rise .55s var(--fx-ease) both;animation-delay:calc(var(--fx-i,0)*1ms)}
+  .quiz-studio .history-week{animation:fc-rise .55s var(--fx-ease) both;animation-delay:calc(var(--fx-i,0)*1ms)}
+  .quiz-studio .topic{transition:transform .3s var(--fx-ease),box-shadow .3s}
+  .quiz-studio .topic:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 26px 50px -30px #17332766}
+  /* Scroll reveal (with JS safety net) */
+  .fx-reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--fx-ease),transform .8s var(--fx-ease)}
+  .fx-reveal.fx-visible{opacity:1;transform:none}
+}
+/* Top 3 of the week: podium feel */
+.quiz-studio .weekly-leaders li:nth-child(-n+3){padding:14px 12px;margin:4px -12px;border-radius:14px;background:#ffffff0d;border-bottom-color:transparent}
+.quiz-studio .weekly-leaders li:first-child{background:linear-gradient(90deg,#d6e99d26,#ffffff08);box-shadow:inset 0 0 0 1px #d6e99d40}
+.quiz-studio .weekly-leaders li:first-child .place{font-size:22px}
+
+@keyframes fc-pop{0%{transform:scale(.92)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes fc-fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes fc-rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes fc-enter{from{transform:translateY(14px) scale(.95)}to{transform:none}}
+@keyframes fc-tick{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes fc-demo{0%,18%{transform:none}38%{transform:translate(38%,-4%) rotate(12deg)}50%{transform:translate(130%,-8%) rotate(22deg);opacity:0}51%{transform:translateY(16px) scale(.94);opacity:0}64%,100%{transform:none;opacity:1}}
+@keyframes fc-demo-stamp{0%,20%{opacity:0}34%,50%{opacity:1}51%,100%{opacity:0}}
+@keyframes fx-spin{to{transform:rotate(360deg)}}
+@keyframes fx-float{0%,100%{translate:0 0}50%{translate:0 -10px}}
+@keyframes fx-twinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.18) rotate(20deg)}}
+@keyframes fx-solved{0%,100%{box-shadow:0 0 0 0 #d6e99d00}50%{box-shadow:0 0 0 8px #d6e99d33}}
+@keyframes fx-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+@keyframes fx-card-pulse{0%{box-shadow:0 0 0 0 #6b8f4a66}100%{box-shadow:0 0 0 18px #6b8f4a00}}
+@keyframes fx-float-up{0%{opacity:0;transform:translateY(10px)}15%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0;transform:translateY(-26px)}}
+@keyframes fx-glow{0%{box-shadow:0 0 0 0 #d6e99dcc}100%{box-shadow:0 0 0 22px #d6e99d00}}
+@keyframes fx-toast-in{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes fx-toast-out{to{opacity:0;transform:translateY(10px)}}
+
+@media(max-width:860px){
+  .factcheck-feature{grid-template-columns:1fr}
+  .fc-demo{height:260px}
+}
+@media(max-width:560px){
+  .factcheck-feature{margin-bottom:48px;border-radius:22px}
+  .fc-level-btn{flex:1 1 30%;min-width:0;padding:12px 14px}
+  .fc-level-btn small{font-size:11px}
+  .fc-stack{height:360px}
+  .fc-btn{min-width:0;flex:1}
+  .fc-actions{width:100%}
+  .fc-result-head{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .fc-stats,.fc-result-actions{justify-content:center}
+  .fc-meta{gap:12px;font-size:13px}
+  .fc-title{font-size:15px}
+  .fc-clock{width:52px;height:52px}
+}
