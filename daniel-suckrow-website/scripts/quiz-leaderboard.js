@@ -8,7 +8,7 @@
   const medal={gold:'🥇',silver:'🥈',bronze:'🥉'};
   const safeText=value=>String(value??'').slice(0,80);
   const initials=name=>safeText(name).trim().split(/\s+/).map(word=>word[0]||'').join('').slice(0,2).toUpperCase()||'V';
-  const avatar=(url,name)=>{const node=document.createElement('span');node.className='leader-avatar';if(url){const image=document.createElement('img');image.src=url;image.alt='';node.append(image);}else node.textContent=initials(name);return node;};
+  const avatar=(url,name)=>{const node=document.createElement('span');node.className='leader-avatar';if(url){const image=document.createElement('img');image.width=27;image.height=27;image.src=url;image.alt='';node.append(image);}else node.textContent=initials(name);return node;};
   async function withAvatars(rows){const names=[...new Set(rows.map(row=>safeText(row.name)).filter(Boolean))];if(!names.length)return rows;const {data}=await sb.from('profiles').select('display_name,avatar_url').in('display_name',names);const urls=new Map((data||[]).map(profile=>[profile.display_name,profile.avatar_url]));return rows.map(row=>({...row,avatar_url:row.avatar_url||urls.get(row.name)||''}));}
   function weekLabel(value){
     const day=new Date(value+'T12:00:00Z');

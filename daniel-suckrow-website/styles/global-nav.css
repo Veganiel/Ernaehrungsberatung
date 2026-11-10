@@ -23,3 +23,6 @@
 /* Tablet widths: keep the account button next to the language switch without overflowing */
 @media(min-width:761px) and (max-width:1080px){.veganiel-global-header .vn-inner{gap:14px}.veganiel-global-header .vn-links{gap:14px;margin-left:12px}.veganiel-global-header .vn-brand-text{font-size:23px}.veganiel-global-header .vn-brand img{width:36px;height:36px}}
 @media(min-width:761px) and (max-width:860px){.veganiel-global-header .vn-links>a.vn-account-link{padding:6px}.veganiel-global-header .vn-links>a.vn-account-link>span:not(.vn-account-avatar){position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+
+/* Avatar size must be known before nav-account/nav-profile CSS arrives, or the photo flashes at full size */
+.veganiel-global-header .vn-account-avatar,.account-nav .vn-account-avatar{display:inline-grid;place-items:center;flex:0 0 auto;width:23px;height:23px;border-radius:50%;overflow:hidden}.vn-account-avatar img{display:block;width:100%;height:100%;object-fit:cover}

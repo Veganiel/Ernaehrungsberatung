@@ -186,3 +186,6 @@
   .fc-title{font-size:15px}
   .fc-clock{width:52px;height:52px}
 }
+
+/* Leaderboard avatars: fixed size before leaderboard-avatars.css loads */
+.leader-avatar{display:inline-grid;place-items:center;flex:0 0 auto;width:27px;height:27px;border-radius:50%;overflow:hidden}.leader-avatar img{display:block;width:100%;height:100%;object-fit:cover}.history-person .leader-avatar{width:21px;height:21px}
