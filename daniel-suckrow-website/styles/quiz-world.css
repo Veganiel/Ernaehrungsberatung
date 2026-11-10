@@ -27,3 +27,6 @@
 @media(max-width:1050px){.game-lab{grid-template-columns:1fr 1fr}.mission-card{grid-column:1/-1;min-height:235px}.mission-card>p:not(.world-kicker){max-width:48ch}.game-badge-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:640px){.game-lab{grid-template-columns:1fr;margin-bottom:48px}.game-lab article{min-height:300px;padding:24px}.mission-card{grid-column:auto;min-height:280px}.mission-card a{left:24px;bottom:24px}.game-badge-grid{grid-template-columns:repeat(2,1fr)}.sprint-art{top:24px;right:18px;width:80px;height:80px}.sprint-art span{font-size:29px}.rank-row{margin-top:26px}}
 @media(max-width:800px){.leaderboard-panel{grid-template-columns:1fr}.leaderboard-main,.leaderboard-side{padding:28px 24px}}
+
+/* The signed-in indicator doubles as the direct route to the personal account. */
+.quiz-account-actions .is-account-link{cursor:pointer;transition:transform .18s ease,background .18s ease,border-color .18s ease}.quiz-account-actions .is-account-link:hover,.quiz-account-actions .is-account-link:focus-visible{background:#e7efdf;border-color:#91ab88;transform:translateY(-1px);outline:none}
