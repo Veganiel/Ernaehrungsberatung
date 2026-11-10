@@ -184,6 +184,32 @@
   font-weight: 700;
   text-decoration: none;
 }
+.health-hero-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:20px}
+.health-hero-actions .studio-health-start{margin-top:0}
+.studio-health-profile{display:inline-flex;min-height:48px;align-items:center;padding-inline:22px;font-size:14px;font-weight:700;border-radius:999px;background:transparent;color:var(--studio-ink,#1e3a2c);border:1.5px solid var(--studio-ink,#1e3a2c);cursor:pointer;text-decoration:none;transition:background .15s,color .15s}
+.studio-health-profile:hover{background:var(--studio-ink,#1e3a2c);color:#fff}
+.studio-health-profile.is-active{background:#eaf0e5;border-color:#c0d4b0;color:var(--studio-ink,#1e3a2c)}
+.health-profile-banner{background:#eaf0e5;border:1px solid #c0d4b0;border-radius:10px;padding:20px 24px;margin:20px 0;font-size:14px;line-height:1.65}
+.health-profile-banner strong{display:block;margin-bottom:6px;font-size:15px}
+.health-profile-banner .profile-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.health-profile-banner button{font-size:13px;padding:8px 16px;border-radius:6px;border:1px solid #a6b5a9;background:#fff;cursor:pointer}
+.health-profile-banner button:hover{background:#f0f4ec}
+.health-profile-banner button.danger{color:#9b302c;border-color:#d4a4a2}
+.health-profile-banner button.danger:hover{background:#fff2ed}
+.health-history{background:#fff;border:1px solid var(--line,#dce4db);border-radius:10px;padding:24px;margin:20px 0}
+.health-history h3{margin:0 0 14px;font-size:16px}
+.health-history-entry{display:grid;grid-template-columns:110px 1fr auto;gap:8px 16px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line,#dce4db);font-size:14px}
+.health-history-entry:last-child{border-bottom:none}
+.health-history-entry .date{color:var(--muted,#5b6d62);font-size:13px}
+.health-history-entry .delta{font-weight:600;font-size:13px}
+.delta.up{color:#3a7d4f}
+.delta.down{color:#9b302c}
+.delta.same{color:var(--muted,#5b6d62)}
+.health-compare{background:#eaf0e5;border-radius:10px;padding:20px 24px;margin:20px 0}
+.health-compare h3{margin:0 0 10px;font-size:16px}
+.health-compare .compare-grid{display:grid;grid-template-columns:1fr auto auto auto;gap:4px 16px;font-size:14px}
+.health-compare .compare-grid .label{color:var(--muted,#5b6d62)}
+.health-compare .compare-grid .val{font-weight:600;text-align:right}
 #health-form-title { scroll-margin-top: 112px; }
 .studio-health-art { background: #142f25; }
 .studio-health-art svg { display: block; width: 100%; height: 100%; }
