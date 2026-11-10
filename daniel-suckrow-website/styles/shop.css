@@ -177,3 +177,103 @@ body:has(.shop-lightbox[open]){overflow:hidden}
 @media(max-width:1000px){.shop-hero-backdrop .shop-hero{min-height:540px}.hero-duo{aspect-ratio:.95}.duo-card{padding:12px 10px}.duo-star{font-size:44px}}
 @media(max-width:760px){.shop-hero-backdrop .shop-hero{min-height:0;padding-block:36px 42px;gap:32px}.shop-hero-backdrop h1{font-size:clamp(49px,10.7vw,76px)}.hero-duo{width:calc(100% - 10px);max-width:480px;aspect-ratio:1.13;margin:0 auto 14px}.duo-card{height:78%;border-radius:12px}.duo-type{font-size:8px}.duo-label strong{font-size:clamp(13px,3.1vw,20px)}.duo-label>span{font-size:17px}.duo-caption{font-size:8px}.duo-star{font-size:39px}.duo-card img{margin-block:8px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+
+/* ── Refinement pass: site typography, aligned grid, readable sizes ───────── */
+.shop-editorial{--shop-serif:"Playfair Display",Georgia,serif;--shop-sans:"DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--shop-gold:#b08d47}
+.shop-editorial{font-family:var(--shop-sans);font-size:16px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.shop-editorial .shop-shell{width:min(1120px,calc(100% - 40px))}
+.shop-editorial .shop-kicker{font-size:11px;letter-spacing:.2em}
+
+/* Headings in the site serif */
+.shop-editorial .hero-copy h1{font-family:var(--shop-serif);letter-spacing:-.025em;line-height:1.02}
+.shop-editorial .collection-heading h2,.shop-editorial .shop-faq h2,.shop-editorial .manifesto-copy h2{font-family:var(--shop-serif);letter-spacing:-.02em;line-height:1.08}
+.shop-editorial .product-title-row h3,.shop-editorial .order-steps h3,.shop-editorial .duo-label strong,.shop-editorial .lightbox-top p,.shop-editorial .footer-brand{font-family:var(--shop-serif);letter-spacing:-.015em}
+.shop-editorial .step-number{font-family:var(--shop-serif)}
+.shop-editorial .shop-closing>span{font-family:var(--shop-serif);letter-spacing:-.03em}
+
+/* Hero: same banner, calmer details */
+.shop-editorial .hero-description{font-size:17px;max-width:38ch}
+.shop-editorial .hero-footnote p{font-size:13px}
+.shop-editorial .shop-button{font-size:14px;border-radius:999px;padding-inline:26px}
+.shop-editorial .shop-hero-backdrop .hero-button{border-radius:999px}
+.shop-editorial .duo-type,.shop-editorial .duo-caption{font-size:10px}
+
+/* Ribbon */
+.shop-editorial .shop-ribbon span{font-size:12px;letter-spacing:.16em}
+
+/* Collection: two equal, framed product cards */
+.shop-editorial .collection{padding-block:clamp(72px,9vw,120px) clamp(56px,7vw,96px)}
+.shop-editorial .collection-heading{margin-bottom:clamp(32px,4vw,52px)}
+.shop-editorial .collection-heading>p{font-size:15px}
+.shop-editorial .shop-grid{gap:clamp(20px,3vw,36px);align-items:stretch}
+.shop-editorial .hoodie-card{padding-top:0}
+.shop-editorial .merch-card{display:flex;flex-direction:column;background:#fffefb;border:1px solid var(--shop-line);border-radius:6px;overflow:hidden;transition:box-shadow .3s ease,transform .3s ease}
+.shop-editorial .merch-card:hover{box-shadow:0 30px 70px -36px #12302566;transform:translateY(-3px)}
+.shop-editorial .merch-stage{aspect-ratio:1.12;border-radius:0}
+.shop-editorial .merch-stage-top{inset:20px 22px auto}
+.shop-editorial .merch-stage-top .shop-kicker{font-size:10px}
+.shop-editorial .material-tag{font-size:11px;padding:6px 11px;border-radius:999px;background:#ffffffc4}
+.shop-editorial .view-caption{font-size:11px;left:22px}
+.shop-editorial .merch-info{display:flex;flex-direction:column;flex:1;padding:28px clamp(22px,3vw,34px) clamp(24px,3vw,32px);border-top:1px solid var(--shop-line)}
+.shop-editorial .merch-type{font-size:10px}
+.shop-editorial .product-title-row{align-items:flex-start;margin-block:12px 16px}
+.shop-editorial .product-title-row h3{font-size:clamp(30px,3vw,42px);line-height:1.05}
+.shop-editorial .merch-pricing{padding:6px 0 0}
+.shop-editorial .merch-pricing strong{font-family:var(--shop-serif);font-size:26px;font-weight:400}
+.shop-editorial .merch-pricing small{font-size:12px}
+.shop-editorial .merch-description{font-size:15.5px;line-height:1.75;min-height:0;max-width:none}
+.shop-editorial .product-colors{font-size:13px;margin-block:20px 24px;padding-top:18px;border-top:1px dashed var(--shop-line)}
+.shop-editorial .print-note{font-size:12px}
+.shop-editorial .buy-button{margin-top:auto}
+
+/* Benefits below the products */
+.shop-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:clamp(32px,4vw,48px) 0 0;padding:0;list-style:none;border:1px solid var(--shop-line);border-radius:6px;background:#fffefb}
+.shop-benefits li{display:flex;align-items:flex-start;gap:14px;padding:22px 24px;font-size:14.5px;line-height:1.55;color:var(--shop-muted)}
+.shop-benefits li+li{border-left:1px solid var(--shop-line)}
+.shop-benefits strong{display:block;color:var(--shop-ink);font-weight:600;font-size:15px}
+.shop-benefits svg{flex:0 0 22px;margin-top:2px;color:#6b7f41}
+.shop-editorial .collection-note{font-size:13px;margin-top:20px}
+
+/* Manifesto */
+.shop-editorial .manifesto-inner{padding-block:clamp(64px,8vw,104px)}
+.shop-editorial .manifesto-copy>p:last-child{font-size:16.5px}
+.shop-editorial .art-caption{font-size:10px}
+
+/* Order steps */
+.shop-editorial .shop-order{padding-block:clamp(72px,9vw,112px) clamp(40px,5vw,64px)}
+.shop-editorial .text-link{font-size:14px}
+.shop-editorial .step-number{color:var(--shop-gold)}
+.shop-editorial .order-steps h3{font-size:26px}
+.shop-editorial .order-steps p{font-size:15px;line-height:1.75}
+
+/* FAQ */
+.shop-editorial .shop-faq{padding-block:clamp(40px,5vw,64px) clamp(72px,9vw,112px)}
+.shop-editorial .faq-list summary{font:400 clamp(18px,1.7vw,21px)/1.35 var(--shop-serif);padding-block:24px;color:var(--shop-ink)}
+.shop-editorial .faq-list summary span{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border:1px solid var(--shop-line);border-radius:50%;font:300 20px/1 var(--shop-sans);transition:transform .25s,background-color .25s,color .25s}
+.shop-editorial .faq-list details[open] summary span{background:var(--shop-ink);border-color:var(--shop-ink);color:#fff}
+.shop-editorial .faq-list details p{font-size:15.5px;line-height:1.8;max-width:62ch;padding-bottom:24px}
+
+/* Footer */
+.shop-editorial .shop-footer .shop-shell{font-size:13px}
+.shop-editorial .footer-brand small{font-family:var(--shop-sans);font-size:9px}
+
+@media(max-width:1000px){
+  .shop-editorial .shop-shell{width:calc(100% - 40px)}
+  .shop-benefits{grid-template-columns:1fr}
+  .shop-benefits li+li{border-left:0;border-top:1px solid var(--shop-line)}
+}
+@media(max-width:760px){
+  .shop-editorial .shop-shell{width:calc(100% - 34px)}
+  .shop-editorial .hero-description{font-size:16px}
+  .shop-editorial .shop-ribbon span{font-size:10px;letter-spacing:.1em}
+  .shop-editorial .merch-stage{aspect-ratio:1.04}
+  .shop-editorial .merch-info{padding:24px 20px 22px}
+  .shop-editorial .product-title-row h3{font-size:36px}
+  .shop-editorial .merch-pricing strong{font-size:23px}
+  .shop-editorial .merch-description{font-size:15px}
+  .shop-editorial .collection-heading h2,.shop-editorial .shop-faq h2{font-size:40px}
+  .shop-editorial .order-steps h3{font-size:23px}
+  .shop-editorial .faq-list summary{font-size:18px}
+  .shop-editorial .collection-note{text-align:left}
+  .shop-editorial .buy-button{gap:12px;padding-inline:22px;font-size:13.5px;white-space:nowrap}
+}
