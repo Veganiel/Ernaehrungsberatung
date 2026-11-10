@@ -66,9 +66,6 @@ if(profile.checks.length>=2){const hist=el('div',undefined,'health-history');his
 for(let i=profile.checks.length-1;i>=0;i--){const c=profile.checks[i];const row=el('div',undefined,'health-history-entry');row.append(el('span',formatDate(c.date),'date'));const vals=[];if(c.score!=null)vals.push(t('Score: ','Score: ')+c.score);if(c.totalPoints!=null)vals.push(t('Gesamt: ','Total: ')+c.totalPoints);if(c.vo2!=null)vals.push('VO₂max: '+c.vo2.toFixed(1));row.append(el('span',vals.join(' · ')));
 if(i<profile.checks.length-1){const prev=profile.checks[i+1];const d=deltaLabel(c.score,prev.score);row.append(el('span',d?d.text:'','delta '+(d?d.cls:'')));}else row.append(el('span',''));
 hist.append(row);}banner.append(hist);}}
-const actions=el('div',undefined,'profile-actions');
-const del=el('button',t('Profil löschen','Delete profile'),'danger');del.type='button';del.addEventListener('click',()=>{if(confirm(t('Gesundheitsprofil und alle gespeicherten Checks löschen?','Delete health profile and all saved checks?'))){profileDelete();profile=null;build();if(last)report(last.d,last.a);}});
-actions.append(del);banner.append(actions);
 form.parentElement.insertBefore(banner,form);}
 function renderComparison(area,result){
 if(!profile||profile.checks.length===0)return;

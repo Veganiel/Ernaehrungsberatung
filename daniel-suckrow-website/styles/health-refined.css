@@ -1,0 +1,63 @@
+/* Scoped refinement: calm editorial surfaces, with short, optional motion. */
+.health-studio { --health-shadow: 0 12px 38px #173c2e09; }
+.health-studio .calculator-hero { padding-block: 16px 28px; }
+.health-studio .calculator-hero #intro .eyebrow { display: inline-flex; align-items: center; gap: 10px; }
+.health-studio .calculator-hero #intro .eyebrow::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #708e56; box-shadow: 0 0 0 5px #708e5614; }
+.health-studio .studio-health-art { border: 1px solid #42634e; border-radius: 32px; box-shadow: 0 24px 55px #183d2c20, inset 0 0 0 10px #ffffff05; transform: rotate(1deg); }
+.health-studio .health-art-pills span { border: 1px solid #e3eec43b; background: #193c2be6; color: #e3eec4; border-radius: 999px; padding: 9px 18px; }
+.health-studio .health-form-heading { display: flex; align-items: baseline; gap: 22px; border-bottom: 1px solid #cbd5c5; padding-bottom: 20px; margin-bottom: 24px; }
+.health-studio .health-form-heading h2 { margin: 0; }
+.health-studio .bmi-kind-note { border: 1px solid #dddcca; border-left: 3px solid #9aab79; border-radius: 0 20px 20px 0; background: #f5f3e9; padding: 24px 28px; box-shadow: none; }
+.health-studio .bmi-kind-note strong { color: #31563e; }
+.health-studio .bmi-kind-note p { max-width: 92ch; font-size: 14px; line-height: 1.8; }
+.health-studio #fields details { margin: 16px 0; border-radius: 22px; border-color: #d8dfd1; box-shadow: var(--health-shadow); transition: border-color .22s, box-shadow .22s; }
+.health-studio #fields details[open] { border-color: #9fb596; box-shadow: 0 16px 44px #173c2e0c; }
+.health-studio #fields summary { position: relative; padding: 26px 76px 26px 28px; list-style: none; font-size: clamp(16px, 1.8vw, 20px); letter-spacing: -.025em; }
+.health-studio #fields summary::-webkit-details-marker { display: none; }
+.health-studio #fields summary::after { content: '+'; position: absolute; right: 26px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid #d6dfcc; border-radius: 50%; background: #f3f5eb; font-size: 22px; font-weight: 400; }
+.health-studio #fields details[open] > summary { background: linear-gradient(100deg,#eaf0e1,#f6f8f0); margin-bottom: 0; border-bottom: 1px solid #dbe4d1; }
+.health-studio #fields details[open] > summary::after { content: '−'; color: #fff; background: #294f3a; border-color: #294f3a; }
+.health-studio #fields .section-body { padding: 24px 28px 32px; }
+.health-studio #fields .section-body > .note:empty { display: none; }
+.health-studio #fields .grid { gap: 24px 30px; }
+.health-studio #fields label > span { font-size: 13px; line-height: 1.5; }
+.health-studio #fields :is(input,select) { min-height: 52px; border: 1px solid #bbc9b5; border-radius: 12px; padding: 13px 15px; background: #fff; transition: border-color .2s, box-shadow .2s; }
+.health-studio #fields :is(input,select):focus { border-color: #577d48; box-shadow: 0 0 0 4px #7d9b5817; }
+.health-studio #fields .field-missing :is(input,select) { border-color: #b44037; background: #fff6f2; }
+.health-studio .health-profile-banner { position: relative; padding: 28px 30px; border-radius: 22px; border: 1px solid #c2d0b5; background: linear-gradient(120deg,#e9f0de,#f6f8ef); box-shadow: var(--health-shadow); }
+.health-studio .health-profile-banner > strong { display: flex; align-items: center; gap: 12px; font-size: 18px; letter-spacing: -.02em; }
+.health-studio .health-profile-banner > strong::before { content: ''; flex: 0 0 10px; height: 10px; border: 2px solid #6d8b51; border-radius: 50%; box-shadow: 0 0 0 5px #77975512; }
+.health-studio .health-profile-banner > p { margin-bottom: 0; max-width: 80ch; color: #4c624e; }
+.health-studio #health-form > .actions { padding: 22px 0; gap: 14px; }
+.health-studio :is(#analyze,.studio-health-start,.studio-health-profile) { transition: transform .2s, box-shadow .2s, background .2s; }
+.health-studio #analyze { padding: 17px 28px; box-shadow: 0 8px 20px #173c2e19; }
+.health-studio #reset { border-color: transparent; font-size: 13px; color: #5c6d5b; }
+.health-studio #analysis .result-card { padding: 28px; border-radius: 22px; box-shadow: var(--health-shadow); }
+.health-studio #analysis .result-card h3 { font-size: 17px; }
+.health-studio #analysis .result-card .metric { font-family: var(--studio-serif); font-size: clamp(28px,3vw,40px); color: #294f3a; }
+.health-studio #analysis .habit-score { padding: clamp(24px,4vw,44px); background: radial-gradient(ellipse at top right,#f4f7e8,#e5eddc); border-radius: 26px; }
+.health-studio #analysis .habit-score > .metric { letter-spacing: -.05em; }
+.health-studio #analysis .fitness-bonus { padding: 22px; border: 1px solid #ccd8bf; background: #fffdf78c; border-radius: 18px; }
+.health-studio .health-history, .health-studio .health-compare { border-radius: 18px; }
+@media (hover:hover) { .health-studio #fields details:hover { border-color: #9eaf91; } .health-studio :is(#analyze,.studio-health-start,.studio-health-profile):hover { transform: translateY(-2px); box-shadow: 0 9px 24px #173c2e19; } }
+@media (prefers-reduced-motion:no-preference) {
+  .health-studio .calculator-hero .edition-copy { animation: health-arrive .65s ease-out both; }
+  .health-studio .studio-health-art svg > path[stroke] { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: health-trace 2s .25s ease-out forwards; }
+  .health-studio #fields details[open] .section-body { animation: health-arrive .28s ease-out; }
+  .health-studio #analysis:not([hidden]) { animation: health-arrive .45s ease-out; }
+  @keyframes health-arrive { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes health-trace { to { stroke-dashoffset: 0; } }
+}
+@media (prefers-reduced-motion:reduce) { .health-studio :is(details,input,select,button,.studio-health-start) { transition: none !important; } }
+@media (max-width:650px) {
+  .health-studio .studio-health-art { transform: none; border-radius: 24px; }
+  .health-studio .health-form-heading { gap: 14px; }
+  .health-studio #fields summary { padding: 22px 64px 22px 20px; }
+  .health-studio #fields summary::after { right: 18px; }
+  .health-studio #fields .section-body { padding: 20px; }
+  .health-studio :is(.health-profile-banner,.bmi-kind-note) { padding: 22px; }
+  .health-studio #analyze { width: 100%; }
+  .health-studio #reset { margin-inline: auto; }
+  .health-studio .health-history-entry { grid-template-columns: 1fr; gap: 4px; }
+}
+@media print { .health-studio #analysis, .health-studio #analysis * { animation: none !important; box-shadow: none !important; } }
