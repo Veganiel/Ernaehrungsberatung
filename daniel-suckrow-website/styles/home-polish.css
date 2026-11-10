@@ -1,0 +1,113 @@
+/* Home polish layer: readability, hero choreography and richer interactions.
+   Builds on home-studio.css without changing the layout. */
+
+/* ── Readability: lift the smallest type to comfortable sizes ─────────────── */
+.home-studio .eyebrow{font-size:11px;letter-spacing:.16em}
+.home-studio .hero-copy>.eyebrow{font-size:11px;letter-spacing:.16em}
+.home-studio .hero-description{font-size:17px;line-height:1.75;max-width:480px}
+.home-studio .button{font-size:13px;min-height:54px}
+.home-studio .quiet-link{font-size:13.5px}
+.home-studio .hero-footnote{font-size:13px}
+.home-studio .hero-baseline{font-size:12px}
+.home-studio .hello-card strong{font-size:14px}
+.home-studio .hello-card small{font-size:12px}
+.home-studio .food-frame figcaption{font-size:11px}
+.home-studio .section-label{font-size:11px;letter-spacing:.16em}
+.home-studio .section-intro{font-size:16px;line-height:1.85}
+.home-studio .personal-note p>span{font-size:13px}
+.home-studio .journey-step>p{font-size:14.5px;line-height:1.8}
+.home-studio .journey-count,.home-studio .step-number{font-size:12px}
+.home-studio .journey-caption{font-size:12px}
+.home-studio .weekly-impulse-task p{font-size:15.5px}
+.home-studio .section-heading-row>p,.home-studio .section-heading-row>div>p{font-size:15px}
+.home-studio .card-topline{font-size:10px;letter-spacing:.12em}
+.home-studio .discover-card p{font-size:14px;line-height:1.75}
+.home-studio .card-link{font-size:13px}
+.home-studio .health-art>span{font-size:9px}
+.home-studio .calculator-links strong{font-size:13px}
+.home-studio .calculator-links small{font-size:11.5px}
+.home-studio .calculator-heading>span,.home-studio .tools-note{font-size:12px}
+.home-studio .about-copy>p{font-size:16px;line-height:1.8}
+.home-studio .about-credentials strong{font-size:13px}
+.home-studio .about-credentials small{font-size:12px}
+.home-studio .journal-category{font-size:10.5px;letter-spacing:.12em}
+.home-studio .journal-card p{font-size:14px;line-height:1.75}
+.home-studio .read-link{font-size:12px}
+.home-studio .closing-copy>p:not(.eyebrow){font-size:16px}
+.home-studio .closing-note>span:not(.quote-mark){font-size:11px}
+.home-studio .closing-note>a{font-size:14px}
+.home-studio .footer-top p{font-size:13px}
+.home-studio .footer-bottom{font-size:12px}
+
+/* ── Header: soft elevation once the page scrolls ─────────────────────────── */
+.home-studio header{transition:box-shadow .3s ease,background-color .3s ease}
+.home-studio header.is-scrolled{box-shadow:0 10px 30px -18px #17332755;background:#f8f6eefa}
+
+/* ── Values band as a calm, endless ribbon ────────────────────────────────── */
+.approach-strip.is-marquee{overflow:hidden}
+.approach-strip.is-marquee>.wrap{width:100%;max-width:none;display:block;padding-block:22px}
+.approach-strip .marquee-track{display:flex;width:max-content;animation:veganiel-marquee 42s linear infinite}
+.approach-strip .marquee-group{display:flex;align-items:center;gap:72px;padding-right:72px}
+.approach-strip .marquee-group>span{display:flex;align-items:center;gap:13px;font-size:14px;line-height:1.5;white-space:nowrap}
+.approach-strip .marquee-group>i{width:6px;height:6px;border-radius:50%;background:#b9d28f;opacity:.7;flex:0 0 6px}
+.approach-strip.is-marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes veganiel-marquee{to{transform:translateX(-50%)}}
+
+/* ── Discovery cards: soft spotlight that follows the pointer ─────────────── */
+.discover-card .card-spotlight{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .35s ease;background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),#ffffff2e,transparent 60%)}
+.discover-card.health-card .card-spotlight{background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),#d5e99b26,transparent 60%)}
+.discover-card:hover .card-spotlight{opacity:1}
+.discover-card .round-arrow{transition:transform .35s var(--ease),background-color .35s,color .35s}
+.discover-card:hover .round-arrow{transform:rotate(45deg);background:var(--forest);color:#fff;border-color:var(--forest)}
+.discover-card.health-card:hover .round-arrow{background:var(--lime);color:var(--forest);border-color:var(--lime)}
+.journal-card .journal-arrow{transition:transform .35s var(--ease),background-color .35s,color .35s}
+.journal-card:hover .journal-arrow{transform:rotate(45deg);background:var(--forest);color:#fff}
+
+/* ── Hero choreography ──────────────────────────────────────────────────────
+   Only active while <html> has .hero-motion (set inline in <head> when motion is allowed).
+   .hero-motion-done is added after 2.5 s as a safety net, so content can never stay hidden. */
+html.hero-motion:not(.hero-motion-done) .studio-hero .hero-copy>.eyebrow,
+html.hero-motion:not(.hero-motion-done) .studio-hero h1>span,
+html.hero-motion:not(.hero-motion-done) .studio-hero h1>em,
+html.hero-motion:not(.hero-motion-done) .studio-hero .hero-description,
+html.hero-motion:not(.hero-motion-done) .studio-hero .hero-actions,
+html.hero-motion:not(.hero-motion-done) .studio-hero .hero-footnote,
+html.hero-motion:not(.hero-motion-done) .studio-hero .hello-card{animation:veganiel-rise .9s var(--ease) both}
+html.hero-motion:not(.hero-motion-done) .studio-hero .hero-copy>.eyebrow{animation-delay:.05s}
+html.hero-motion:not(.hero-motion-done) .studio-hero h1>span:nth-of-type(1){animation-delay:.12s}
+html.hero-motion:not(.hero-motion-done) .studio-hero h1>span:nth-of-type(2){animation-delay:.22s}
+html.hero-motion:not(.hero-motion-done) .studio-hero h1>em{animation-delay:.32s}
+html.hero-motion:not(.hero-motion-done) .studio-hero .hero-description{animation-delay:.46s}
+html.hero-motion:not(.hero-motion-done) .studio-hero .hero-actions{animation-delay:.56s}
+html.hero-motion:not(.hero-motion-done) .studio-hero .hero-footnote{animation-delay:.66s}
+html.hero-motion:not(.hero-motion-done) .studio-hero .hello-card{animation-delay:1.05s;animation-duration:.8s}
+html.hero-motion:not(.hero-motion-done) .studio-hero h1 em::after{animation:veganiel-draw 1.1s .85s var(--ease) both}
+html.hero-motion:not(.hero-motion-done) .studio-hero .food-frame{animation:veganiel-frame 1.2s .1s var(--ease) both}
+html.hero-motion:not(.hero-motion-done) .studio-hero .food-frame>img{animation:veganiel-settle 2.1s .1s var(--ease) both}
+html.hero-motion:not(.hero-motion-done) .studio-hero .hero-seal{animation:veganiel-pop .8s .9s var(--ease) both}
+@media(prefers-reduced-motion:no-preference){
+  html.hero-motion-done .studio-hero .hero-seal{animation:veganiel-bob 6s ease-in-out infinite}
+  .home-studio .live-dot{animation:veganiel-pulse 2.4s ease-out infinite}
+}
+@keyframes veganiel-rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes veganiel-draw{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes veganiel-frame{from{opacity:0;transform:translateY(30px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes veganiel-settle{from{transform:scale(1.12)}to{transform:scale(1)}}
+@keyframes veganiel-pop{from{opacity:0;transform:rotate(-30deg) scale(.4)}to{opacity:1;transform:rotate(12deg) scale(1)}}
+@keyframes veganiel-bob{0%,100%{transform:rotate(12deg) translateY(0)}50%{transform:rotate(6deg) translateY(-8px)}}
+@keyframes veganiel-pulse{0%{box-shadow:0 0 0 0 #6b894866}70%{box-shadow:0 0 0 9px #6b894800}100%{box-shadow:0 0 0 0 #6b894800}}
+
+@media(max-width:940px){
+  .approach-strip .marquee-group>span{font-size:13px}
+  .approach-strip .marquee-group{gap:48px;padding-right:48px}
+}
+@media(max-width:760px){
+  .home-studio .hero-copy>.eyebrow{font-size:10px;letter-spacing:.12em}
+  .home-studio .hero-description{font-size:16px}
+  .home-studio .discover-card p{font-size:14px}
+  .approach-strip.is-marquee>.wrap{padding-block:18px}
+}
+@media(prefers-reduced-motion:reduce){
+  .approach-strip .marquee-track{animation:none}
+}
+@media(max-width:440px){.home-studio .hero-copy>.eyebrow{letter-spacing:.07em}}
