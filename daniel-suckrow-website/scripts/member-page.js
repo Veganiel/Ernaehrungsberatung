@@ -1,80 +1,993 @@
 (() => {
- const avatarStyle=document.createElement('link');avatarStyle.rel='stylesheet';avatarStyle.href='styles/member-avatar.css';document.head.append(avatarStyle);
- if(!window.VeganielMember?.client)return;
- const sb=window.VeganielMember.client,$=id=>document.getElementById(id);let user=null,recovery=false,renderVersion=0;
- const status=text=>{$('member-status').textContent=text;};
- const registrationError=error=>{
-  const code=error?.code||'';
-  if(code==='email_address_invalid')return 'Bitte prüfe, ob deine E-Mail-Adresse vollständig und richtig geschrieben ist.';
-  if(code==='weak_password')return 'Das Passwort ist noch zu schwach. Verwende mindestens zwölf Zeichen und vermeide leicht erratbare Wörter.';
-  if(code==='user_already_exists'||code==='email_exists')return 'Für diese E-Mail-Adresse besteht bereits ein Konto. Nutze die Anmeldung oder „Passwort vergessen“.';
-  if(code==='over_email_send_rate_limit')return 'Es wurden gerade zu viele E-Mails angefordert. Bitte warte einige Minuten und versuche es dann erneut.';
-  if(code==='unexpected_failure')return 'Die Bestätigungs-E-Mail konnte gerade nicht versendet werden. Bitte versuche es in einigen Minuten erneut.';
-  return 'Registrierung gerade nicht möglich. Bitte prüfe deine Angaben oder versuche es später erneut.';
- };
- async function run(button,action){button.disabled=true;try{await action();}catch{status('Das hat gerade nicht funktioniert. Bitte versuche es erneut. Deine Eingaben bleiben erhalten.');}finally{button.disabled=false;}}
- function registrationChoices(){if($('league-consent'))return;const box=$('register-fields'),choices=document.createElement('div');choices.className='private-note';choices.innerHTML='<label><input id="terms-consent" type="checkbox" required> Ich akzeptiere die <a href="agb.html" target="_blank" rel="noopener">AGB</a>.</label><label><input id="league-consent" type="checkbox"> Mein öffentlicher Anzeigename darf in der wöchentlichen Quiz-Liga erscheinen. Diese freiwillige Einstellung kann ich jederzeit in meinem Konto ändern.</label>';box.insertBefore(choices,$('confirm-register'));}
- function leagueProfileChoice(value){let input=$('profile-league');if(!input){const choice=document.createElement('label');choice.className='private-note';choice.innerHTML='<input id="profile-league" type="checkbox"> Mit meinem öffentlichen Anzeigenamen an der wöchentlichen Quiz-Liga teilnehmen. Diese Einstellung ist freiwillig und jederzeit änderbar.';($('league-choice')||$('profile-form')).append(choice);input=$('profile-league');}input.checked=!!value;}
- function setupProfileLayout(){const form=$('profile-form');if(!$('profile-data-disclosure')){const details=document.createElement('details'),summary=document.createElement('summary'),league=document.createElement('div');details.id='profile-data-disclosure';summary.textContent='Accountdaten aktualisieren';details.append(summary);form.before(details);details.append(form);league.id='league-choice';league.className='league-choice';details.after(league);}const choice=$('profile-league')?.closest('label');if(choice)$('league-choice').append(choice);}
- function history(){try{const legacy=window.VeganielWellbeingHistory?.read?.()??JSON.parse(localStorage.getItem('veganiel.wellbeing-history.v1')||'[]'),profile=JSON.parse(localStorage.getItem('veganiel.health-profile.v1')||'null'),profileRows=Array.isArray(profile?.checks)?profile.checks.flatMap(check=>{const at=String(check.date||'').match(/^\d{4}-\d{2}-\d{2}$/)?check.date+'T12:00:00.000Z':null;if(!at)return [];const rows=[];if(Number.isFinite(Number(check.score)))rows.push({kind:'health',at,score:Number(check.score),total:Number.isFinite(Number(check.totalPoints))?Number(check.totalPoints):null});if(Number.isFinite(Number(check.vo2)))rows.push({kind:'vo2',at,value:Number(check.vo2),method:'Gesundheits-Check'});if(Number.isFinite(Number(check.waistRatio))&&Number.isFinite(Number(check.bmi)))rows.push({kind:'waist',at,ratio:Number(check.waistRatio),bmi:Number(check.bmi),category:'Aus Gesundheits-Check'});return rows;}):[],merged=[...(Array.isArray(legacy)?legacy:[]),...profileRows].filter(row=>row&&typeof row.kind==='string'&&row.at),seen=new Set;return merged.filter(row=>{const id=row.kind+'|'+row.at;if(seen.has(id))return false;seen.add(id);return true;}).sort((a,b)=>String(a.at).localeCompare(String(b.at)));}catch{return [];}}
- function latest(rows,kind){return rows.filter(row=>row.kind===kind).at(-1);}
- function chart(entries,max=100,label='Verlauf',valueFor=row=>row.value,format=value=>String(value)){const rows=(entries||[]).slice(-6),series=rows.map(valueFor).map(Number).filter(Number.isFinite),ceiling=Math.max(max,...series,1),svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 260 88');svg.setAttribute('role','img');svg.setAttribute('aria-label',label);const dated=row=>new Date(row.at).toLocaleDateString('de-DE'),shortDate=row=>new Date(row.at).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'});if(series.length<2){const note=document.createElementNS('http://www.w3.org/2000/svg','text');note.setAttribute('x','130');note.setAttribute('y','42');note.setAttribute('text-anchor','middle');note.textContent=series.length?dated(rows[0])+' · '+format(series[0]):'Noch ein weiterer Wert für den Verlauf';svg.append(note);return svg;}const yFor=value=>68-(Math.max(0,Math.min(ceiling,value))/ceiling*53),xFor=index=>12+index*(236/(series.length-1)),points=series.map((value,index)=>xFor(index)+','+yFor(value)).join(' '),line=document.createElementNS('http://www.w3.org/2000/svg','polyline');line.setAttribute('points',points);line.setAttribute('fill','none');line.setAttribute('stroke','currentColor');line.setAttribute('stroke-width','3');line.setAttribute('stroke-linecap','round');line.setAttribute('stroke-linejoin','round');svg.append(line);series.forEach((value,index)=>{const x=xFor(index),y=yFor(value),dot=document.createElementNS('http://www.w3.org/2000/svg','circle');dot.setAttribute('cx',String(x));dot.setAttribute('cy',String(y));dot.setAttribute('r','4');const title=document.createElementNS('http://www.w3.org/2000/svg','title');title.textContent=dated(rows[index])+': '+format(value);dot.append(title);svg.append(dot);const score=document.createElementNS('http://www.w3.org/2000/svg','text');score.setAttribute('x',String(x));score.setAttribute('y',String(Math.max(11,y-7)));score.setAttribute('text-anchor','middle');score.textContent=format(value);svg.append(score);const date=document.createElementNS('http://www.w3.org/2000/svg','text');date.setAttribute('x',String(x));date.setAttribute('y','84');date.setAttribute('text-anchor','middle');date.textContent=shortDate(rows[index]);svg.append(date);});return svg;}
- function card(title,value,detail,href){const node=document.createElement('article');node.className='overview-card';const label=document.createElement('p');label.className='overview-label';label.textContent=title;const metric=document.createElement('strong');metric.textContent=value;const text=document.createElement('p');text.textContent=detail;node.append(label,metric,text);const rows=history();if(title==='Gesundheits-Check'){const last=latest(rows,'health');if(last)metric.textContent=String(last.total??last.score)+' Punkte';}const trend=title==='VO₂max'?{rows:rows.filter(row=>row.kind==='vo2'),max:90,label:'Verlauf des VO₂max-Werts',valueFor:row=>row.value,format:value=>value+' ml'}:title==='Taille & BMI'?{rows:rows.filter(row=>row.kind==='waist'),max:45,label:'Verlauf des BMI',valueFor:row=>row.bmi,format:value=>'BMI '+value.toFixed(1)}:null;if(trend){const wrap=document.createElement('div');wrap.className='health-chart';wrap.append(chart(trend.rows,trend.max,trend.label,trend.valueFor,trend.format));node.append(wrap);}if(href){const link=document.createElement('a');link.href=title==='Herzfrequenzzonen'?'herzfrequenz-rechner.html#heart-results':href;link.textContent='Öffnen ↗';node.append(link);}return node;}
- function avatarKey(){return 'veganiel.profile-avatar.v1.'+(user?.id||'guest');}
- const isFactKey=key=>String(key||'').startsWith('Fakt oder Fake · ');
- function quizBadges(allRows){const factRows=(allRows||[]).filter(row=>isFactKey(row.quiz_key)),rows=(allRows||[]).filter(row=>!isFactKey(row.quiz_key));let profile={daily:[],sprint:{plays:0,best:0},duels:0,factcheck:{plays:0,best:0,combo:0}};try{const stored=JSON.parse(localStorage.getItem('veganiel.quiz-world-profile.v1')||'{}');profile={daily:Array.isArray(stored.daily)?stored.daily:[],sprint:stored.sprint||profile.sprint,duels:Number(stored.duels)||0,factcheck:stored.factcheck||profile.factcheck};}catch{}const factPlays=Math.max(Number(profile.factcheck.plays)||0,factRows.reduce((sum,row)=>sum+(Number(row.attempts)||0),0)),factBest=Math.max(Number(profile.factcheck.best)||0,...factRows.map(row=>Number(row.best)||0)),factCombo=Math.min(10,Number(profile.factcheck.combo)||0);const today=Math.floor(Date.now()/86400000),days=new Set(profile.daily),streak=(()=>{let n=0;for(let day=today;days.has(day);day--)n++;return n;})();const totalQuizzes=21,attempts=(rows||[]).reduce((sum,row)=>sum+(Number(row.attempts)||0),0),mastered=(rows||[]).filter(row=>row.best>=8).length,perfect=(rows||[]).filter(row=>row.best===10).length,hardPerfect=(rows||[]).filter(row=>row.quiz_key?.endsWith(' · Schwer')&&row.best===10).length,xp=attempts*20+mastered*30+perfect*40+profile.daily.length*15+(Number(profile.sprint.plays)||0)*10+profile.duels*10+factPlays*12+(factBest===10?40:0)+factCombo*3;return [{icon:'☀',name:'Erster Impuls',detail:'Tagesfrage beantwortet',earned:profile.daily.length>=1},{icon:'⚡',name:'Blitzstart',detail:'Eine Blitzrunde gespielt',earned:(Number(profile.sprint.plays)||0)>=1},{icon:'⏱',name:'Schnelldenker:in',detail:'8 von 10 in der Blitzrunde',earned:(Number(profile.sprint.best)||0)>=8},{icon:'↗',name:'Duell eröffnet',detail:'Eine Herausforderung geteilt',earned:profile.duels>=1},{icon:'☘',name:'Drei-Tage-Flow',detail:'3 Tage in Folge aktiv',earned:streak>=3},{icon:'✦',name:'Wissensfunke',detail:'Level Entdecker:in erreicht',earned:xp>=160},{icon:'◆',name:'Quiz-Komplettist:in',detail:'Alle '+totalQuizzes+' Quizze abgeschlossen',earned:(rows||[]).length>=totalQuizzes},{icon:'♛',name:'Wissensmeister:in',detail:'Alle '+totalQuizzes+' Quizze mit 10 von 10 gemeistert',earned:(rows||[]).length>=totalQuizzes&&perfect>=totalQuizzes},{icon:'⚑',name:'Unbeirrbar',detail:'Alle 7 schweren Quizze mit 10 von 10 gemeistert',earned:hardPerfect>=7},{icon:'⇄',name:'Faktenblick',detail:'Eine Runde Fakt oder Fake gespielt',earned:factPlays>=1},{icon:'◎',name:'Combo-Kette',detail:'5 Treffer in Folge bei Fakt oder Fake',earned:factCombo>=5},{icon:'✓',name:'Fake-Detektor:in',detail:'10 von 10 bei Fakt oder Fake',earned:factBest===10}];}
- function setupAvatar(host,profileUrl=''){const avatar=document.createElement('label'),input=document.createElement('input'),image=document.createElement('img'),plus=document.createElement('span');avatar.className='profile-avatar';avatar.title='Profilbild hinzufügen oder ändern';input.type='file';input.accept='image/png,image/jpeg,image/webp';input.hidden=true;plus.className='profile-avatar-plus';plus.textContent='+';plus.setAttribute('aria-hidden','true');let saved=profileUrl;try{saved=saved||localStorage.getItem(avatarKey())||localStorage.getItem('veganiel.profile-avatar.current')||'';}catch{};const draw=url=>{avatar.replaceChildren();if(url){image.src=url;image.alt='Dein Profilbild';avatar.append(image);}else avatar.append(document.createTextNode((user?.user_metadata?.display_name||user?.email||'?').trim().charAt(0).toUpperCase()));avatar.append(plus,input);};draw(saved);input.addEventListener('change',async()=>{const file=input.files?.[0];if(!file||file.size>1200000)return;const reader=new FileReader();reader.onload=()=>{try{localStorage.setItem(avatarKey(),String(reader.result));localStorage.setItem('veganiel.profile-avatar.current',String(reader.result));}catch{}draw(String(reader.result));window.dispatchEvent(new Event('veganiel:avatar-change'));};reader.readAsDataURL(file);const ext=(file.name.split('.').pop()||'jpg').replace(/[^a-z0-9]/gi,'');const path=user.id+'/profile.'+ext;const upload=await sb.storage.from('avatars').upload(path,file,{upsert:true,contentType:file.type});if(!upload.error){const {data}=sb.storage.from('avatars').getPublicUrl(path);const url=data.publicUrl+'?v='+Date.now();await sb.from('profiles').upsert({id:user.id,display_name:$('profile-display').value.trim()||'Mitglied',avatar_url:url,updated_at:new Date().toISOString()});try{localStorage.setItem('veganiel.profile-avatar.current',url);}catch{}draw(url);window.dispatchEvent(new Event('veganiel:avatar-change'));}});host.append(avatar);}
- function renderOverview(quizRows,awards,profileUrl){const home=$('member-home');let panel=$('member-overview');if(!panel){panel=document.createElement('section');panel.id='member-overview';panel.className='member-panel member-overview';home.prepend(panel);}panel.replaceChildren();const top=document.createElement('div');top.className='overview-top';setupAvatar(top,profileUrl);const copy=document.createElement('div');const heading=document.createElement('h2');heading.textContent='Dein Überblick';const text=document.createElement('p');text.textContent='Quizfortschritt und Rechner-Ergebnisse auf einen Blick.';copy.append(heading,text);top.append(copy);panel.append(top);const rows=history(),grid=document.createElement('div');grid.className='overview-grid';const medals={gold:'🥇 Gold',silver:'🥈 Silber',bronze:'🥉 Bronze'};const awardText=Object.entries(awards||{}).filter(([,count])=>count).map(([medal,count])=>(medals[medal]||medal)+' × '+count).join(' · ')||'Noch keine Liga-Auszeichnung';grid.append(card('Quizwelt',String((quizRows||[]).filter(row=>!isFactKey(row.quiz_key)).length)+' Quiz-Bestwerte',awardText,'quiz.html'));const health=rows.filter(row=>row.kind==='health'),lastHealth=health.at(-1);const healthCard=card('Gesundheits-Check',lastHealth?(lastHealth.score+' / 100'):'Noch kein gespeicherter Check',lastHealth?'Letzter Check: '+new Date(lastHealth.at).toLocaleDateString('de-DE'):'Führe deinen ersten Check durch.','gesundheits-check.html');const chartWrap=document.createElement('div');chartWrap.className='health-chart';chartWrap.append(chart(health,100,'Verlauf des Gesundheits-Checks',row=>row.total??row.score,value=>value+' P.'));healthCard.append(chartWrap);grid.append(healthCard);const vo2=latest(rows,'vo2');grid.append(card('VO₂max',vo2?(vo2.value+' ml/kg/min'):'Noch kein Wert',vo2?(vo2.method||'Letzte Feldtest-Schätzung'):'Mit Cooper- oder Rockport-Test schätzen.','vo2max-rechner.html'));const heart=latest(rows,'heart');grid.append(card('Herzfrequenzzonen',heart?(heart.maximum+' Schläge/min'):'Noch keine Zonen',heart?(heart.zones?.join(' · ')||heart.method||'Letztes Ergebnis'):'Berechne deine vier Trainingsbereiche.','herzfrequenz-rechner.html'));const waist=latest(rows,'waist');grid.append(card('Taille & BMI',waist?('BMI '+waist.bmi.toFixed(1)):'Noch keine Maße',waist?('Taille/Größe: '+waist.ratio.toFixed(3)):'Deine grobe Orientierung.','taille-rechner.html'));const supplements=latest(rows,'supplements');grid.append(card('Supplement-Auswahl',supplements?(supplements.total.toFixed(2)+' € / Monat'):'Noch keine Auswahl',supplements?(supplements.products?.slice(0,3).join(' · ')||'Letzte Beispielauswahl'):'Plane eine Beispielauswahl nach Budget.','supplement-rechner.html'));panel.append(grid);const badgeTitle=document.createElement('h3');badgeTitle.className='profile-badge-title';badgeTitle.textContent='Deine Quizwelt-Auszeichnungen';panel.append(badgeTitle);const badgeList=document.createElement('div');badgeList.className='profile-badges';quizBadges(quizRows).forEach(badge=>{const item=document.createElement('article');item.className='profile-badge'+(badge.earned?' earned':'');const icon=document.createElement('span');icon.textContent=badge.icon;const name=document.createElement('strong');name.textContent=badge.name;const detail=document.createElement('small');detail.textContent=badge.earned?'Freigeschaltet · '+badge.detail:badge.detail;item.append(icon,name,detail);badgeList.append(item);});panel.append(badgeList);const note=document.createElement('p');note.className='small overview-note';note.textContent='Rechner-Ergebnisse, Profilbild und einige Quiz-Abzeichen bleiben nur auf diesem Gerät gespeichert und werden nicht an Veganiel übertragen.';panel.append(note);}
- async function render(){
-  const version=++renderVersion;const {data,error}=await sb.auth.getUser();if(version!==renderVersion)return;user=data?.user||null;
-  $('member-auth').hidden=!!user||recovery;$('member-home').hidden=!user||recovery;$('recovery-panel').hidden=!recovery;
-  if(!user||recovery){$('profile-form').reset();$('account-email').textContent='';return;}
-  $('account-email').textContent=user.email;
-  const [profile,details,quiz,league,awards]=await Promise.all([sb.from('profiles').select('display_name,avatar_url').eq('id',user.id).maybeSingle(),sb.from('member_details').select('full_name,address_line,postal_code,city,country').eq('user_id',user.id).maybeSingle(),sb.from('quiz_results').select('quiz_key,best,attempts').eq('user_id',user.id),sb.from('quiz_leaderboard_preferences').select('participates').eq('user_id',user.id).maybeSingle(),sb.rpc('get_quiz_leaderboard',{history_weeks:1})]);
-  if(version!==renderVersion)return;
-  const remoteProblem=[profile,details,quiz,league,awards].some(result=>result.error);
-  $('profile-form').querySelector('button').disabled=!!(profile.error||details.error||league.error);
-  $('profile-display').value=profile.data?.display_name||user.user_metadata?.display_name||'Mitglied';
-  for(const [id,key] of Object.entries({'full-name':'full_name',address:'address_line',postal:'postal_code',city:'city',country:'country'}))$(id).value=details.data?.[key]||'';
-  setupProfileLayout();leagueProfileChoice(league.data?.participates||user.user_metadata?.leaderboard_opt_in);
-  $('account-quiz-summary').replaceChildren(document.createTextNode(String((quiz.data||[]).filter(row=>!isFactKey(row.quiz_key)).length)+' '));const summary=document.createElement('span');summary.textContent='gespeicherte Quiz-Bestwerte.';$('account-quiz-summary').append(summary);
-  renderOverview(quiz.data||[],awards.data?.viewer_medals||{},profile.data?.avatar_url);updateContact();
-  if(remoteProblem)status('Einige Kontodaten sind gerade nicht erreichbar. Deine auf diesem Gerät gespeicherten Rechner-Ergebnisse werden weiterhin angezeigt.');
- }
- function updateContact(){if(!user)return;const text='Hallo Daniel,\n\nich interessiere mich für eine Ernährungsberatung.\n\nName: '+$('full-name').value+'\nKonto-E-Mail: '+user.email+'\nKontokennung: '+user.id+'\n\nMein Anliegen (ohne medizinische Unterlagen):\n';$('consultation-email').href='mailto:info@veganiel.com?subject='+encodeURIComponent('Beratungsanfrage aus meinem Veganiel-Konto')+'&body='+encodeURIComponent(text);}
- $('login-form').addEventListener('submit',e=>{e.preventDefault();run(e.submitter,async()=>{const {error}=await sb.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error){status('Anmeldung nicht möglich. Bitte prüfe E-Mail-Adresse und Passwort sowie die E-Mail-Bestätigung.');return;}$('password').value='';location.assign('index.html');});});
- $('register').addEventListener('click',()=>{$('register-name-field').hidden=false;$('register-fields').hidden=false;registrationChoices();$('password').autocomplete='new-password';$('display-name').focus();});
- $('confirm-register').addEventListener('click',e=>run(e.currentTarget,async()=>{if(!$('login-form').reportValidity())return;if(!$('terms-consent').checked){status('Bitte akzeptiere die AGB, um ein Konto zu erstellen.');return;}if($('password').value.length<12){status('Bitte wähle ein Passwort mit mindestens zwölf Zeichen.');return;}const display=$('display-name').value.trim();if(!display){status('Bitte wähle einen öffentlichen Anzeigenamen.');return;}const {error}=await sb.auth.signUp({email:$('email').value.trim(),password:$('password').value,options:{emailRedirectTo:location.origin+'/konto.html',data:{display_name:display,leaderboard_opt_in:$('league-consent').checked,terms_accepted_at:new Date().toISOString(),terms_version:'2026-11-09'}}});if(error){status(registrationError(error));return;}$('password').value='';status('Bitte prüfe dein E-Mail-Postfach und bestätige deine Adresse. Falls bereits ein Konto besteht, nutze die Anmeldung oder „Passwort vergessen“.');}));
- $('forgot').addEventListener('click',e=>run(e.currentTarget,async()=>{if(!$('email').reportValidity())return;const {error}=await sb.auth.resetPasswordForEmail($('email').value.trim(),{redirectTo:location.origin+'/konto.html?recovery=1'});if(error)throw error;status('Falls ein Konto mit dieser Adresse existiert, erhältst du einen Link zum Zurücksetzen.');}));
- $('recovery-form').addEventListener('submit',e=>{e.preventDefault();run(e.submitter,async()=>{const {error}=await sb.auth.updateUser({password:$('new-password').value});if(error)throw error;$('new-password').value='';recovery=false;history.replaceState(null,'','/konto.html');status('Dein Passwort wurde geändert.');await render();});});
- $('profile-form').addEventListener('submit',e=>{e.preventDefault();run(e.submitter,async()=>{if(!user)throw Error();const id=user.id;const {error}=await sb.from('member_details').upsert({user_id:id,full_name:$('full-name').value.trim(),address_line:$('address').value.trim(),postal_code:$('postal').value.trim(),city:$('city').value.trim(),country:$('country').value.trim(),updated_at:new Date().toISOString()});if(error)throw error;const result=await sb.from('profiles').upsert({id,display_name:$('profile-display').value.trim()||'Mitglied',updated_at:new Date().toISOString()});if(result.error){status('Private Angaben gespeichert. Der Anzeigename konnte gerade nicht aktualisiert werden.');return;}const league=await sb.rpc('set_quiz_leaderboard_participation',{enabled:$('profile-league').checked});if(league.error){status('Dein Profil wurde gespeichert. Die Liga-Einstellung konnte gerade nicht aktualisiert werden.');return;}await sb.auth.updateUser({data:{leaderboard_opt_in:$('profile-league').checked}});updateContact();status('Dein Profil wurde gespeichert.');});});
- $('logout').addEventListener('click',e=>run(e.currentTarget,async()=>{const {error}=await sb.auth.signOut();if(error)throw error;$('profile-form').reset();status('Du bist abgemeldet.');await render();}));
- if(new URLSearchParams(location.hash.slice(1)).has('error'))status('Der Bestätigungslink ist abgelaufen oder ungültig. Bitte fordere einen neuen Link an.');
- window.addEventListener('veganiel:wellbeing-history',()=>{if(user&&!$('member-home').hidden)render();});
- window.addEventListener('storage',event=>{if(event.key==='veganiel.wellbeing-history.v1'&&user&&!$('member-home').hidden)render();});
- sb.auth.onAuthStateChange(event=>{if(event==='TOKEN_REFRESHED')return;if(event==='PASSWORD_RECOVERY')recovery=true;if(event==='SIGNED_OUT')recovery=false;setTimeout(()=>render(),0);});
- render();
+  const avatarStyle = document.createElement("link");
+  avatarStyle.rel = "stylesheet";
+  avatarStyle.href = "styles/member-avatar.css";
+  document.head.append(avatarStyle);
+  if (!window.VeganielMember?.client) return;
+  const sb = window.VeganielMember.client,
+    $ = (id) => document.getElementById(id);
+  let user = null,
+    recovery = false,
+    renderVersion = 0;
+  const status = (text) => {
+    $("member-status").textContent = text;
+  };
+  const registrationError = (error) => {
+    const code = error?.code || "";
+    if (code === "email_address_invalid")
+      return "Bitte prüfe, ob deine E-Mail-Adresse vollständig und richtig geschrieben ist.";
+    if (code === "weak_password")
+      return "Das Passwort ist noch zu schwach. Verwende mindestens zwölf Zeichen und vermeide leicht erratbare Wörter.";
+    if (code === "user_already_exists" || code === "email_exists")
+      return "Für diese E-Mail-Adresse besteht bereits ein Konto. Nutze die Anmeldung oder „Passwort vergessen“.";
+    if (code === "over_email_send_rate_limit")
+      return "Es wurden gerade zu viele E-Mails angefordert. Bitte warte einige Minuten und versuche es dann erneut.";
+    if (code === "unexpected_failure")
+      return "Die Bestätigungs-E-Mail konnte gerade nicht versendet werden. Bitte versuche es in einigen Minuten erneut.";
+    return "Registrierung gerade nicht möglich. Bitte prüfe deine Angaben oder versuche es später erneut.";
+  };
+  async function run(button, action) {
+    button.disabled = true;
+    try {
+      await action();
+    } catch {
+      status(
+        "Das hat gerade nicht funktioniert. Bitte versuche es erneut. Deine Eingaben bleiben erhalten.",
+      );
+    } finally {
+      button.disabled = false;
+    }
+  }
+  function registrationChoices() {
+    if ($("league-consent")) return;
+    const box = $("register-fields"),
+      choices = document.createElement("div");
+    choices.className = "private-note";
+    choices.innerHTML =
+      '<label><input id="terms-consent" type="checkbox" required> Ich akzeptiere die <a href="agb.html" target="_blank" rel="noopener">AGB</a>.</label><label><input id="league-consent" type="checkbox"> Mein öffentlicher Anzeigename darf in der wöchentlichen Quiz-Liga erscheinen. Diese freiwillige Einstellung kann ich jederzeit in meinem Konto ändern.</label>';
+    box.insertBefore(choices, $("confirm-register"));
+  }
+  function leagueProfileChoice(value) {
+    let input = $("profile-league");
+    if (!input) {
+      const choice = document.createElement("label");
+      choice.className = "private-note";
+      choice.innerHTML =
+        '<input id="profile-league" type="checkbox"> Mit meinem öffentlichen Anzeigenamen an der wöchentlichen Quiz-Liga teilnehmen. Diese Einstellung ist freiwillig und jederzeit änderbar.';
+      ($("league-choice") || $("profile-form")).append(choice);
+      input = $("profile-league");
+    }
+    input.checked = !!value;
+  }
+  function setupProfileLayout() {
+    const form = $("profile-form");
+    if (!$("profile-data-disclosure")) {
+      const details = document.createElement("details"),
+        summary = document.createElement("summary"),
+        league = document.createElement("div");
+      details.id = "profile-data-disclosure";
+      summary.textContent = "Accountdaten aktualisieren";
+      details.append(summary);
+      form.before(details);
+      details.append(form);
+      league.id = "league-choice";
+      league.className = "league-choice";
+      details.after(league);
+    }
+    const choice = $("profile-league")?.closest("label");
+    if (choice) $("league-choice").append(choice);
+  }
+  function history() {
+    try {
+      const legacy =
+          window.VeganielWellbeingHistory?.read?.() ??
+          JSON.parse(
+            localStorage.getItem("veganiel.wellbeing-history.v1") || "[]",
+          ),
+        profile = JSON.parse(
+          localStorage.getItem("veganiel.health-profile.v1") || "null",
+        ),
+        profileRows = Array.isArray(profile?.checks)
+          ? profile.checks.flatMap((check) => {
+              const at = String(check.date || "").match(/^\d{4}-\d{2}-\d{2}$/)
+                ? check.date + "T12:00:00.000Z"
+                : null;
+              if (!at) return [];
+              const rows = [];
+              if (Number.isFinite(Number(check.score)))
+                rows.push({
+                  kind: "health",
+                  at,
+                  score: Number(check.score),
+                  total: Number.isFinite(Number(check.totalPoints))
+                    ? Number(check.totalPoints)
+                    : null,
+                });
+              if (Number.isFinite(Number(check.vo2)))
+                rows.push({
+                  kind: "vo2",
+                  at,
+                  value: Number(check.vo2),
+                  method: "Gesundheits-Check",
+                });
+              if (
+                Number.isFinite(Number(check.waistRatio)) &&
+                Number.isFinite(Number(check.bmi))
+              )
+                rows.push({
+                  kind: "waist",
+                  at,
+                  ratio: Number(check.waistRatio),
+                  bmi: Number(check.bmi),
+                  category: "Aus Gesundheits-Check",
+                });
+              return rows;
+            })
+          : [],
+        direct = JSON.parse(
+          localStorage.getItem("veganiel.supplement-calculator.v1") || "null",
+        ),
+        directRows =
+          direct?.touched && Array.isArray(direct.products) && direct.products.length
+            ? [
+                {
+                  kind: "supplements",
+                  at: direct.at || new Date().toISOString(),
+                  total: Number(direct.total),
+                  products: direct.products,
+                },
+              ]
+            : [],
+        merged = [
+          ...(Array.isArray(legacy) ? legacy : []),
+          ...profileRows,
+          ...directRows,
+        ].filter((row) => row && typeof row.kind === "string" && row.at),
+        seen = new Set();
+      return merged
+        .filter((row) => {
+          const id = row.kind + "|" + row.at;
+          if (seen.has(id)) return false;
+          seen.add(id);
+          return true;
+        })
+        .sort((a, b) => String(a.at).localeCompare(String(b.at)));
+    } catch {
+      return [];
+    }
+  }
+  function latest(rows, kind) {
+    return rows.filter((row) => row.kind === kind).at(-1);
+  }
+  function chart(
+    entries,
+    max = 100,
+    label = "Verlauf",
+    valueFor = (row) => row.value,
+    format = (value) => String(value),
+  ) {
+    const rows = (entries || []).slice(-6),
+      series = rows.map(valueFor).map(Number).filter(Number.isFinite),
+      ceiling = Math.max(max, ...series, 1),
+      svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 260 88");
+    svg.setAttribute("role", "img");
+    svg.setAttribute("aria-label", label);
+    const dated = (row) => new Date(row.at).toLocaleDateString("de-DE"),
+      shortDate = (row) =>
+        new Date(row.at).toLocaleDateString("de-DE", {
+          day: "2-digit",
+          month: "2-digit",
+        });
+    if (series.length < 2) {
+      const note = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "text",
+      );
+      note.setAttribute("x", "130");
+      note.setAttribute("y", "42");
+      note.setAttribute("text-anchor", "middle");
+      note.textContent = series.length
+        ? dated(rows[0]) + " · " + format(series[0])
+        : "Noch ein weiterer Wert für den Verlauf";
+      svg.append(note);
+      return svg;
+    }
+    const yFor = (value) =>
+        68 - (Math.max(0, Math.min(ceiling, value)) / ceiling) * 53,
+      xFor = (index) => 12 + index * (236 / (series.length - 1)),
+      points = series
+        .map((value, index) => xFor(index) + "," + yFor(value))
+        .join(" "),
+      line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+    line.setAttribute("points", points);
+    line.setAttribute("fill", "none");
+    line.setAttribute("stroke", "currentColor");
+    line.setAttribute("stroke-width", "3");
+    line.setAttribute("stroke-linecap", "round");
+    line.setAttribute("stroke-linejoin", "round");
+    svg.append(line);
+    series.forEach((value, index) => {
+      const x = xFor(index),
+        y = yFor(value),
+        dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      dot.setAttribute("cx", String(x));
+      dot.setAttribute("cy", String(y));
+      dot.setAttribute("r", "4");
+      const title = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "title",
+      );
+      title.textContent = dated(rows[index]) + ": " + format(value);
+      dot.append(title);
+      svg.append(dot);
+      const score = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "text",
+      );
+      score.setAttribute("x", String(x));
+      score.setAttribute("y", String(Math.max(11, y - 7)));
+      score.setAttribute("text-anchor", "middle");
+      score.textContent = format(value);
+      svg.append(score);
+      const date = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "text",
+      );
+      date.setAttribute("x", String(x));
+      date.setAttribute("y", "84");
+      date.setAttribute("text-anchor", "middle");
+      date.textContent = shortDate(rows[index]);
+      svg.append(date);
+    });
+    return svg;
+  }
+  function card(title, value, detail, href) {
+    const node = document.createElement("article");
+    node.className = "overview-card";
+    const label = document.createElement("p");
+    label.className = "overview-label";
+    label.textContent = title;
+    const metric = document.createElement("strong");
+    metric.textContent = value;
+    const text = document.createElement("p");
+    text.textContent = detail;
+    node.append(label, metric, text);
+    const rows = history();
+    if (title === "Gesundheits-Check") {
+      const last = latest(rows, "health");
+      if (last)
+        metric.textContent = String(last.total ?? last.score) + " Punkte";
+    }
+    const trend =
+      title === "VO₂max"
+        ? {
+            rows: rows.filter((row) => row.kind === "vo2"),
+            max: 90,
+            label: "Verlauf des VO₂max-Werts",
+            valueFor: (row) => row.value,
+            format: (value) => value + " ml",
+          }
+        : title === "Taille & BMI"
+          ? {
+              rows: rows.filter((row) => row.kind === "waist"),
+              max: 45,
+              label: "Verlauf des BMI",
+              valueFor: (row) => row.bmi,
+              format: (value) => "BMI " + value.toFixed(1),
+            }
+          : null;
+    if (trend) {
+      const wrap = document.createElement("div");
+      wrap.className = "health-chart";
+      wrap.append(
+        chart(trend.rows, trend.max, trend.label, trend.valueFor, trend.format),
+      );
+      node.append(wrap);
+    }
+    if (href) {
+      const link = document.createElement("a");
+      link.href =
+        title === "Herzfrequenzzonen"
+          ? "herzfrequenz-rechner.html#heart-results"
+          : href;
+      link.textContent = "Öffnen ↗";
+      node.append(link);
+    }
+    return node;
+  }
+  function avatarKey() {
+    return "veganiel.profile-avatar.v1." + (user?.id || "guest");
+  }
+  const isFactKey = (key) => String(key || "").startsWith("Fakt oder Fake · ");
+  function quizBadges(allRows) {
+    const factRows = (allRows || []).filter((row) => isFactKey(row.quiz_key)),
+      rows = (allRows || []).filter((row) => !isFactKey(row.quiz_key));
+    let profile = {
+      daily: [],
+      sprint: { plays: 0, best: 0 },
+      duels: 0,
+      factcheck: { plays: 0, best: 0, combo: 0 },
+    };
+    try {
+      const stored = JSON.parse(
+        localStorage.getItem("veganiel.quiz-world-profile.v1") || "{}",
+      );
+      profile = {
+        daily: Array.isArray(stored.daily) ? stored.daily : [],
+        sprint: stored.sprint || profile.sprint,
+        duels: Number(stored.duels) || 0,
+        factcheck: stored.factcheck || profile.factcheck,
+      };
+    } catch {}
+    const factPlays = Math.max(
+        Number(profile.factcheck.plays) || 0,
+        factRows.reduce((sum, row) => sum + (Number(row.attempts) || 0), 0),
+      ),
+      factBest = Math.max(
+        Number(profile.factcheck.best) || 0,
+        ...factRows.map((row) => Number(row.best) || 0),
+      ),
+      factCombo = Math.min(10, Number(profile.factcheck.combo) || 0);
+    const today = Math.floor(Date.now() / 86400000),
+      days = new Set(profile.daily),
+      streak = (() => {
+        let n = 0;
+        for (let day = today; days.has(day); day--) n++;
+        return n;
+      })();
+    const totalQuizzes = 21,
+      attempts = (rows || []).reduce(
+        (sum, row) => sum + (Number(row.attempts) || 0),
+        0,
+      ),
+      mastered = (rows || []).filter((row) => row.best >= 8).length,
+      perfect = (rows || []).filter((row) => row.best === 10).length,
+      hardPerfect = (rows || []).filter(
+        (row) => row.quiz_key?.endsWith(" · Schwer") && row.best === 10,
+      ).length,
+      xp =
+        attempts * 20 +
+        mastered * 30 +
+        perfect * 40 +
+        profile.daily.length * 15 +
+        (Number(profile.sprint.plays) || 0) * 10 +
+        profile.duels * 10 +
+        factPlays * 12 +
+        (factBest === 10 ? 40 : 0) +
+        factCombo * 3;
+    return [
+      {
+        icon: "☀",
+        name: "Erster Impuls",
+        detail: "Tagesfrage beantwortet",
+        earned: profile.daily.length >= 1,
+      },
+      {
+        icon: "⚡",
+        name: "Blitzstart",
+        detail: "Eine Blitzrunde gespielt",
+        earned: (Number(profile.sprint.plays) || 0) >= 1,
+      },
+      {
+        icon: "⏱",
+        name: "Schnelldenker:in",
+        detail: "8 von 10 in der Blitzrunde",
+        earned: (Number(profile.sprint.best) || 0) >= 8,
+      },
+      {
+        icon: "↗",
+        name: "Duell eröffnet",
+        detail: "Eine Herausforderung geteilt",
+        earned: profile.duels >= 1,
+      },
+      {
+        icon: "☘",
+        name: "Drei-Tage-Flow",
+        detail: "3 Tage in Folge aktiv",
+        earned: streak >= 3,
+      },
+      {
+        icon: "✦",
+        name: "Wissensfunke",
+        detail: "Level Entdecker:in erreicht",
+        earned: xp >= 160,
+      },
+      {
+        icon: "◆",
+        name: "Quiz-Komplettist:in",
+        detail: "Alle " + totalQuizzes + " Quizze abgeschlossen",
+        earned: (rows || []).length >= totalQuizzes,
+      },
+      {
+        icon: "♛",
+        name: "Wissensmeister:in",
+        detail: "Alle " + totalQuizzes + " Quizze mit 10 von 10 gemeistert",
+        earned: (rows || []).length >= totalQuizzes && perfect >= totalQuizzes,
+      },
+      {
+        icon: "⚑",
+        name: "Unbeirrbar",
+        detail: "Alle 7 schweren Quizze mit 10 von 10 gemeistert",
+        earned: hardPerfect >= 7,
+      },
+      {
+        icon: "⇄",
+        name: "Faktenblick",
+        detail: "Eine Runde Fakt oder Fake gespielt",
+        earned: factPlays >= 1,
+      },
+      {
+        icon: "◎",
+        name: "Combo-Kette",
+        detail: "5 Treffer in Folge bei Fakt oder Fake",
+        earned: factCombo >= 5,
+      },
+      {
+        icon: "✓",
+        name: "Fake-Detektor:in",
+        detail: "10 von 10 bei Fakt oder Fake",
+        earned: factBest === 10,
+      },
+    ];
+  }
+  function setupAvatar(host, profileUrl = "") {
+    const avatar = document.createElement("label"),
+      input = document.createElement("input"),
+      image = document.createElement("img"),
+      plus = document.createElement("span");
+    avatar.className = "profile-avatar";
+    avatar.title = "Profilbild hinzufügen oder ändern";
+    input.type = "file";
+    input.accept = "image/png,image/jpeg,image/webp";
+    input.hidden = true;
+    plus.className = "profile-avatar-plus";
+    plus.textContent = "+";
+    plus.setAttribute("aria-hidden", "true");
+    let saved = profileUrl;
+    try {
+      saved =
+        saved ||
+        localStorage.getItem(avatarKey()) ||
+        localStorage.getItem("veganiel.profile-avatar.current") ||
+        "";
+    } catch {}
+    const draw = (url) => {
+      avatar.replaceChildren();
+      if (url) {
+        image.src = url;
+        image.alt = "Dein Profilbild";
+        avatar.append(image);
+      } else
+        avatar.append(
+          document.createTextNode(
+            (user?.user_metadata?.display_name || user?.email || "?")
+              .trim()
+              .charAt(0)
+              .toUpperCase(),
+          ),
+        );
+      avatar.append(plus, input);
+    };
+    draw(saved);
+    input.addEventListener("change", async () => {
+      const file = input.files?.[0];
+      if (!file || file.size > 1200000) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          localStorage.setItem(avatarKey(), String(reader.result));
+          localStorage.setItem(
+            "veganiel.profile-avatar.current",
+            String(reader.result),
+          );
+        } catch {}
+        draw(String(reader.result));
+        window.dispatchEvent(new Event("veganiel:avatar-change"));
+      };
+      reader.readAsDataURL(file);
+      const ext = (file.name.split(".").pop() || "jpg").replace(
+        /[^a-z0-9]/gi,
+        "",
+      );
+      const path = user.id + "/profile." + ext;
+      const upload = await sb.storage
+        .from("avatars")
+        .upload(path, file, { upsert: true, contentType: file.type });
+      if (!upload.error) {
+        const { data } = sb.storage.from("avatars").getPublicUrl(path);
+        const url = data.publicUrl + "?v=" + Date.now();
+        await sb
+          .from("profiles")
+          .upsert({
+            id: user.id,
+            display_name: $("profile-display").value.trim() || "Mitglied",
+            avatar_url: url,
+            updated_at: new Date().toISOString(),
+          });
+        try {
+          localStorage.setItem("veganiel.profile-avatar.current", url);
+        } catch {}
+        draw(url);
+        window.dispatchEvent(new Event("veganiel:avatar-change"));
+      }
+    });
+    host.append(avatar);
+  }
+  function renderOverview(quizRows, awards, profileUrl) {
+    const home = $("member-home");
+    let panel = $("member-overview");
+    if (!panel) {
+      panel = document.createElement("section");
+      panel.id = "member-overview";
+      panel.className = "member-panel member-overview";
+      home.prepend(panel);
+    }
+    panel.replaceChildren();
+    const top = document.createElement("div");
+    top.className = "overview-top";
+    setupAvatar(top, profileUrl);
+    const copy = document.createElement("div");
+    const heading = document.createElement("h2");
+    heading.textContent = "Dein Überblick";
+    const text = document.createElement("p");
+    text.textContent =
+      "Quizfortschritt und Rechner-Ergebnisse auf einen Blick.";
+    copy.append(heading, text);
+    top.append(copy);
+    panel.append(top);
+    const rows = history(),
+      grid = document.createElement("div");
+    grid.className = "overview-grid";
+    const medals = {
+      gold: "🥇 Gold",
+      silver: "🥈 Silber",
+      bronze: "🥉 Bronze",
+    };
+    const awardText =
+      Object.entries(awards || {})
+        .filter(([, count]) => count)
+        .map(([medal, count]) => (medals[medal] || medal) + " × " + count)
+        .join(" · ") || "Noch keine Liga-Auszeichnung";
+    grid.append(
+      card(
+        "Quizwelt",
+        String(
+          (quizRows || []).filter((row) => !isFactKey(row.quiz_key)).length,
+        ) + " Quiz-Bestwerte",
+        awardText,
+        "quiz.html",
+      ),
+    );
+    const health = rows.filter((row) => row.kind === "health"),
+      lastHealth = health.at(-1);
+    const healthCard = card(
+      "Gesundheits-Check",
+      lastHealth
+        ? lastHealth.score + " / 100"
+        : "Noch kein gespeicherter Check",
+      lastHealth
+        ? "Letzter Check: " +
+            new Date(lastHealth.at).toLocaleDateString("de-DE")
+        : "Führe deinen ersten Check durch.",
+      "gesundheits-check.html",
+    );
+    const chartWrap = document.createElement("div");
+    chartWrap.className = "health-chart";
+    chartWrap.append(
+      chart(
+        health,
+        100,
+        "Verlauf des Gesundheits-Checks",
+        (row) => row.total ?? row.score,
+        (value) => value + " P.",
+      ),
+    );
+    healthCard.append(chartWrap);
+    grid.append(healthCard);
+    const vo2 = latest(rows, "vo2");
+    grid.append(
+      card(
+        "VO₂max",
+        vo2 ? vo2.value + " ml/kg/min" : "Noch kein Wert",
+        vo2
+          ? vo2.method || "Letzte Feldtest-Schätzung"
+          : "Mit Cooper- oder Rockport-Test schätzen.",
+        "vo2max-rechner.html",
+      ),
+    );
+    const heart = latest(rows, "heart");
+    grid.append(
+      card(
+        "Herzfrequenzzonen",
+        heart ? heart.maximum + " Schläge/min" : "Noch keine Zonen",
+        heart
+          ? heart.zones?.join(" · ") || heart.method || "Letztes Ergebnis"
+          : "Berechne deine vier Trainingsbereiche.",
+        "herzfrequenz-rechner.html",
+      ),
+    );
+    const waist = latest(rows, "waist");
+    grid.append(
+      card(
+        "Taille & BMI",
+        waist ? "BMI " + waist.bmi.toFixed(1) : "Noch keine Maße",
+        waist
+          ? "Taille/Größe: " + waist.ratio.toFixed(3)
+          : "Deine grobe Orientierung.",
+        "taille-rechner.html",
+      ),
+    );
+    const supplements = latest(rows, "supplements");
+    grid.append(
+      card(
+        "Supplement-Auswahl",
+        supplements
+          ? supplements.total.toFixed(2) + " € / Monat"
+          : "Noch keine Auswahl",
+        supplements
+          ? supplements.products?.join(" · ") ||
+              "Letzte Beispielauswahl"
+          : "Plane eine Beispielauswahl nach Budget.",
+        "supplement-rechner.html",
+      ),
+    );
+    panel.append(grid);
+    const badgeTitle = document.createElement("h3");
+    badgeTitle.className = "profile-badge-title";
+    badgeTitle.textContent = "Deine Quizwelt-Auszeichnungen";
+    panel.append(badgeTitle);
+    const badgeList = document.createElement("div");
+    badgeList.className = "profile-badges";
+    quizBadges(quizRows).forEach((badge) => {
+      const item = document.createElement("article");
+      item.className = "profile-badge" + (badge.earned ? " earned" : "");
+      const icon = document.createElement("span");
+      icon.textContent = badge.icon;
+      const name = document.createElement("strong");
+      name.textContent = badge.name;
+      const detail = document.createElement("small");
+      detail.textContent = badge.earned
+        ? "Freigeschaltet · " + badge.detail
+        : badge.detail;
+      item.append(icon, name, detail);
+      badgeList.append(item);
+    });
+    panel.append(badgeList);
+    const note = document.createElement("p");
+    note.className = "small overview-note";
+    note.textContent =
+      "Rechner-Ergebnisse, Profilbild und einige Quiz-Abzeichen bleiben nur auf diesem Gerät gespeichert und werden nicht an Veganiel übertragen.";
+    panel.append(note);
+  }
+  async function render() {
+    const version = ++renderVersion;
+    const { data, error } = await sb.auth.getUser();
+    if (version !== renderVersion) return;
+    user = data?.user || null;
+    $("member-auth").hidden = !!user || recovery;
+    $("member-home").hidden = !user || recovery;
+    $("recovery-panel").hidden = !recovery;
+    if (!user || recovery) {
+      $("profile-form").reset();
+      $("account-email").textContent = "";
+      return;
+    }
+    $("account-email").textContent = user.email;
+    const [profile, details, quiz, league, awards] = await Promise.all([
+      sb
+        .from("profiles")
+        .select("display_name,avatar_url")
+        .eq("id", user.id)
+        .maybeSingle(),
+      sb
+        .from("member_details")
+        .select("full_name,address_line,postal_code,city,country")
+        .eq("user_id", user.id)
+        .maybeSingle(),
+      sb
+        .from("quiz_results")
+        .select("quiz_key,best,attempts")
+        .eq("user_id", user.id),
+      sb
+        .from("quiz_leaderboard_preferences")
+        .select("participates")
+        .eq("user_id", user.id)
+        .maybeSingle(),
+      sb.rpc("get_quiz_leaderboard", { history_weeks: 1 }),
+    ]);
+    if (version !== renderVersion) return;
+    const remoteProblem = [profile, details, quiz, league, awards].some(
+      (result) => result.error,
+    );
+    $("profile-form").querySelector("button").disabled = !!(
+      profile.error ||
+      details.error ||
+      league.error
+    );
+    $("profile-display").value =
+      profile.data?.display_name ||
+      user.user_metadata?.display_name ||
+      "Mitglied";
+    for (const [id, key] of Object.entries({
+      "full-name": "full_name",
+      address: "address_line",
+      postal: "postal_code",
+      city: "city",
+      country: "country",
+    }))
+      $(id).value = details.data?.[key] || "";
+    setupProfileLayout();
+    leagueProfileChoice(
+      league.data?.participates || user.user_metadata?.leaderboard_opt_in,
+    );
+    $("account-quiz-summary").replaceChildren(
+      document.createTextNode(
+        String(
+          (quiz.data || []).filter((row) => !isFactKey(row.quiz_key)).length,
+        ) + " ",
+      ),
+    );
+    const summary = document.createElement("span");
+    summary.textContent = "gespeicherte Quiz-Bestwerte.";
+    $("account-quiz-summary").append(summary);
+    renderOverview(
+      quiz.data || [],
+      awards.data?.viewer_medals || {},
+      profile.data?.avatar_url,
+    );
+    updateContact();
+    if (remoteProblem)
+      status(
+        "Einige Kontodaten sind gerade nicht erreichbar. Deine auf diesem Gerät gespeicherten Rechner-Ergebnisse werden weiterhin angezeigt.",
+      );
+  }
+  function updateContact() {
+    if (!user) return;
+    const text =
+      "Hallo Daniel,\n\nich interessiere mich für eine Ernährungsberatung.\n\nName: " +
+      $("full-name").value +
+      "\nKonto-E-Mail: " +
+      user.email +
+      "\nKontokennung: " +
+      user.id +
+      "\n\nMein Anliegen (ohne medizinische Unterlagen):\n";
+    $("consultation-email").href =
+      "mailto:info@veganiel.com?subject=" +
+      encodeURIComponent("Beratungsanfrage aus meinem Veganiel-Konto") +
+      "&body=" +
+      encodeURIComponent(text);
+  }
+  $("login-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    run(e.submitter, async () => {
+      const { error } = await sb.auth.signInWithPassword({
+        email: $("email").value.trim(),
+        password: $("password").value,
+      });
+      if (error) {
+        status(
+          "Anmeldung nicht möglich. Bitte prüfe E-Mail-Adresse und Passwort sowie die E-Mail-Bestätigung.",
+        );
+        return;
+      }
+      $("password").value = "";
+      location.assign("index.html");
+    });
+  });
+  $("register").addEventListener("click", () => {
+    $("register-name-field").hidden = false;
+    $("register-fields").hidden = false;
+    registrationChoices();
+    $("password").autocomplete = "new-password";
+    $("display-name").focus();
+  });
+  $("confirm-register").addEventListener("click", (e) =>
+    run(e.currentTarget, async () => {
+      if (!$("login-form").reportValidity()) return;
+      if (!$("terms-consent").checked) {
+        status("Bitte akzeptiere die AGB, um ein Konto zu erstellen.");
+        return;
+      }
+      if ($("password").value.length < 12) {
+        status("Bitte wähle ein Passwort mit mindestens zwölf Zeichen.");
+        return;
+      }
+      const display = $("display-name").value.trim();
+      if (!display) {
+        status("Bitte wähle einen öffentlichen Anzeigenamen.");
+        return;
+      }
+      const { error } = await sb.auth.signUp({
+        email: $("email").value.trim(),
+        password: $("password").value,
+        options: {
+          emailRedirectTo: location.origin + "/konto.html",
+          data: {
+            display_name: display,
+            leaderboard_opt_in: $("league-consent").checked,
+            terms_accepted_at: new Date().toISOString(),
+            terms_version: "2026-11-09",
+          },
+        },
+      });
+      if (error) {
+        status(registrationError(error));
+        return;
+      }
+      $("password").value = "";
+      status(
+        "Bitte prüfe dein E-Mail-Postfach und bestätige deine Adresse. Falls bereits ein Konto besteht, nutze die Anmeldung oder „Passwort vergessen“.",
+      );
+    }),
+  );
+  $("forgot").addEventListener("click", (e) =>
+    run(e.currentTarget, async () => {
+      if (!$("email").reportValidity()) return;
+      const { error } = await sb.auth.resetPasswordForEmail(
+        $("email").value.trim(),
+        { redirectTo: location.origin + "/konto.html?recovery=1" },
+      );
+      if (error) throw error;
+      status(
+        "Falls ein Konto mit dieser Adresse existiert, erhältst du einen Link zum Zurücksetzen.",
+      );
+    }),
+  );
+  $("recovery-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    run(e.submitter, async () => {
+      const { error } = await sb.auth.updateUser({
+        password: $("new-password").value,
+      });
+      if (error) throw error;
+      $("new-password").value = "";
+      recovery = false;
+      history.replaceState(null, "", "/konto.html");
+      status("Dein Passwort wurde geändert.");
+      await render();
+    });
+  });
+  $("profile-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    run(e.submitter, async () => {
+      if (!user) throw Error();
+      const id = user.id;
+      const { error } = await sb
+        .from("member_details")
+        .upsert({
+          user_id: id,
+          full_name: $("full-name").value.trim(),
+          address_line: $("address").value.trim(),
+          postal_code: $("postal").value.trim(),
+          city: $("city").value.trim(),
+          country: $("country").value.trim(),
+          updated_at: new Date().toISOString(),
+        });
+      if (error) throw error;
+      const result = await sb
+        .from("profiles")
+        .upsert({
+          id,
+          display_name: $("profile-display").value.trim() || "Mitglied",
+          updated_at: new Date().toISOString(),
+        });
+      if (result.error) {
+        status(
+          "Private Angaben gespeichert. Der Anzeigename konnte gerade nicht aktualisiert werden.",
+        );
+        return;
+      }
+      const league = await sb.rpc("set_quiz_leaderboard_participation", {
+        enabled: $("profile-league").checked,
+      });
+      if (league.error) {
+        status(
+          "Dein Profil wurde gespeichert. Die Liga-Einstellung konnte gerade nicht aktualisiert werden.",
+        );
+        return;
+      }
+      await sb.auth.updateUser({
+        data: { leaderboard_opt_in: $("profile-league").checked },
+      });
+      updateContact();
+      status("Dein Profil wurde gespeichert.");
+    });
+  });
+  $("logout").addEventListener("click", (e) =>
+    run(e.currentTarget, async () => {
+      const { error } = await sb.auth.signOut();
+      if (error) throw error;
+      $("profile-form").reset();
+      status("Du bist abgemeldet.");
+      await render();
+    }),
+  );
+  if (new URLSearchParams(location.hash.slice(1)).has("error"))
+    status(
+      "Der Bestätigungslink ist abgelaufen oder ungültig. Bitte fordere einen neuen Link an.",
+    );
+  window.addEventListener("veganiel:wellbeing-history", () => {
+    if (user && !$("member-home").hidden) render();
+  });
+  window.addEventListener("storage", (event) => {
+    if (
+      event.key === "veganiel.wellbeing-history.v1" &&
+      user &&
+      !$("member-home").hidden
+    )
+      render();
+  });
+  sb.auth.onAuthStateChange((event) => {
+    if (event === "TOKEN_REFRESHED") return;
+    if (event === "PASSWORD_RECOVERY") recovery = true;
+    if (event === "SIGNED_OUT") recovery = false;
+    setTimeout(() => render(), 0);
+  });
+  render();
 })();
 (() => {
-  const core=()=>window.VeganielCalculators?.supplements?Promise.resolve(window.VeganielCalculators.supplements):new Promise(resolve=>{const script=document.createElement('script');script.src='scripts/supplement-core.js';script.onload=()=>resolve(window.VeganielCalculators?.supplements);script.onerror=()=>resolve(null);document.head.append(script);});
-  const completeSelection=async entry=>{
-    if(!Number.isFinite(Number(entry?.total)))return entry?.products||[];
-    const select=await core();if(!select)return entry.products||[];
-    const total=Math.round(Number(entry.total)*100);
-    for(const winter of [true,false])for(const eggs of [false,true])for(let budget=5;budget<=300;budget++){
-      const chosen=select(budget,{winter,eggs}).chosen;
-      if(Math.round(chosen.reduce((sum,item)=>sum+item.monthly,0)*100)===total)return chosen.map(item=>item.name);
-    }
-    return entry.products||[];
+  const core = () =>
+    window.VeganielCalculators?.supplements
+      ? Promise.resolve(window.VeganielCalculators.supplements)
+      : new Promise((resolve) => {
+          const script = document.createElement("script");
+          script.src = "scripts/supplement-core.js";
+          script.onload = () =>
+            resolve(window.VeganielCalculators?.supplements);
+          script.onerror = () => resolve(null);
+          document.head.append(script);
+        });
+  const completeSelection = async (entry) => {
+    if (!Number.isFinite(Number(entry?.total))) return entry?.products || [];
+    const select = await core();
+    if (!select) return entry.products || [];
+    const total = Math.round(Number(entry.total) * 100);
+    for (const winter of [true, false])
+      for (const eggs of [false, true])
+        for (let budget = 5; budget <= 300; budget++) {
+          const chosen = select(budget, { winter, eggs }).chosen;
+          if (
+            Math.round(
+              chosen.reduce((sum, item) => sum + item.monthly, 0) * 100,
+            ) === total
+          )
+            return chosen.map((item) => item.name);
+        }
+    return entry.products || [];
   };
-  const updateSupplementDetail=async()=>{
-    let rows=[],direct=null;try{rows=JSON.parse(localStorage.getItem('veganiel.wellbeing-history.v1')||'[]');direct=JSON.parse(localStorage.getItem('veganiel.supplement-calculator.v1')||'null');}catch{}
-    const latest=direct?.touched&&direct.products?.length?direct:[...(Array.isArray(rows)?rows:[])].reverse().find(row=>row?.kind==='supplements');
-    const card=[...document.querySelectorAll('.overview-card')].find(node=>node.querySelector('.overview-label')?.textContent==='SUPPLEMENT-AUSWAHL');
-    const products=await completeSelection(latest),detail=products.join(' · '),text=card?.querySelector('p:not(.overview-label)');
-    if(!text||!detail||card.dataset.supplementDetail===detail)return;
-    card.dataset.supplementDetail=detail;text.textContent=detail;
+  const updateSupplementDetail = async () => {
+    let rows = [],
+      direct = null;
+    try {
+      rows = JSON.parse(
+        localStorage.getItem("veganiel.wellbeing-history.v1") || "[]",
+      );
+      direct = JSON.parse(
+        localStorage.getItem("veganiel.supplement-calculator.v1") || "null",
+      );
+    } catch {}
+    const latest =
+      direct?.touched && direct.products?.length
+        ? direct
+        : [...(Array.isArray(rows) ? rows : [])]
+            .reverse()
+            .find((row) => row?.kind === "supplements");
+    const card = [...document.querySelectorAll(".overview-card")].find(
+      (node) =>
+        node.querySelector(".overview-label")?.textContent ===
+        "SUPPLEMENT-AUSWAHL",
+    );
+    const products = await completeSelection(latest),
+      detail = products.join(" · "),
+      text = card?.querySelector("p:not(.overview-label)");
+    if (!text || !detail || card.dataset.supplementDetail === detail) return;
+    card.dataset.supplementDetail = detail;
+    text.textContent = detail;
   };
-  new MutationObserver(updateSupplementDetail).observe(document.body,{childList:true,subtree:true});
+  new MutationObserver(updateSupplementDetail).observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
   updateSupplementDetail();
 })();
