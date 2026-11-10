@@ -1,6 +1,7 @@
 /* „Fakt oder Fake" – swipe format for the quiz world.
-   Statements are built from the existing, sourced question banks: a question paired with
-   either its correct answer (Fakt) or one of its distractors (Fake). Results count for the
+   Each round mixes two sources 50/50: statements built from the existing, sourced question banks
+   (a question paired with its correct answer = Fakt, or a distractor = Fake) and the separate,
+   sourced statement pool in quiz-factcheck-pool.js. Recently seen items are avoided. Results count for the
    weekly league via the existing 'veganiel:quiz-finished' event (key "Fakt oder Fake · <Stufe>"). */
 (function (root) {
   'use strict';
@@ -9,15 +10,15 @@
 
   function rng(seed) { let n = seed >>> 0; return () => { n = (Math.imul(n, 1664525) + 1013904223) >>> 0; return n / 4294967296; }; }
 
-  // Pure: pick ROUND unique questions and turn each into a true/false claim.
-  function buildStatements(questions, seed, count = ROUND) {
-    const random = rng(seed), seen = new Set();
-    const pool = questions.filter(q => q && q.q && Array.isArray(q.a) && q.a.length > 1 && q.a[q.correct] && !seen.has(q.q) && seen.add(q.q));
-    for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
-    const picked = pool.slice(0, count);
-    // Balanced: half true, half false, in shuffled order
-    const truths = picked.map((_, i) => i < Math.ceil(picked.length / 2));
-    for (let i = truths.length - 1; i > 0; i--) { const j = Math.floor(random() * (i + 1)); [truths[i], truths[j]] = [truths[j], truths[i]]; }
+  function shuffle(list, random) { for (let i = list.length - 1; i > 0; i--) { const j = Math.floor(random() * (i + 1)); [list[i], list[j]] = [list[j], list[i]]; } return list; }
+
+  // Pure: pick unique questions (not recently seen first) and turn each into a true/false claim.
+  function buildStatements(questions, seed, count = ROUND, trueCount = Math.ceil(count / 2), avoid = null) {
+    const random = rng(seed), seen = new Set(), skip = avoid instanceof Set ? avoid : new Set(avoid || []);
+    const pool = shuffle(questions.filter(q => q && q.q && Array.isArray(q.a) && q.a.length > 1 && q.a[q.correct] && !seen.has(q.q) && seen.add(q.q)), random);
+    const ordered = pool.filter(q => !skip.has('q:' + q.q)).concat(pool.filter(q => skip.has('q:' + q.q)));
+    const picked = ordered.slice(0, count);
+    const truths = shuffle(picked.map((_, i) => i < Math.min(trueCount, picked.length)), random);
     return picked.map((q, i) => {
       const wrong = q.a.filter((_, k) => k !== q.correct);
       const truth = truths[i];
@@ -25,11 +26,27 @@
       return { topic: q.topic || '', question: q.q, claim, truth, answer: q.a[q.correct], info: q.info || '', source: q.source || '' };
     });
   }
+  // Pure: half the round from the extra statement pool, half from the quiz banks; 5 true, 5 false overall.
+  function buildMixedRound(bankQuestions, extras, seed, avoid = [], count = ROUND) {
+    const random = rng((seed ^ 0x9e3779b9) >>> 0), skip = new Set(avoid || []);
+    const valid = (extras || []).filter(e => e && e.id && typeof e.truth === 'boolean' && e.s);
+    const extraCount = Math.min(Math.floor(count / 2), valid.length);
+    const pick = (list, n) => shuffle(list.filter(x => !skip.has(x.id)), random).concat(shuffle(list.filter(x => skip.has(x.id)), random)).slice(0, n);
+    const wantTrue = Math.floor(extraCount / 2) + (extraCount % 2 && random() < .5 ? 1 : 0);
+    let chosen = pick(valid.filter(e => e.truth), wantTrue);
+    chosen = chosen.concat(pick(valid.filter(e => !e.truth), extraCount - chosen.length));
+    if (chosen.length < extraCount) chosen = chosen.concat(pick(valid.filter(e => !chosen.includes(e)), extraCount - chosen.length));
+    const extraItems = chosen.map(e => ({ id: e.id, kind: 'extra', truth: e.truth, topic: e.topic, text: e.s, info: e.info, source: e.source || '' }));
+    const bankCount = count - extraItems.length;
+    const bankTrue = Math.max(0, Math.min(bankCount, Math.ceil(count / 2) - extraItems.filter(e => e.truth).length));
+    const bankItems = buildStatements(bankQuestions, seed, bankCount, bankTrue, skip).map(s => ({ ...s, id: 'q:' + s.question, kind: 'bank' }));
+    return shuffle(extraItems.concat(bankItems), random);
+  }
   function timeBonus(secondsLeft, points, total = ROUND) {
     const s = Math.max(0, Math.min(SECONDS, Math.floor(secondsLeft))), p = Math.max(0, Math.min(total, points));
     return Math.min(75, Math.floor(s * p / total));
   }
-  const api = { buildStatements, timeBonus, KEY_PREFIX, LEVELS, ROUND, SECONDS, keys: LEVELS.map(l => KEY_PREFIX + l) };
+  const api = { buildStatements, buildMixedRound, timeBonus, KEY_PREFIX, LEVELS, ROUND, SECONDS, keys: LEVELS.map(l => KEY_PREFIX + l) };
   if (typeof module !== 'undefined') { module.exports = api; return; }
   root.QuizFactcheck = api;
 
@@ -38,7 +55,12 @@
   if (!ui || !ui.banks || !root.document) return;
   const doc = root.document, $ = id => doc.getElementById(id);
   const reduced = root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const WEEK_KEY = 'veganiel.factcheck.week';
+  const WEEK_KEY = 'veganiel.factcheck.week', SEEN_KEY = 'veganiel.factcheck.seen';
+  const lang = () => (doc.documentElement.lang === 'en' ? 'en' : 'de');
+  const loc = v => (v && typeof v === 'object' ? (v[lang()] || v.de || '') : (v || ''));
+  function readSeen() { try { const v = JSON.parse(localStorage.getItem(SEEN_KEY) || '[]'); return Array.isArray(v) ? v.filter(x => typeof x === 'string') : []; } catch { return []; } }
+  function rememberSeen(ids) { try { localStorage.setItem(SEEN_KEY, JSON.stringify(readSeen().filter(id => !ids.includes(id)).concat(ids).slice(-160))); } catch { /* optional */ } }
+  function fixed(node) { node.setAttribute('translate', 'no'); return node; } // already in the visitor's language
 
   function weekStart() { const d = new Date(); const day = (d.getDay() + 6) % 7; d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - day); return d.toISOString().slice(0, 10); }
   function playedThisWeek() { try { const v = JSON.parse(localStorage.getItem(WEEK_KEY) || '{}'); return v.week === weekStart() && Array.isArray(v.levels) ? v.levels : []; } catch { return []; } }
@@ -53,7 +75,7 @@
     '<div class="fc-feature-copy">' +
       '<p class="world-kicker"><span class="fc-new">Neu</span> Fakt oder Fake · 60 Sekunden</p>' +
       '<h2 id="factcheck-title">Wisch dich<br><em>zur Wahrheit.</em></h2>' +
-      '<p class="fc-feature-text">Zehn Aussagen, eine Minute. Wische nach rechts, wenn die Antwort stimmt – nach links, wenn sie ein Fake ist. Treffer in Serie bauen deine Combo auf, Tempo bringt Zeitbonus.</p>' +
+      '<p class="fc-feature-text">Zehn Aussagen, eine Minute. Wische nach rechts, wenn es stimmt – nach links, wenn es ein Fake ist. Treffer in Serie bauen deine Combo auf, Tempo bringt Zeitbonus.</p>' +
       '<div class="fc-levels" role="group" aria-label="Stufe wählen"></div>' +
       '<p class="fc-league-note small">Zählt für die Wochen-Liga: dein erster Versuch pro Stufe und Woche – inklusive Zeitbonus.</p>' +
     '</div>' +
@@ -103,7 +125,9 @@
     stop();
     const pool = Object.entries(ui.banks[level] || {}).flatMap(([topic, qs]) => qs.map(q => ({ ...q, topic })));
     const seed = Math.floor(Math.random() * 4294967296);
-    state = { level, items: buildStatements(pool, seed), index: 0, points: 0, combo: 0, bestCombo: 0, answers: [], seconds: SECONDS, done: false, locked: false };
+    const items = buildMixedRound(pool, (root.FactcheckPool || {})[level] || [], seed, readSeen());
+    rememberSeen(items.map(item => item.id));
+    state = { level, items, index: 0, points: 0, combo: 0, bestCombo: 0, answers: [], seconds: SECONDS, done: false, locked: false };
     $('landing')?.classList.add('hidden'); $('quiz')?.classList.add('hidden');
     view.classList.remove('hidden', 'is-finished'); playBox.classList.remove('hidden'); resultBox.classList.add('hidden');
     view.querySelector('.fc-title').textContent = 'Fakt oder Fake · ' + level;
@@ -129,8 +153,9 @@
   function card(item, depth) {
     const c = el('article', 'fc-card'); c.dataset.depth = String(depth);
     if (depth === 0) { c.tabIndex = 0; c.setAttribute('aria-label', 'Aktuelle Aussage'); }
-    c.append(el('span', 'fc-card-topic', item.topic), el('p', 'fc-card-question', item.question), el('span', 'fc-card-label', 'Antwort'), el('strong', 'fc-card-claim', item.claim),
-      el('span', 'fc-stamp fc-stamp-fact', 'Fakt'), el('span', 'fc-stamp fc-stamp-fake', 'Fake'));
+    if (item.kind === 'extra') c.append(fixed(el('span', 'fc-card-topic', loc(item.topic))), el('span', 'fc-card-label', 'Aussage'), fixed(el('strong', 'fc-card-claim', loc(item.text))));
+    else c.append(el('span', 'fc-card-topic', item.topic), el('p', 'fc-card-question', item.question), el('span', 'fc-card-label', 'Antwort'), el('strong', 'fc-card-claim', item.claim));
+    c.append(el('span', 'fc-stamp fc-stamp-fact', 'Fakt'), el('span', 'fc-stamp fc-stamp-fake', 'Fake'));
     return c;
   }
   function renderStack() {
@@ -160,7 +185,9 @@
     state.locked = true; state.answers.push({ ...item, saysTrue, correct });
     if (correct) { state.points++; state.combo++; state.bestCombo = Math.max(state.bestCombo, state.combo); } else state.combo = 0;
     feedback.className = 'fc-feedback ' + (correct ? 'is-right' : 'is-wrong');
-    feedback.replaceChildren(el('strong', null, correct ? '✓ Richtig!' : '✕ Daneben.'), doc.createTextNode(' '),
+    if (item.kind === 'extra') feedback.replaceChildren(el('strong', null, correct ? '✓ Richtig!' : '✕ Daneben.'), doc.createTextNode(' '),
+      el('span', null, item.truth ? 'Das ist ein Fakt.' : 'Das ist ein Fake.'), doc.createTextNode(' '), fixed(el('em', null, loc(item.info))));
+    else feedback.replaceChildren(el('strong', null, correct ? '✓ Richtig!' : '✕ Daneben.'), doc.createTextNode(' '),
       el('span', null, item.truth ? 'Die Antwort stimmt:' : 'Das war ein Fake. Richtig ist:'), doc.createTextNode(' '), el('em', null, item.truth ? item.claim : item.answer));
     if (top) {
       top.classList.add(saysTrue ? 'fly-right' : 'fly-left', correct ? 'was-right' : 'was-wrong');
@@ -195,13 +222,17 @@
     const review = el('div', 'fc-review'); review.append(el('h3', null, 'Alle Aussagen im Überblick'));
     state.answers.forEach(a => {
       const d = el('details', 'fc-review-item ' + (a.correct ? 'is-right' : 'is-wrong'));
-      const s = el('summary'), text = el('span');
-      text.append(el('span', null, a.question), doc.createTextNode(' → '), el('em', null, a.claim));
+      const s = el('summary'), text = el('span'), p = el('p');
+      if (a.kind === 'extra') {
+        text.append(fixed(el('span', null, loc(a.text))));
+        p.append(el('strong', null, a.truth ? 'Fakt.' : 'Fake.'), doc.createTextNode(' '), fixed(el('span', null, loc(a.info))));
+      } else {
+        text.append(el('span', null, a.question), doc.createTextNode(' → '), el('em', null, a.claim));
+        p.append(el('strong', null, a.truth ? 'Fakt.' : 'Fake.'), doc.createTextNode(' '));
+        if (!a.truth) p.append(el('span', null, 'Richtig ist:'), doc.createTextNode(' '), el('em', null, a.answer), doc.createTextNode(' · '));
+        p.append(el('span', null, a.info));
+      }
       s.append(el('span', 'fc-review-mark', a.correct ? '✓' : '✕'), text);
-      const p = el('p');
-      p.append(el('strong', null, a.truth ? 'Fakt.' : 'Fake.'), doc.createTextNode(' '));
-      if (!a.truth) p.append(el('span', null, 'Richtig ist:'), doc.createTextNode(' '), el('em', null, a.answer), doc.createTextNode(' · '));
-      p.append(el('span', null, a.info));
       d.append(s, p);
       if (a.source) { const link = el('a', null, 'Quelle ansehen ↗'); link.href = a.source; link.target = '_blank'; link.rel = 'noopener noreferrer'; d.append(link); }
       review.append(d);

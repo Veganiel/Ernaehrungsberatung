@@ -3636,7 +3636,6 @@
   "Fakt oder Fake": "Fact or Fake",
   "Wisch dich": "Swipe your way",
   "zur Wahrheit.": "to the truth.",
-  "Zehn Aussagen, eine Minute. Wische nach rechts, wenn die Antwort stimmt – nach links, wenn sie ein Fake ist. Treffer in Serie bauen deine Combo auf, Tempo bringt Zeitbonus.": "Ten statements, one minute. Swipe right if the answer is true – left if it's a fake. Hits in a row build your combo, speed earns a time bonus.",
   "Stufe wählen": "Choose a level",
   "Zählt für die Wochen-Liga: dein erster Versuch pro Stufe und Woche – inklusive Zeitbonus.": "Counts for the weekly league: your first attempt per level and week – time bonus included.",
   "Stimmt das?": "Is it true?",
@@ -3687,5 +3686,9 @@
   "← Zurück": "← Back",
   "Fakt oder Fake · Leicht": "Fact or Fake · Easy",
   "Fakt oder Fake · Mittel": "Fact or Fake · Medium",
-  "Fakt oder Fake · Schwer": "Fact or Fake · Hard"
+  "Fakt oder Fake · Schwer": "Fact or Fake · Hard",
+  "Zehn Aussagen, eine Minute. Wische nach rechts, wenn es stimmt – nach links, wenn es ein Fake ist. Treffer in Serie bauen deine Combo auf, Tempo bringt Zeitbonus.": "Ten statements, one minute. Swipe right if it's true – left if it's a fake. Hits in a row build your combo, speed earns a time bonus.",
+  "Aussage": "Statement",
+  "Das ist ein Fakt.": "That's a fact.",
+  "Das ist ein Fake.": "That's a fake."
 }

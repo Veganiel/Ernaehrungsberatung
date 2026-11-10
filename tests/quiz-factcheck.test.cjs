@@ -55,3 +55,42 @@ test('older stored profiles without fact-check data still load',()=>{
   assert.deepEqual(p.data().factcheck,{plays:0,best:0,combo:0});
   assert.equal(p.data().sprint.best,7);
 });
+
+const pool=require('../daniel-suckrow-website/scripts/quiz-factcheck-pool.js');
+
+test('extra statement pool is large, bilingual, sourced and uniquely identified',()=>{
+  const ids=new Set();let total=0;
+  for(const level of fc.LEVELS){
+    const list=pool[level];assert.ok(Array.isArray(list)&&list.length>=25,level+' has at least 25 statements');
+    assert.ok(list.filter(s=>s.truth).length>=8&&list.filter(s=>!s.truth).length>=8,level+' has enough facts and fakes');
+    for(const s of list){total++;assert.ok(!ids.has(s.id),'unique id '+s.id);ids.add(s.id);
+      for(const field of ['s','info','topic']){assert.ok(s[field].de&&s[field].en,s.id+' '+field+' in DE and EN');}
+      assert.equal(typeof s.truth,'boolean');assert.match(s.source,/^https:\/\//);}
+  }
+  assert.ok(total>=80);
+});
+
+test('mixed rounds take half from the pool and half from the quiz, always 5 facts and 5 fakes',()=>{
+  const all=banks();
+  for(const level of fc.LEVELS){
+    const bank=Object.entries(all[level]).flatMap(([topic,qs])=>qs.map(q=>({...q,topic})));
+    for(const seed of [3,77,123456789]){
+      const round=fc.buildMixedRound(bank,pool[level],seed);
+      assert.equal(round.length,10);
+      assert.equal(round.filter(r=>r.kind==='extra').length,5);
+      assert.equal(round.filter(r=>r.kind==='bank').length,5);
+      assert.equal(round.filter(r=>r.truth).length,5);
+      assert.equal(new Set(round.map(r=>r.id)).size,10);
+    }
+  }
+});
+
+test('recently seen statements are avoided while fresh ones remain',()=>{
+  const all=banks(),bank=Object.entries(all.Mittel).flatMap(([topic,qs])=>qs.map(q=>({...q,topic})));
+  const seen=[];
+  for(let round=0;round<4;round++){
+    const items=fc.buildMixedRound(bank,pool.Mittel,1000+round,seen);
+    for(const item of items)assert.ok(!seen.includes(item.id),'no repeat within the first rounds: '+item.id);
+    seen.push(...items.map(i=>i.id));
+  }
+});
