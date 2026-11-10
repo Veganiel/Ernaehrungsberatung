@@ -56,16 +56,24 @@
  render();
 })();
 (() => {
-  const updateSupplementDetail=()=>{
-    let rows=[];
-    try{rows=JSON.parse(localStorage.getItem('veganiel.wellbeing-history.v1')||'[]');}catch{}
-    const latest=[...(Array.isArray(rows)?rows:[])].reverse().find(row=>row?.kind==='supplements'&&Array.isArray(row.products)&&row.products.length);
+  const core=()=>window.VeganielCalculators?.supplements?Promise.resolve(window.VeganielCalculators.supplements):new Promise(resolve=>{const script=document.createElement('script');script.src='scripts/supplement-core.js';script.onload=()=>resolve(window.VeganielCalculators?.supplements);script.onerror=()=>resolve(null);document.head.append(script);});
+  const completeSelection=async entry=>{
+    if(!Number.isFinite(Number(entry?.total)))return entry?.products||[];
+    const select=await core();if(!select)return entry.products||[];
+    const total=Math.round(Number(entry.total)*100);
+    for(const winter of [true,false])for(const eggs of [false,true])for(let budget=5;budget<=300;budget++){
+      const chosen=select(budget,{winter,eggs}).chosen;
+      if(Math.round(chosen.reduce((sum,item)=>sum+item.monthly,0)*100)===total)return chosen.map(item=>item.name);
+    }
+    return entry.products||[];
+  };
+  const updateSupplementDetail=async()=>{
+    let rows=[];try{rows=JSON.parse(localStorage.getItem('veganiel.wellbeing-history.v1')||'[]');}catch{}
+    const latest=[...(Array.isArray(rows)?rows:[])].reverse().find(row=>row?.kind==='supplements');
     const card=[...document.querySelectorAll('.overview-card')].find(node=>node.querySelector('.overview-label')?.textContent==='SUPPLEMENT-AUSWAHL');
-    const detail=latest?.products.join(' · ');
-    const text=card?.querySelector('p:not(.overview-label)');
+    const products=await completeSelection(latest),detail=products.join(' · '),text=card?.querySelector('p:not(.overview-label)');
     if(!text||!detail||card.dataset.supplementDetail===detail)return;
-    card.dataset.supplementDetail=detail;
-    text.textContent=detail;
+    card.dataset.supplementDetail=detail;text.textContent=detail;
   };
   new MutationObserver(updateSupplementDetail).observe(document.body,{childList:true,subtree:true});
   updateSupplementDetail();
