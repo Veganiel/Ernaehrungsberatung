@@ -55,3 +55,18 @@
  sb.auth.onAuthStateChange(event=>{if(event==='TOKEN_REFRESHED')return;if(event==='PASSWORD_RECOVERY')recovery=true;if(event==='SIGNED_OUT')recovery=false;setTimeout(()=>render(),0);});
  render();
 })();
+(() => {
+  const updateSupplementDetail=()=>{
+    let rows=[];
+    try{rows=JSON.parse(localStorage.getItem('veganiel.wellbeing-history.v1')||'[]');}catch{}
+    const latest=[...(Array.isArray(rows)?rows:[])].reverse().find(row=>row?.kind==='supplements'&&Array.isArray(row.products)&&row.products.length);
+    const card=[...document.querySelectorAll('.overview-card')].find(node=>node.querySelector('.overview-label')?.textContent==='SUPPLEMENT-AUSWAHL');
+    const detail=latest?.products.join(' · ');
+    const text=card?.querySelector('p:not(.overview-label)');
+    if(!text||!detail||card.dataset.supplementDetail===detail)return;
+    card.dataset.supplementDetail=detail;
+    text.textContent=detail;
+  };
+  new MutationObserver(updateSupplementDetail).observe(document.body,{childList:true,subtree:true});
+  updateSupplementDetail();
+})();
