@@ -137,6 +137,7 @@ function render(){
   }
   const sum=chosen.reduce((s,x)=>s+x.monthly,0);
   document.getElementById("total").textContent=money(sum);
+  try{localStorage.setItem('veganiel.supplement-calculator.v1',JSON.stringify({at:new Date().toISOString(),budget:limit,winter:document.getElementById("winter").checked,eggs:document.getElementById("eggs").checked,prices,total:sum,products:chosen.map(item=>item.name)}));}catch{}
   document.getElementById("tierStatus").innerHTML=tierText + (sum > limit + .001 ? " <span>Die Auswahl liegt über dem eingestellten Budget.</span>" : "");
 }
 const requestedBudget=new URLSearchParams(location.hash.slice(1)).get("budget");
