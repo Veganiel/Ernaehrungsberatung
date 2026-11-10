@@ -54,7 +54,6 @@
     const holder=card.querySelector('.season-scene');
     holder.replaceChildren();
     scenesToLoad.set(holder,()=>scene(i));
-    const caption=document.createElement('p');caption.className='month-poetry';caption.textContent=months[i][0];card.querySelector('h3').after(caption);
   });
   const now=new Date().getMonth(), heroArt=document.querySelector('.now-art');
   heroArt.replaceChildren();
@@ -75,34 +74,5 @@
   }else scenesToLoad.forEach((render,holder)=>{holder.innerHTML=render();holder.classList.add('scene-visible');});
   const updateVisibility=()=>document.body.classList.toggle('season-page-hidden',document.hidden);
   document.addEventListener('visibilitychange',updateVisibility);updateVisibility();
-  document.querySelector('.hero h1').innerHTML='Mit den Jahreszeiten <em>genießen.</em>';
-  document.querySelector('.section-head h2').innerHTML='Zwölf Monate.<br><em>Immer neu entdecken.</em>';
-  const fruitSelection=[
-    ['Äpfel (Lagerware)','Birnen (Lagerware)'],
-    ['Äpfel (Lagerware)'],
-    ['Äpfel (Lagerware)'],
-    ['Äpfel (Lagerware)'],
-    ['Äpfel (Lagerware)','Erdbeeren (Saisonbeginn)'],
-    ['Erdbeeren','Süßkirschen','Himbeeren','Johannisbeeren','Stachelbeeren'],
-    ['Erdbeeren','Süßkirschen','Sauerkirschen','Himbeeren','Heidelbeeren','Johannisbeeren','Stachelbeeren','Aprikosen'],
-    ['Äpfel','Birnen','Pflaumen','Zwetschgen','Mirabellen','Renekloden','Brombeeren','Heidelbeeren','Himbeeren','Pfirsiche'],
-    ['Äpfel','Birnen','Zwetschgen','Pflaumen','Brombeeren','Himbeeren','Tafeltrauben','Holunderbeeren (nur erhitzt)'],
-    ['Äpfel','Birnen','Quitten','Tafeltrauben'],
-    ['Äpfel (Lagerware)','Birnen (Lagerware)'],
-    ['Äpfel (Lagerware)','Birnen (Lagerware)']
-  ];
-  document.querySelectorAll('.month').forEach((card,i)=>{
-    card.querySelectorAll('li.fruit').forEach(item=>item.remove());
-    const list=card.querySelector('ul');
-    fruitSelection[i].forEach(name=>{const li=document.createElement('li');li.className='fruit';li.textContent=name;list.append(li);});
-    // Rhabarber is botanically a vegetable and remains available under the vegetable filter.
-    if(i>=3&&i<=5){const li=document.createElement('li');li.textContent='Rhabarber';list.append(li);}
-    const seen=new Set();list.querySelectorAll('li').forEach(item=>{if(seen.has(item.textContent))item.remove();else seen.add(item.textContent);});
-  });
-  // The feature panel uses the completed current-month list, including all fruit additions.
-  document.getElementById('now-picks').textContent=Array.from(document.querySelectorAll('.month')[now].querySelectorAll('li'),item=>item.textContent).join(' · ');
-  const reference=document.createElement('p');reference.className='season-caption';
-  reference.innerHTML='Obst aus deutschem Anbau: typische Erntezeit oder ausdrücklich markierte Lagerware. Im Winter ist die regionale Obstauswahl kleiner. Saisonbeginn und Verfügbarkeit variieren nach Region, Sorte und Wetter. Orientierung: <a href="https://www.bzfe.de/kueche-und-alltag/einkaufen/der-saisonkalender/">Saisonkalender des Bundeszentrums für Ernährung</a>.';
-  document.querySelector('#month-grid').after(reference);
-  const note=document.createElement('p');note.className='season-caption';note.textContent='Ein illustrierter Jahreslauf für Deutschland. Wetter und Blattaustrieb unterscheiden sich je nach Region und Jahr.';document.querySelector('.season-switch').before(note);
+  // Texte, Obstlisten und Hinweise stehen statisch in saisonkalender.html (suchmaschinenlesbar und übersetzbar).
 })();
