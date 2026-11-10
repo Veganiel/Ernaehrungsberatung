@@ -75,3 +75,38 @@ test('stylesheet is loaded in the head so month cards do not shift after first p
   assert.match(head, /styles\/season-scenes\.css/);
   assert.match(html, /<script src="scripts\/season-scenes\.js" defer><\/script>/);
 });
+
+const yearRows = [...html.matchAll(/<tr data-type="(veg|fruit)"><th scope="row">([^<]+)<\/th>(.*?)<\/tr>/g)].map(match => ({
+  type: match[1],
+  label: decode(match[2]),
+  cells: [...match[3].matchAll(/<td(?: class="([^"]*)")?>/g)].map(cell => {
+    const classes = (cell[1] || '').split(' ');
+    return classes.includes('on') ? 'fresh' : classes.includes('st') ? 'store' : null;
+  })
+}));
+
+test('year overview table shows exactly what the month cards list', () => {
+  const expected = new Map();
+  months.forEach((month, index) => {
+    for (const item of month.items) {
+      const store = /\(Lagerware\)/.test(item.text);
+      const label = item.text.replace(/\s*\((?:Lagerware|Saisonbeginn)\)/, '').trim();
+      const key = `${item.fruit ? 'fruit' : 'veg'}|${label}`;
+      if (!expected.has(key)) expected.set(key, Array(12).fill(null));
+      const cells = expected.get(key);
+      cells[index] = store && cells[index] !== 'fresh' ? 'store' : 'fresh';
+    }
+  });
+  const actual = new Map(yearRows.map(row => [`${row.type}|${row.label}`, row.cells]));
+  assert.deepEqual([...actual.keys()].sort(), [...expected.keys()].sort());
+  for (const [key, cells] of expected) assert.deepEqual(actual.get(key), cells, key);
+});
+
+test('year overview has twelve month columns, two groups and is wired to the filter', () => {
+  const head = html.match(/<thead>(.*?)<\/thead>/)[1];
+  assert.equal((head.match(/<th scope="col">/g) || []).length, 13);
+  for (const row of yearRows) assert.equal(row.cells.length, 12, row.label);
+  assert.equal((html.match(/<tr class="group" data-type="(?:veg|fruit)">/g) || []).length, 2);
+  assert.match(html, /<table class="year-table" id="year-table">/);
+  assert.match(html, /aria-controls="year-table month-grid"/);
+});

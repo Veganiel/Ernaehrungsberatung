@@ -3488,5 +3488,22 @@
   "Jetzt Saison": "In season now",
   "Alle Zutaten werden angezeigt.": "All ingredients are shown.",
   "Es wird nur Gemüse angezeigt.": "Only vegetables are shown.",
-  "Es wird nur Obst angezeigt.": "Only fruit is shown."
+  "Es wird nur Obst angezeigt.": "Only fruit is shown.",
+  "Zutat": "Ingredient",
+  "Jan": "Jan",
+  "Feb": "Feb",
+  "Mär": "Mar",
+  "Apr": "Apr",
+  "Jun": "Jun",
+  "Jul": "Jul",
+  "Aug": "Aug",
+  "Sep": "Sep",
+  "Okt": "Oct",
+  "Nov": "Nov",
+  "Dez": "Dec",
+  "Saison": "In season",
+  "Lagerware": "Stored",
+  "Jahresübersicht Obst und Gemüse": "Year overview of fruit and vegetables",
+  "Das Jahr im Überblick": "The year at a glance",
+  "Jeder Balken zeigt, in welchen Monaten eine Zutat aus Deutschland Saison hat. Gestreift heißt: Lagerware.": "Each bar shows the months in which an ingredient from Germany is in season. Striped means stored produce."
 }
