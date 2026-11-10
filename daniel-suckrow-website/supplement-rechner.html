@@ -137,13 +137,13 @@ function render(){
   }
   const sum=chosen.reduce((s,x)=>s+x.monthly,0);
   document.getElementById("total").textContent=money(sum);
-  try{localStorage.setItem('veganiel.supplement-calculator.v1',JSON.stringify({at:new Date().toISOString(),budget:limit,winter:document.getElementById("winter").checked,eggs:document.getElementById("eggs").checked,prices,total:sum,products:chosen.map(item=>item.name)}));}catch{}
   document.getElementById("tierStatus").innerHTML=tierText + (sum > limit + .001 ? " <span>Die Auswahl liegt über dem eingestellten Budget.</span>" : "");
 }
 const requestedBudget=new URLSearchParams(location.hash.slice(1)).get("budget");
 if(requestedBudget!==null&&Number.isFinite(Number(requestedBudget))&&Number(requestedBudget)>=5&&Number(requestedBudget)<=300)budget.value=String(Number(requestedBudget));
 document.getElementById("winter").checked=[10,11,0,1,2].includes(new Date().getMonth());
-for(const el of document.querySelectorAll('#budget,#winter,#eggs,.price-settings input'))el.addEventListener("input",render);
+const persistSelection=()=>{try{const total=Number(document.getElementById("total").textContent.replace(/[^\d,.-]/g,"").replace(",","."));const products=[...document.querySelectorAll('#results .product strong')].map(item=>item.textContent.trim()).filter(Boolean);if(Number.isFinite(total)&&products.length)localStorage.setItem('veganiel.supplement-calculator.v1',JSON.stringify({at:new Date().toISOString(),budget:Number(budget.value),winter:document.getElementById("winter").checked,eggs:document.getElementById("eggs").checked,total,products,touched:true}));}catch{}};
+for(const el of document.querySelectorAll('#budget,#winter,#eggs,.price-settings input'))el.addEventListener("input",()=>{render();persistSelection();});
 render();
 </script>
 

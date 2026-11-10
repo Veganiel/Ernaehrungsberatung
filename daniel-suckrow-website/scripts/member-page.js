@@ -69,7 +69,7 @@
   };
   const updateSupplementDetail=async()=>{
     let rows=[],direct=null;try{rows=JSON.parse(localStorage.getItem('veganiel.wellbeing-history.v1')||'[]');direct=JSON.parse(localStorage.getItem('veganiel.supplement-calculator.v1')||'null');}catch{}
-    const latest=direct?.products?.length?direct:[...(Array.isArray(rows)?rows:[])].reverse().find(row=>row?.kind==='supplements');
+    const latest=direct?.touched&&direct.products?.length?direct:[...(Array.isArray(rows)?rows:[])].reverse().find(row=>row?.kind==='supplements');
     const card=[...document.querySelectorAll('.overview-card')].find(node=>node.querySelector('.overview-label')?.textContent==='SUPPLEMENT-AUSWAHL');
     const products=await completeSelection(latest),detail=products.join(' · '),text=card?.querySelector('p:not(.overview-label)');
     if(!text||!detail||card.dataset.supplementDetail===detail)return;
