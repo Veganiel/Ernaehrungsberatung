@@ -4,6 +4,10 @@ const path = require('node:path');
 const PRODUCT = 'veganiel-longevity-v1';
 const LANGS = ['de', 'en'];
 const CONSULTING = 'veganiel-consulting-v1';
+// Compact package: same analysis, no video calls; intake documents and follow-up by email.
+const CONSULTING_BASIC = 'veganiel-consulting-basic-v1';
+const PRICES = { [PRODUCT]: '2.00', [CONSULTING]: '79.00', [CONSULTING_BASIC]: '49.00' };
+const isConsulting = product => product === CONSULTING || product === CONSULTING_BASIC;
 const fail = (status, message) => Object.assign(new Error(message), { status });
 function key() {
   const value = process.env.PDF_ENCRYPTION_KEY || '';
@@ -60,8 +64,8 @@ function verifyOrder(order) {
   const unit = units[0];
   const [product, lang, nonce, signature, extra] = (unit.custom_id || '').split(':');
   const value = `${product}:${lang}:${nonce}`;
-  if (extra || ![PRODUCT, CONSULTING].includes(product) || !LANGS.includes(lang) || !nonce || signature !== sign(value)) throw fail(403, 'Wrong product');
-  const price = product === CONSULTING ? '79.00' : '2.00';
+  if (extra || !Object.hasOwn(PRICES, product) || !LANGS.includes(lang) || !nonce || signature !== sign(value)) throw fail(403, 'Wrong product');
+  const price = PRICES[product];
   const captures = unit.payments?.captures || [];
   const capture = captures.find(c => c.status === 'COMPLETED');
   if (order.status !== 'COMPLETED' || captures.length !== 1 || !capture || capture.amount?.value !== price || capture.amount?.currency_code !== 'EUR' || unit.amount?.value !== price || unit.amount?.currency_code !== 'EUR') throw fail(409, 'Payment not completed');
@@ -72,6 +76,17 @@ function verifyOrder(order) {
 }
 async function deliver(order) {
   const { product, lang, capture, email } = verifyOrder(order);
+  if (product === CONSULTING_BASIC) {
+    const english = lang === 'en';
+    const text = english
+      ? `Thank you for booking the Veganiel compact nutrition consultation (€49, without video calls). Your payment reference: ${capture.id}. I will send you the intake documents and the food diary template by email shortly. You can reach me by email with any questions. Please do not send medical records through PayPal.
+Daniel Suckrow · info@veganiel.com`
+      : `Vielen Dank für die Buchung der Veganiel-Ernährungsberatung Kompakt (49 €, ohne Online-Gespräche). Deine Zahlungsreferenz: ${capture.id}. Ich schicke dir in Kürze die Unterlagen zum Ausfüllen und das Dokument zur Ernährungserfassung per E-Mail. Bei Rückfragen erreichst du mich jederzeit per E-Mail. Bitte sende keine medizinischen Unterlagen über PayPal.
+Daniel Suckrow · info@veganiel.com`;
+    const response = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json', 'Idempotency-Key': `${CONSULTING_BASIC}/${capture.id}` }, body: JSON.stringify({ from: 'Veganiel <info@veganiel.com>', to: [email], bcc: ['info@veganiel.com'], reply_to: 'info@veganiel.com', subject: english ? 'Your Veganiel compact nutrition consultation' : 'Deine Veganiel-Ernährungsberatung Kompakt', text }), signal: AbortSignal.timeout(15000) });
+    if (!response.ok) throw fail(502, 'Email delivery pending');
+    return { product, contactUrl: 'mailto:info@veganiel.com?subject=' + encodeURIComponent('Ernährungsberatung Kompakt · ' + capture.id) };
+  }
   if (product === CONSULTING) {
     const english = lang === 'en';
     const text = english
@@ -99,4 +114,4 @@ Daniel Suckrow · info@veganiel.com`;
   if (!response.ok) throw fail(502, 'Email delivery pending');
   return { downloadUrl: url };
 }
-module.exports = { LANGS, PRODUCT, CONSULTING, fail, seal, unseal, metadata, pdf, configured, paypal, verifyOrder, deliver };
+module.exports = { LANGS, PRODUCT, CONSULTING, CONSULTING_BASIC, PRICES, isConsulting, fail, seal, unseal, metadata, pdf, configured, paypal, verifyOrder, deliver };

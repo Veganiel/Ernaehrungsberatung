@@ -108,3 +108,36 @@ test('consultation requires exactly EUR 79 and sends booking confirmation withou
   o.purchase_units[0].payments.captures[0].amount.value = '2.00';
   assert.throws(() => shop.verifyOrder(o));
 });
+test('compact consultation requires exactly EUR 49, never accepts the 79 price, and promises documents instead of calls', async () => {
+  const o = order('de');
+  o.purchase_units[0].custom_id = shop.metadata('de', 'compact', shop.CONSULTING_BASIC);
+  o.purchase_units[0].amount.value = o.purchase_units[0].payments.captures[0].amount.value = '49.00';
+  assert.equal(shop.verifyOrder(o).product, shop.CONSULTING_BASIC);
+  const originalFetch = global.fetch; let sent, headers;
+  global.fetch = async (url, options) => { sent = JSON.parse(options.body); headers = options.headers; return { ok: true }; };
+  try {
+    const result = await shop.deliver(o);
+    assert.match(result.contactUrl, /Kompakt/);
+    assert.equal(sent.attachments, undefined);
+    assert.deepEqual(sent.bcc, ['info@veganiel.com']);
+    assert.match(sent.text, /49 €/); assert.match(sent.text, /Unterlagen/); assert.doesNotMatch(sent.text, /Termin/);
+    assert.match(headers['Idempotency-Key'], /basic/);
+  } finally { global.fetch = originalFetch; }
+  for (const value of ['79.00', '2.00', '48.99']) { const x = JSON.parse(JSON.stringify(o)); x.purchase_units[0].amount.value = x.purchase_units[0].payments.captures[0].amount.value = value; assert.throws(() => shop.verifyOrder(x)); }
+  const full = order('de'); full.purchase_units[0].custom_id = shop.metadata('de', 'full', shop.CONSULTING);
+  full.purchase_units[0].amount.value = full.purchase_units[0].payments.captures[0].amount.value = '49.00';
+  assert.throws(() => shop.verifyOrder(full), 'the full package cannot be bought for 49');
+});
+test('compact consultation orders are created for EUR 49 and need service consent', async () => {
+  enable();
+  const original = global.fetch; let created;
+  global.fetch = async (url, options) => { if (url.endsWith('/v2/checkout/orders')) created = JSON.parse(options.body); return { ok: true, json: async () => url.endsWith('/token') ? { access_token: 't' } : { id: 'ORDERCOMPACT12345' } }; };
+  try {
+    const bad = await handler({ httpMethod: 'POST', headers: { origin: 'https://veganiel.com' }, queryStringParameters: { action: 'create' }, body: JSON.stringify({ lang: 'de', product: 'consulting-basic', serviceConsent: false }) });
+    assert.equal(bad.statusCode, 400);
+    const ok = await handler({ httpMethod: 'POST', headers: { origin: 'https://veganiel.com' }, queryStringParameters: { action: 'create' }, body: JSON.stringify({ lang: 'de', product: 'consulting-basic', serviceConsent: true }) });
+    assert.equal(ok.statusCode, 200);
+    assert.equal(created.purchase_units[0].amount.value, '49.00');
+    assert.equal(created.purchase_units[0].reference_id, shop.CONSULTING_BASIC);
+  } finally { global.fetch = original; }
+});

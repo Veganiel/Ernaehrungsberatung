@@ -3,7 +3,9 @@
   'use strict';
   const root = document.getElementById('guide-checkout');
   if (!root) return;
-  const consulting = root.dataset.product === 'consulting';
+  // data-product: 'consulting' (79 €), 'consulting-basic' (49 €) or absent (PDF guide). The consulting page may switch it before PayPal starts.
+  const kind = () => root.dataset.product === 'consulting-basic' ? 'basic' : root.dataset.product === 'consulting' ? 'full' : 'guide';
+  const consultingProduct = () => kind() !== 'guide';
   const language = root.querySelector('select');
   const consent = root.querySelector('input');
   const terms = root.querySelector('[data-terms-consent]');
@@ -16,12 +18,19 @@
     de: { acceptTerms: 'Ich stimme den', acceptTermsEnd: 'zu.', withdrawal: 'Widerruf', language: 'Sprache deiner PDF', price: 'Einmalig · 2,00 € · PDF per E-Mail', consent: 'Ich stimme ausdrücklich zu, dass die Bereitstellung der PDF vor Ablauf der Widerrufsfrist beginnt. Ich weiß, dass ich dadurch mein Widerrufsrecht verliere.', start: 'Mit PayPal kaufen · 2,00 €', loading: 'Zahlung wird vorbereitet …', unavailable: 'Der Verkauf wird eingerichtet. Momentan werden keine Zahlungen angenommen.', intro: 'Wähle deine PDF-Sprache. Die PDF geht nach bestätigter Zahlung an deine bei PayPal hinterlegte E-Mail-Adresse.', cancelled: 'Zahlung abgebrochen. Du wurdest nicht belastet.', error: 'Die Zahlung konnte nicht bestätigt werden. Bitte prüfe zuerst dein PayPal-Konto und versuche die Bestätigung erneut.', success: 'Vielen Dank! Deine PDF wurde zum Versand an deine PayPal-E-Mail-Adresse angenommen. Prüfe auch den Spamordner.', delayed: 'Die Zahlung ist abgeschlossen. Der E-Mail-Versand ist verzögert. Lade deine PDF hier herunter; bitte nicht erneut bezahlen.', download: 'Deine PDF herunterladen', retry: 'Zahlung erneut prüfen', legal: 'Information zur sofortigen Bereitstellung', help: 'Fragen? info@veganiel.com' },
     en: { acceptTerms: 'I agree to the terms (', acceptTermsEnd: ').', withdrawal: 'Withdrawal', language: 'PDF language', price: 'One-time payment · €2.00 · PDF by email', consent: 'I expressly agree that the PDF will be supplied before the withdrawal period ends. I acknowledge that I thereby lose my right of withdrawal.', start: 'Buy with PayPal · €2.00', loading: 'Preparing checkout …', unavailable: 'Checkout is being set up. No payments are currently accepted.', intro: 'Choose your PDF language. After confirmed payment, the PDF is sent to the email address registered with PayPal.', cancelled: 'Payment cancelled. You have not been charged.', error: 'Payment could not be confirmed. Check your PayPal account first, then try confirming again.', success: 'Thank you! Your PDF has been accepted for delivery to your PayPal email address. Please also check your spam folder.', delayed: 'Your payment is complete. Email delivery is delayed. Download your PDF here; please do not pay again.', download: 'Download your PDF', retry: 'Check payment again', legal: 'Immediate digital delivery', help: 'Questions? info@veganiel.com' }
   };
-  if (consulting) {
+  const base = { de: { ...copy.de }, en: { ...copy.en } };
+  {
     Object.assign(copy.de, { price: 'Einmalig · 79,00 € · Persönliche Ernährungsberatung', consent: 'Ich möchte, dass die Beratung nach Terminvereinbarung auch vor Ablauf der 14-tägigen Widerrufsfrist beginnen kann. Bei einem Widerruf kann für bereits erbrachte Leistungen ein anteiliger Betrag anfallen.', start: 'Beratung mit PayPal buchen · 79,00 €', intro: 'Nach bestätigter Zahlung erhältst du eine Bestätigung per E-Mail. Deinen Termin und die nächsten Schritte vereinbaren wir anschließend per E-Mail.', success: 'Vielen Dank! Deine Beratung ist bezahlt. Die Bestätigung wurde zum Versand angenommen. Antworte darauf, um deinen Termin zu vereinbaren.', delayed: 'Deine Beratung ist bezahlt. Die Bestätigungs-E-Mail ist verzögert. Bitte kontaktiere uns mit deiner PayPal-Zahlungsreferenz, um den Termin zu vereinbaren. Bitte nicht erneut bezahlen.', download: 'Termin per E-Mail vereinbaren', legal: 'Widerruf und Beginn der Beratung' });
     Object.assign(copy.en, { price: 'One-time payment · €79.00 · Personal nutrition consultation', consent: 'I request that the consultation may begin, by appointment, before the 14-day withdrawal period expires. If I withdraw, a proportionate charge may apply for services already provided.', start: 'Book consultation with PayPal · €79.00', intro: 'After confirmed payment, you will receive an email confirmation. We will arrange your appointment and next steps by email.', success: 'Thank you! Your consultation is paid. Your confirmation email has been accepted for delivery. Reply to arrange your appointment.', delayed: 'Your consultation is paid. The confirmation email is delayed. Please contact us with your PayPal payment reference to arrange your appointment. Please do not pay again.', download: 'Arrange your appointment by email', legal: 'Withdrawal and starting your consultation' });
   }
+  const full = { de: { ...base.de, ...copy.de }, en: { ...base.en, ...copy.en } };
+  const basic = {
+    de: { ...full.de, consent: 'Ich möchte, dass die Beratung auch vor Ablauf der 14-tägigen Widerrufsfrist beginnen kann. Bei einem Widerruf kann für bereits erbrachte Leistungen ein anteiliger Betrag anfallen.', price: 'Einmalig · 49,00 € · Ernährungsberatung Kompakt (ohne Online-Gespräche)', start: 'Kompakt mit PayPal buchen · 49,00 €', intro: 'Nach bestätigter Zahlung erhältst du eine Bestätigung per E-Mail. Die Unterlagen zum Ausfüllen und das Dokument zur Ernährungserfassung schicke ich dir anschließend per E-Mail.', success: 'Vielen Dank! Deine Beratung ist bezahlt. Die Bestätigung wurde zum Versand angenommen. Deine Unterlagen erhältst du per E-Mail.', delayed: 'Deine Beratung ist bezahlt. Die Bestätigungs-E-Mail ist verzögert. Bitte kontaktiere uns mit deiner PayPal-Zahlungsreferenz. Bitte nicht erneut bezahlen.', download: 'Per E-Mail Kontakt aufnehmen' },
+    en: { ...full.en, consent: 'I request that the consultation may begin before the 14-day withdrawal period expires. If I withdraw, a proportionate charge may apply for services already provided.', price: 'One-time payment · €49.00 · Compact nutrition consultation (no video calls)', start: 'Book Compact with PayPal · €49.00', intro: 'After confirmed payment, you will receive an email confirmation. I will then send you the intake documents and the food diary template by email.', success: 'Thank you! Your consultation is paid. Your confirmation email has been accepted for delivery. You will receive your documents by email.', delayed: 'Your consultation is paid. The confirmation email is delayed. Please contact us with your PayPal payment reference. Please do not pay again.', download: 'Contact us by email' }
+  };
+  const copies = { guide: base, full, basic };
   const ui = () => document.documentElement.lang === 'de' ? 'de' : 'en';
-  const t = key => copy[ui()][key];
+  const t = key => copies[kind()][ui()][key];
   function render() {
     const cover = document.querySelector('.guide-cover');
     if (cover) cover.src = ui() === 'en' ? 'longevity-guide-cover-en.png' : 'longevity-guide-cover.png';
@@ -29,6 +38,7 @@
     if (!selected && !locked) language.value = ui();
     start.disabled = !ready || !consent.checked || !terms.checked || locked;
     if (!locked) status.textContent = ready ? t('intro') : t('unavailable');
+    root.dataset.locked = locked ? 'true' : 'false';
   }
   async function request(action, body) {
     const response = await fetch('/.netlify/functions/checkout?action=' + action, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : { cache: 'no-store' });
@@ -41,10 +51,10 @@
     status.textContent = t('loading');
     try {
       const result = await request('capture', { receipt });
-      if (!result.paid || !(consulting ? result.contactUrl : result.downloadUrl)) throw new Error('Not completed');
+      if (!result.paid || !(consultingProduct() ? result.contactUrl : result.downloadUrl)) throw new Error('Not completed');
       status.textContent = t(result.emailed ? 'success' : 'delayed') + ' ';
       const link = document.createElement('a');
-      link.href = consulting ? result.contactUrl : result.downloadUrl;
+      link.href = consultingProduct() ? result.contactUrl : result.downloadUrl;
       link.textContent = t('download');
       link.style.textDecoration = 'underline';
       status.append(link);
@@ -58,6 +68,7 @@
   consent.addEventListener('change', render);
   terms.addEventListener('change', render);
   document.addEventListener('veganiel:languagechange', render);
+  new MutationObserver(render).observe(root, { attributes: true, attributeFilter: ['data-product'] });
   retry.addEventListener('click', capture);
   start.addEventListener('click', async () => {
     if (!ready || !consent.checked || !terms.checked || locked) return;
@@ -77,7 +88,7 @@
       await window.paypal.Buttons({
         style: { layout: 'vertical', label: 'pay' },
         createOrder: async () => {
-          const order = await request('create', { lang: language.value, product: consulting ? 'consulting' : 'guide', digitalConsent: !consulting && consent.checked, serviceConsent: consulting && consent.checked });
+          const order = await request('create', { lang: language.value, product: kind() === 'basic' ? 'consulting-basic' : kind() === 'full' ? 'consulting' : 'guide', digitalConsent: !consultingProduct() && consent.checked, serviceConsent: consultingProduct() && consent.checked });
           receipt = order.receipt;
           return order.id;
         },
