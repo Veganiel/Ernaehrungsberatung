@@ -20,58 +20,82 @@
   <link rel="stylesheet" href="branding.css?v=2">
   <link rel="stylesheet" href="styles/global-nav.css?v=3">
   <link rel="stylesheet" href="i18n.css">
-  <link rel="stylesheet" href="styles/shop.css?v=collection-1">
+  <link rel="stylesheet" href="styles/shop.css?v=editorial-2">
   <script src="i18n.js" defer></script>
   <script src="scripts/global-nav.js?v=4" defer></script>
   <script src="scripts/shop-visibility.js" defer></script>
-  <script src="scripts/shop-gallery.js?v=1" defer></script>
+  <script src="scripts/shop-gallery.js?v=2" defer></script>
 <link rel="stylesheet" href="styles/legal-footer.css"></head>
-<body>
+<body class="shop-editorial">
   <a class="shop-skip" href="#main">Zum Inhalt springen</a>
-  <header class="shop-fallback-header">
-    <a href="index.html">Veganiel</a>
-  </header>
+  <header class="shop-fallback-header"><a href="index.html">Veganiel</a></header>
   <main id="main">
-    <section class="shop-hero" aria-labelledby="shop-title">
-      <div class="shop-shell hero-inner">
-        <div class="hero-copy">
-          <p class="shop-kicker hero-kicker"><span></span>Kleidung mit Bio-Baumwolle</p>
-          <h1 id="shop-title"><span class="hero-name">Veganiels Shop:</span> <span class="hero-statement">Zeig Haltung mit dem, was du trägst</span></h1>
-          <p class="hero-description">Der End Speciesism Hoodie mit Bio-Baumwolle und das Make the Connection T-Shirt aus 100 % Bio-Baumwolle. Druck, Zahlung und Versand übernimmt Spreadshop.</p>
-          <a class="shop-button hero-button" href="#kollektion"><span>Kollektion entdecken</span><span aria-hidden="true">↓</span></a>
-        </div>
-        <div class="hero-stage">
-          <div class="hero-rings" aria-hidden="true"></div>
-          <span class="stage-mark" aria-hidden="true">✳</span>
-          <a class="hero-item hero-hoodie" href="#end-speciesism" aria-label="End Speciesism Hoodie ansehen">
-            <img src="assets/shop/end-speciesism-back.webp" width="350" height="350" alt="" decoding="async">
-            <span class="hero-item-index" aria-hidden="true">01 <b>↘</b></span>
-          </a>
-          <a class="hero-item hero-shirt" href="#make-the-connection" aria-label="Make the Connection T-Shirt ansehen">
-            <img src="assets/shop/make-the-connection-spreadshop.webp" width="1200" height="1200" alt="" fetchpriority="high" decoding="async">
-            <span class="hero-item-index" aria-hidden="true">02 <b>↘</b></span>
-          </a>
-          <span class="stage-caption shop-kicker">Zwei Motive, eine Haltung</span>
+    <section class="shop-hero shop-shell" aria-labelledby="shop-title">
+      <div class="hero-copy">
+        <p class="shop-kicker"><span class="status-dot"></span> Veganiels Shop · Die Kollektion</p>
+        <h1 id="shop-title">Zeig Haltung.<br><em>Mit dem, was <br>du trägst.</em></h1>
+        <p class="hero-description">Für die Verbindung zur Natur. Für einen anderen Blick auf Tiere. Zwei Designs, die deine Werte sichtbar machen.</p>
+        <a class="shop-button hero-button" href="#kollektion">Kollektion entdecken <span aria-hidden="true">↘</span></a>
+        <div class="hero-footnote"><span class="small-leaf" aria-hidden="true">❧</span><p>Kleidung mit Bio-Baumwolle.<br>Druck &amp; Versand durch Spreadshop.</p></div>
+      </div>
+      <div class="hero-stage" data-feature="shirt">
+        <span class="stage-edition shop-kicker">Zwei Motive. Eine Haltung.</span>
+        <svg class="stage-botanical" viewBox="0 0 480 600" fill="none" aria-hidden="true"><path d="M220 600C160 420 250 170 370 20M218 474C30 420 16 320 30 274C142 302 218 358 218 474ZM222 405C398 394 456 290 446 237C324 256 249 318 222 405ZM245 295C104 255 107 147 123 116C214 139 249 210 245 295ZM286 195C405 178 452 91 426 46C354 68 309 119 286 195Z" stroke="currentColor" stroke-width="1.3"/></svg>
+        <a class="hero-product hero-product-shirt" data-hero-view="shirt" href="#make-the-connection" aria-label="Make the Connection T-Shirt ansehen">
+          <img src="assets/shop/make-the-connection-spreadshop.webp" width="1200" height="1200" alt="Make the Connection Bio-T-Shirt in Lavendel mit Blattmotte und Sternen" fetchpriority="high" decoding="async">
+        </a>
+        <a class="hero-product hero-product-hoodie" data-hero-view="hoodie" href="#end-speciesism" aria-label="End Speciesism Hoodie ansehen" hidden>
+          <img src="assets/shop/end-speciesism-back.webp" width="350" height="350" alt="End Speciesism Hoodie in Navy, Rückseite mit Tiermotiv" decoding="async">
+        </a>
+        <span class="stage-star" aria-hidden="true">✳</span>
+        <span class="stage-vertical shop-kicker" aria-hidden="true">Wear your values</span>
+        <div class="stage-bottom">
+          <div class="stage-label" data-hero-label="shirt"><span class="shop-kicker">01 / T-Shirt</span><strong translate="no">Make the Connection</strong></div>
+          <div class="stage-label" data-hero-label="hoodie" hidden><span class="shop-kicker">02 / Hoodie</span><strong translate="no">End Speciesism</strong></div>
+          <div class="hero-switch" role="group" aria-label="Produktvorschau wählen" hidden>
+            <button type="button" data-hero-show="shirt" aria-pressed="true" aria-label="T-Shirt anzeigen">01</button>
+            <button type="button" data-hero-show="hoodie" aria-pressed="false" aria-label="Hoodie anzeigen">02</button>
+          </div>
         </div>
       </div>
     </section>
 
-    <div class="shop-shell collection" id="kollektion">
+    <div class="shop-ribbon" aria-label="Die Idee hinter der Kollektion">
+      <div class="shop-shell"><span>Für Tiere.</span><i aria-hidden="true">✳</i><span>Für Natur.</span><i aria-hidden="true">✳</i><span>Für dich.</span><i aria-hidden="true">✳</i><span translate="no">Wear your values.</span></div>
+    </div>
+
+    <section class="shop-shell collection" id="kollektion" aria-labelledby="collection-title">
       <div class="collection-heading">
-        <div>
-          <p class="shop-kicker section-kicker">Veganiel Merch</p>
-          <h2>Die Kollektion</h2>
-        </div>
-        <span class="collection-count shop-kicker">02 / Designs</span>
+        <div><p class="shop-kicker">Kleine Kollektion. Klare Botschaft.</p><h2 id="collection-title">Finde dein <em>Statement.</em></h2></div>
+        <p>Zwei eigenständige Motive.<br>Welches passt zu dir?</p>
       </div>
       <div class="shop-grid">
-        <article class="merch-card" id="end-speciesism">
+        <article class="merch-card shirt-card" id="make-the-connection">
+          <div class="merch-stage shirt-stage">
+            <div class="merch-stage-top"><span class="shop-kicker">01 / T-Shirt</span><span class="material-tag">100 % Bio-Baumwolle</span></div>
+            <span class="product-watermark" aria-hidden="true" translate="no">CONNECT.</span>
+            <button class="product-zoom" type="button" data-zoom-image="assets/shop/make-the-connection-spreadshop.webp" data-zoom-label="Make the Connection · T-Shirt" aria-label="T-Shirt in großer Ansicht öffnen" disabled>
+              <img src="assets/shop/make-the-connection-spreadshop.webp" width="1200" height="1200" alt="Make the Connection Bio-T-Shirt in Lavendel mit Blattmotte, Sternen und dezentem Schriftzug" loading="lazy" decoding="async">
+              <span class="zoom-hint" aria-hidden="true">↗</span>
+            </button>
+            <span class="view-caption">Spreadshop-Produktansicht · Lavendel</span>
+          </div>
+          <div class="merch-info">
+            <p class="shop-kicker merch-type">SPREAD · Premium Bio-T-Shirt</p>
+            <div class="product-title-row"><h3 translate="no">Make the<br>Connection</h3><div class="merch-pricing"><strong>27,99 €</strong><small>zzgl. Versand</small></div></div>
+            <p class="merch-description">Blätter werden Flügel. Eine lila Motte, kleine Sterne und ein dezenter Schriftzug erinnern daran, wie eng alles miteinander verbunden ist.</p>
+            <div class="product-colors"><span class="swatches" aria-hidden="true"><i class="lavender"></i><i class="white"></i><i class="black"></i></span><span>Lavendel, Weiß &amp; Schwarz</span></div>
+            <a class="shop-button buy-button" href="https://veganiels-shop.myspreadshop.de/make+the+connection-A32823aab0f16131b?sellable=rngbtjw1olcr-812&amp;appearance=1267" target="_blank" rel="noopener noreferrer"><span>T-Shirt im Spreadshop ansehen</span><span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+
+        <article class="merch-card hoodie-card" id="end-speciesism">
           <div class="merch-stage hoodie-stage" data-shop-gallery>
-            <span class="merch-number" aria-hidden="true">01</span>
-            <span class="merch-stamp shop-kicker">Vorder- und Rückendruck</span>
+            <div class="merch-stage-top"><span class="shop-kicker">02 / Hoodie</span><span class="material-tag">Mit Bio-Baumwolle</span></div>
+            <span class="product-watermark" aria-hidden="true" translate="no">RESPECT.</span>
             <div class="gallery-images" id="hoodie-views">
-              <img data-view="back" src="assets/shop/end-speciesism-back.webp" width="350" height="350" alt="End Speciesism Hoodie, Rückseite mit Fuchs, Pferd, Schwein und Kuh" loading="lazy" decoding="async">
-              <img data-view="front" src="assets/shop/end-speciesism-front.webp" width="350" height="350" alt="End Speciesism Hoodie, Vorderseite mit kleinem Brustmotiv" loading="lazy" decoding="async">
+              <button class="product-zoom" type="button" data-view="back" data-zoom-image="assets/shop/end-speciesism-back.webp" data-zoom-label="End Speciesism · Rückseite" aria-label="Hoodie-Rückseite in großer Ansicht öffnen" disabled><img src="assets/shop/end-speciesism-back.webp" width="350" height="350" alt="End Speciesism Hoodie, Rückseite mit Fuchs, Pferd, Schwein und Kuh" loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">↗</span></button>
+              <button class="product-zoom" type="button" data-view="front" data-zoom-image="assets/shop/end-speciesism-front.webp" data-zoom-label="End Speciesism · Vorderseite" aria-label="Hoodie-Vorderseite in großer Ansicht öffnen" disabled><img src="assets/shop/end-speciesism-front.webp" width="350" height="350" alt="End Speciesism Hoodie, Vorderseite mit kleinem Schriftzug auf der Brust" loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">↗</span></button>
             </div>
             <div class="gallery-controls" role="group" aria-label="Hoodie-Ansicht wählen" hidden>
               <button type="button" data-show="back" aria-controls="hoodie-views" aria-pressed="true">Rückseite</button>
@@ -80,56 +104,44 @@
           </div>
           <div class="merch-info">
             <p class="shop-kicker merch-type">Stanley/Stella SOUNDER · Unisex</p>
-            <h3>End Speciesism Hoodie</h3>
-            <p class="merch-description">Vorn ein kleiner Schriftzug auf der Brust. Hinten brechen Fuchs, Pferd, Schwein und Kuh durch den Asphalt.</p>
-            <ul class="merch-specs">
-              <li>Mit Bio-Baumwolle</li>
-              <li><span class="swatches" aria-hidden="true"><i class="navy"></i><i class="bottle"></i></span>Navy und Flaschengrün</li>
-            </ul>
-            <div class="merch-buy">
-              <div class="merch-pricing"><strong>56,99 €</strong><small>zzgl. Versand</small></div>
-              <a class="shop-button buy-button" href="https://veganiels-shop.myspreadshop.de/end+speciesism+hoodie-A3281db3ae9788476?sellable=rnfamhai1q46-1425&amp;appearance=399" target="_blank" rel="noopener noreferrer"><span>Im Spreadshop kaufen</span><span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-        </article>
-
-        <article class="merch-card" id="make-the-connection">
-          <div class="merch-stage shirt-stage">
-            <span class="merch-number" aria-hidden="true">02</span>
-            <span class="merch-stamp shop-kicker">Produktansicht in Lavendel</span>
-            <img class="shirt-product" src="assets/shop/make-the-connection-spreadshop.webp" width="1200" height="1200" alt="Make the Connection Bio-T-Shirt in Lavendel mit Blattmotte, Sternen und kleinem Schriftzug" loading="lazy" decoding="async">
-          </div>
-          <div class="merch-info">
-            <p class="shop-kicker merch-type">SPREAD · Premium Bio-T-Shirt</p>
-            <h3>Make the Connection T-Shirt</h3>
-            <p class="merch-description">Eine lila Blattmotte mit Sternen und einem kleinen, dezenten Schriftzug auf der Vorderseite.</p>
-            <ul class="merch-specs">
-              <li>100 % Bio-Baumwolle</li>
-              <li><span class="swatches" aria-hidden="true"><i class="lavender"></i><i class="white"></i><i class="black"></i></span>Lavendel, Weiß und Schwarz</li>
-            </ul>
-            <div class="merch-buy">
-              <div class="merch-pricing"><strong>27,99 €</strong><small>zzgl. Versand</small></div>
-              <a class="shop-button buy-button" href="https://veganiels-shop.myspreadshop.de/make+the+connection-A32823aab0f16131b?sellable=rngbtjw1olcr-812&amp;appearance=1267" target="_blank" rel="noopener noreferrer"><span>Im Spreadshop kaufen</span><span aria-hidden="true">↗</span></a>
-            </div>
+            <div class="product-title-row"><h3 translate="no">End<br>Speciesism</h3><div class="merch-pricing"><strong>56,99 €</strong><small>zzgl. Versand</small></div></div>
+            <p class="merch-description">Vorn dezent. Hinten unübersehbar: Fuchs, Pferd, Schwein und Kuh brechen durch den Asphalt. Ein Statement für Mitgefühl über Artgrenzen hinweg.</p>
+            <div class="product-colors"><span class="swatches" aria-hidden="true"><i class="navy"></i><i class="bottle"></i></span><span>Navy &amp; Flaschengrün</span><span class="print-note">Brust- &amp; Rückendruck</span></div>
+            <a class="shop-button buy-button" href="https://veganiels-shop.myspreadshop.de/end+speciesism+hoodie-A3281db3ae9788476?sellable=rnfamhai1q46-1425&amp;appearance=399" target="_blank" rel="noopener noreferrer"><span>Hoodie im Spreadshop ansehen</span><span aria-hidden="true">↗</span></a>
           </div>
         </article>
       </div>
+      <p class="collection-note">Größe und Farbe wählst du im Spreadshop. Dort findest du auch den aktuellen Preis und die Versandkosten.</p>
+    </section>
 
-      <aside class="shop-order-note">
-        <span class="order-icon" aria-hidden="true">↗</span>
-        <div>
-          <strong>So läuft deine Bestellung</strong>
-          <p>Größe, Farbe und Lieferoptionen wählst du im Spreadshop. Dort wird deine Bestellung bezahlt, gedruckt und verschickt.</p>
-        </div>
-        <a href="https://veganiels-shop.myspreadshop.de/" target="_blank" rel="noopener noreferrer">Zum Spreadshop <span aria-hidden="true">↗</span></a>
-      </aside>
-    </div>
+    <section class="shop-manifesto" aria-labelledby="manifesto-title">
+      <div class="shop-shell manifesto-inner">
+        <div class="manifesto-copy"><p class="shop-kicker">Was du trägst, kann etwas sagen.</p><h2 id="manifesto-title">Mehr Verbindung.<br><em>Mehr Mitgefühl.</em></h2><p>Eine Motte aus Blättern. Tiere, die Grenzen aufbrechen. Diese Kollektion bringt zwei Gedanken zusammen: Wir sind Teil der Natur. Und Mitgefühl hört nicht bei unserer eigenen Art auf.</p></div>
+        <div class="manifesto-art" aria-hidden="true"><span class="art-orbit"></span><svg viewBox="0 0 240 240" fill="none"><path d="M120 191V92M120 151C57 155 38 107 46 75C94 76 125 105 120 151ZM120 121C181 127 205 77 196 44C146 48 116 83 120 121Z" stroke="currentColor" stroke-width="2"/><path d="m120 151-54-55m54 25 55-57" stroke="currentColor"/><circle cx="120" cy="120" r="108" stroke="currentColor" stroke-dasharray="2 9"/></svg><span class="art-star">✳</span><span class="art-caption shop-kicker" translate="no">Kind by nature.</span></div>
+      </div>
+    </section>
+
+    <section class="shop-shell shop-order" aria-labelledby="order-title">
+      <div class="collection-heading"><div><p class="shop-kicker">Von deinem Lieblingsmotiv zu dir</p><h2 id="order-title">So einfach <em>geht’s.</em></h2></div><a class="text-link" href="https://veganiels-shop.myspreadshop.de/" target="_blank" rel="noopener noreferrer">Den ganzen Spreadshop öffnen <span aria-hidden="true">↗</span></a></div>
+      <ol class="order-steps">
+        <li><span class="step-number" aria-hidden="true">01</span><h3>Dein Motiv.</h3><p>Entdecke die beiden Designs und schau dir dein Lieblingsstück in Ruhe an.</p></li>
+        <li><span class="step-number" aria-hidden="true">02</span><h3>Deine Auswahl.</h3><p>Wähle im Spreadshop die passende Größe und Farbe. Prüfe dort die Maßtabelle und Lieferoptionen.</p></li>
+        <li><span class="step-number" aria-hidden="true">03</span><h3>Auf dem Weg zu dir.</h3><p>Spreadshop übernimmt Bezahlung, Druck und Versand. Alle Bestelldetails erhältst du dort.</p></li>
+      </ol>
+    </section>
+
+    <section class="shop-shell shop-faq" aria-labelledby="faq-title">
+      <div><p class="shop-kicker">Gut zu wissen</p><h2 id="faq-title">Noch eine <br><em>Frage?</em></h2></div>
+      <div class="faq-list">
+        <details><summary>Wo bestelle ich mein Lieblingsstück?<span aria-hidden="true">+</span></summary><p>Die Produktbuttons führen direkt zu Veganiels Shop bei Spreadshop. Dort wählst du Größe und Farbe und schließt deinen Kauf ab. Zahlung, Druck, Versand und Fragen zur Bestellung übernimmt Spreadshop.</p></details>
+        <details><summary>Was bedeutet hier Bio-Qualität?<span aria-hidden="true">+</span></summary><p>Das Make the Connection T-Shirt besteht aus 100 % Bio-Baumwolle. Der End Speciesism Hoodie enthält Bio-Baumwolle. Die genaue Materialzusammensetzung und Pflegehinweise findest du auf der jeweiligen Produktseite im Spreadshop.</p></details>
+        <details><summary>Wie finde ich die richtige Größe?<span aria-hidden="true">+</span></summary><p>Auf der Produktseite im Spreadshop findest du die verfügbaren Größen und eine Maßtabelle. Vergleiche die Maße am besten mit einem Kleidungsstück, das dir bereits gut passt.</p></details>
+        <details><summary>Wohin wird geliefert und was kostet der Versand?<span aria-hidden="true">+</span></summary><p>Die verfügbaren Lieferländer, Lieferzeiten und Versandkosten werden dir im Spreadshop angezeigt. Sie hängen von deiner Lieferadresse und Bestellung ab.</p></details>
+      </div>
+    </section>
+    <div class="shop-closing shop-shell"><span translate="no">Wear your values.</span><a href="#kollektion" aria-label="Zurück zur Kollektion">↗</a></div>
   </main>
-  <footer class="shop-footer">
-    <div class="shop-shell">
-      <span>Veganiel · Daniel Suckrow</span>
-      <a href="/agb.html">AGB</a>
-    </div>
-  <nav class="legal-footer-links" aria-label="Rechtliche Informationen"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav></footer>
+  <footer class="shop-footer"><div class="shop-shell"><a class="footer-brand" href="index.html">Veganiel<small translate="no">Daniels Ernährungsberatung</small></a><span>Mit Haltung ausgewählt.</span><nav class="legal-footer-links" aria-label="Rechtliche Informationen"><a href="/agb.html">AGB</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav></div></footer>
+  <dialog class="shop-lightbox" aria-labelledby="lightbox-title"><div class="lightbox-top"><p id="lightbox-title"></p><button type="button" data-close-lightbox aria-label="Große Ansicht schließen">×</button></div><img alt="" width="1200" height="1200"><p class="lightbox-note">Original-Produktansicht von Spreadshop</p></dialog>
 </body>
 </html>

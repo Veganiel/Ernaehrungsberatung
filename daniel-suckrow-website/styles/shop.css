@@ -1,518 +1,150 @@
-:root {
-  --shop-paper: #f8f6ed;
-  --shop-ink: #172923;
-  --shop-deep: #102b23;
-  --shop-lime: #d8eb9e;
-  --shop-line: #d9ded0;
-  --shop-muted: #526157;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  background: var(--shop-paper);
-  color: var(--shop-ink);
-  font: 16px/1.55 system-ui, sans-serif;
-}
-
-[hidden] { display: none !important; }
-
-.shop-shell {
-  width: min(1180px, calc(100% - 64px));
-  margin-inline: auto;
-}
-
-.shop-skip {
-  position: fixed;
-  top: 8px;
-  left: 8px;
-  z-index: 101;
-  transform: translateY(-150%);
-  padding: 10px 14px;
-  background: white;
-  color: var(--shop-deep);
-}
-
-.shop-skip:focus { transform: none; }
-
-.shop-fallback-header {
-  padding: 18px max(24px, calc((100% - 1180px) / 2));
-  font: bold 25px Georgia, serif;
-}
-
-.shop-fallback-header a { color: inherit; }
-
-#main, #kollektion, .merch-card { scroll-margin-top: 98px; }
-
-.shop-hero {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  background:
-    radial-gradient(ellipse at 77% 34%, #315344 0%, transparent 60%),
-    var(--shop-deep);
-  color: #fbf8ec;
-}
-
-.shop-hero::before {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  content: "";
-  background-image:
-    linear-gradient(#e1ebd814 1px, transparent 1px),
-    linear-gradient(90deg, #e1ebd814 1px, transparent 1px);
-  background-size: 54px 54px;
-  mask-image: linear-gradient(90deg, transparent 32%, #000);
-  pointer-events: none;
-}
-
-.hero-inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.06fr);
-  align-items: center;
-  min-height: 615px;
-  gap: clamp(28px, 4vw, 58px);
-  padding-block: 56px;
-}
-
-.hero-copy { position: relative; z-index: 2; }
-
-.shop-kicker {
-  margin: 0;
-  font: 700 11px/1.4 system-ui, sans-serif;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-}
-
-.hero-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: #e0edc7;
-  border: 1px solid #cbdab363;
-  border-radius: 100px;
-  padding: 8px 12px;
-}
-
-.hero-kicker span {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--shop-lime);
-}
-
-.shop-hero h1 {
-  margin: 22px 0 18px;
-  color: inherit;
-  font-weight: 500;
-}
-
-.hero-name {
-  display: block;
-  margin-bottom: 10px;
-  color: var(--shop-lime);
-  font: 750 clamp(16px, 2vw, 22px)/1.2 system-ui, sans-serif;
-}
-
-.hero-statement {
-  display: block;
-  max-width: 13ch;
-  font: 500 clamp(42px, 5.3vw, 78px)/.99 Georgia, serif;
-  letter-spacing: -.058em;
-  text-wrap: balance;
-}
-
-.hero-description {
-  max-width: 47ch;
-  margin: 0 0 26px;
-  color: #e0e8da;
-  font-size: clamp(14px, 1.35vw, 16px);
-}
-
-.shop-button {
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 18px;
-  min-height: 48px;
-  padding: 11px 17px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 750;
-  line-height: 1.35;
-  text-decoration: none;
-  transition: background-color .18s ease, color .18s ease, transform .18s ease;
-}
-
-.shop-button:hover { transform: translateY(-2px); }
-
-.shop-button span[aria-hidden] { font-size: 19px; line-height: 1; }
-
-.hero-button {
-  background: var(--shop-lime);
-  color: var(--shop-deep);
-}
-
-.hero-button:hover { background: #e7f6bd; }
-
-.hero-stage { position: relative; min-height: 435px; }
-
-.hero-rings {
-  position: absolute;
-  width: 91%;
-  height: 87%;
-  top: 5%;
-  left: 5%;
-  border-radius: 50%;
-  opacity: .37;
-  background: repeating-radial-gradient(ellipse, transparent 0 23px, #b6c69b80 24px 25px, transparent 26px 28px);
-  transform: rotate(-24deg);
-  pointer-events: none;
-}
-
-.stage-mark {
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 3;
-  color: var(--shop-lime);
-  font-size: clamp(29px, 4vw, 52px);
-  line-height: 1;
-  pointer-events: none;
-}
-
-.hero-item {
-  position: absolute;
-  display: grid;
-  place-items: center;
-  width: 55%;
-  height: 77%;
-  padding: 7% 0;
-  border: 1px solid #f1f2dfaa;
-  border-radius: 18px;
-  text-decoration: none;
-  box-shadow: 0 22px 45px #06171065;
-  transition: transform .23s ease;
-}
-
-.hero-hoodie {
-  top: 9%;
-  left: 2%;
-  z-index: 1;
-  background: linear-gradient(145deg, #dbe9ac, #aebf79);
-  color: #193023;
-  transform: rotate(-9deg);
-}
-
-.hero-shirt {
-  top: 15%;
-  right: 3%;
-  z-index: 2;
-  background: linear-gradient(145deg, #ede6f4, #c7b8db);
-  color: #2e2440;
-  transform: rotate(9deg);
-}
-
-.hero-hoodie:hover, .hero-hoodie:focus-visible { transform: rotate(-5deg) translateY(-7px); }
-.hero-shirt:hover, .hero-shirt:focus-visible { transform: rotate(5deg) translateY(-7px); }
-
-.hero-item img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  object-fit: contain;
-  filter: drop-shadow(0 12px 11px #18221f40);
-}
-
-.hero-item-index {
-  position: absolute;
-  inset: auto 12px 10px;
-  display: flex;
-  justify-content: space-between;
-  font: 800 11px/1 system-ui, sans-serif;
-  letter-spacing: .08em;
-}
-
-.hero-item-index b { font-size: 17px; }
-
-.stage-caption {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  color: #e2ecd1;
-  text-align: right;
-}
-
-.collection { padding-block: clamp(40px, 7vw, 94px) 52px; }
-
-.collection-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 12px;
-  padding-bottom: 17px;
-  margin-bottom: 22px;
-  border-bottom: 1px solid #b9c6b4;
-}
-
-.section-kicker { color: #4d6452; }
-
-.collection-heading h2 {
-  margin: 5px 0 0;
-  font: 500 clamp(38px, 5vw, 62px)/1 Georgia, serif;
-  letter-spacing: -.06em;
-}
-
-.collection-count {
-  color: #4d6452;
-  white-space: nowrap;
-  padding-bottom: 4px;
-}
-
-.shop-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(18px, 3vw, 30px);
-}
-
-.merch-card {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  overflow: hidden;
-  border: 1px solid var(--shop-line);
-  border-radius: 20px;
-  background: #fffdf7;
-  box-shadow: 0 10px 35px #132d2010;
-}
-
-.merch-stage {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  place-items: center;
-  aspect-ratio: 1.35;
-  min-height: 300px;
-  overflow: hidden;
-}
-
-.hoodie-stage { background: radial-gradient(circle, #e8efce 1%, #cad9a3 78%); }
-.shirt-stage { background: radial-gradient(circle, #f4eefa 1%, #ded2ee 83%); }
-
-.merch-stage::before {
-  position: absolute;
-  inset: 15%;
-  content: "";
-  z-index: -1;
-  border: 1px solid #263b2e2b;
-  border-radius: 50%;
-  box-shadow: 0 0 0 18px #f9faf245, 0 0 0 35px #f9faf227;
-  pointer-events: none;
-}
-
-.merch-number {
-  position: absolute;
-  top: 15px;
-  left: 18px;
-  z-index: -1;
-  color: #21312629;
-  font: 500 clamp(58px, 7vw, 100px)/1 Georgia, serif;
-  letter-spacing: -.09em;
-}
-
-.merch-stamp {
-  position: absolute;
-  z-index: 1;
-  top: 14px;
-  right: 14px;
-  padding: 7px 10px;
-  border: 1px solid #36453540;
-  border-radius: 100px;
-  color: #25372c;
-  background: #fafaf0d9;
-  font-size: 9px;
-}
-
-.gallery-images {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  padding: 30px 12px 51px;
-}
-
-.gallery-images img, .shirt-product {
-  display: block;
-  object-fit: contain;
-  filter: drop-shadow(0 13px 13px #19291f39);
-}
-
-.gallery-images img { width: 50%; height: 100%; }
-.gallery-images img[hidden] + img, .gallery-images img:only-of-type { width: 100%; }
-.gallery-images:has(img[hidden]) img { width: min(100%, 350px); }
-
-.shirt-product {
-  position: absolute;
-  top: 9%;
-  left: 12%;
-  width: 76%;
-  height: 84%;
-}
-
-.gallery-controls {
-  position: absolute;
-  inset: auto auto 13px;
-  display: flex;
-  gap: 3px;
-  padding: 4px;
-  border: 1px solid #53664840;
-  border-radius: 100px;
-  background: #fafbf0;
-}
-
-.gallery-controls button {
-  min-height: 38px;
-  padding: 7px 14px;
-  border: 0;
-  border-radius: 100px;
-  background: transparent;
-  color: var(--shop-deep);
-  font: 700 12px/1.15 system-ui, sans-serif;
-  cursor: pointer;
-}
-
-.gallery-controls button:hover { background: #e8eddb; }
-.gallery-controls button[aria-pressed="true"] { background: var(--shop-deep); color: white; }
-
-.merch-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: clamp(20px, 3vw, 34px);
-}
-
-.merch-type { color: #51674f; }
-
-.merch-info h3 {
-  margin: 7px 0 11px;
-  font: 500 clamp(30px, 3.6vw, 49px)/1.04 Georgia, serif;
-  letter-spacing: -.055em;
-  text-wrap: balance;
-}
-
-.merch-description { margin: 0; color: var(--shop-muted); }
-
-.merch-specs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin: 17px 0 22px;
-  padding: 0;
-  list-style: none;
-}
-
-.merch-specs li {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 9px;
-  border: 1px solid #dce3d5;
-  border-radius: 100px;
-  background: #f5f6ed;
-  font-size: 12px;
-  font-weight: 650;
-}
-
-.swatches { display: inline-flex; gap: 3px; }
-.swatches i { width: 11px; height: 11px; border: 1px solid #25372c47; border-radius: 50%; }
-.swatches .navy { background: #202b42; }
-.swatches .bottle { background: #244f3f; }
-.swatches .lavender { background: #c8b6d8; }
-.swatches .white { background: #fff; }
-.swatches .black { background: #242628; }
-
-.merch-buy {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-top: auto;
-  padding-top: 17px;
-  border-top: 1px solid var(--shop-line);
-}
-
-.merch-pricing { display: grid; gap: 2px; }
-.merch-pricing strong { font-size: 23px; line-height: 1.1; }
-.merch-pricing small { color: var(--shop-muted); font-size: 11px; }
-.buy-button { background: var(--shop-deep); color: white; }
-.buy-button:hover { background: #285242; }
-
-.shop-order-note {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 15px 20px;
-  margin-top: 25px;
-  padding: 20px;
-  border: 1px solid #d2dcc9;
-  border-radius: 14px;
-  background: #edf1e4;
-}
-
-.order-icon {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--shop-deep);
-  color: var(--shop-lime);
-  font-size: 21px;
-}
-
-.shop-order-note p { margin: 2px 0 0; color: var(--shop-muted); font-size: 14px; }
-.shop-order-note a, .shop-footer a { color: inherit; text-underline-offset: 3px; }
-.shop-order-note a { font-size: 13px; font-weight: 750; }
-
-.shop-footer { background: var(--shop-deep); color: #ebf0e1; font-size: 13px; }
-.shop-footer .shop-shell { display: flex; justify-content: space-between; gap: 12px; padding-block: 22px; }
-
-.shop-button:focus-visible, .hero-item:focus-visible,
-.gallery-controls button:focus-visible, .shop-order-note a:focus-visible {
-  outline: 3px solid #845526;
-  outline-offset: 4px;
-}
-
-.shop-hero :focus-visible { outline-color: #fff6b4; }
-
-@media (max-width: 960px) {
-  .hero-inner { min-height: 525px; padding-block: 46px; }
-  .hero-stage { min-height: 350px; }
-}
-
-@media (max-width: 700px) {
-  .shop-shell { width: calc(100% - 36px); }
-  .hero-inner { grid-template-columns: 1fr; gap: 18px; min-height: 0; padding-block: 35px 25px; }
-  .hero-statement { max-width: 15ch; font-size: clamp(39px, 9vw, 58px); }
-  .shop-hero h1 { margin-top: 17px; }
-  .hero-description { margin-bottom: 17px; }
-  .hero-stage { min-height: 0; width: min(100%, 420px); aspect-ratio: 1.32; justify-self: center; }
-  .hero-item { border-radius: 12px; }
-  .stage-caption { font-size: 9px; }
-  .shop-grid { grid-template-columns: 1fr; }
-  .merch-stage { min-height: 265px; }
-  .shop-order-note { grid-template-columns: auto 1fr; }
-  .shop-order-note a { grid-column: 2; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .shop-button, .hero-item { transition: none; }
-  .shop-button:hover { transform: none; }
-}
+/* Veganiel collection — editorial product presentation. */
+:root{--shop-paper:#f8f7f1;--shop-ink:#18392d;--shop-muted:#59695f;--shop-line:#d5dbcf;--shop-lime:#dce9ae;--shop-lilac:#e8dff0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--shop-paper);color:var(--shop-ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+[hidden]{display:none!important}
+button,a{-webkit-tap-highlight-color:transparent}
+button{font:inherit}
+a{color:inherit}
+img{max-width:100%;display:block}
+.shop-shell{width:min(1320px,calc(100% - 96px));margin-inline:auto}
+.shop-skip{position:fixed;top:8px;left:8px;z-index:150;transform:translateY(-150%);padding:10px 15px;background:white}
+.shop-skip:focus{transform:none}
+.shop-fallback-header{padding:20px;font:700 26px Georgia,serif}
+.shop-editorial :focus-visible{outline:3px solid #73539c;outline-offset:5px}
+#main,#kollektion,.merch-card{scroll-margin-top:110px}
+.shop-kicker{margin:0;font-size:10px;line-height:1.5;font-weight:700;letter-spacing:.17em;text-transform:uppercase}
+.shop-hero{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,90px);align-items:center;padding-block:48px 64px}
+.hero-copy{padding:20px 0}
+.hero-copy>.shop-kicker{display:flex;align-items:center;gap:9px}
+.status-dot{width:6px;height:6px;border-radius:50%;background:#6b7f41;flex-shrink:0;box-shadow:0 0 0 4px #e6ebd6}
+.hero-copy h1{margin:30px 0 24px;font:400 clamp(48px,5.5vw,83px)/1.03 Georgia,"Times New Roman",serif;letter-spacing:-.06em}
+.hero-copy h1 em{color:#66764b;font-weight:400}
+.hero-description{max-width:35ch;margin:0 0 28px;color:var(--shop-muted);font-size:16px;line-height:1.75}
+.shop-button{min-height:54px;display:inline-flex;align-items:center;justify-content:space-between;gap:30px;padding:15px 22px;border:1px solid var(--shop-ink);border-radius:3px;background:var(--shop-ink);color:#fff;font-size:13px;font-weight:600;text-decoration:none;transition:background .2s,transform .2s}
+.shop-button:hover{background:#315342;transform:translateY(-2px)}
+.shop-button span[aria-hidden]{font-size:23px;line-height:1}
+.hero-footnote{display:flex;align-items:center;gap:13px;margin-top:32px;color:var(--shop-muted)}
+.hero-footnote p{margin:0;font-size:11px;line-height:1.55}
+.small-leaf{font:40px/1 Georgia,serif;color:#78864e}
+.hero-stage{position:relative;isolation:isolate;min-width:0;aspect-ratio:.94;max-height:650px;background:#e8e1ed;border-radius:180px 180px 5px 5px;overflow:hidden;transition:background .35s}
+.hero-stage[data-feature="hoodie"]{background:#dce2ce}
+.stage-edition{position:absolute;inset:28px 0 auto;text-align:center;z-index:2;font-size:9px}
+.stage-botanical{position:absolute;width:105%;height:110%;top:-1%;left:10%;color:#79678c;opacity:.2;transform:rotate(12deg);pointer-events:none}
+.hero-product{position:absolute;inset:54px 12px 85px;display:grid;place-items:center}
+.hero-product img{width:100%;height:100%;object-fit:contain;min-height:0;filter:drop-shadow(0 22px 15px #35203d26);transition:transform .45s}
+.hero-product-shirt img{transform:rotate(-7deg) scale(.99)}
+.hero-product-shirt:hover img{transform:rotate(-3deg) scale(1.025)}
+.hero-product-hoodie img{width:90%;height:90%;transform:rotate(5deg)}
+.hero-product-hoodie:hover img{transform:rotate(2deg) scale(1.03)}
+.stage-star{position:absolute;right:26px;top:24%;font:68px/1 Georgia,serif;color:#685274;transform:rotate(8deg);pointer-events:none}
+.stage-vertical{position:absolute;left:15px;top:38%;writing-mode:vertical-rl;color:#63576e;font-size:9px}
+.stage-bottom{position:absolute;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:23px 28px;border-top:1px solid #21382a24;background:#ffffff2b}
+.stage-label{display:grid;gap:3px}
+.stage-label .shop-kicker{font-size:9px}
+.stage-label strong{font:400 22px/1.2 Georgia,serif;letter-spacing:-.02em}
+.hero-switch{display:flex;gap:6px}
+.hero-switch button{width:35px;height:35px;border:1px solid #41514350;border-radius:50%;background:transparent;color:var(--shop-ink);font-size:10px;cursor:pointer}
+.hero-switch button[aria-pressed="true"]{background:var(--shop-ink);color:white}
+.shop-ribbon{border-block:1px solid var(--shop-line);background:#edf0e3}
+.shop-ribbon .shop-shell{display:flex;justify-content:space-between;align-items:center;gap:15px;padding-block:19px}
+.shop-ribbon span{font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;white-space:nowrap}
+.shop-ribbon i{font:25px/1 Georgia,serif;color:#718451}
+.collection{padding-block:95px 76px}
+.collection-heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:34px}
+.collection-heading h2,.shop-faq h2{margin:12px 0 0;font:400 clamp(36px,4vw,58px)/1.08 Georgia,serif;letter-spacing:-.045em}
+.collection-heading h2 em,.shop-faq h2 em{font-weight:400;color:#738257}
+.collection-heading>p{margin:0 0 3px;color:var(--shop-muted);font-size:13px;line-height:1.7}
+.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px}
+.merch-card{min-width:0}
+.hoodie-card{padding-top:68px}
+.merch-stage{position:relative;isolation:isolate;aspect-ratio:1.07;overflow:hidden;border-radius:4px}
+.shirt-stage{background:#e9e3ed}
+.hoodie-stage{background:#e1e6d6}
+.merch-stage-top{position:absolute;inset:18px 20px auto;display:flex;align-items:center;justify-content:space-between;gap:8px;z-index:2;pointer-events:none}
+.merch-stage-top .shop-kicker{font-size:9px}
+.material-tag{padding:5px 9px;background:#ffffff96;border:1px solid #ffffff80;border-radius:2px;font-size:10px;color:#344438}
+.product-watermark{position:absolute;top:36%;left:50%;transform:translateX(-50%);font:700 clamp(45px,5.4vw,84px)/1 -apple-system,BlinkMacSystemFont,sans-serif;letter-spacing:-.06em;color:#79638c20;pointer-events:none}
+.hoodie-stage .product-watermark{color:#50632f20}
+.product-zoom{position:absolute;inset:50px 20px 48px;display:grid;place-items:center;margin:0;padding:0;background:none;border:0;color:inherit;cursor:zoom-in}
+.product-zoom:disabled{cursor:default}
+.product-zoom img{width:100%;height:100%;object-fit:contain;min-height:0;filter:drop-shadow(0 16px 12px #21332428);transition:transform .4s}
+.product-zoom:hover img{transform:scale(1.035)}
+.shirt-stage .product-zoom img{transform:rotate(-4deg)}
+.shirt-stage .product-zoom:hover img{transform:rotate(-1deg) scale(1.035)}
+.zoom-hint{position:absolute;right:-4px;bottom:-30px;display:grid;place-items:center;width:30px;height:30px;border:1px solid #34493850;border-radius:50%;background:#ffffff50;font-size:19px}
+.product-zoom:disabled .zoom-hint{display:none}
+.view-caption{position:absolute;left:20px;bottom:18px;font-size:10px;color:#60645b}
+.gallery-images{position:absolute;inset:0;display:flex}
+.gallery-images .product-zoom{position:relative;inset:auto;width:50%;height:100%;padding:55px 15px 68px}
+.gallery-images .product-zoom[hidden]+.product-zoom,.gallery-images:has([hidden]) .product-zoom{width:100%}
+.gallery-images .product-zoom img{max-height:390px}
+.gallery-images .zoom-hint{right:16px;bottom:14px}
+.gallery-controls{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:3px;padding:4px;border-radius:40px;background:#f8faf0;border:1px solid #5c6f4540;white-space:nowrap}
+.gallery-controls button{min-height:34px;border:0;border-radius:40px;padding:6px 14px;background:transparent;color:var(--shop-ink);font-size:11px;cursor:pointer}
+.gallery-controls button[aria-pressed="true"]{color:white;background:var(--shop-ink)}
+.merch-info{padding:25px 0 0}
+.merch-type{color:var(--shop-muted);font-size:9px}
+.product-title-row{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-block:12px 19px}
+.product-title-row h3{margin:0;font:400 clamp(32px,3.5vw,50px)/1.02 Georgia,serif;letter-spacing:-.045em}
+.merch-pricing{text-align:right;padding-bottom:3px;flex-shrink:0}
+.merch-pricing strong{display:block;font-size:19px;font-weight:500;white-space:nowrap}
+.merch-pricing small{font-size:10px;color:var(--shop-muted)}
+.merch-description{margin:0;color:var(--shop-muted);font-size:13px;line-height:1.8;max-width:54ch;min-height:70px}
+.product-colors{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-block:18px 22px;font-size:10px}
+.swatches{display:inline-flex;gap:5px}
+.swatches i{display:block;width:15px;height:15px;border:2px solid var(--shop-paper);outline:1px solid #53645040;border-radius:50%}
+.swatches .lavender{background:#b5a0c6}.swatches .white{background:#fff}.swatches .black{background:#222}.swatches .navy{background:#142136}.swatches .bottle{background:#294c3e}
+.print-note{margin-left:auto;color:var(--shop-muted)}
+.buy-button{width:100%}
+.collection-note{text-align:center;margin:35px 0 0;color:var(--shop-muted);font-size:11px}
+.shop-manifesto{background:var(--shop-ink);color:#f5f3e5;overflow:hidden}
+.manifesto-inner{display:grid;grid-template-columns:1.3fr .7fr;gap:8%;align-items:center;padding-block:70px}
+.manifesto-copy .shop-kicker{color:#cbd6af}
+.manifesto-copy h2{margin:23px 0;font:400 clamp(40px,4.5vw,66px)/1.04 Georgia,serif;letter-spacing:-.045em}
+.manifesto-copy h2 em{color:#d7e5a9;font-weight:400}
+.manifesto-copy>p:last-child{max-width:49ch;color:#d2ddcc;font-size:14px;line-height:1.85;margin-bottom:0}
+.manifesto-art{position:relative;width:min(100%,330px);aspect-ratio:1;justify-self:center;color:#cedc9e}
+.manifesto-art svg{position:absolute;inset:5%;width:90%;height:90%;transform:rotate(-12deg)}
+.art-orbit{position:absolute;inset:-7%;border:1px solid #d1dfa129;border-radius:50%}
+.art-star{position:absolute;right:-1%;top:4%;font-size:51px;line-height:1}
+.art-caption{position:absolute;bottom:-14px;left:0;width:100%;text-align:center;font-size:9px}
+.shop-order{padding-block:90px 65px}
+.text-link{font-size:12px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:#849174}
+.text-link span{margin-left:16px;font-size:18px}
+.order-steps{display:grid;grid-template-columns:repeat(3,1fr);padding:0;margin:38px 0 0;list-style:none;border-top:1px solid var(--shop-line)}
+.order-steps li{padding:28px 30px 0 0;min-width:0}
+.order-steps li+li{border-left:1px solid var(--shop-line);padding-left:30px}
+.step-number{font:italic 35px/1 Georgia,serif;color:#7a8864}
+.order-steps h3{margin:22px 0 10px;font:400 25px/1.2 Georgia,serif;letter-spacing:-.03em}
+.order-steps p{margin:0;color:var(--shop-muted);font-size:13px;line-height:1.8;max-width:32ch}
+.shop-faq{display:grid;grid-template-columns:.7fr 1.3fr;gap:8%;padding-block:45px 90px}
+.faq-list{border-top:1px solid var(--shop-line)}
+.faq-list details{border-bottom:1px solid var(--shop-line)}
+.faq-list summary{display:flex;justify-content:space-between;align-items:center;gap:18px;list-style:none;padding:22px 0;cursor:pointer;font-size:13px;font-weight:600}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary span{font-size:24px;line-height:1;font-weight:300;transition:transform .2s}
+.faq-list details[open] summary span{transform:rotate(45deg)}
+.faq-list details p{margin:0;padding:0 24px 22px 0;font-size:13px;color:var(--shop-muted);line-height:1.85}
+.shop-closing{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:30px 0 40px;border-top:1px solid var(--shop-line)}
+.shop-closing>span{font:italic 400 clamp(35px,7.1vw,106px)/1 Georgia,serif;letter-spacing:-.055em}
+.shop-closing>a{display:grid;place-items:center;width:70px;height:70px;flex-shrink:0;border-radius:50%;background:#e2e9cf;font-size:36px;text-decoration:none;transition:transform .2s}
+.shop-closing>a:hover{transform:rotate(45deg)}
+.shop-footer{padding-block:28px;background:#edf0e5}
+.shop-footer .shop-shell{display:flex;align-items:center;justify-content:space-between;gap:24px;font-size:11px;color:var(--shop-muted)}
+.footer-brand{font:600 26px/1 Georgia,serif;color:var(--shop-ink);text-decoration:none}
+.footer-brand small{display:block;margin-top:6px;font:600 8px/1.2 Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.shop-lightbox{width:min(760px,calc(100% - 30px));max-height:92dvh;border:1px solid #c7cdbf;border-radius:8px;padding:22px;background:var(--shop-paper);color:var(--shop-ink);box-shadow:0 20px 80px #0005}
+.shop-lightbox::backdrop{background:#0e201ce6;backdrop-filter:blur(6px)}
+.lightbox-top{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.lightbox-top p{margin:0;font:400 22px/1.25 Georgia,serif}
+.lightbox-top button{border:1px solid var(--shop-line);border-radius:50%;width:40px;height:40px;background:transparent;color:inherit;font-size:27px;cursor:pointer;flex-shrink:0}
+.shop-lightbox>img{height:min(65dvh,610px);width:100%;object-fit:contain;margin-block:12px}
+.lightbox-note{font-size:11px;text-align:center;color:var(--shop-muted);margin:0}
+body:has(.shop-lightbox[open]){overflow:hidden}
+@media(min-width:761px) and (max-width:1050px){.shop-editorial .veganiel-global-header .vn-inner{width:calc(100% - 32px);gap:12px}.shop-editorial .veganiel-global-header .vn-links{gap:13px;margin-left:4px}.shop-editorial .veganiel-global-header .vn-brand-text{font-size:24px}.shop-editorial .veganiel-global-header .vn-brand img{width:34px;height:34px}}
+@media(max-width:1000px){.shop-shell{width:calc(100% - 56px)}.shop-hero{gap:30px;padding-block:35px 45px}.hero-copy h1{font-size:clamp(44px,6vw,64px)}.hero-stage{aspect-ratio:.78}.stage-label strong{font-size:18px}.stage-bottom{padding:20px}.hero-description{font-size:14px}.shop-grid{gap:24px}.collection{padding-top:65px}.merch-stage{aspect-ratio:.94}.material-tag{font-size:9px}.merch-stage-top{inset:16px 14px auto}.manifesto-inner{padding-block:55px}.shop-order{padding-block:65px 45px}}
+@media(max-width:760px){.shop-shell{width:calc(100% - 36px)}.shop-hero{grid-template-columns:1fr;gap:28px;padding-block:32px 30px}.hero-copy{padding:0}.hero-copy>.shop-kicker{font-size:9px}.hero-copy h1{font-size:clamp(49px,10.7vw,76px);margin-block:25px 20px}.hero-copy h1 br:last-child{display:none}.hero-description{font-size:14px;max-width:40ch;margin-bottom:23px}.hero-footnote{margin-top:20px}.hero-stage{aspect-ratio:1.02;max-height:520px;border-radius:130px 130px 4px 4px;width:100%}.hero-product{inset:47px 30px 77px}.hero-product-hoodie img{width:90%;height:100%}.stage-edition{top:22px}.stage-star{font-size:47px;right:20px;top:30%}.stage-label strong{font-size:21px}.stage-bottom{padding:17px 23px}.hero-switch button{width:33px;height:33px}.shop-ribbon .shop-shell{padding-block:17px;gap:8px}.shop-ribbon span{font-size:8px;letter-spacing:.07em}.shop-ribbon span:last-child,.shop-ribbon i:last-of-type{display:none}.shop-ribbon i{font-size:19px}.collection{padding-block:52px}.collection-heading{align-items:start;gap:16px;margin-bottom:25px}.collection-heading>p{display:none}.collection-heading h2,.shop-faq h2{font-size:39px}.collection-heading .shop-kicker{font-size:9px}.shop-grid{grid-template-columns:1fr;gap:42px}.hoodie-card{padding-top:0}.merch-stage{aspect-ratio:1.04}.product-watermark{font-size:13vw}.merch-info{padding-top:21px}.merch-description{font-size:13px;min-height:0;max-width:none}.product-title-row h3{font-size:40px}.product-title-row{margin-bottom:15px}.product-colors{margin-top:18px}.material-tag{font-size:10px}.product-zoom{inset:48px 15px 45px}.merch-pricing strong{font-size:20px}.collection-note{font-size:11px;text-align:left;margin-top:26px}.manifesto-inner{grid-template-columns:1fr;gap:38px;padding-block:46px 55px}.manifesto-copy h2{font-size:43px}.manifesto-copy>p:last-child{font-size:13px}.manifesto-art{width:200px}.art-star{font-size:36px}.shop-order{padding-block:55px 30px}.shop-order .collection-heading{flex-direction:column;gap:20px}.order-steps{grid-template-columns:1fr;margin-top:29px}.order-steps li,.order-steps li+li{position:relative;border-left:0;padding:22px 0 22px 50px;border-bottom:1px solid var(--shop-line)}.step-number{position:absolute;left:0;top:25px;font-size:28px}.order-steps h3{font-size:24px;margin:0 0 8px}.order-steps p{max-width:none}.shop-faq{grid-template-columns:1fr;gap:28px;padding-block:32px 55px}.shop-faq h2 br{display:none}.faq-list summary{font-size:13px;padding-block:20px}.shop-closing{padding-block:25px}.shop-closing>span{font-size:9vw}.shop-closing>a{width:43px;height:43px;font-size:25px}.shop-footer .shop-shell{flex-wrap:wrap;gap:22px}.shop-footer .shop-shell>span{display:none}.shop-footer nav{width:100%;justify-content:flex-start}.shop-lightbox{padding:16px}.lightbox-top p{font-size:20px}}
+@media(max-width:380px){.hero-stage{min-height:345px}.stage-bottom{padding:16px 18px}.stage-label strong{font-size:18px}.hero-switch{flex-shrink:0}.hero-product{inset:47px 20px 90px}.product-title-row h3{font-size:34px}.product-title-row{gap:8px}.merch-pricing strong{font-size:18px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
