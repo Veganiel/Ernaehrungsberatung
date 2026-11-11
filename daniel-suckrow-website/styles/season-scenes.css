@@ -79,9 +79,9 @@ html{scroll-behavior:smooth}
 }
 /* Collapsible year overview: month bar always visible */
 .year-collapse{position:relative}
-.year-collapse .year-scroll{overflow-y:hidden;transition:height .75s cubic-bezier(.22,.8,.24,1)}
+.year-collapse .year-scroll{overflow-y:hidden;transition:height .8s cubic-bezier(.45,.05,.25,1);will-change:height}
 .year-collapse .year-table tbody{transition:opacity .45s ease .05s}
-.year-collapse:not(.is-open) .year-table tbody{opacity:0;transition:opacity .25s ease}
+.year-collapse:not(.is-open):not(.is-peek) .year-table tbody{opacity:0;transition:opacity .25s ease}
 @media(prefers-reduced-motion:reduce){.year-collapse .year-scroll,.year-collapse .year-table tbody{transition:none}}
 .year-collapse .year-scroll{border-radius:22px 22px 0 0;border-bottom:0}
 .yc-toggle{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:14px 20px;border:1px solid var(--line,#cfd6c4);border-radius:0 0 22px 22px;background:#f4f5ec;color:#214a37;font:600 14px/1.2 "DM Sans",sans-serif;cursor:pointer;transition:background .2s}
