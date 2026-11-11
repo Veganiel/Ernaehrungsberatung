@@ -77,3 +77,14 @@ html{scroll-behavior:smooth}
   .year-table tbody th[scope=row]{min-width:128px;padding-left:16px;font-size:12px}
   .year-table thead th:first-child,.year-table tr.group th{padding-left:16px}
 }
+/* Collapsible year overview */
+.year-collapse{margin-top:6px}
+.year-collapse>summary{display:inline-flex;align-items:center;gap:12px;list-style:none;cursor:pointer;padding:12px 20px;border:1px solid #cfd6c4;border-radius:999px;background:#f8f8f1;color:#214a37;font:600 14px/1.2 "DM Sans",sans-serif;transition:background .2s}
+.year-collapse>summary::-webkit-details-marker{display:none}
+.year-collapse>summary:hover{background:#eef2e6}
+.year-collapse>summary:focus-visible{outline:2px solid #214a37;outline-offset:3px}
+.yc-arrow{width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .25s}
+.year-collapse[open] .yc-arrow{transform:translateY(2px) rotate(-135deg)}
+.year-collapse .yc-hide,.year-collapse[open] .yc-show{display:none}
+.year-collapse[open] .yc-hide{display:inline}
+.year-collapse[open]>summary{margin-bottom:18px}
