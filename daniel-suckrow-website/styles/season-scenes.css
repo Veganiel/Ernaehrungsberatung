@@ -91,3 +91,20 @@ html{scroll-behavior:smooth}
 .is-open .yc-arrow{transform:translateY(2px) rotate(-135deg)}
 .yc-hide,.is-open .yc-show{display:none}
 .is-open .yc-hide{display:inline}
+/* Monatskarten und Tabellenköpfe führen zu den Monatsseiten */
+.month{cursor:pointer;transition:transform .35s cubic-bezier(.22,.8,.24,1),box-shadow .35s,border-color .35s!important}
+.month:hover,.month:focus-within{transform:translateY(-6px);border-color:#a9c08f;box-shadow:0 22px 40px -22px #1b422b66}
+.month .season-scene svg{transition:transform .8s cubic-bezier(.22,.8,.24,1)}
+.month:hover .season-scene svg{transform:scale(1.04)}
+.month-link{position:relative;z-index:2;display:inline-flex;align-items:center;gap:6px;margin-top:16px;color:#2f5a3c;font-size:12px;font-weight:700;letter-spacing:.04em;text-decoration:none}
+.month-link::after{content:'';position:absolute;inset:-600px -400px -40px;z-index:3}
+.month-link span{display:inline-block;transition:transform .3s cubic-bezier(.22,.8,.24,1)}
+.month:hover .month-link span,.month-link:focus-visible span{transform:translateX(5px)}
+.month-link:focus-visible{outline:2px solid #2f5a3c;outline-offset:4px;border-radius:4px}
+.month{overflow:hidden}
+.yt-month{position:relative;display:inline-block;padding:4px 8px;border-radius:999px;color:inherit;text-decoration:none;transition:background .25s,color .25s,transform .25s cubic-bezier(.22,.8,.24,1)}
+.yt-month::after{content:'';position:absolute;left:50%;right:50%;bottom:0;height:2px;border-radius:2px;background:currentColor;transition:left .25s,right .25s}
+.yt-month:hover,.yt-month:focus-visible{background:#e4eed6;color:#183d2e;transform:translateY(-2px)}
+.yt-month:hover::after,.yt-month:focus-visible::after{left:8px;right:8px}
+.is-now-col .yt-month{color:inherit}
+@media(prefers-reduced-motion:reduce){.month,.month-link span,.yt-month,.month .season-scene svg{transition:none!important}.month:hover .season-scene svg{transform:none}}

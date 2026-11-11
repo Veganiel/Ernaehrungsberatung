@@ -56,9 +56,13 @@
     scenesToLoad.set(holder,()=>scene(i));
   });
   const now=new Date().getMonth(), heroArt=document.querySelector('.now-art');
-  heroArt.replaceChildren();
-  scenesToLoad.set(heroArt,()=>scene(now,'hero'));
-  heroArt.removeAttribute('aria-hidden');
+  if(heroArt){
+    // Monatsseiten setzen data-scene-month (0–11), die Übersicht zeigt den aktuellen Monat.
+    const heroMonth=heroArt.dataset.sceneMonth!=null?Number(heroArt.dataset.sceneMonth):now;
+    heroArt.replaceChildren();
+    scenesToLoad.set(heroArt,()=>scene(heroMonth,'hero'));
+    heroArt.removeAttribute('aria-hidden');
+  }
   // Build detailed SVGs only near the viewport; animate only visible landscapes.
   if('IntersectionObserver' in window){
     const loader=new IntersectionObserver(entries=>entries.forEach(entry=>{
