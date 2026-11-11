@@ -7,13 +7,15 @@
       "options": [
         "Ich nehme es regelmäßig",
         "Ich nehme es unregelmäßig",
-        "Ich nehme keines / weiß es nicht"
+        "Ich nehme keines / weiß es nicht",
+        "Vitamin B12 ist in meinem All-in-One-Präparat enthalten"
       ],
       "name": "Vitamin B12",
       "advice": [
         "Gut, dass du B12 berücksichtigst. Ob Präparat und Dosierung zu dir passen, lässt sich aus dieser Frage nicht beurteilen. Lass deine Versorgung individuell überprüfen.",
         "Bei veganer Ernährung ist eine zuverlässige B12-Ergänzung notwendig. Besprich ein geeignetes Vorgehen und eine Kontrolle mit einer Fachperson.",
-        "Bei veganer Ernährung ist ein Vitamin-B12-Präparat notwendig. Lass dich zeitnah zur geeigneten Ergänzung und Kontrolle beraten."
+        "Bei veganer Ernährung ist ein Vitamin-B12-Präparat notwendig. Lass dich zeitnah zur geeigneten Ergänzung und Kontrolle beraten.",
+        "Prüfe den Vitamin-B12-Gehalt pro Tagesportion und ob du das Präparat regelmäßig einnimmst. Lass individuell prüfen, ob Menge und Einnahmerhythmus zu dir passen."
       ]
     },
     {
@@ -23,19 +25,21 @@
       "options": [
         "Meistens",
         "Selten oder nie",
-        "Ich weiß es nicht"
+        "Ich weiß es nicht",
+        "Jod ist in meinem All-in-One-Präparat enthalten"
       ],
       "name": "Jod",
       "advice": [
         "Jodsalz kann zur Jodzufuhr beitragen. Ob deine gesamte Zufuhr ausreicht, lässt sich daraus nicht erkennen.",
         "Jodsalz kann eine hilfreiche Jodquelle sein. Prüfe deine Jodversorgung mit einer Fachperson, bevor du Präparate einnimmst.",
-        "Schau auf die Verpackung deines Salzes und prüfe deine Jodzufuhr. Eine Ergänzung solltest du individuell abklären."
+        "Schau auf die Verpackung deines Salzes und prüfe deine Jodzufuhr. Eine Ergänzung solltest du individuell abklären.",
+        "Prüfe den Jodgehalt pro Tagesportion und berücksichtige weitere Jodquellen. Besprich die passende Menge besonders bei Schilddrüsenerkrankungen mit einer Fachperson."
       ]
     },
     {
       "id": "calcium",
-      "title": "Wie oft nutzt du calciumreiche Lebensmittel?",
-      "hint": "Zum Beispiel calciumangereicherte Pflanzendrinks, calciumreiches Mineralwasser oder calciumhaltiger Tofu.",
+      "title": "Trinkst du calciumangereicherte Pflanzendrinks?",
+      "hint": "Schau auf dem Etikett nach, ob Calcium zugesetzt ist und wie viel der Drink pro 100 ml enthält.",
       "options": [
         "Täglich",
         "Mehrmals pro Woche",
@@ -43,8 +47,8 @@
       ],
       "name": "Calcium",
       "advice": [
-        "Du denkst regelmäßig an Calciumquellen. Der Calciumgehalt und die verzehrte Menge sind entscheidend – prüfe die Angaben auf dem Etikett.",
-        "Baue calciumreiche Lebensmittel bewusster in deinen Alltag ein und achte auf den tatsächlichen Calciumgehalt.",
+        "Du trinkst täglich calciumangereicherte Pflanzendrinks. Wie viel Calcium sie beitragen, hängt vom Gehalt und deiner Trinkmenge ab.",
+        "Calciumangereicherte Pflanzendrinks können zu deiner Zufuhr beitragen. Auch calciumreiches Mineralwasser oder calciumhaltiger Tofu kommen als Quellen infrage.",
         "Schau dir Calciumquellen wie angereicherte Pflanzendrinks, calciumreiches Mineralwasser und calciumhaltigen Tofu an."
       ]
     },
@@ -71,13 +75,33 @@
       "options": [
         "Täglich",
         "Mehrmals pro Woche",
-        "Selten"
+        "Selten",
+        "Eisen ist in meinem All-in-One-Präparat enthalten"
       ],
       "name": "Eisen",
       "advice": [
         "Du nutzt regelmäßig mögliche Eisenquellen. Vitamin-C-reiches Obst oder Gemüse zur Mahlzeit kann die Aufnahme pflanzlichen Eisens verbessern.",
         "Ergänze häufiger eisenreiche Lebensmittel; Vitamin C zur Mahlzeit kann die Aufnahme verbessern.",
-        "Hülsenfrüchte, Vollkorn und Kerne sind mögliche Eisenquellen. Kombiniere sie mit Vitamin-C-reichem Obst oder Gemüse."
+        "Hülsenfrüchte, Vollkorn und Kerne sind mögliche Eisenquellen. Kombiniere sie mit Vitamin-C-reichem Obst oder Gemüse.",
+        "Prüfe den Eisengehalt pro Tagesportion. Lass einen möglichen Mehrbedarf fachlich abklären, bevor du zusätzliches Eisen einnimmst."
+      ]
+    },
+    {
+      "id": "zinc-selenium",
+      "title": "Wie oft isst du pflanzliche Quellen für Zink und Selen?",
+      "hint": "Zum Beispiel Nüsse, Samen, Hülsenfrüchte und Vollkornprodukte. Paranüsse (Selen) können viel Selen enthalten. Der Gehalt schwankt je nach Herkunft stark.",
+      "options": [
+        "Täglich",
+        "Mehrmals pro Woche",
+        "Selten",
+        "Zink und/oder Selen sind in meinem All-in-One-Präparat enthalten"
+      ],
+      "name": "Zink und Selen",
+      "advice": [
+        "Vollkorn, Hülsenfrüchte, Nüsse und Samen können Zink liefern. Wie viel Selen pflanzliche Lebensmittel liefern, hängt unter anderem vom Boden ab. Eine einzelne Paranuss kann viel zum Tagesbedarf beitragen, ihr Selengehalt schwankt jedoch stark.",
+        "Baue diese Lebensmittel regelmäßig und abwechslungsreich ein. Lass deine Selenzufuhr bei Unsicherheit individuell prüfen.",
+        "Probiere häufiger Hülsenfrüchte, Vollkornprodukte, Nüsse oder Samen. Lass dich bei Fragen zu deiner Zink- und Selenzufuhr individuell beraten.",
+        "Prüfe Zink und Selen getrennt auf dem Etikett. Berücksichtige die Menge pro Tagesportion und weitere Präparate, um doppelte Einnahmen zu vermeiden."
       ]
     },
     {
@@ -89,11 +113,27 @@
         "Mehrmals pro Woche",
         "Selten"
       ],
-      "name": "Omega-3-Fettsäuren",
+      "name": "Omega-3 aus Nüssen und Samen (ALA)",
       "advice": [
-        "Diese Lebensmittel liefern die Omega-3-Fettsäure ALA. Die Versorgung mit den langkettigen Fettsäuren EPA und DHA lässt sich daraus nicht sicher beurteilen.",
-        "Leinsamen, Chiasamen und Walnüsse liefern ALA. Die Versorgung mit EPA und DHA ist eine zusätzliche Frage.",
-        "Leinsamen, Chiasamen und Walnüsse können ALA liefern. Für EPA und DHA kommen auch Mikroalgenprodukte infrage; lass dich individuell beraten."
+        "Leinsamen, Chiasamen und Walnüsse liefern ALA. Die verzehrte Menge bestimmt, wie viel sie zu deiner ALA-Zufuhr beitragen.",
+        "Baue ALA-Quellen regelmäßig in deine Mahlzeiten ein, etwa mit geschroteten Leinsamen im Müsli.",
+        "Probiere geschrotete Leinsamen, Chiasamen oder Walnüsse als ALA-Quellen im Alltag."
+      ]
+    },
+    {
+      "id": "algae-oil",
+      "title": "Nimmst du Algenöl mit EPA und DHA ein?",
+      "hint": "Schau auf das Etikett: Dort stehen die Mengen an EPA und DHA pro Portion.",
+      "options": [
+        "Ja, regelmäßig",
+        "Ja, gelegentlich",
+        "Nein / weiß ich nicht"
+      ],
+      "name": "EPA und DHA aus Algenöl",
+      "advice": [
+        "Algenöl kann EPA und DHA direkt liefern. Für deine Zufuhr zählen die Mengen an EPA und DHA und wie regelmäßig du es einnimmst.",
+        "Prüfe den Gehalt an EPA und DHA und wie häufig du das Algenöl einnimmst. Lass dich bei Fragen zu deiner Zufuhr individuell beraten.",
+        "EPA und DHA sind langkettige Omega-3-Fettsäuren. Mikroalgenöl ist eine pflanzliche Quelle. Wenn du ein Produkt erwägst, prüfe die ausgewiesenen Mengen von EPA und DHA."
       ]
     }
   ];
