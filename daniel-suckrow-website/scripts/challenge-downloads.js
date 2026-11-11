@@ -2,7 +2,8 @@
   const files = {
     fasten: 'intervallfasten',
     vegan: 'sieben-tage-vegan',
-    abendritual: 'abendroutine'
+    abendritual: 'abendroutine',
+    laufen: 'erste-5-km'
   };
   const links = [];
   for (const [id, slug] of Object.entries(files)) {

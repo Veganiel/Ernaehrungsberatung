@@ -1,6 +1,8 @@
 """Build the bilingual A4 downloads from challenges.html. Requires lxml and ReportLab."""
 from pathlib import Path
+import json
 import os
+import sys
 from xml.sax.saxutils import escape, quoteattr
 
 from lxml import html
@@ -20,7 +22,11 @@ CHALLENGES = (
     ('fasten', 'intervallfasten', '#35604d', '#edf4ee'),
     ('vegan', 'sieben-tage-vegan', '#86512d', '#faf1e6'),
     ('abendritual', 'abendroutine', '#514773', '#f1eef7'),
+    ('laufen', 'erste-5-km', '#9c4227', '#fbf0ea'),
 )
+# Newer sections carry no data-en attributes; their English comes from the site dictionary.
+EN = json.loads((ROOT / 'locales' / 'en.json').read_text(encoding='utf-8'))
+SKIP = {'ch-num', 'ch-progress', 'day-check', 'ch-art'}
 WIDTH, HEIGHT = A4
 MARGIN = 48
 CONTENT = WIDTH - 2 * MARGIN
@@ -29,11 +35,20 @@ MUTED = HexColor('#56665d')
 RULE = HexColor('#ccd6ce')
 
 
+def translated(text, lang):
+    key = ' '.join(text.split())
+    if lang != 'en' or key not in EN:
+        return text
+    return text[:len(text) - len(text.lstrip())] + EN[key] + text[len(text.rstrip()):]
+
+
 def localized(element, lang):
     if element.get('data-' + lang) is not None:
         return element.get('data-' + lang)
-    return (element.text or '') + ''.join(
-        localized(child, lang) + (child.tail or '') for child in element
+    if lang == 'en' and ' '.join(element.text_content().split()) in EN:
+        return EN[' '.join(element.text_content().split())]
+    return translated(element.text or '', lang) + ''.join(
+        localized(child, lang) + translated(child.tail or '', lang) for child in element
     )
 
 
@@ -57,7 +72,7 @@ def build(section, number, slug, lang, accent, tint):
     }
 
     def para(value, style='body'):
-        value = ' '.join(value.split())
+        value = ' '.join(value.replace('→', '').replace('↓', '').split())
         return Paragraph(escape(value), styles[style])
 
     def panel(items, compact=False):
@@ -75,9 +90,20 @@ def build(section, number, slug, lang, accent, tint):
     def blocks(element):
         kind = element.get('class', '')
         tag = element.tag
-        if not isinstance(tag, str) or tag in ('img', 'h2', 'script'):
+        if not isinstance(tag, str) or tag in ('img', 'h2', 'script') or SKIP & set(kind.split()):
             return []
-        if kind in ('notice', 'callout', 'evidence-note', 'day', 'timeline-item'):
+        if 'week' in kind.split():
+            label = localized(element.xpath('.//*[@class="week-label"]')[0], lang)
+            total = localized(element.xpath('.//*[@class="week-total"]')[0], lang)
+            items = [para(f'{label}  /  {total}', 'kicker'),
+                     para(localized(element.xpath('./strong')[0], lang), 'minor')]
+            items.extend(para(localized(p, lang)) for p in element.xpath('./p'))
+            return [panel(items, compact=True)]
+        if kind == 'tip':
+            return [KeepTogether([item for child in element for item in blocks(child)])]
+        if 'run-strength' in kind.split():
+            return [PageBreak()] + [item for child in element for item in blocks(child)]
+        if kind.split()[:1] and kind.split()[0] in ('notice', 'callout', 'evidence-note', 'day', 'timeline-item'):
             items = []
             if kind == 'day':
                 day = element.xpath('.//*[@class="day-num"]')[0].text_content()
@@ -86,12 +112,17 @@ def build(section, number, slug, lang, accent, tint):
                 items.extend(para(localized(p, lang)) for p in element.xpath('.//p'))
             else:
                 for child in element:
+                    if child.get('class') == 'evidence-links':
+                        refs = [f'<link href={quoteattr(a.get("href"))}>{escape(" ".join(localized(a, lang).split()))}</link>'
+                                for a in child.xpath('./a[@href]')]
+                        items.append(Paragraph('  ·  '.join(refs), styles['small']))
+                        continue
                     value = localized(child, lang)
                     if value.strip():
                         items.append(para(value, 'kicker' if child.tag == 'strong' else 'body'))
                 if not items:
                     items.append(para(localized(element, lang)))
-            return [panel(items, compact=kind in ('day', 'timeline-item'))]
+            return [panel(items, compact=kind.split()[0] in ('day', 'timeline-item'))]
         if kind == 'facts':
             return [panel([para(localized(child, lang), 'small') for child in element], compact=True)]
         if kind == 'recipe-card':
@@ -142,6 +173,21 @@ def build(section, number, slug, lang, accent, tint):
         lines = Table([['']] * 5, colWidths=[CONTENT - 12], rowHeights=[24] * 5)
         lines.setStyle(TableStyle([('LINEBELOW', (0, 0), (-1, -1), 0.5, RULE)]))
         story.append(lines)
+    if slug == 'erste-5-km':
+        tracker_intro = [para('Mein Lauf-Tracker' if german else 'My running tracker', 'major'),
+                         para('Hake jede Einheit ab und notiere, wie es sich angefühlt hat.' if german
+                              else 'Tick off every session and note how it felt.', 'small')]
+        head = (['Woche', 'Einheit 1', 'Einheit 2', 'Einheit 3', 'Notizen'] if german
+                else ['Week', 'Session 1', 'Session 2', 'Session 3', 'Notes'])
+        rows = [head] + [[str(week), '', '', '', ''] for week in range(1, 9)]
+        tracker = Table(rows, colWidths=[44, 64, 64, 64, CONTENT - 12 - 236], rowHeights=[22] + [38] * 8)
+        tracker.setStyle(TableStyle([
+            ('FONT', (0, 0), (-1, 0), 'Bold', 9), ('FONT', (0, 1), (-1, -1), 'Bold', 11),
+            ('TEXTCOLOR', (0, 0), (-1, 0), accent), ('TEXTCOLOR', (0, 1), (-1, -1), INK),
+            ('BACKGROUND', (0, 0), (-1, 0), tint), ('ALIGN', (0, 0), (-2, -1), 'CENTER'),
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'), ('GRID', (0, 0), (-1, -1), 0.5, RULE),
+        ]))
+        story.append(KeepTogether(tracker_intro + [Spacer(1, 6), tracker]))
     doc = SimpleDocTemplate(
         str(ROOT / 'assets' / 'challenges' / f'{slug}-{lang}.pdf'),
         pagesize=A4, leftMargin=MARGIN - 6, rightMargin=MARGIN - 6,
@@ -152,7 +198,10 @@ def build(section, number, slug, lang, accent, tint):
 
 
 tree = html.parse(str(ROOT / 'challenges.html'))
+only = set(sys.argv[1:])  # optional section ids, e.g. "laufen"; default: rebuild all
 for number, (key, slug, accent, tint) in enumerate(CHALLENGES, 1):
+    if only and key not in only:
+        continue
     section = tree.xpath(f'//section[@id="{key}"]')[0]
     for language in ('de', 'en'):
         build(section, number, slug, language, HexColor(accent), HexColor(tint))
