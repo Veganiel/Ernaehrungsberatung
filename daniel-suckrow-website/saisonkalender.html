@@ -146,12 +146,12 @@
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,token=0;
   function closedH(){return head.offsetHeight;}
   function peekH(){var r=body.querySelector('tr[data-type]:not(.group):not([hidden])');return r?Math.round(r.getBoundingClientRect().bottom-table.getBoundingClientRect().top)+6:closedH();}
-  function animateTo(h,done){
+  function animateTo(h,done,force,ease){
     var my=++token,from=scroll.offsetHeight;
     if(reduce||from===h){scroll.style.height=h+'px';if(done)done();return;}
     var dist=Math.abs(h-from);
-    var dur=Math.min(1.25,Math.max(.55,.45+dist/2200)),fin=false;
-    scroll.style.transitionDuration=dur+'s';
+    var dur=force||Math.min(1.25,Math.max(.55,.45+dist/2200)),fin=false;
+    scroll.style.transitionDuration=dur+'s';scroll.style.transitionTimingFunction=ease||'';
     scroll.style.height=from+'px';scroll.offsetHeight;scroll.style.height=h+'px';
     function finish(){if(fin)return;fin=true;scroll.removeEventListener('transitionend',e);if(my===token&&done)done();}
     function e(ev){if(ev.propertyName==='height')finish();}
@@ -180,9 +180,19 @@
         animateTo(peekH(),function(){
           setTimeout(function(){
             if(!box.classList.contains('is-peek'))return;
-            box.classList.remove('is-peek');
-            animateTo(closedH(),function(){if(!box.classList.contains('is-open'))body.style.visibility='hidden';});
-          },1100);
+            var c=closedH();
+            /* schneller zu, dann kleiner Rücksetzer (Bounce) */
+            animateTo(c,function(){
+              if(!box.classList.contains('is-peek'))return;
+              animateTo(c+16,function(){
+                if(!box.classList.contains('is-peek'))return;
+                animateTo(c,function(){
+                  box.classList.remove('is-peek');
+                  if(!box.classList.contains('is-open'))body.style.visibility='hidden';
+                },.3,'cubic-bezier(.5,0,.3,1)');
+              },.16,'cubic-bezier(.2,.7,.4,1)');
+            },.45,'cubic-bezier(.55,0,.75,.2)');
+          },450);
         });
       },350);
     },{threshold:.6});
