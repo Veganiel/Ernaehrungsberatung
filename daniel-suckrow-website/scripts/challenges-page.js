@@ -2,8 +2,12 @@
 (() => {
   'use strict';
 
-  // Sticky chapter bar: mark the challenge currently in view.
-  const tabs = [...document.querySelectorAll('.ch-tabs a')];
+  // Old links to the former one-page version (challenges.html#vegan …) open the challenge's own page.
+  const legacy = location.hash.length > 1 && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  if (legacy && legacy.matches('a.ch-card[href]')) { location.replace(legacy.href); return; }
+
+  // Sticky chapter bar: on a page with several challenges, mark the one currently in view.
+  const tabs = [...document.querySelectorAll('.ch-tabs a[href^="#"]')];
   const strip = document.querySelector('.ch-tabs-inner');
   const sections = tabs.map(tab => document.querySelector(tab.getAttribute('href'))).filter(Boolean);
   if (tabs.length && sections.length && 'IntersectionObserver' in window) {

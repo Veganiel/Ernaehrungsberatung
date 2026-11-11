@@ -42,7 +42,7 @@
 .ch-pick-body small { font-size: 11px; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; opacity: .78; }
 .ch-pick-body strong { font: 500 clamp(19px, 2vw, 23px)/1.15 var(--edition-serif); letter-spacing: -.02em; }
 .ch-pick-arrow { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid currentColor; border-radius: 50%; font-size: 15px; transition: transform .25s ease, background .25s ease; }
-.challenge-picker a.ch-pick:hover .ch-pick-arrow { transform: translateY(3px); background: #ffffff8f; }
+.challenge-picker a.ch-pick:hover .ch-pick-arrow { transform: translateX(3px); background: #ffffff8f; }
 
 /* ---------- Sticky chapter bar ---------- */
 nav.ch-tabs {
@@ -79,8 +79,8 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
 .ch-tabs a.is-night span { background: #e4ddf2; color: #2e2747; }
 .ch-tabs a.is-run span   { background: #f5d9cb; color: #4a2216; }
 .ch-tabs a:hover { border-color: #b8c6b0; }
-.ch-tabs a[aria-current="true"] { background: var(--edition-deep); border-color: var(--edition-deep); color: #fbf8ee; }
-.ch-tabs a[aria-current="true"] span { background: var(--edition-lime); color: var(--edition-deep); }
+.ch-tabs a:is([aria-current="true"], [aria-current="page"]) { background: var(--edition-deep); border-color: var(--edition-deep); color: #fbf8ee; }
+.ch-tabs a:is([aria-current="true"], [aria-current="page"]) span { background: var(--edition-lime); color: var(--edition-deep); }
 .challenges-edition :is(#fasten, #vegan, #abendritual, #laufen) { scroll-margin-top: 130px; }
 
 /* ---------- Section frame ---------- */
@@ -98,7 +98,7 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
 .ch-head > :not(.ch-num) { grid-column: 1; max-width: 720px; }
 .ch-num {
   grid-column: 2;
-  grid-row: 1 / span 4;
+  grid-row: 1 / span 5;
   align-self: start;
   color: transparent;
   font: 500 clamp(96px, 13vw, 176px)/.8 var(--edition-serif);
@@ -116,7 +116,7 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
   font-size: 11px;
   letter-spacing: .13em;
 }
-.challenges-edition .ch-head h2 {
+.challenges-edition .ch-head :is(h1, h2) {
   margin: 18px 0 14px;
   color: var(--edition-ink);
   font: 500 clamp(36px, 5vw, 58px)/1.03 var(--edition-serif);
@@ -124,6 +124,24 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
   text-wrap: balance;
 }
 .challenges-edition .ch-head p { color: #4d5e52; font-size: 16px; line-height: 1.65; }
+.challenges-edition nav.ch-breadcrumb {
+  position: static;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #5d6c62;
+  font-size: 13px;
+  font-weight: 600;
+}
+.ch-breadcrumb a { text-decoration: underline; text-decoration-color: #5d6c6266; text-underline-offset: 3px; }
+.ch-breadcrumb a:hover { color: var(--ch-ink); text-decoration-color: currentColor; }
+.ch-breadcrumb [aria-current="page"] { color: var(--ch-ink); }
+.challenge-page .ch-section { padding-top: clamp(40px, 6vw, 76px); }
 .challenges-edition .ch-head .challenge-pdf-download {
   justify-self: start;
   margin-top: 24px;
@@ -427,6 +445,44 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
 .ex-dose { display: inline-block; margin: 0 0 8px; padding: 4px 11px; border-radius: 100px; background: var(--ch-bg); color: var(--ch-ink); font-size: 12px; font-weight: 700; }
 .challenges-edition .run-strength .tip h4 { margin-bottom: 8px; }
 
+/* ---------- Overview cards and "more challenges" ---------- */
+.challenges-edition .ch-overview, .challenges-edition .ch-more { padding: clamp(60px, 8vw, 100px) 0; background: #fbf8ee; }
+.challenges-edition .ch-more { border-top: 1px solid #00000010; }
+.ch-overview-head { max-width: 720px; margin-bottom: 34px; }
+.ch-overview .eyebrow, .ch-more .eyebrow { color: #48634f; }
+.ch-overview h2, .ch-more h2 { margin: 14px 0 12px; color: var(--edition-ink); font: 500 clamp(34px, 4.6vw, 52px)/1.05 var(--edition-serif); letter-spacing: -.045em; }
+.ch-more h2 { margin-bottom: 28px; }
+.ch-overview-head p { margin: 0; color: #4d5e52; font-size: 16px; line-height: 1.65; }
+.ch-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.ch-card-grid--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+a.ch-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 250px;
+  padding: 26px;
+  border: 1px solid #00000012;
+  border-radius: 24px;
+  background: var(--ch-bg);
+  color: var(--ch-ink);
+  box-shadow: 0 14px 34px #1b3a2a10;
+  scroll-margin-top: 100px;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+a.ch-card:hover { transform: translateY(-4px); box-shadow: 0 22px 44px #1b3a2a1c; }
+.ch-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+.ch-card-num { color: transparent; font: 500 46px/1 var(--edition-serif); letter-spacing: -.05em; -webkit-text-stroke: 1.2px var(--ch-accent); }
+.ch-card-icon { display: grid; place-items: center; width: 58px; height: 58px; border-radius: 17px; background: var(--ch-tint); color: var(--ch-ink); transform: rotate(-6deg); }
+.ch-card-icon svg { width: 32px; height: 32px; }
+a.ch-card small { color: var(--ch-accent); font-size: 11px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+a.ch-card strong { color: var(--edition-ink); font: 500 clamp(24px, 2.6vw, 30px)/1.1 var(--edition-serif); letter-spacing: -.03em; }
+.ch-card-text { flex: 1; color: #4d5e52; font-size: 14.5px; line-height: 1.6; }
+.ch-card-link { align-self: flex-start; margin-top: 14px; padding: 9px 16px; border-radius: 100px; background: var(--ch-ink); color: #fffdf8; font-size: 13px; font-weight: 700; }
+.ch-card-link span { display: inline-block; margin-left: 4px; transition: transform .25s ease; }
+a.ch-card:hover .ch-card-link span { transform: translateX(3px); }
+.ch-more-all { display: inline-block; margin-top: 26px; color: var(--edition-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.ch-more-all:hover { text-decoration-thickness: 2px; }
+
 /* ---------- Tips ---------- */
 .challenges-edition .tips { gap: 16px; margin-top: 40px; }
 .challenges-edition .tip { padding: 26px; border: 1px solid #00000010; border-radius: 20px; background: #fffdf8; }
@@ -468,6 +524,8 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
   .challenges-edition .recipe-card:last-child { grid-column: 1 / -1; }
   .challenges-edition .recipe-card:nth-child(n+4) .recipe-photo { height: 210px; }
   .run-weeks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ch-card-grid--three { grid-template-columns: 1fr; }
+  a.ch-card { min-height: 0; }
 }
 
 @media (max-width: 760px) {
@@ -482,6 +540,7 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
 @media (max-width: 680px) {
   .challenges-edition .seo-context nav { position: static; padding: 0; background: none; border: 0; }
   .challenges-edition footer nav.legal-footer-links { display: flex; position: static; flex-direction: row; align-items: center; padding: 14px 0 0; background: none; border: 0; }
+  .challenges-edition nav.ch-breadcrumb { flex-direction: row; align-items: center; justify-content: flex-start; max-width: calc(100% - 92px); padding: 0; font-size: 12px; }
   nav.ch-tabs { display: block; position: sticky; padding: 0; background: #fbf8eef5; border-bottom: 1px solid var(--edition-rule); }
   .ch-tabs-inner { padding-block: 8px; }
   .ch-tabs a { padding-right: 13px; font-size: 12px; }
@@ -513,10 +572,13 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
   .challenges-edition .recipe-card:nth-child(n+4) .recipe-photo { width: calc(100% + 36px); height: 200px; margin: 0 -18px 18px; }
   .challenges-edition .supplement-note { border-radius: 20px; }
   .run-weeks { grid-template-columns: 1fr; }
+  .ch-card-grid { grid-template-columns: 1fr; }
+  a.ch-card { padding: 22px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .challenge-picker a.ch-pick, .ch-pick-arrow, .ch-progress-bar i { transition: none; }
+  .challenge-picker a.ch-pick, .ch-pick-arrow, .ch-progress-bar i, a.ch-card, .ch-card-link span { transition: none; }
+  a.ch-card:hover, a.ch-card:hover .ch-card-link span { transform: none; }
   .challenge-picker a.ch-pick:hover, .challenge-picker a.ch-pick:hover .ch-pick-arrow { transform: none; }
 }
 

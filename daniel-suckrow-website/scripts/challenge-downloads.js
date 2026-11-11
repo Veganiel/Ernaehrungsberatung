@@ -1,4 +1,6 @@
 (() => {
+  // Resolved against this script, so the links also work on the English pages under /en/.
+  const base = new URL('../assets/challenges/', document.currentScript.src);
   const files = {
     fasten: 'intervallfasten',
     vegan: 'sieben-tage-vegan',
@@ -18,7 +20,7 @@
   const update = () => {
     const lang = document.documentElement.lang === 'en' ? 'en' : 'de';
     for (const [link, slug] of links) {
-      link.href = `assets/challenges/${slug}-${lang}.pdf`;
+      link.href = new URL(`${slug}-${lang}.pdf`, base).href;
       link.textContent = lang === 'en' ? '↓ Download printable PDF' : '↓ Druckversion als PDF herunterladen';
       link.setAttribute('aria-label', `${link.textContent}: ${slug}`);
     }

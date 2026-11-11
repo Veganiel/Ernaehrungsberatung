@@ -40,6 +40,10 @@ PAGES = {
     'kennenlernen.html': ('consult', 'icon:chat'),
     'blog-uebersicht.html': ('blog', 'icon:book'),
     'challenges.html': ('challenge', 'icon:flag'),
+    'challenge-intervallfasten.html': ('challenge', 'icon:hourglass'),
+    'challenge-7-tage-vegan.html': ('challenge', 'icon:leaf'),
+    'challenge-abendroutine.html': ('challenge', 'icon:moon'),
+    'challenge-5-km-laufen.html': ('challenge', 'icon:run'),
     'longevity.html': ('longevity', 'icon:hourglass'),
     'quiz.html': ('quiz', 'icon:question'),
     'shop.html': ('shop', 'photo:assets/shop/make-the-connection-spreadshop.webp'),
@@ -85,6 +89,7 @@ ICONS = {  # Linien-Symbole, viewBox 0 0 64 64
     'tape': '<circle cx="24" cy="30" r="16"/><circle cx="24" cy="30" r="5"/><path d="M24 46h32V34H40"/><path d="M44 46v-5M50 46v-5"/>',
     'checklist': '<rect x="12" y="8" width="40" height="50" rx="6"/><path d="M20 22l4 4 7-8M20 36l4 4 7-8M36 23h10M36 37h10M20 50h26"/>',
     'document': '<path d="M16 6h24l12 12v40H16Z"/><path d="M40 6v12h12M22 30h22M22 38h22M22 46h14"/>',
+    'moon': '<path d="M40 8a24 24 0 1 0 16 38A20 20 0 0 1 40 8Z"/><path d="M50 10v8M46 14h8M56 26v4M54 28h4"/>',
     'lock': '<rect x="14" y="28" width="36" height="28" rx="6"/><path d="M22 28v-8a10 10 0 0 1 20 0v8"/><circle cx="32" cy="41" r="3"/><path d="M32 44v5"/>',
 }
 
@@ -190,6 +195,10 @@ def main():
             slug = seo_head.slug_for(rel)
             document = path.read_text(encoding='utf-8')
             title, description = read_meta(document)
+            if rel in seo_head.STATIC_DE:
+                # Eigene englische Seite: nutzt das -en-Bild der deutschen Seite, nur Kopfdaten setzen.
+                path.write_text(seo_head.patch(document, rel, f'Preview image: {card_title(title)}'), encoding='utf-8')
+                continue
             group, visual = page_config(rel)
             de_title = card_title(title)
             en_full = dictionary.get(title)

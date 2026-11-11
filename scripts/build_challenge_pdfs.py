@@ -1,4 +1,4 @@
-"""Build the bilingual A4 downloads from challenges.html. Requires lxml and ReportLab."""
+"""Build the bilingual A4 downloads from the German challenge pages. Requires lxml and ReportLab."""
 from pathlib import Path
 import json
 import os
@@ -18,15 +18,15 @@ FONT_DIR = Path(os.environ['CHALLENGE_FONT_DIR'])
 for weight in ('Regular', 'Bold'):
     pdfmetrics.registerFont(TTFont(weight, str(FONT_DIR / f'NotoSans-{weight}.ttf')))
 
-CHALLENGES = (
-    ('fasten', 'intervallfasten', '#35604d', '#edf4ee'),
-    ('vegan', 'sieben-tage-vegan', '#86512d', '#faf1e6'),
-    ('abendritual', 'abendroutine', '#514773', '#f1eef7'),
-    ('laufen', 'erste-5-km', '#9c4227', '#fbf0ea'),
+CHALLENGES = (  # section id, PDF name, accent, tint, source page
+    ('fasten', 'intervallfasten', '#35604d', '#edf4ee', 'challenge-intervallfasten.html'),
+    ('vegan', 'sieben-tage-vegan', '#86512d', '#faf1e6', 'challenge-7-tage-vegan.html'),
+    ('abendritual', 'abendroutine', '#514773', '#f1eef7', 'challenge-abendroutine.html'),
+    ('laufen', 'erste-5-km', '#9c4227', '#fbf0ea', 'challenge-5-km-laufen.html'),
 )
 # Newer sections carry no data-en attributes; their English comes from the site dictionary.
 EN = json.loads((ROOT / 'locales' / 'en.json').read_text(encoding='utf-8'))
-SKIP = {'ch-num', 'ch-progress', 'day-check', 'ch-art'}
+SKIP = {'ch-num', 'ch-progress', 'day-check', 'ch-art', 'ch-breadcrumb'}
 WIDTH, HEIGHT = A4
 MARGIN = 48
 CONTENT = WIDTH - 2 * MARGIN
@@ -54,7 +54,7 @@ def localized(element, lang):
 
 def build(section, number, slug, lang, accent, tint):
     german = lang == 'de'
-    title = localized(section.xpath('.//h2')[0], lang).strip()
+    title = localized(section.xpath('.//h1 | .//h2')[0], lang).strip()
     series = 'CHALLENGE / DRUCKVERSION' if german else 'CHALLENGE / PRINT EDITION'
     styles = {
         'title': ParagraphStyle('title', fontName='Bold', fontSize=30, leading=37,
@@ -90,7 +90,7 @@ def build(section, number, slug, lang, accent, tint):
     def blocks(element):
         kind = element.get('class', '')
         tag = element.tag
-        if not isinstance(tag, str) or tag in ('img', 'h2', 'script') or SKIP & set(kind.split()):
+        if not isinstance(tag, str) or tag in ('img', 'h1', 'h2', 'script') or SKIP & set(kind.split()):
             return []
         if 'week' in kind.split():
             label = localized(element.xpath('.//*[@class="week-label"]')[0], lang)
@@ -197,11 +197,10 @@ def build(section, number, slug, lang, accent, tint):
     doc.build(story, onFirstPage=page, onLaterPages=page)
 
 
-tree = html.parse(str(ROOT / 'challenges.html'))
 only = set(sys.argv[1:])  # optional section ids, e.g. "laufen"; default: rebuild all
-for number, (key, slug, accent, tint) in enumerate(CHALLENGES, 1):
+for number, (key, slug, accent, tint, page) in enumerate(CHALLENGES, 1):
     if only and key not in only:
         continue
-    section = tree.xpath(f'//section[@id="{key}"]')[0]
+    section = html.parse(str(ROOT / page)).xpath(f'//section[@id="{key}"]')[0]
     for language in ('de', 'en'):
         build(section, number, slug, language, HexColor(accent), HexColor(tint))

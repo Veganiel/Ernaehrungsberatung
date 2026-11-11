@@ -8,12 +8,20 @@
   try { saved = localStorage.getItem(storageKey); } catch (_) { /* Storage may be disabled. */ }
   const requested = new URL(location.href).searchParams.get('lang');
   const explicitLanguage = supported(requested) ? requested : supported(saved) ? saved : null;
-  let language = explicitLanguage || 'en';
+  // Pages that exist as separate German and English files (<html data-page-lang="…">, linked via hreflang)
+  // keep their own language: the switch opens the counterpart instead of translating in place.
+  const pageLanguage = supported(document.documentElement.dataset.pageLang) ? document.documentElement.dataset.pageLang : null;
+  const counterpart = lang => {
+    const href = document.querySelector(`link[rel="alternate"][hreflang="${lang}"]`)?.href;
+    return href ? new URL(new URL(href).pathname, location.origin).href : null; // same host (also previews)
+  };
+  const isBot = /bot|crawl|spider|slurp|facebookexternalhit|embedly|preview|lighthouse/i.test(navigator.userAgent || '');
+  let language = pageLanguage || explicitLanguage || 'en';
   if (supported(requested)) { try { localStorage.setItem(storageKey, requested); } catch (_) {} }
   let dictionary = {}, fragments = null, observer, scheduled = false;
   const textState = new WeakMap(), attributeState = new WeakMap();
   const normalise = value => value.replace(/\s+/g, ' ').trim();
-  const excluded = 'script,style,noscript,code,pre,textarea,[translate="no"],.notranslate,.community-comment,.community-avatar,#community-user strong';
+  const excluded = 'script,style,noscript,code,pre,textarea,[translate="no"],.notranslate,.community-comment,.community-avatar,#community-user strong' + (pageLanguage ? ',main' : '');
   const attributes = ['alt', 'title', 'placeholder', 'aria-label'];
   const escapeRE = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -68,7 +76,7 @@
     document.querySelectorAll('[alt],[title],[placeholder],[aria-label]').forEach(element => {
       if (!element.closest(excluded)) attributes.forEach(name => translateAttribute(element, name));
     });
-    document.querySelectorAll('meta[name="description"],meta[property="og:title"],meta[property="og:description"],meta[name="twitter:title"],meta[name="twitter:description"]').forEach(element => translateAttribute(element, 'content'));
+    if (!pageLanguage) document.querySelectorAll('meta[name="description"],meta[property="og:title"],meta[property="og:description"],meta[name="twitter:title"],meta[name="twitter:description"]').forEach(element => translateAttribute(element, 'content'));
     document.documentElement.lang = language;
     const button = document.getElementById('langBtn');
     if (button) {
@@ -81,6 +89,11 @@
 
   function setLanguage(next) {
     if (!supported(next)) return;
+    if (pageLanguage && next !== pageLanguage && counterpart(next)) {
+      try { localStorage.setItem(storageKey, next); } catch (_) { /* The counterpart page still opens. */ }
+      location.href = counterpart(next);
+      return;
+    }
     language = next;
     try { localStorage.setItem(storageKey, language); } catch (_) { /* Preference remains active for this page. */ }
     const url = new URL(location.href);
@@ -101,7 +114,7 @@
   async function getDefaultLanguage() {
     if (explicitLanguage) return explicitLanguage;
     // Suchmaschinen sehen auf der Adresse ohne ?lang die deutsche Quelle; die englische Fassung hat ihre eigene Adresse (?lang=en).
-    if (/bot|crawl|spider|slurp|facebookexternalhit|embedly|preview|lighthouse/i.test(navigator.userAgent || '')) return 'de';
+    if (isBot) return 'de';
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 3000);
     try {
@@ -120,6 +133,12 @@
     return response.json();
   });
   api.ready = Promise.all([translations, getDefaultLanguage()]).then(([data, initialLanguage]) => {
+    if (pageLanguage) {
+      // German page for an English reader (choice or location), or English page after an explicit switch to German.
+      const target = initialLanguage !== pageLanguage && (explicitLanguage || pageLanguage === 'de') && !isBot && counterpart(initialLanguage);
+      if (target) { location.replace(target); return; }
+      initialLanguage = pageLanguage;
+    }
     language = initialLanguage;
     dictionary = data;
     const keys = Object.keys(data).filter(key => key !== data[key] && key.length >= 3)

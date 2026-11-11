@@ -16,6 +16,10 @@ Jede öffentliche Seite hat ein eigenes Vorschaubild für geteilte Links (1200 �
 
 Deutsch ist die Quelle unter der Adresse ohne Parameter; Suchmaschinen bekommen dort immer Deutsch. Für `?lang=en` setzt `netlify/edge-functions/seo-language.js` serverseitig Sprache, Titel, Beschreibungen, Canonical, `og:locale` und das englische Vorschaubild, damit Google und Link-Vorschauen ohne JavaScript die englische Fassung sehen. Die Monatsseiten des Saisonkalenders entstehen mit `python3 scripts/build_season_months.py` und erhalten die Kopfdaten dabei automatisch. Prüfung: `tests/seo-share.test.cjs`.
 
+### Challenges: eigene Seiten und eigene englische Adressen
+
+Jede Challenge hat eine eigene Seite (`challenge-intervallfasten.html`, `challenge-7-tage-vegan.html`, `challenge-abendroutine.html`, `challenge-5-km-laufen.html`), `challenges.html` ist die Übersicht. Die englischen Fassungen liegen als eigene Dateien unter `en/` und sind über hreflang mit der deutschen Seite verknüpft (Liste: `STATIC_EN` in `scripts/seo_head.py`). Deutsch bleibt die Quelle: nach Änderungen an einer deutschen Challenge-Seite neue Texte in `locales/en.json` ergänzen und `python3 scripts/build_english_pages.py` ausführen; fehlende Übersetzungen werden aufgelistet. Seiten mit `data-page-lang` schalten die Sprache per Wechsel auf die Partnerseite um; `challenges.html?lang=en` leitet per `_redirects` auf `/en/challenges.html` weiter.
+
 ## PayPal-Verkauf und Versand
 
 `/.netlify/functions/checkout` erstellt und prüft PayPal-Bestellungen serverseitig: Guide 2 EUR (DE/EN), Beratung 50 EUR. PDF-Versand nach bestätigter Zahlung über Resend; Beratung mit Bestätigung an den Käufer und Kopie an info@veganiel.com, Terminvereinbarung anschließend per E-Mail. Der bestehende kostenlose Kennenlernkalender bleibt verfügbar.
