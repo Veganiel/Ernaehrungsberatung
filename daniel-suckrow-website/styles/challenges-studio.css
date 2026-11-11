@@ -4,6 +4,7 @@
 .ch-theme-fast  { --ch-bg: #fbf8ee; --ch-tint: #f3e5cc; --ch-accent: #8a5c1f; --ch-ink: #4a3418; }
 .ch-theme-vegan { --ch-bg: #eef3e4; --ch-tint: #dce9bf; --ch-accent: #44702f; --ch-ink: #1f4130; }
 .ch-theme-night { --ch-bg: #f2eff7; --ch-tint: #e4ddf2; --ch-accent: #5f5194; --ch-ink: #2e2747; }
+.ch-theme-run   { --ch-bg: #fbf0ea; --ch-tint: #f5d9cb; --ch-accent: #9c4227; --ch-ink: #4a2216; }
 
 /* ---------- Hero ---------- */
 .challenges-edition .ch-hero .edition-copy p { font-size: 16px; line-height: 1.65; max-width: 52ch; }
@@ -33,6 +34,7 @@
 .challenge-picker a.ch-pick--fast  { background: #f4e7d3; color: #4a3418; }
 .challenge-picker a.ch-pick--vegan { background: #e3efc0; color: #1f4130; }
 .challenge-picker a.ch-pick--night { background: #e7e1f4; color: #2e2747; }
+.challenge-picker a.ch-pick--run   { background: #f6dccd; color: #4a2216; }
 .challenge-picker a.ch-pick:hover { transform: translateY(-3px); box-shadow: 0 20px 34px #06181275; }
 .ch-pick-icon { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 14px; background: #ffffff8f; }
 .ch-pick-icon svg { width: 30px; height: 30px; }
@@ -75,10 +77,11 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
 .ch-tabs a.is-fast span  { background: #f3e5cc; color: #4a3418; }
 .ch-tabs a.is-vegan span { background: #dce9bf; color: #1f4130; }
 .ch-tabs a.is-night span { background: #e4ddf2; color: #2e2747; }
+.ch-tabs a.is-run span   { background: #f5d9cb; color: #4a2216; }
 .ch-tabs a:hover { border-color: #b8c6b0; }
 .ch-tabs a[aria-current="true"] { background: var(--edition-deep); border-color: var(--edition-deep); color: #fbf8ee; }
 .ch-tabs a[aria-current="true"] span { background: var(--edition-lime); color: var(--edition-deep); }
-.challenges-edition :is(#fasten, #vegan, #abendritual) { scroll-margin-top: 130px; }
+.challenges-edition :is(#fasten, #vegan, #abendritual, #laufen) { scroll-margin-top: 130px; }
 
 /* ---------- Section frame ---------- */
 .challenges-edition .ch-section { position: relative; padding: clamp(60px, 8vw, 108px) 0; background: var(--ch-bg); }
@@ -160,6 +163,7 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
     linear-gradient(160deg, #3a3462, #1c1a33);
   color: #f1eef9;
 }
+.challenges-edition .ch-theme-run .challenge .challenge-side { background: linear-gradient(155deg, #c4613f, #6f2a19); color: #fff6f0; }
 .challenges-edition .ch-section .challenge-side::after {
   position: absolute;
   z-index: -1;
@@ -188,6 +192,7 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
 .ch-theme-vegan .ch-art { border-color: #ffffffa0; background: #ffffff70; }
 .ch-theme-fast .ch-art { color: #f0cf8e; }
 .ch-theme-night .ch-art { color: #d9cffa; }
+.ch-theme-run .ch-art { color: #ffe0cd; }
 .ch-art svg { width: 54px; height: 54px; }
 .challenges-edition .ch-section .challenge-side h3 { margin: 26px 0 12px; font: 500 clamp(28px, 3vw, 36px)/1.1 var(--edition-serif); letter-spacing: -.035em; }
 .challenges-edition .ch-section .challenge-side p { font-size: 15px; line-height: 1.6; opacity: .86; }
@@ -388,6 +393,40 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
 .challenges-edition .recipe-card details.recipe-method p { margin-top: 14px; color: #4f6254; }
 .challenges-edition .photo-credits { margin-top: 16px; }
 
+/* ---------- Challenge 04: running plan ---------- */
+.ch-inline-link { display: block; margin-top: 10px; color: var(--ch-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.ch-inline-link:hover { text-decoration-thickness: 2px; }
+.challenges-edition .run-plan { margin-top: 72px; }
+.challenges-edition .run-plan > .eyebrow { color: var(--ch-accent); }
+.run-weeks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.week {
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  border: 1px solid #00000012;
+  border-radius: 18px;
+  background: #fffdf8;
+  transition: background .25s, border-color .25s;
+}
+.week:has(input:checked) { border-color: #e2a78c; background: #fdf0e8; }
+.week-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 12px; }
+.week-label { color: var(--ch-accent); font-size: 11px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+.week-total { padding: 4px 10px; border-radius: 100px; background: var(--ch-tint); color: var(--ch-ink); font-size: 11px; font-weight: 700; }
+.week > strong { color: var(--edition-ink); font: 500 18px/1.25 var(--edition-serif); letter-spacing: -.01em; }
+.week > p { flex: 1; margin: 8px 0 0; color: #57675c; font-size: 13.5px; line-height: 1.55; }
+.week.week--goal { border: 0; background: linear-gradient(155deg, #c4613f, #6f2a19); color: #fff6f0; }
+.week.week--goal .week-label { color: #ffd9c4; }
+.week.week--goal .week-total { background: #fff6f0; color: #6f2a19; }
+.week.week--goal > strong { color: #fff; }
+.week.week--goal > p { color: #fde6da; }
+.week.week--goal .day-check { background: #ffffff26; color: #fff; }
+.challenges-edition .run-plan .notice { margin-top: 20px; }
+.challenges-edition .run-strength, .challenges-edition .run-basics { margin-top: 64px; }
+.challenges-edition .run-strength > h3 { margin-bottom: 10px; }
+.challenges-edition .run-strength .recipe-intro { margin-bottom: 26px; }
+.ex-dose { display: inline-block; margin: 0 0 8px; padding: 4px 11px; border-radius: 100px; background: var(--ch-bg); color: var(--ch-ink); font-size: 12px; font-weight: 700; }
+.challenges-edition .run-strength .tip h4 { margin-bottom: 8px; }
+
 /* ---------- Tips ---------- */
 .challenges-edition .tips { gap: 16px; margin-top: 40px; }
 .challenges-edition .tip { padding: 26px; border: 1px solid #00000010; border-radius: 20px; background: #fffdf8; }
@@ -428,11 +467,12 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
   .challenges-edition .recipe-card:nth-child(n+4) { grid-column: auto; }
   .challenges-edition .recipe-card:last-child { grid-column: 1 / -1; }
   .challenges-edition .recipe-card:nth-child(n+4) .recipe-photo { height: 210px; }
+  .run-weeks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 760px) {
   nav.ch-tabs { top: 70px; }
-  .challenges-edition :is(#fasten, #vegan, #abendritual) { scroll-margin-top: 122px; }
+  .challenges-edition :is(#fasten, #vegan, #abendritual, #laufen) { scroll-margin-top: 122px; }
 }
 
 /* The page's legacy inline rules for the old header menu (nav{…}) also hit these navs: keep them readable and in flow. */
@@ -472,6 +512,7 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
   .challenges-edition .recipe-photo,
   .challenges-edition .recipe-card:nth-child(n+4) .recipe-photo { width: calc(100% + 36px); height: 200px; margin: 0 -18px 18px; }
   .challenges-edition .supplement-note { border-radius: 20px; }
+  .run-weeks { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {

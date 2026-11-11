@@ -1,4 +1,4 @@
-/* Challenges page: highlight the active chapter and let visitors tick off the 7-day vegan plan. */
+/* Challenges page: highlight the active chapter and let visitors tick off the plans. */
 (() => {
   'use strict';
 
@@ -33,30 +33,32 @@
     check();
   }
 
-  // 7-day vegan plan: progress is kept only in this browser.
-  const boxes = [...document.querySelectorAll('.day-check input')];
-  const count = document.getElementById('veganCount');
-  const bar = document.getElementById('veganBar');
-  const reset = document.getElementById('veganReset');
-  if (!boxes.length || !count || !bar) return;
+  // Tick-off plans (7-day vegan, 8-week running): progress is kept only in this browser.
+  document.querySelectorAll('[data-tracker]').forEach(root => {
+    const boxes = [...root.querySelectorAll('.day-check input')];
+    const count = root.querySelector('.ch-progress-count');
+    const fill = root.querySelector('.ch-progress-bar i');
+    const reset = root.querySelector('.ch-progress-reset');
+    if (!boxes.length || !count || !fill) return;
 
-  const key = 'veganiel-challenge-vegan-days';
-  let saved = [];
-  try { saved = JSON.parse(localStorage.getItem(key) || '[]'); } catch (_) { saved = []; }
-  if (!Array.isArray(saved)) saved = [];
-  boxes.forEach(box => { box.checked = saved.includes(box.value); });
+    const key = `veganiel-challenge-${root.dataset.tracker}`;
+    let saved = [];
+    try { saved = JSON.parse(localStorage.getItem(key) || '[]'); } catch (_) { saved = []; }
+    if (!Array.isArray(saved)) saved = [];
+    boxes.forEach(box => { box.checked = saved.includes(box.value); });
 
-  const update = persist => {
-    const done = boxes.filter(box => box.checked);
-    count.textContent = String(done.length);
-    bar.style.width = `${(done.length / boxes.length) * 100}%`;
-    if (reset) reset.hidden = done.length === 0;
-    if (persist) {
-      try { localStorage.setItem(key, JSON.stringify(done.map(box => box.value))); } catch (_) { /* Storage may be disabled. */ }
-    }
-  };
+    const update = persist => {
+      const done = boxes.filter(box => box.checked);
+      count.textContent = String(done.length);
+      fill.style.width = `${(done.length / boxes.length) * 100}%`;
+      if (reset) reset.hidden = done.length === 0;
+      if (persist) {
+        try { localStorage.setItem(key, JSON.stringify(done.map(box => box.value))); } catch (_) { /* Storage may be disabled. */ }
+      }
+    };
 
-  boxes.forEach(box => box.addEventListener('change', () => update(true)));
-  if (reset) reset.addEventListener('click', () => { boxes.forEach(box => { box.checked = false; }); update(true); });
-  update(false);
+    boxes.forEach(box => box.addEventListener('change', () => update(true)));
+    if (reset) reset.addEventListener('click', () => { boxes.forEach(box => { box.checked = false; }); update(true); });
+    update(false);
+  });
 })();
