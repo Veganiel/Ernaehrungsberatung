@@ -256,6 +256,16 @@ footer{background:var(--deeper);color:#b9c8bc;font-size:13px;padding:34px 0}
   .btn{padding:0 22px;letter-spacing:.04em}
   .foot{flex-direction:column;align-items:flex-start}
 }
+
+/* Für wen */
+.audience-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:8px}
+.audience-card{padding:28px 26px;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);box-shadow:var(--shadow)}
+.audience-dot{display:block;width:10px;height:10px;border-radius:50%;background:var(--gold);margin-bottom:18px}
+.audience-card h3{font-size:21px;line-height:1.25;margin:0 0 10px}
+.audience-card p{margin:0;font-size:15px}
+.audience-promise{margin:30px 0 0;padding:22px 26px;border-left:3px solid var(--gold);border-radius:0 var(--radius) var(--radius) 0;background:var(--sand);font-size:16px;color:var(--ink)}
+@media(max-width:1020px){.audience-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.audience-grid{grid-template-columns:1fr}}
 </style><script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -311,7 +321,7 @@ html{scroll-behavior:smooth}
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">Individuell · Ganzheitlich · Alltagstauglich</span>
+      <span class="eyebrow">Mit Daniel Suckrow · Individuell · Alltagstauglich</span>
       <h1><span>Ernährung verstehen.</span> <em>Gesundheit bewusst gestalten.</em></h1>
       <p class="lead">Eine persönliche Auswertung deiner Ernährungsgewohnheiten und deiner ärztlich erhobenen Blutwerte – mit konkreten Empfehlungen, die zu deinem Alltag passen. Ohne starre Pläne und ohne liebgewonnene Gewohnheiten pauschal aufzugeben.</p>
       <div class="hero-actions">
@@ -321,6 +331,7 @@ html{scroll-behavior:smooth}
       <ul class="hero-facts">
         <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg><span>Ausbildung an der Akademie der Naturheilkunde (AKN).</span></li>
         <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span>Persönlich per Video · online</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Für jede Ernährungsweise – du musst nicht vegan leben</span></li>
       </ul>
     </div>
     <div class="hero-visual">
@@ -346,8 +357,22 @@ html{scroll-behavior:smooth}
     <div class="principles">
       <div class="principle"><span class="idx">i.</span><h3>Dein eigener Weg.</h3><p>Deine Gewohnheiten, Vorlieben und Ziele bilden den Ausgangspunkt. Gemeinsam finden wir Schritte, die in deinem Alltag funktionieren.</p></div>
       <div class="principle"><span class="idx">ii.</span><h3>Wissen, das ankommt.</h3><p>Ich lege Wert auf eine verständliche Einordnung wissenschaftlicher Erkenntnisse und einen bewussten Umgang mit Gesundheitsinformationen.</p></div>
-      <div class="principle"><span class="idx">iii.</span><h3>Pflanzenbetont denken.</h3><p>Ernährung verbindet uns mit unserer Umwelt. Nachhaltigkeit, Tierwohl und gesellschaftliche Verantwortung gehören für mich dazu.</p></div>
+      <div class="principle"><span class="idx">iii.</span><h3>Pflanzenbetont – ohne Dogma.</h3><p>Pflanzliche Vielfalt, Nachhaltigkeit und Tierwohl liegen mir am Herzen, und ich gebe dir gern Anregungen dazu. Was davon zu dir passt, entscheidest allein du.</p></div>
     </div>
+  </div>
+</section>
+
+
+<!-- FÜR WEN -->
+<section class="section audience" id="fuer-wen">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Für wen</span>
+      <h2>Für jede Ernährungsweise.</h2>
+      <p class="lead">Ob du gern Fleisch isst, flexibel unterwegs bist oder vegetarisch bzw. vegan lebst: Die Beratung beginnt bei dir – nicht bei einer Ideologie.</p>
+    </div>
+    <div class="audience-grid"><article class="audience-card"><span class="audience-dot" aria-hidden="true"></span><h3>Du isst gern Fleisch oder Fisch.</h3><p>Wunderbar. Wir schauen, wie du dich damit ausgewogen und abwechslungsreich ernährst – ohne etwas aufzugeben, das dir wichtig ist.</p></article><article class="audience-card"><span class="audience-dot" aria-hidden="true"></span><h3>Du willst gesünder essen, ohne alles umzukrempeln.</h3><p>Kleine, realistische Schritte statt Komplettumstellung: Wir verändern nur, was wirklich in deinen Alltag passt.</p></article><article class="audience-card"><span class="audience-dot" aria-hidden="true"></span><h3>Du lebst vegetarisch oder vegan.</h3><p>Ich helfe dir, kritische Nährstoffe im Blick zu behalten und deine Ernährung sicher und genussvoll zu gestalten.</p></article><article class="audience-card"><span class="audience-dot" aria-hidden="true"></span><h3>Du hast Fragen zu deinen Blutwerten.</h3><p>Wir betrachten deine Ernährung und deine ärztlich erhobenen Blutwerte gemeinsam und leiten daraus verständliche Empfehlungen ab.</p></article></div>
+    <p class="audience-promise"><strong>Mein Versprechen:</strong> Ich möchte niemanden bekehren. Deine Gewohnheiten, deine Vorlieben und dein Alltag haben bei mir oberste Priorität.</p>
   </div>
 </section>
 
@@ -471,6 +496,7 @@ html{scroll-behavior:smooth}
     </div>
     <div class="faq-list">
       <details open><summary><span>Was kostet die Beratung?</span><span class="plus" aria-hidden="true"></span></summary><p>Es gibt zwei Pakete: Komplett für einmalig 79 € und Kompakt für einmalig 49 €. Es gibt keine Mitgliedschaft und kein Abo.</p></details>
+      <details><summary><span>Muss ich vegan sein oder werden?</span><span class="plus" aria-hidden="true"></span></summary><p>Nein. Du musst weder vegan noch vegetarisch leben – und ich werde dich auch nicht dazu überreden. Pflanzenbetonte Ernährung ist meine persönliche Leidenschaft, und ich zeige dir gern, wo pflanzliche Lebensmittel deinen Alltag bereichern können. Was davon zu dir passt, entscheidest du. Ausgangspunkt sind immer deine Gewohnheiten, deine Vorlieben und dein Alltag.</p></details>
       <details><summary><span>Was ist der Unterschied zwischen Komplett und Kompakt?</span><span class="plus" aria-hidden="true"></span></summary><p>Inhaltlich sind beide gleich: Ernährungserfassung, individuelle Auswertung und personalisierte PDF. Komplett enthält zusätzlich ein Kennenlernen und ein Auswertungsgespräch per Video, jeweils etwa 30 Minuten. Bei Kompakt ersetzen Unterlagen zum Ausfüllen das Kennenlernen, und Rückfragen klären wir per E-Mail.</p></details>
       <details><summary><span>Ist die Blutuntersuchung im Preis enthalten?</span><span class="plus" aria-hidden="true"></span></summary><p>Nein. Die ärztliche Blutuntersuchung lässt du bei deinem Hausarzt oder deiner Hausärztin durchführen – idealerweise in derselben Woche wie die Ernährungserfassung. Organisation und mögliche Kosten der Untersuchung liegen bei dir.</p></details>
       <details><summary><span>Muss ich vorab ein Kennenlerngespräch buchen?</span><span class="plus" aria-hidden="true"></span></summary><p>Nein. Das kostenlose Kennenlerngespräch von etwa 15 Minuten ist optional und gehört nicht zum Beratungspaket. Im Komplett-Paket ist trotzdem ein persönliches Kennenlernen per Video von etwa 30 Minuten enthalten. Im Kompakt-Paket ersetzen Unterlagen zum Ausfüllen das Kennenlernen.</p></details>
