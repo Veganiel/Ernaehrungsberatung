@@ -79,12 +79,14 @@ html{scroll-behavior:smooth}
 }
 /* Collapsible year overview: month bar always visible */
 .year-collapse{position:relative}
-.year-collapse:not(.is-open) .year-table tbody{display:none}
-.year-collapse:not(.is-open) .year-scroll{border-radius:22px 22px 0 0;border-bottom:0}
+.year-collapse .year-scroll{overflow-y:hidden;transition:height .75s cubic-bezier(.22,.8,.24,1)}
+.year-collapse .year-table tbody{transition:opacity .45s ease .05s}
+.year-collapse:not(.is-open) .year-table tbody{opacity:0;transition:opacity .25s ease}
+@media(prefers-reduced-motion:reduce){.year-collapse .year-scroll,.year-collapse .year-table tbody{transition:none}}
+.year-collapse .year-scroll{border-radius:22px 22px 0 0;border-bottom:0}
 .yc-toggle{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:14px 20px;border:1px solid var(--line,#cfd6c4);border-radius:0 0 22px 22px;background:#f4f5ec;color:#214a37;font:600 14px/1.2 "DM Sans",sans-serif;cursor:pointer;transition:background .2s}
 .yc-toggle:hover{background:#eaeedf}
 .yc-toggle:focus-visible{outline:2px solid #214a37;outline-offset:3px}
-.year-collapse.is-open .yc-toggle{margin-top:14px;border-radius:999px;width:auto;margin-inline:auto}
 .yc-arrow{width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .25s}
 .is-open .yc-arrow{transform:translateY(2px) rotate(-135deg)}
 .yc-hide,.is-open .yc-show{display:none}
