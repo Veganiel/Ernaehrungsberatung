@@ -10,6 +10,12 @@ Die Übersetzung benötigt JavaScript. Ohne JavaScript bleiben die deutschen Inh
 
 Beim ersten Besuch bestimmt `netlify/edge-functions/language-default.js` anhand von Netlifys Ländererkennung die Voreinstellung: DE/AT/CH → Deutsch, sonst Englisch. URL-Sprachwahl und gespeicherte manuelle Wahl haben Vorrang. Die automatische Auswahl wird nicht als manuelle Präferenz gespeichert. Ist die Ländererkennung nicht erreichbar oder unbekannt, wird Englisch verwendet. Der Endpunkt ist nicht cachebar und gibt nur die Sprache zurück; es werden keine Standortdaten gespeichert. Die Edge Function wird über ihre Inline-Pfadkonfiguration bereitgestellt; das Publish-Verzeichnis bleibt unverändert.
 
+## Vorschaubilder und zweisprachige SEO
+
+Jede öffentliche Seite hat ein eigenes Vorschaubild für geteilte Links (1200 × 630) auf Deutsch (`og/<seite>.jpg`) und Englisch (`og/<seite>-en.jpg`). Erzeugt werden sie mit `python3 scripts/build_share_images.py` (benötigt Google Chrome und Pillow). Das Skript trägt Vorschaubild, Twitter-Karte und `hreflang`-Verweise (de, en = `?lang=en`, x-default) in den Seitenkopf ein. Nach neuen Seiten oder geänderten Titeln erneut ausführen; Titel und Beschreibung brauchen einen Eintrag in `locales/en.json`.
+
+Deutsch ist die Quelle unter der Adresse ohne Parameter; Suchmaschinen bekommen dort immer Deutsch. Für `?lang=en` setzt `netlify/edge-functions/seo-language.js` serverseitig Sprache, Titel, Beschreibungen, Canonical, `og:locale` und das englische Vorschaubild, damit Google und Link-Vorschauen ohne JavaScript die englische Fassung sehen. Die Monatsseiten des Saisonkalenders entstehen mit `python3 scripts/build_season_months.py` und erhalten die Kopfdaten dabei automatisch. Prüfung: `tests/seo-share.test.cjs`.
+
 ## PayPal-Verkauf und Versand
 
 `/.netlify/functions/checkout` erstellt und prüft PayPal-Bestellungen serverseitig: Guide 2 EUR (DE/EN), Beratung 50 EUR. PDF-Versand nach bestätigter Zahlung über Resend; Beratung mit Bestätigung an den Käufer und Kopie an info@veganiel.com, Terminvereinbarung anschließend per E-Mail. Der bestehende kostenlose Kennenlernkalender bleibt verfügbar.

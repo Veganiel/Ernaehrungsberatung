@@ -100,6 +100,8 @@
 
   async function getDefaultLanguage() {
     if (explicitLanguage) return explicitLanguage;
+    // Suchmaschinen sehen auf der Adresse ohne ?lang die deutsche Quelle; die englische Fassung hat ihre eigene Adresse (?lang=en).
+    if (/bot|crawl|spider|slurp|facebookexternalhit|embedly|preview|lighthouse/i.test(navigator.userAgent || '')) return 'de';
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 3000);
     try {

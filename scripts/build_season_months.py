@@ -17,6 +17,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from season_months_content import MONTHS  # noqa: E402
 from season_months_steps import STEPS  # noqa: E402
+import seo_head  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent / 'daniel-suckrow-website'
 SITE = 'https://veganiel.com'
@@ -98,7 +99,8 @@ def page(index, month, card, footer):
 
     title = pair(f'Saisonkalender {name}: Obst, Gemüse & Rezepte | Veganiel',
                  f'Seasonal calendar {en_name}: fruit, veg & recipes | Veganiel')
-    description = f'Was hat im {name} Saison? Obst und Gemüse aus Deutschland, drei einfache pflanzliche Rezepte Schritt für Schritt und Ideen für draußen und drinnen.'
+    description = pair(f'Was hat im {name} Saison? Obst und Gemüse aus Deutschland, drei einfache pflanzliche Rezepte Schritt für Schritt und Ideen für draußen und drinnen.',
+                       f'What is in season in {en_name}? Fruit and vegetables from Germany, three simple plant-based recipes explained step by step, and ideas for outdoors and indoors.')
     kicker = pair('OBST · GEMÜSE · PFLANZLICHE REZEPTE', 'FRUIT · VEGETABLES · PLANT-BASED RECIPES')
     intro = t(month['intro'])
     h_season = pair(f'Was im {name} Saison hat', f'What is in season in {en_name}')
@@ -263,7 +265,11 @@ def main():
     for index, month in enumerate(MONTHS):
         assert len(STEPS[month['slug']]) == len(month['recipes']), month['slug']
         target = ROOT / f'saisonkalender-{month["slug"]}.html'
-        target.write_text(page(index, month, cards[month['slug']], footer), encoding='utf-8')
+        rel = f'saisonkalender-{month["slug"]}.html'
+        document = page(index, month, cards[month['slug']], footer)
+        alt = f'Vorschaubild: Saisonkalender {DE_NAMES[index]}: Obst, Gemüse & Rezepte'
+        translations[alt] = f'Preview image: Seasonal calendar {month["en"]}: fruit, veg & recipes'
+        target.write_text(seo_head.patch(document, rel, alt), encoding='utf-8')
     path = ROOT / 'locales' / 'en.json'
     dictionary = json.loads(path.read_text(encoding='utf-8'))
     added = 0
