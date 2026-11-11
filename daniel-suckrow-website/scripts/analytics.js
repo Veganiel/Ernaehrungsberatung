@@ -1,14 +1,16 @@
 /* Google Analytics 4 – lädt erst nach Einwilligung.
  * Die Einwilligung holt die bereits genutzte, von Google zertifizierte Einwilligungsmitteilung
  * (AdSense „Datenschutz & Mitteilungen“, IAB TCF v2.2). Ohne Einwilligung wird kein Google-Analytics-Code geladen.
- * Aktivierung: Mess-ID (G-…) unten eintragen. Leer = Analytics ist aus.
+ * Aktivierung: Container-ID (GTM-…) und/oder Mess-ID (G-…) unten eintragen. Beide leer = aus.
  */
 (() => {
   'use strict';
-  const MEASUREMENT_ID = '';
+  const CONTAINER_ID = 'GTM-KTXLBGXJ'; // Google Tag Manager
+  const MEASUREMENT_ID = ''; // Google Analytics 4 (optional, direkt ohne Tag Manager)
   const PUBLISHER = 'pub-2996299966418101';
   const GOOGLE_VENDOR = 755; // Google Advertising Products im IAB-TCF
-  if (!/^G-[A-Z0-9]+$/.test(MEASUREMENT_ID)) return;
+  const useGtm = /^GTM-[A-Z0-9]+$/.test(CONTAINER_ID), useGa = /^G-[A-Z0-9]+$/.test(MEASUREMENT_ID);
+  if (!useGtm && !useGa) return;
 
   let loaded = false;
   function loadAnalytics() {
@@ -17,12 +19,21 @@
     window.dataLayer = window.dataLayer || [];
     window.gtag = function gtag() { window.dataLayer.push(arguments); };
     window.gtag('consent', 'default', { analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
-    window.gtag('js', new Date());
-    window.gtag('config', MEASUREMENT_ID, { allow_google_signals: false, allow_ad_personalization_signals: false });
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(MEASUREMENT_ID);
-    document.head.append(script);
+    if (useGtm) {
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      const gtm = document.createElement('script');
+      gtm.async = true;
+      gtm.src = 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(CONTAINER_ID);
+      document.head.append(gtm);
+    }
+    if (useGa) {
+      window.gtag('js', new Date());
+      window.gtag('config', MEASUREMENT_ID, { allow_google_signals: false, allow_ad_personalization_signals: false });
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(MEASUREMENT_ID);
+      document.head.append(script);
+    }
   }
 
   function allowed(tcData) {
