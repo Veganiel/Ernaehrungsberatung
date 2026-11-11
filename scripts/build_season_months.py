@@ -203,6 +203,7 @@ def page(index, month, card, footer):
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="branding.css?v=2"><link rel="stylesheet" href="styles/global-nav.css?v=6"><link rel="stylesheet" href="styles/legal-footer.css"><script src="scripts/global-nav.js?v=5" defer></script>
   <link rel="stylesheet" href="styles/season-scenes.css?v=9"><link rel="stylesheet" href="styles/season-month.css?v=4"><link rel="stylesheet" href="i18n.css"><script src="i18n.js?v=journal-20261106" defer></script>
+<script src="/scripts/analytics.js" defer></script>
 </head>
 <body class="season-month-page season-symbols"><header></header><main class="season-main"><div class="wrap">
   <nav class="sm-breadcrumb" aria-label="Brotkrumen"><a href="index.html">Startseite</a><span aria-hidden="true">/</span><a href="saisonkalender.html">Saisonkalender</a><span aria-hidden="true">/</span><span aria-current="page">{e(name)}</span></nav>
