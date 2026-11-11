@@ -89,7 +89,7 @@
     {
       "id": "zinc-selenium",
       "title": "Wie oft isst du pflanzliche Quellen für Zink und Selen?",
-      "hint": "Zum Beispiel Nüsse, Samen, Hülsenfrüchte und Vollkornprodukte. Paranüsse (Selen) können viel Selen enthalten. Der Gehalt schwankt je nach Herkunft stark.",
+      "hint": "Zum Beispiel Nüsse, Samen, Hülsenfrüchte und Vollkornprodukte. Paranüsse (Selen) können viel Selen enthalten. Der Gehalt schwankt je nach Herkunft stark. Für Erwachsene gilt als Orientierung: höchstens zwei Paranüsse pro Tag. Kinder, Jugendliche, Schwangere und Stillende sollten darauf verzichten.",
       "options": [
         "Täglich",
         "Mehrmals pro Woche",
