@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Veganer Nährstoff-Check: Ernährung prüfen | Veganiel</title>
+    <meta name="description" content="Kostenloser veganer Nährstoff-Check: Entdecke, worauf du bei B12, Jod, Calcium, Eisen und Omega-3 achten kannst. Persönliche Orientierung in wenigen Minuten.">
+    <link rel="canonical" href="https://veganiel.com/veganer-naehrstoff-check.html">
+    <meta name="theme-color" content="#214a37">
+    <meta property="og:title" content="Veganer Nährstoff-Check | Veganiel">
+    <meta property="og:description" content="Wie gut planst du deine pflanzliche Ernährung? Entdecke persönliche Anregungen zu wichtigen Nährstoffen.">
+    <meta property="og:url" content="https://veganiel.com/veganer-naehrstoff-check.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" href="veganiel-logo-32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="branding.css?v=2">
+    <link rel="stylesheet" href="styles/global-nav.css?v=6">
+    <link rel="stylesheet" href="styles/legal-footer.css">
+    <script src="scripts/global-nav.js?v=5" defer></script>
+    <script src="scripts/shop-visibility.js" defer></script>
+    <link rel="stylesheet" href="i18n.css">
+    <script src="i18n.js" defer></script>
+    <script src="scripts/veganer-naehrstoff-check.js" defer></script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Veganer Nährstoff-Check","url":"https://veganiel.com/veganer-naehrstoff-check.html","description":"Kostenlose Orientierung zu wichtigen Nährstoffen bei veganer Ernährung.","inLanguage":"de","isPartOf":{"@type":"WebSite","name":"Veganiel","url":"https://veganiel.com/"},"author":{"@type":"Person","name":"Daniel Suckrow","url":"https://veganiel.com/ueber-mich.html"}}</script>
+    <style>
+      :root {
+        --green: #214a37;
+        --ink: #263b2d;
+        --muted: #5f7064;
+        --cream: #faf9f3;
+        --line: #d9e4d8;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      @media(prefers-reduced-motion:reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--cream);
+        color: var(--ink);
+        font: 16px/1.65 'DM Sans',sans-serif;
+      }
+      a {
+        color: var(--green);
+      }
+      .wrap {
+        width: min(1080px,calc(100% - 40px));
+        margin: auto;
+      }
+      h1,h2,h3 {
+        font-family: 'Playfair Display',serif;
+        color: var(--green);
+        line-height: 1.16;
+        font-weight: 500;
+      }
+      h1 {
+        font-size: clamp(43px,6vw,70px);
+        margin: 15px 0 22px;
+      }
+      h2 {
+        font-size: clamp(29px,4vw,40px);
+      }
+      h3 {
+        font-size: 23px;
+        margin: 0 0 10px;
+      }
+      .hero {
+        padding: 82px 0 56px;
+        display: grid;
+        grid-template-columns: 1.2fr .8fr;
+        gap: 55px;
+        align-items: center;
+      }
+      .eyebrow {
+        color: #718c73;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+      }
+      .lead {
+        color: var(--muted);
+        font-size: 18px;
+        max-width: 620px;
+      }
+      .chips {
+        display: flex;
+        gap: 9px;
+        flex-wrap: wrap;
+        margin: 28px 0;
+      }
+      .chip {
+        background: #edf3e9;
+        border-radius: 50px;
+        padding: 7px 14px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .art {
+        min-height: 300px;
+        background: #e7eee1;
+        border-radius: 48% 52% 45% 55%;
+        display: grid;
+        place-items: center;
+        position: relative;
+      }
+      .art span {
+        font-size: 112px;
+      }
+      .intro {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 26px 30px;
+        margin-bottom: 25px;
+      }
+      .intro p {
+        margin: 6px 0;
+        color: var(--muted);
+      }
+      form {
+        display: grid;
+        gap: 16px;
+      }
+      .question {
+        border: 1px solid var(--line);
+        background: white;
+        border-radius: 18px;
+        padding: 25px 28px;
+      }
+      fieldset {
+        margin: 0;
+        min-inline-size: 0;
+      }
+      #questions {
+        display: grid;
+        gap: 16px;
+      }
+      #main,#check,#results {
+        scroll-margin-top: 100px;
+      }
+      h1,legend,.option span {
+        overflow-wrap: anywhere;
+      }
+      legend {
+        font-weight: 700;
+        padding: 0 8px;
+        font-size: 18px;
+        color: var(--green);
+      }
+      .hint {
+        font-size: 14px;
+        color: var(--muted);
+        margin: 0 0 14px;
+      }
+      .options {
+        display: flex;
+        gap: 9px;
+        flex-wrap: wrap;
+      }
+      .option {
+        position: relative;
+      }
+      .option input {
+        position: absolute;
+        opacity: 0;
+      }
+      .option span {
+        display: block;
+        border: 1px solid #cbdacc;
+        border-radius: 10px;
+        padding: 10px 15px;
+        cursor: pointer;
+      }
+      .option input:checked+span {
+        background: var(--green);
+        border-color: var(--green);
+        color: white;
+      }
+      .option input:focus-visible+span,button:focus-visible,a:focus-visible {
+        outline: 3px solid #c99f54;
+        outline-offset: 3px;
+      }
+      .action {
+        border: 0;
+        background: var(--green);
+        color: white;
+        border-radius: 10px;
+        padding: 16px 25px;
+        font: 700 16px 'DM Sans',sans-serif;
+        cursor: pointer;
+        justify-self: start;
+      }
+      .action:hover {
+        background: #35674d;
+      }
+      .privacy {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .results {
+        margin: 60px 0;
+        background: #eaf1e6;
+        border-radius: 24px;
+        padding: clamp(24px,5vw,50px);
+      }
+      .results h2 {
+        margin: 10px 0;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 14px;
+        margin: 25px 0;
+      }
+      .card {
+        background: white;
+        border-radius: 14px;
+        padding: 23px;
+      }
+      .card p {
+        margin: 0;
+        color: #526657;
+      }
+      .note {
+        border-left: 3px solid #9ab49a;
+        padding-left: 18px;
+        color: #526657;
+      }
+      .content {
+        padding: 25px 0 80px;
+        max-width: 800px;
+      }
+      .content details {
+        border-bottom: 1px solid var(--line);
+        padding: 16px 0;
+      }
+      .content summary {
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .sources {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      footer {
+        background: #173629;
+        color: white;
+        padding: 28px 0;
+        font-size: 13px;
+      }
+      footer a {
+        color: white;
+      }
+      .skip {
+        position: absolute;
+        left: 10px;
+        top: -100px;
+        background: white;
+        padding: 10px;
+        z-index: 100;
+      }
+      .skip:focus {
+        top: 10px;
+      }
+      @media(max-width:700px) {
+        .hero {
+          grid-template-columns: 1fr;
+          padding: 46px 0 30px;
+          gap: 20px;
+        }
+        .art {
+          min-height: 170px;
+          max-width: 260px;
+          width: 100%;
+          margin: auto;
+        }
+        .art span {
+          font-size: 70px;
+        }
+        .cards {
+          grid-template-columns: 1fr;
+        }
+        .question {
+          padding: 22px 18px;
+        }
+        .options {
+          display: grid;
+        }
+        .option span {
+          min-height: 44px;
+        }
+        .wrap {
+          width: calc(100% - 32px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Zum Inhalt springen</a>
+    <header>
+      <div class="wrap">
+        <a class="veganiel-logo-brand" href="index.html"><img class="veganiel-logo-image" src="veganiel-logo-192.png" alt="" width="42" height="42"><span class="veganiel-logo-text"><span>Veganiel</span><small>Daniels Ernährungsberatung</small></span></a>
+      </div>
+    </header>
+    <main id="main" class="wrap">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Wissen, das dich weiterbringt</div>
+          <h1>Dein veganer Nährstoff-Check<span style="color:#9bb99a">.</span></h1>
+          <p class="lead">Pflanzlich essen und gut planen: Entdecke, welche Nährstoffe du im Alltag besonders im Blick behalten kannst.</p>
+          <div class="chips">
+            <span class="chip">✳ Kostenlos</span><span class="chip">◷ Ca. 3 Minuten</span><span class="chip">♡ Ohne Anmeldung</span>
+          </div>
+          <a class="action" style="display:inline-block;text-decoration:none" href="#check">Jetzt starten →</a>
+        </div>
+        <div class="art" aria-hidden="true">
+          <span>🌿</span>
+        </div>
+      </section>
+      <section id="check">
+        <div class="intro">
+          <span class="eyebrow">Dein Alltag im Blick</span>
+          <h2>Ein paar Fragen. Neue Impulse.</h2>
+          <p>Beantworte die Fragen so, wie es meistens auf dich zutrifft. Du erhältst Anregungen zu einzelnen Nährstoffen – keine Diagnose und keine Berechnung deiner Versorgung.</p>
+          <p>Der Check richtet sich an Erwachsene. Bei Schwangerschaft, Stillzeit, für Kinder und Jugendliche sowie bei Erkrankungen ist eine persönliche fachliche Beratung besonders wichtig.</p>
+        </div>
+        <noscript>
+          <p>Aktiviere JavaScript, um den Check zu verwenden.</p>
+        </noscript>
+        <form id="nutrition-form" method="post">
+          <div id="questions"></div>
+          <button class="action" type="submit" disabled>Meine Hinweise anzeigen →</button>
+          <p class="privacy">Deine Antworten werden nur in diesem Browser verarbeitet und nicht gespeichert oder versendet.</p>
+        </form>
+      </section>
+      <section class="results" id="results" hidden tabindex="-1" aria-live="polite">
+        <span class="eyebrow">Deine persönliche Orientierung</span>
+        <h2>Das kannst du im Blick behalten.</h2>
+        <p>Deine Antworten geben Hinweise auf Gewohnheiten, nicht auf deinen tatsächlichen Nährstoffstatus. Menge, Aufnahme und individueller Bedarf bleiben unberücksichtigt.</p>
+        <div class="cards" id="result-cards">
+        </div>
+        <p class="note">Auch Vitamin D, Vitamin B2, Zink und Selen verdienen Aufmerksamkeit. Ein Ergebnis kann weder einen Mangel ausschließen noch feststellen. Besprich Fragen zu Blutwerten und Nahrungsergänzung mit einer qualifizierten Fachperson.</p>
+        <p><a href="angebot.html">Mehr über meine Ernährungsberatung erfahren →</a> · <a href="blog-uebersicht.html">Ernährungswissen entdecken →</a></p>
+        <button class="action" type="button" id="restart">Antworten ändern</button>
+      </section>
+      <section class="content">
+        <span class="eyebrow">Gut zu wissen</span>
+        <h2>Vegane Ernährung bewusst gestalten</h2>
+        <p>Eine abwechslungsreiche pflanzliche Ernährung kann viele wertvolle Lebensmittel vereinen. Gleichzeitig lohnt es sich, einige Nährstoffe gezielt zu planen. Besonders Vitamin B12 muss bei veganer Ernährung zuverlässig ergänzt werden.</p>
+        <details>
+          <summary>Kann der Check einen Nährstoffmangel erkennen?</summary>
+          <p>Nein. Der Check erfasst weder vollständige Mengen noch die tatsächliche Aufnahme oder Blutwerte. Er liefert Anregungen für deinen Alltag und ersetzt keine medizinische oder ernährungsfachliche Untersuchung.</p>
+        </details>
+        <details>
+          <summary>Warum ist Vitamin B12 bei veganer Ernährung wichtig?</summary>
+          <p>Bei einer rein pflanzlichen Ernährung ist eine zuverlässige Vitamin-B12-Ergänzung notwendig. Lass dich zur passenden Versorgung und Kontrolle individuell beraten.</p>
+        </details>
+        <details>
+          <summary>Für wen ist der Check gedacht?</summary>
+          <p>Er richtet sich an Erwachsene, die sich vegan ernähren oder ihre pflanzliche Ernährung besser planen möchten. Schwangerschaft, Stillzeit, Kindheit, Jugend und Erkrankungen können besondere Anforderungen mit sich bringen.</p>
+        </details>
+        <h3>Quellen und weiterführende Informationen</h3>
+        <p class="sources"><a href="https://www.dge.de/gesunde-ernaehrung/faq/faqs-vegane-ernaehrung/">Deutsche Gesellschaft für Ernährung: FAQ zur veganen Ernährung</a> · <a href="https://www.dge.de/presse/meldungen/2024/positionspapier-zu-veganer-ernaehrung/">DGE: Position zur veganen Ernährung</a> · <a href="https://gesund.bund.de/gesunde-ernaehrung">gesund.bund.de: Gesunde Ernährung</a></p>
+        <p>Inhalte und Tools: <a href="ueber-mich.html">Daniel Suckrow · Veganiel</a></p>
+      </section>
+    </main>
+    <footer>
+      <div class="wrap">© Daniel Suckrow · Veganiel <p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a></p>
+      </div>
+    </footer>
+  </body>
+</html>
