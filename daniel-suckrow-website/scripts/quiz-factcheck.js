@@ -77,7 +77,7 @@
       '<h2 id="factcheck-title">Wisch dich<br><em>zur Wahrheit.</em></h2>' +
       '<p class="fc-feature-text">Zehn Aussagen, eine Minute. Wische nach rechts, wenn es stimmt – nach links, wenn es ein Fake ist. Treffer in Serie bauen deine Combo auf, Tempo bringt Zeitbonus.</p>' +
       '<div class="fc-levels" role="group" aria-label="Stufe wählen"></div>' +
-      '<p class="fc-league-note small">Zählt für die Wochen-Liga: dein erster Versuch pro Stufe und Woche – inklusive Zeitbonus.</p>' +
+      '<p class="fc-league-note small">Jede Runde zählt für die Wochen-Liga – inklusive Zeitbonus – und bringt dir XP.</p>' +
     '</div>' +
     '<div class="fc-demo" aria-hidden="true"><div class="fc-demo-card fc-demo-3"></div><div class="fc-demo-card fc-demo-2"></div>' +
       '<div class="fc-demo-card fc-demo-1"><span class="fc-demo-kicker">Stimmt das?</span><strong>Hülsenfrüchte liefern Protein.</strong><span class="fc-demo-stamp">Fakt</span></div>' +
@@ -85,11 +85,10 @@
   if (hub) hub.after(feature);
   const levelBox = feature.querySelector('.fc-levels');
   function renderLevels() {
-    const played = playedThisWeek();
     levelBox.replaceChildren();
     LEVELS.forEach(level => {
       const b = el('button', 'fc-level-btn'); b.type = 'button';
-      b.append(el('span', 'fc-level-name', level), el('small', null, played.includes(level) ? '✓ Diese Woche gewertet' : 'Für die Liga offen'));
+      b.append(el('span', 'fc-level-name', level), el('small', null, 'Jede Runde zählt'));
       b.addEventListener('click', () => start(level));
       levelBox.append(b);
     });
@@ -200,7 +199,6 @@
     if (!state || state.done) return; state.done = true; stop(); view.classList.add('is-finished');
     const secondsLeft = timedOut ? 0 : Math.max(0, state.seconds);
     const bonus = timeBonus(secondsLeft, state.points), key = KEY_PREFIX + state.level;
-    const alreadyCounted = playedThisWeek().includes(state.level);
     ui.profile?.recordFactcheck(state.points, state.bestCombo); ui.updateGameLab?.(); markPlayed(state.level); renderLevels();
     root.dispatchEvent(new CustomEvent('veganiel:quiz-finished', { detail: { key, score: state.points, timeBonus: bonus } }));
     if (state.points === state.items.length) root.VeganielFX?.confetti();
@@ -213,7 +211,7 @@
       el('h2', null, state.points === state.items.length ? 'Makellos. Kein Fake kommt an dir vorbei.' : state.points >= 7 ? 'Starker Faktenblick!' : state.points >= 4 ? 'Gute Runde – da geht noch mehr.' : 'Jede Runde schärft den Blick.'));
     const stats = el('ul', 'fc-stats');
     [['Zeitbonus', '+' + bonus], ['Liga-Punkte', String(state.points + bonus)], ['Beste Combo', '×' + state.bestCombo]].forEach(([k, v]) => { const li = el('li'); li.append(el('span', null, k), el('strong', null, v)); stats.append(li); });
-    copy.append(stats, el('p', 'small fc-result-note', alreadyCounted ? 'Für die Liga zählt dein erster Versuch dieser Woche auf dieser Stufe. Diese Runde bringt dir trotzdem XP.' : 'Mit Anmeldung und Liga-Teilnahme zählt diese Runde für die Wochen-Liga. XP sammelst du in jedem Fall.'));
+    copy.append(stats, el('p', 'small fc-result-note', 'Mit Konto und Liga-Teilnahme zählt jede Runde für die Wochen-Liga. XP sammelst du in jedem Fall.'));
     const actions = el('div', 'fc-result-actions');
     const again = el('button', 'btn', 'Neue Runde ↻'); again.type = 'button'; again.addEventListener('click', () => start(state.level));
     const other = el('button', 'btn secondary', 'Zur Quizwelt'); other.type = 'button'; other.addEventListener('click', quit);

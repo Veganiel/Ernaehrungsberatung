@@ -3,7 +3,7 @@
   const sb=window.VeganielMember?.client, $=id=>document.getElementById(id);
   if(!$('weekly-leaders')) return;
   const intro=document.querySelector('.leaderboard-intro');
-  if(intro) intro.textContent='Bei Themen-Quizzen und „Fakt oder Fake“ zählt dein erster Versuch pro Woche. In der Blitzrunde zählt dein bestes Wochen-Ergebnis – Zeitbonus inklusive. Jede Woche beginnt neu.';
+  if(intro) intro.textContent='Bei Themen-Quizzen zählt dein erster Versuch pro Woche. Bei „Fakt oder Fake“ zählt jede Runde, in der Blitzrunde dein bestes Wochen-Ergebnis – Zeitbonus inklusive. Jede Woche beginnt neu.';
   if(!sb){$('weekly-leaders').innerHTML='<li class="leaderboard-empty">Die Kontoverbindung wird gerade nicht geladen.</li>';$('leaderboard-status').textContent='Bitte lade die Seite einmal neu. Deine Quizdaten bleiben erhalten.';return;}
   const medal={gold:'🥇',silver:'🥈',bronze:'🥉'};
   const safeText=value=>String(value??'').slice(0,80);
