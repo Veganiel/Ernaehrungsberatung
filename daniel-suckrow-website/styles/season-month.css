@@ -184,3 +184,9 @@ body.season-month-page{margin:0;background:radial-gradient(1200px 600px at 85% -
   .recipe{break-inside:avoid;box-shadow:none}
   .sm-js .reveal{opacity:1;transform:none}
 }
+
+/* SEO: Suchbegriff in der Hauptüberschrift, direkte Antwort */
+.sm-h1-pre{display:block;margin-bottom:10px;font:600 clamp(13px,1.3vw,15px)/1.2 'DM Sans',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#b9cf8a}
+.sm-answer{margin:0 0 18px;padding:clamp(20px,2.6vw,28px) clamp(22px,3vw,32px);border-radius:22px;background:var(--paper);border:1px solid var(--line);border-left:4px solid #8fac73;box-shadow:var(--shadow)}
+.sm-answer h3{margin:0 0 8px;font:500 clamp(20px,2vw,24px)/1.25 var(--serif);color:var(--forest)}
+.sm-answer p{margin:0;max-width:75ch;color:var(--body);font-size:15.5px;line-height:1.75}

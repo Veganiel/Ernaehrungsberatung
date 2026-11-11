@@ -112,3 +112,4 @@ html{scroll-behavior:smooth}
 body.season-symbols::before{content:'';position:fixed;inset:-12vh -12vw;z-index:-1;pointer-events:none;background:url('season-symbols.svg') 0 0/440px 440px repeat;opacity:.11;transform:rotate(-7deg);-webkit-mask-image:linear-gradient(90deg,#000 0 18%,rgba(0,0,0,.18) 40% 60%,#000 82% 100%);mask-image:linear-gradient(90deg,#000 0 18%,rgba(0,0,0,.18) 40% 60%,#000 82% 100%)}
 @media(max-width:700px){body.season-symbols::before{opacity:.08;background-size:320px 320px;-webkit-mask-image:linear-gradient(90deg,#000 0 6%,rgba(0,0,0,.12) 30% 70%,#000 94% 100%);mask-image:linear-gradient(90deg,#000 0 6%,rgba(0,0,0,.12) 30% 70%,#000 94% 100%)}}
 @media print{body.season-symbols::before{display:none}}
+.hero h1 .h1-pre{display:block;margin-bottom:14px;font:600 clamp(12px,1.2vw,14px)/1.2 'DM Sans',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#dbeaa8}

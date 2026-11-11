@@ -71,15 +71,35 @@ def count(n, de_one, de_many, en_one, en_many):
     return pair(f'{n} {de_one if n == 1 else de_many}', f'{n} {en_one if n == 1 else en_many}')
 
 
+DICTIONARY = json.loads((ROOT / 'locales' / 'en.json').read_text(encoding='utf-8'))
+
+
+def listing(items, word):
+    return items[0] if len(items) == 1 else ', '.join(items[:-1]) + f' {word} ' + items[-1]
+
+
+def answer(name, en_name, items):
+    veg = [text for text, fruit in items if not fruit]
+    fruit = [text for text, fruit in items if fruit]
+    en = lambda text: DICTIONARY.get(text, text)
+    de = (f'Im {name} haben in Deutschland vor allem {listing(veg, "und")} Saison. '
+          f'Beim Obst kommen {listing(fruit, "und")} auf den Tisch. '
+          'Regionale Saisonware ist meist frischer, aromatischer und hat kürzere Transportwege.')
+    en_text = (f'In {en_name}, the main vegetables in season in Germany are {listing([en(v).lower() if en(v)[1:].islower() else en(v) for v in veg], "and")}. '
+               f'For fruit, look out for {listing([en(f).lower() if en(f)[1:].islower() else en(f) for f in fruit], "and")}. '
+               'Regional seasonal produce is usually fresher, more flavourful and travels shorter distances.')
+    return pair(de, en_text), en_text
+
+
 def page(index, month, card, footer):
     name, en_name, slug = DE_NAMES[index], month['en'], month['slug']
     prev_i, next_i = (index - 1) % 12, (index + 1) % 12
     url = f'{SITE}/saisonkalender-{slug}.html'
 
-    title = pair(f'Saisonkalender {name}: Obst, Gemüse & pflanzliche Rezepte | Veganiel',
-                 f'Seasonal calendar {en_name}: fruit, vegetables & plant-based recipes | Veganiel')
+    title = pair(f'Saisonkalender {name}: Obst, Gemüse & Rezepte | Veganiel',
+                 f'Seasonal calendar {en_name}: fruit, veg & recipes | Veganiel')
     description = f'Was hat im {name} Saison? Obst und Gemüse aus Deutschland, drei einfache pflanzliche Rezepte Schritt für Schritt und Ideen für draußen und drinnen.'
-    kicker = pair(f'SAISONKALENDER · {name.upper()}', f'SEASONAL CALENDAR · {en_name.upper()}')
+    kicker = pair('OBST · GEMÜSE · PFLANZLICHE REZEPTE', 'FRUIT · VEGETABLES · PLANT-BASED RECIPES')
     intro = t(month['intro'])
     h_season = pair(f'Was im {name} Saison hat', f'What is in season in {en_name}')
     h_recipes = pair(f'Pflanzliche Rezepte für den {name}', f'Plant-based recipes for {en_name}')
@@ -87,6 +107,8 @@ def page(index, month, card, footer):
 
     veg_items = [text for text, fruit in card['items'] if not fruit]
     fruit_items = [text for text, fruit in card['items'] if fruit]
+    answer_de, answer_en = answer(name, en_name, card['items'])
+    question = pair(f'Welches Obst und Gemüse hat im {name} Saison?', f'Which fruit and vegetables are in season in {en_name}?')
     veg = ''.join(f'<li>{e(text)}</li>' for text in veg_items)
     fruit = ''.join(f'<li>{e(text)}</li>' for text in fruit_items)
 
@@ -116,7 +138,6 @@ def page(index, month, card, footer):
             '@type': 'Recipe', '@id': f'{url}#rezept-{number}', 'name': r_title,
             'author': {'@type': 'Person', 'name': 'Daniel Suckrow'},
             'description': f'Pflanzliches Saisonrezept für den {name}.',
-            'image': f'{SITE}/veganiel-hero-daniel.jpg',
             'suitableForDiet': 'https://schema.org/VeganDiet', 'recipeCategory': 'Hauptgericht' if number < 3 else 'Snack oder Dessert',
             'recipeCuisine': 'Saisonal', 'keywords': f'pflanzlich, saisonal, {name}',
             'totalTime': f'PT{recipe["time"]}M', 'recipeYield': serves(recipe['serves']),
@@ -137,6 +158,8 @@ def page(index, month, card, footer):
             {'@type': 'ListItem', 'position': 1, 'name': 'Startseite', 'item': f'{SITE}/'},
             {'@type': 'ListItem', 'position': 2, 'name': 'Saisonkalender', 'item': f'{SITE}/saisonkalender.html'},
             {'@type': 'ListItem', 'position': 3, 'name': name, 'item': url}]},
+        {'@type': 'FAQPage', '@id': f'{url}#faq', 'mainEntity': [{'@type': 'Question', 'name': question,
+            'acceptedAnswer': {'@type': 'Answer', 'text': answer_de}}]},
     ] + recipe_ld
     ld = json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False).replace('</', '<\\/')
 
@@ -177,14 +200,14 @@ def page(index, month, card, footer):
   <script>document.documentElement.classList.add('sm-js')</script>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="branding.css?v=2"><link rel="stylesheet" href="styles/global-nav.css?v=6"><link rel="stylesheet" href="styles/legal-footer.css"><script src="scripts/global-nav.js?v=5" defer></script>
-  <link rel="stylesheet" href="styles/season-scenes.css?v=9"><link rel="stylesheet" href="styles/season-month.css?v=3"><link rel="stylesheet" href="i18n.css"><script src="i18n.js?v=journal-20261106" defer></script>
+  <link rel="stylesheet" href="styles/season-scenes.css?v=9"><link rel="stylesheet" href="styles/season-month.css?v=4"><link rel="stylesheet" href="i18n.css"><script src="i18n.js?v=journal-20261106" defer></script>
 </head>
 <body class="season-month-page season-symbols"><header></header><main class="season-main"><div class="wrap">
   <nav class="sm-breadcrumb" aria-label="Brotkrumen"><a href="index.html">Startseite</a><span aria-hidden="true">/</span><a href="saisonkalender.html">Saisonkalender</a><span aria-hidden="true">/</span><span aria-current="page">{e(name)}</span></nav>
   <section class="sm-hero">
     <div class="sm-hero-copy">
       <p class="kicker">{e(kicker)}</p>
-      <h1>{e(name)}<em>{e(card["poetry"])}</em></h1>
+      <h1><span class="sm-h1-pre">Saisonkalender</span> {e(name)}<em>{e(card["poetry"])}</em></h1>
       <p class="sm-lead">{e(intro)}</p>
       <ul class="sm-facts">{facts}</ul>
       <a class="sm-hero-cta" href="#rezepte"><span>Zu den Rezepten</span>{ICON_ARROW}</a>
@@ -195,6 +218,7 @@ def page(index, month, card, footer):
 
   <section class="sm-section" id="saison" aria-labelledby="saison-title">
     <div class="sm-head reveal"><p class="kicker">JETZT FRISCH</p><h2 id="saison-title">{e(h_season)}</h2><p>{e(card["line"])}</p></div>
+    <div class="sm-answer reveal"><h3>{e(question)}</h3><p>{e(answer_de)}</p></div>
     <div class="sm-produce">
       <div class="produce-panel produce-veg reveal"><div class="produce-top"><h3>Gemüse</h3><span>{e(veg_count)}</span></div><ul>{veg}</ul></div>
       <div class="produce-panel produce-fruit reveal"><div class="produce-top"><h3>Obst</h3><span>{e(fruit_count)}</span></div><ul>{fruit}</ul></div>
