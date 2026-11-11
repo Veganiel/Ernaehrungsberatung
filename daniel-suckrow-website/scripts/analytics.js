@@ -6,7 +6,7 @@
 (() => {
   'use strict';
   const CONTAINER_ID = 'GTM-KTXLBGXJ'; // Google Tag Manager
-  const MEASUREMENT_ID = ''; // Google Analytics 4 (optional, direkt ohne Tag Manager)
+  const MEASUREMENT_ID = 'G-LYY0J7EX52'; // Google Analytics 4 (optional, direkt ohne Tag Manager)
   const PUBLISHER = 'pub-2996299966418101';
   const GOOGLE_VENDOR = 755; // Google Advertising Products im IAB-TCF
   const useGtm = /^GTM-[A-Z0-9]+$/.test(CONTAINER_ID), useGa = /^G-[A-Z0-9]+$/.test(MEASUREMENT_ID);

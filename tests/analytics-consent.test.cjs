@@ -47,6 +47,7 @@ test('Tag Manager container loads only after consent', () => {
 
 test('the live configuration uses the Veganiel Tag Manager container', () => {
   assert.match(source, /const CONTAINER_ID = 'GTM-KTXLBGXJ';/);
+  assert.match(source, /const MEASUREMENT_ID = 'G-LYY0J7EX52';/);
 });
 
 test('pages without ads load the consent message themselves', () => {
