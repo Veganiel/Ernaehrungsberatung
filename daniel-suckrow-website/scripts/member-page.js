@@ -162,143 +162,43 @@
   function latest(rows, kind) {
     return rows.filter((row) => row.kind === kind).at(-1);
   }
-  function chart(
-    entries,
-    max = 100,
-    label = "Verlauf",
-    valueFor = (row) => row.value,
-    format = (value) => String(value),
-  ) {
-    const rows = (entries || []).slice(-6),
-      series = rows.map(valueFor).map(Number).filter(Number.isFinite),
-      ceiling = Math.max(max, ...series, 1),
-      svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("viewBox", "0 0 260 88");
-    svg.setAttribute("role", "img");
-    svg.setAttribute("aria-label", label);
-    const dated = (row) => new Date(row.at).toLocaleDateString("de-DE"),
-      shortDate = (row) =>
-        new Date(row.at).toLocaleDateString("de-DE", {
-          day: "2-digit",
-          month: "2-digit",
-        });
-    if (series.length < 2) {
-      const note = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "text",
-      );
-      note.setAttribute("x", "130");
-      note.setAttribute("y", "42");
-      note.setAttribute("text-anchor", "middle");
-      note.textContent = series.length
-        ? dated(rows[0]) + " · " + format(series[0])
-        : "Noch ein weiterer Wert für den Verlauf";
-      svg.append(note);
-      return svg;
-    }
-    const yFor = (value) =>
-        68 - (Math.max(0, Math.min(ceiling, value)) / ceiling) * 53,
-      xFor = (index) => 12 + index * (236 / (series.length - 1)),
-      points = series
-        .map((value, index) => xFor(index) + "," + yFor(value))
-        .join(" "),
-      line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-    line.setAttribute("points", points);
-    line.setAttribute("fill", "none");
-    line.setAttribute("stroke", "currentColor");
-    line.setAttribute("stroke-width", "3");
-    line.setAttribute("stroke-linecap", "round");
-    line.setAttribute("stroke-linejoin", "round");
-    svg.append(line);
-    series.forEach((value, index) => {
-      const x = xFor(index),
-        y = yFor(value),
-        dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      dot.setAttribute("cx", String(x));
-      dot.setAttribute("cy", String(y));
-      dot.setAttribute("r", "4");
-      const title = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "title",
-      );
-      title.textContent = dated(rows[index]) + ": " + format(value);
-      dot.append(title);
-      svg.append(dot);
-      const score = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "text",
-      );
-      score.setAttribute("x", String(x));
-      score.setAttribute("y", String(Math.max(11, y - 7)));
-      score.setAttribute("text-anchor", "middle");
-      score.textContent = format(value);
-      svg.append(score);
-      const date = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "text",
-      );
-      date.setAttribute("x", String(x));
-      date.setAttribute("y", "84");
-      date.setAttribute("text-anchor", "middle");
-      date.textContent = shortDate(rows[index]);
-      svg.append(date);
-    });
-    return svg;
-  }
-  function card(title, value, detail, href) {
-    const node = document.createElement("article");
-    node.className = "overview-card";
-    const label = document.createElement("p");
-    label.className = "overview-label";
-    label.textContent = title;
-    const metric = document.createElement("strong");
-    metric.textContent = value;
-    const text = document.createElement("p");
-    text.textContent = detail;
-    node.append(label, metric, text);
-    const rows = history();
-    if (title === "Gesundheits-Check") {
-      const last = latest(rows, "health");
-      if (last)
-        metric.textContent = String(last.total ?? last.score) + " Punkte";
-    }
-    const trend =
-      title === "VO₂max"
-        ? {
-            rows: rows.filter((row) => row.kind === "vo2"),
-            max: 90,
-            label: "Verlauf des VO₂max-Werts",
-            valueFor: (row) => row.value,
-            format: (value) => value + " ml",
-          }
-        : title === "Taille & BMI"
-          ? {
-              rows: rows.filter((row) => row.kind === "waist"),
-              max: 45,
-              label: "Verlauf des BMI",
-              valueFor: (row) => row.bmi,
-              format: (value) => "BMI " + value.toFixed(1),
-            }
-          : null;
-    if (trend) {
-      const wrap = document.createElement("div");
-      wrap.className = "health-chart";
-      wrap.append(
-        chart(trend.rows, trend.max, trend.label, trend.valueFor, trend.format),
-      );
-      node.append(wrap);
-    }
-    if (href) {
-      const link = document.createElement("a");
-      link.href =
-        title === "Herzfrequenzzonen"
-          ? "herzfrequenz-rechner.html#heart-results"
-          : href;
-      link.textContent = "Öffnen ↗";
-      node.append(link);
-    }
-    return node;
-  }
+ const SVGNS='http://www.w3.org/2000/svg';let chartSeq=0;
+ const svgEl=(tag,attrs={})=>{const node=document.createElementNS(SVGNS,tag);for(const [key,value] of Object.entries(attrs))node.setAttribute(key,String(value));return node;};
+ const htmlEl=(tag,className,text)=>{const node=document.createElement(tag);if(className)node.className=className;if(text!=null)node.textContent=text;return node;};
+ const deNumber=(value,digits=0)=>Number(value).toLocaleString('de-DE',{minimumFractionDigits:digits,maximumFractionDigits:digits});
+ const longDate=row=>new Date(row.at).toLocaleDateString('de-DE',{day:'2-digit',month:'short',year:'numeric'});
+ const shortDate=row=>new Date(row.at).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'});
+ const ICONS={quiz:'M4 5h12M4 10h12M4 15h7',health:'M10 16.5s-6-3.6-6-8A3.4 3.4 0 0 1 10 6.3a3.4 3.4 0 0 1 6 2.2c0 4.4-6 8-6 8z',vo2:'M3 13l4-4 3 3 7-7M12 5h5v5',heart:'M2.5 10h3.5l2-4.5 4 9 2-4.5h3.5',waist:'M4 4v12M16 4v12M4 10h12M7 8l-3 2 3 2M13 8l3 2-3 2',supplements:'M7.5 3.5l9 9a3.2 3.2 0 0 1-4.5 4.5l-9-9a3.2 3.2 0 0 1 4.5-4.5zM6 10l4-4'};
+ function icon(kind){const box=htmlEl('span','oc-icon'),svg=svgEl('svg',{viewBox:'0 0 20 20','aria-hidden':'true'});svg.append(svgEl('path',{d:ICONS[kind]||ICONS.quiz,fill:'none',stroke:'currentColor','stroke-width':'1.8','stroke-linecap':'round','stroke-linejoin':'round'}));box.append(svg);return box;}
+ function niceScale(values,fixedMax){let lo,hi;if(fixedMax){lo=0;hi=Math.max(fixedMax,...values);}else{const min=Math.min(...values),max=Math.max(...values),pad=Math.max((max-min)*.35,Math.abs(max)*.03,.5);lo=min-pad;hi=max+pad;if(min>=0&&lo<0)lo=0;}const raw=(hi-lo)/3,mag=10**Math.floor(Math.log10(raw||1)),step=[1,2,2.5,5,10].map(m=>m*mag).find(s=>s>=raw)||mag*10;lo=Math.floor(lo/step)*step;hi=Math.ceil(hi/step)*step;if(hi===lo)hi=lo+step;const ticks=[];for(let t=lo;t<=hi+step/2;t+=step)ticks.push(Number(t.toFixed(6)));return {lo,hi,ticks,step};}
+ function smoothPath(points){if(points.length<3)return 'M'+points.map(p=>p.join(',')).join('L');const n=points.length,dx=[],slope=[],tangent=[];for(let i=0;i<n-1;i++){dx[i]=points[i+1][0]-points[i][0];slope[i]=(points[i+1][1]-points[i][1])/dx[i];}tangent[0]=slope[0];tangent[n-1]=slope[n-2];for(let i=1;i<n-1;i++)tangent[i]=slope[i-1]*slope[i]<=0?0:(slope[i-1]+slope[i])/2;for(let i=0;i<n-1;i++){if(slope[i]===0){tangent[i]=tangent[i+1]=0;continue;}const a=tangent[i]/slope[i],b=tangent[i+1]/slope[i],s=a*a+b*b;if(s>9){const tau=3/Math.sqrt(s);tangent[i]=tau*a*slope[i];tangent[i+1]=tau*b*slope[i];}}let d='M'+points[0].join(',');for(let i=0;i<n-1;i++){const [x0,y0]=points[i],[x1,y1]=points[i+1],h=dx[i]/3;d+='C'+(x0+h)+','+(y0+tangent[i]*h)+' '+(x1-h)+','+(y1-tangent[i+1]*h)+' '+x1+','+y1;}return d;}
+ function chart(entries,max=100,label='Verlauf',valueFor=row=>row.value,format=value=>String(value),options={}){
+  const rows=(entries||[]).filter(row=>Number.isFinite(Number(valueFor(row)))).slice(-8),series=rows.map(row=>Number(valueFor(row)));
+  if(series.length<2){const empty=htmlEl('div','chart-empty');empty.setAttribute('role','img');empty.setAttribute('aria-label',label);if(series.length){empty.append(htmlEl('strong',null,'Erster Wert: '+format(series[0])),htmlEl('span',null,'Gemessen am '+longDate(rows[0])+'. Ab dem zweiten Wert siehst du hier deinen Verlauf.'));}else empty.append(htmlEl('strong',null,'Noch kein Verlauf'),htmlEl('span',null,'Speichere zwei Ergebnisse, um deine Entwicklung zu sehen.'));return empty;}
+  const id='mchart'+(++chartSeq),W=320,H=156,pad={l:34,r:16,t:22,b:26},iw=W-pad.l-pad.r,ih=H-pad.t-pad.b,scale=niceScale(series,options.fixedScale?max:0),tickFormat=options.tickFormat||(value=>deNumber(value,Number.isInteger(value)?0:1));
+  const xFor=i=>pad.l+(series.length===1?iw/2:i*iw/(series.length-1)),yFor=v=>pad.t+ih-(v-scale.lo)/(scale.hi-scale.lo)*ih,points=series.map((v,i)=>[Number(xFor(i).toFixed(2)),Number(yFor(v).toFixed(2))]);
+  const wrap=htmlEl('div','health-chart'),svg=svgEl('svg',{viewBox:'0 0 '+W+' '+H,role:'img',tabindex:'0','aria-label':label+': '+rows.map((row,i)=>shortDate(row)+' '+format(series[i])).join(', ')});
+  const defs=svgEl('defs'),grad=svgEl('linearGradient',{id:id+'g',x1:0,y1:0,x2:0,y2:1});grad.append(svgEl('stop',{offset:'0%','stop-color':'currentColor','stop-opacity':'.26'}),svgEl('stop',{offset:'100%','stop-color':'currentColor','stop-opacity':'0'}));defs.append(grad);svg.append(defs);
+  scale.ticks.forEach((tick,i)=>{const y=yFor(tick);svg.append(svgEl('line',{class:'grid-line'+(i===0?' base':''),x1:pad.l,x2:W-pad.r,y1:y,y2:y}));const t=svgEl('text',{class:'axis-label',x:pad.l-8,y:y+3.5,'text-anchor':'end'});t.textContent=tickFormat(tick);svg.append(t);});
+  const lastIndex=series.length-1,labelled=series.length<=5?null:new Set([0,Math.round(lastIndex/2),lastIndex]);rows.forEach((row,i)=>{if(labelled&&!labelled.has(i))return;const t=svgEl('text',{class:'axis-label',x:xFor(i),y:H-6,'text-anchor':i===0?'start':i===series.length-1?'end':'middle'});t.textContent=shortDate(row);svg.append(t);});
+  const line=smoothPath(points),bottom=pad.t+ih;svg.append(svgEl('path',{class:'area',d:line+'L'+points.at(-1)[0]+','+bottom+'L'+points[0][0]+','+bottom+'Z',fill:'url(#'+id+'g)'}));const path=svgEl('path',{class:'series-line',d:line});svg.append(path);
+  const cross=svgEl('line',{class:'crosshair',x1:0,x2:0,y1:pad.t-6,y2:bottom});svg.append(cross);
+  points.forEach(([x,y],i)=>{const last=i===points.length-1;if(last)svg.append(svgEl('circle',{class:'halo',cx:x,cy:y,r:9}));const dot=svgEl('circle',{class:'series-dot'+(last?' last':''),cx:x,cy:y,r:last?4.5:3});const title=svgEl('title');title.textContent=longDate(rows[i])+': '+format(series[i]);dot.append(title);svg.append(dot);});
+  const [lx,ly]=points.at(-1),valueLabel=svgEl('text',{class:'value-label',x:lx-10,y:Math.max(12,ly-10),'text-anchor':'end'});valueLabel.textContent=format(series.at(-1));svg.append(valueLabel);
+  const active=svgEl('circle',{class:'active-dot',r:5,cx:0,cy:0});svg.append(active);
+  const tip=htmlEl('div','chart-tip');tip.setAttribute('aria-hidden','true');wrap.append(svg,tip);
+  let current=-1;const show=i=>{current=Math.max(0,Math.min(points.length-1,i));const [x,y]=points[current];cross.setAttribute('x1',x);cross.setAttribute('x2',x);active.setAttribute('cx',x);active.setAttribute('cy',y);tip.replaceChildren(htmlEl('strong',null,format(series[current])));const prev=series[current-1];const sub=htmlEl('span',null,longDate(rows[current])+(prev!=null?' · '+(series[current]-prev>=0?'+':'−')+deNumber(Math.abs(series[current]-prev),Number.isInteger(series[current]-prev)?0:1):''));tip.append(sub);tip.style.left=(x/W*100)+'%';tip.style.top=(y/H*100)+'%';wrap.classList.add('is-active');};
+  const hide=()=>{current=-1;wrap.classList.remove('is-active');};
+  svg.addEventListener('pointermove',event=>{const box=svg.getBoundingClientRect(),x=(event.clientX-box.left)/box.width*W;let best=0;points.forEach((p,i)=>{if(Math.abs(p[0]-x)<Math.abs(points[best][0]-x))best=i;});show(best);});
+  svg.addEventListener('pointerleave',hide);svg.addEventListener('blur',hide);svg.addEventListener('focus',()=>show(points.length-1));
+  svg.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();show((current<0?points.length-1:current)+(event.key==='ArrowLeft'?-1:1));}if(event.key==='Escape')hide();});
+  requestAnimationFrame(()=>{try{const len=Math.ceil(path.getTotalLength());path.style.strokeDasharray=String(len);path.style.setProperty('--len',String(len));wrap.classList.add('is-drawn');path.addEventListener('animationend',()=>{path.style.strokeDasharray='';},{once:true});}catch{}});
+  return wrap;}
+ function gauge(value,max){const box=htmlEl('div','oc-gauge'),r=24,c=2*Math.PI*r,svg=svgEl('svg',{viewBox:'0 0 58 58','aria-hidden':'true'}),fill=svgEl('circle',{class:'fill',cx:29,cy:29,r,fill:'none','stroke-width':6,'stroke-linecap':'round','stroke-dasharray':c,'stroke-dashoffset':c});svg.append(svgEl('circle',{class:'track',cx:29,cy:29,r,fill:'none','stroke-width':6}),fill);box.append(svg,htmlEl('span',null,Math.round(Math.max(0,Math.min(1,value/max))*100)+' %'));requestAnimationFrame(()=>requestAnimationFrame(()=>fill.setAttribute('stroke-dashoffset',String(c*(1-Math.max(0,Math.min(1,value/max)))))));return box;}
+ function delta(values,goodWhen,digits=0,unit=''){if(values.length<2)return null;const diff=values.at(-1)-values.at(-2),pill=htmlEl('span','oc-delta');if(Math.abs(diff)<(digits?.05:.5)){pill.textContent='± 0'+unit;pill.title='Unverändert zum vorherigen Wert';return pill;}if(goodWhen)pill.classList.add((diff>0)===(goodWhen==='up')?'good':'bad');pill.textContent=(diff>0?'▲ +':'▼ −')+deNumber(Math.abs(diff),digits)+unit;pill.title='Veränderung zum vorherigen Wert';return pill;}
+ function card(kind,title,metric,detail,href,extras={}){const node=htmlEl('article','overview-card');node.dataset.kind=kind;if(!metric.value)node.classList.add('is-empty');const head=htmlEl('div','oc-head');head.append(icon(kind),htmlEl('p','overview-label',title));if(extras.delta)head.append(extras.delta);node.append(head);const row=htmlEl('div','oc-metric-row'),m=htmlEl('div','oc-metric'),strong=htmlEl('strong','oc-value',metric.value||metric.empty);m.append(strong);if(metric.value&&metric.unit)m.append(htmlEl('span','oc-unit',metric.unit));row.append(m);if(extras.gauge)row.append(extras.gauge);node.append(row);if(detail)node.append(htmlEl('p','oc-detail',detail));(extras.body||[]).forEach(part=>part&&node.append(part));if(extras.chart)node.append(extras.chart);if(href){const foot=htmlEl('div','oc-foot'),link=htmlEl('a','oc-link');link.href=href;link.append(document.createTextNode(metric.value?'Öffnen':'Jetzt starten'),htmlEl('span',null,'→'));link.lastChild.setAttribute('aria-hidden','true');foot.append(link);node.append(foot);}return node;}
+ function chips(items){const list=(items||[]).filter(Boolean);if(!list.length)return null;const box=htmlEl('div','oc-chips');list.forEach(item=>box.append(htmlEl('span','oc-chip',item)));return box;}
+ function progress(value,max,left,right){const box=htmlEl('div','oc-progress'),track=htmlEl('div','oc-progress-track'),fill=htmlEl('div','oc-progress-fill');fill.style.width=Math.round(Math.max(0,Math.min(1,value/max))*100)+'%';track.append(fill);track.setAttribute('role','progressbar');track.setAttribute('aria-valuemin','0');track.setAttribute('aria-valuemax',String(max));track.setAttribute('aria-valuenow',String(value));const label=htmlEl('div','oc-progress-label');label.append(htmlEl('span',null,left),htmlEl('span',null,right));box.append(track,label);return box;}
   function avatarKey() {
     return "veganiel.profile-avatar.v1." + (user?.id || "guest");
   }
@@ -517,152 +417,30 @@
     });
     host.append(avatar);
   }
-  function renderOverview(quizRows, awards, profileUrl) {
-    const home = $("member-home");
-    let panel = $("member-overview");
-    if (!panel) {
-      panel = document.createElement("section");
-      panel.id = "member-overview";
-      panel.className = "member-panel member-overview";
-      home.prepend(panel);
-    }
-    panel.replaceChildren();
-    const top = document.createElement("div");
-    top.className = "overview-top";
-    setupAvatar(top, profileUrl);
-    const copy = document.createElement("div");
-    const heading = document.createElement("h2");
-    heading.textContent = "Dein Überblick";
-    const text = document.createElement("p");
-    text.textContent =
-      "Quizfortschritt und Rechner-Ergebnisse auf einen Blick.";
-    copy.append(heading, text);
-    top.append(copy);
-    panel.append(top);
-    const rows = history(),
-      grid = document.createElement("div");
-    grid.className = "overview-grid";
-    const medals = {
-      gold: "🥇 Gold",
-      silver: "🥈 Silber",
-      bronze: "🥉 Bronze",
-    };
-    const awardText =
-      Object.entries(awards || {})
-        .filter(([, count]) => count)
-        .map(([medal, count]) => (medals[medal] || medal) + " × " + count)
-        .join(" · ") || "Noch keine Liga-Auszeichnung";
-    grid.append(
-      card(
-        "Quizwelt",
-        String(
-          (quizRows || []).filter((row) => !isFactKey(row.quiz_key)).length,
-        ) + " Quiz-Bestwerte",
-        awardText,
-        "quiz.html",
-      ),
-    );
-    const health = rows.filter((row) => row.kind === "health"),
-      lastHealth = health.at(-1);
-    const healthCard = card(
-      "Gesundheits-Check",
-      lastHealth
-        ? lastHealth.score + " / 100"
-        : "Noch kein gespeicherter Check",
-      lastHealth
-        ? "Letzter Check: " +
-            new Date(lastHealth.at).toLocaleDateString("de-DE")
-        : "Führe deinen ersten Check durch.",
-      "gesundheits-check.html",
-    );
-    const chartWrap = document.createElement("div");
-    chartWrap.className = "health-chart";
-    chartWrap.append(
-      chart(
-        health,
-        100,
-        "Verlauf des Gesundheits-Checks",
-        (row) => row.total ?? row.score,
-        (value) => value + " P.",
-      ),
-    );
-    healthCard.append(chartWrap);
-    grid.append(healthCard);
-    const vo2 = latest(rows, "vo2");
-    grid.append(
-      card(
-        "VO₂max",
-        vo2 ? vo2.value + " ml/kg/min" : "Noch kein Wert",
-        vo2
-          ? vo2.method || "Letzte Feldtest-Schätzung"
-          : "Mit Cooper- oder Rockport-Test schätzen.",
-        "vo2max-rechner.html",
-      ),
-    );
-    const heart = latest(rows, "heart");
-    grid.append(
-      card(
-        "Herzfrequenzzonen",
-        heart ? heart.maximum + " Schläge/min" : "Noch keine Zonen",
-        heart
-          ? heart.zones?.join(" · ") || heart.method || "Letztes Ergebnis"
-          : "Berechne deine vier Trainingsbereiche.",
-        "herzfrequenz-rechner.html",
-      ),
-    );
-    const waist = latest(rows, "waist");
-    grid.append(
-      card(
-        "Taille & BMI",
-        waist ? "BMI " + waist.bmi.toFixed(1) : "Noch keine Maße",
-        waist
-          ? "Taille/Größe: " + waist.ratio.toFixed(3)
-          : "Deine grobe Orientierung.",
-        "taille-rechner.html",
-      ),
-    );
-    const supplements = latest(rows, "supplements");
-    grid.append(
-      card(
-        "Supplement-Auswahl",
-        supplements
-          ? supplements.total.toFixed(2) + " € / Monat"
-          : "Noch keine Auswahl",
-        supplements
-          ? supplements.products?.join(" · ") ||
-              "Letzte Beispielauswahl"
-          : "Plane eine Beispielauswahl nach Budget.",
-        "supplement-rechner.html",
-      ),
-    );
-    panel.append(grid);
-    const badgeTitle = document.createElement("h3");
-    badgeTitle.className = "profile-badge-title";
-    badgeTitle.textContent = "Deine Quizwelt-Auszeichnungen";
-    panel.append(badgeTitle);
-    const badgeList = document.createElement("div");
-    badgeList.className = "profile-badges";
-    quizBadges(quizRows).forEach((badge) => {
-      const item = document.createElement("article");
-      item.className = "profile-badge" + (badge.earned ? " earned" : "");
-      const icon = document.createElement("span");
-      icon.textContent = badge.icon;
-      const name = document.createElement("strong");
-      name.textContent = badge.name;
-      const detail = document.createElement("small");
-      detail.textContent = badge.earned
-        ? "Freigeschaltet · " + badge.detail
-        : badge.detail;
-      item.append(icon, name, detail);
-      badgeList.append(item);
-    });
-    panel.append(badgeList);
-    const note = document.createElement("p");
-    note.className = "small overview-note";
-    note.textContent =
-      "Rechner-Ergebnisse, Profilbild und einige Quiz-Abzeichen bleiben nur auf diesem Gerät gespeichert und werden nicht an Veganiel übertragen.";
-    panel.append(note);
-  }
+ function renderOverview(quizRows,awards,profileUrl){
+  const home=$('member-home');let panel=$('member-overview');if(!panel){panel=document.createElement('section');panel.id='member-overview';panel.className='member-panel member-overview';home.prepend(panel);}panel.replaceChildren();
+  const rows=history(),quizMain=(quizRows||[]).filter(row=>!isFactKey(row.quiz_key)),badges=quizBadges(quizRows),earned=badges.filter(badge=>badge.earned).length,name=($('profile-display')?.value||user?.user_metadata?.display_name||'').trim();
+  const top=htmlEl('div','overview-top');setupAvatar(top,profileUrl);const copy=htmlEl('div');copy.append(htmlEl('span','eyebrow','Dein Überblick'),htmlEl('h2',null,name&&name!=='Mitglied'?'Hallo, '+name+'.':'Willkommen zurück.'),htmlEl('p',null,'Quizfortschritt und Rechner-Ergebnisse auf einen Blick.'));const meta=htmlEl('div','overview-meta');if(user?.created_at)meta.append(htmlEl('span','overview-chip','Mitglied seit '+new Date(user.created_at).toLocaleDateString('de-DE',{month:'long',year:'numeric'})));meta.append(htmlEl('span','overview-chip',earned+' von '+badges.length+' Abzeichen'),htmlEl('span','overview-chip',String(quizMain.length)+' Quiz-Bestwerte'));copy.append(meta);top.append(copy);panel.append(top);
+  const body=htmlEl('div','overview-body');panel.append(body);
+  const section=(title,note)=>{const wrap=htmlEl('div','overview-section'),head=htmlEl('div','section-head');head.append(htmlEl('h3',null,title));if(note)head.append(note instanceof Node?note:htmlEl('p',null,note));wrap.append(head);body.append(wrap);return wrap;};
+  const trends=section('Deine Verläufe','Fahre über ein Diagramm für Details zu jedem Messpunkt.'),trendGrid=htmlEl('div','overview-grid');trends.append(trendGrid);
+  const health=rows.filter(row=>row.kind==='health'),healthValue=row=>row.total??row.score,lastHealth=health.at(-1),healthMax=health.some(row=>row.total!=null)?130:100,healthSeries=health.map(healthValue).map(Number).filter(Number.isFinite);
+  trendGrid.append(card('health','Gesundheits-Check',{value:lastHealth?String(healthValue(lastHealth)):'',unit:'Punkte',empty:'Noch kein gespeicherter Check'},lastHealth?'Letzter Check: '+longDate(lastHealth)+(lastHealth.total!=null?' · Gewohnheiten '+lastHealth.score+' / 100':''):'Führe deinen ersten Check durch.','gesundheits-check.html',{gauge:lastHealth?gauge(Number(healthValue(lastHealth)),lastHealth.total!=null?130:100):null,delta:delta(healthSeries,'up',0,' P.'),chart:chart(health,healthMax,'Verlauf des Gesundheits-Checks',healthValue,value=>value+' P.')}));
+  const vo2Rows=rows.filter(row=>row.kind==='vo2'),vo2=vo2Rows.at(-1);
+  trendGrid.append(card('vo2','VO₂max',{value:vo2?deNumber(vo2.value,1):'',unit:'ml/kg/min',empty:'Noch kein Wert'},vo2?(vo2.ranking||vo2.method||'Letzte Feldtest-Schätzung'):'Mit Cooper- oder Rockport-Test schätzen.','vo2max-rechner.html',{delta:delta(vo2Rows.map(row=>Number(row.value)),'up',1),chart:chart(vo2Rows,90,'Verlauf des VO₂max-Werts',row=>row.value,value=>deNumber(value,1)+' ml')}));
+  const waistRows=rows.filter(row=>row.kind==='waist'&&Number.isFinite(Number(row.bmi))),waist=waistRows.at(-1);
+  trendGrid.append(card('waist','Taille & BMI',{value:waist?deNumber(waist.bmi,1):'',unit:'BMI',empty:'Noch keine Maße'},waist?('Taille/Größe: '+deNumber(waist.ratio,2)+(waist.category?' · '+waist.category:'')):'Deine grobe Orientierung.','taille-rechner.html',{delta:delta(waistRows.map(row=>Number(row.bmi)),null,1),chart:chart(waistRows,45,'Verlauf des BMI',row=>row.bmi,value=>'BMI '+deNumber(value,1),{tickFormat:value=>deNumber(value,Number.isInteger(value)?0:1)})}));
+  const more=section('Weitere Ergebnisse'),moreGrid=htmlEl('div','overview-grid');more.append(moreGrid);
+  const medals={gold:'🥇 Gold',silver:'🥈 Silber',bronze:'🥉 Bronze'},awardText=Object.entries(awards||{}).filter(([,count])=>count).map(([medal,count])=>(medals[medal]||medal)+' × '+count).join(' · ')||'Noch keine Liga-Auszeichnung',quizCount=quizMain.length;
+  moreGrid.append(card('quiz','Quizwelt',{value:quizCount?String(quizCount):'',unit:'Quiz-Bestwerte',empty:'Noch keine Bestwerte'},awardText,'quiz.html',{body:[progress(Math.min(quizCount,21),21,'Quizze abgeschlossen',Math.min(quizCount,21)+' / 21')]}));
+  const heart=latest(rows,'heart');
+  moreGrid.append(card('heart','Herzfrequenzzonen',{value:heart?String(heart.maximum):'',unit:'Schläge/min max.',empty:'Noch keine Zonen'},heart?(heart.method||'Letztes Ergebnis'):'Berechne deine vier Trainingsbereiche.','herzfrequenz-rechner.html#heart-results',{body:[heart?chips((heart.zones||[]).map((zone,i)=>zone?'Z'+(i+1)+' · '+zone:'')):null]}));
+  const supplements=latest(rows,'supplements');
+  moreGrid.append(card('supplements','Supplement-Auswahl',{value:supplements?deNumber(supplements.total,2):'',unit:'€ / Monat',empty:'Noch keine Auswahl'},supplements?'Letzte Beispielauswahl':'Plane eine Beispielauswahl nach Budget.','supplement-rechner.html',{body:[supplements?chips(supplements.products||[]):null]}));
+  const badgeProgress=htmlEl('div','badge-progress'),track=htmlEl('div','oc-progress-track'),fill=htmlEl('div','oc-progress-fill');fill.style.width=Math.round(earned/badges.length*100)+'%';track.append(fill);badgeProgress.append(track,htmlEl('span',null,earned+' / '+badges.length+' freigeschaltet'));
+  const badgeSection=section('Deine Quizwelt-Auszeichnungen',badgeProgress),badgeList=htmlEl('div','profile-badges');
+  badges.forEach(badge=>{const item=htmlEl('article','profile-badge'+(badge.earned?' earned':''));const text=htmlEl('div');text.append(htmlEl('strong',null,badge.name),htmlEl('small',null,badge.earned?'Freigeschaltet · '+badge.detail:badge.detail));item.append(htmlEl('span',null,badge.icon),text);badgeList.append(item);});badgeSection.append(badgeList);
+  body.append(htmlEl('p','small overview-note','Rechner-Ergebnisse, Profilbild und einige Quiz-Abzeichen bleiben nur auf diesem Gerät gespeichert und werden nicht an Veganiel übertragen.'));}
   async function render() {
     const version = ++renderVersion;
     const { data, error } = await sb.auth.getUser();
@@ -977,17 +755,27 @@
         : [...(Array.isArray(rows) ? rows : [])]
             .reverse()
             .find((row) => row?.kind === "supplements");
-    const card = [...document.querySelectorAll(".overview-card")].find(
-      (node) =>
-        node.querySelector(".overview-label")?.textContent ===
-        "SUPPLEMENT-AUSWAHL",
-    );
+    const card = document.querySelector('.overview-card[data-kind="supplements"]');
     const products = await completeSelection(latest),
-      detail = products.join(" · "),
-      text = card?.querySelector("p:not(.overview-label)");
-    if (!text || !detail || card.dataset.supplementDetail === detail) return;
+      detail = products.join(" · ");
+    if (!card || !detail || card.dataset.supplementDetail === detail) return;
     card.dataset.supplementDetail = detail;
-    text.textContent = detail;
+    let list = card.querySelector(".oc-chips");
+    if (!list) {
+      list = document.createElement("div");
+      list.className = "oc-chips";
+      const foot = card.querySelector(".oc-foot");
+      if (foot) foot.before(list);
+      else card.append(list);
+    }
+    list.replaceChildren(
+      ...products.map((name) => {
+        const chip = document.createElement("span");
+        chip.className = "oc-chip";
+        chip.textContent = name;
+        return chip;
+      }),
+    );
   };
   new MutationObserver(updateSupplementDetail).observe(document.body, {
     childList: true,

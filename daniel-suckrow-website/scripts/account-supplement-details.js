@@ -19,10 +19,11 @@
     return Array.isArray(entry.products)?entry.products:[];
   };
   const update=async()=>{
-    const card=[...document.querySelectorAll('.overview-card')].find(node=>node.querySelector('.overview-label')?.textContent==='SUPPLEMENT-AUSWAHL');
-    const text=card?.querySelector('p:not(.overview-label)'),items=await products(saved());
-    if(!text||!items.length)return false;
-    text.textContent=items.join(' · ');
+    const card=document.querySelector('.overview-card[data-kind="supplements"]'),items=await products(saved());
+    if(!card||!items.length)return false;
+    let list=card.querySelector('.oc-chips');
+    if(!list){list=document.createElement('div');list.className='oc-chips';const foot=card.querySelector('.oc-foot');foot?foot.before(list):card.append(list);}
+    list.replaceChildren(...items.map(name=>{const chip=document.createElement('span');chip.className='oc-chip';chip.textContent=name;return chip;}));
     return true;
   };
   let attempts=0;
