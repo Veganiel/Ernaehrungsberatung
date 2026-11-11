@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480" fill="none" stroke="#376942" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Baum -->
+  <g transform="translate(40 36)"><path d="M30 78V44"/><path d="M30 44c-18 0-26-12-22-24 3-9 12-13 20-11 3-7 14-9 20-3 9-1 15 8 12 17 6 8 0 21-12 21H30Z"/><path d="M30 58l-9-8M30 52l8-7"/></g>
+  <!-- Schneeflocke -->
+  <g transform="translate(212 40)"><path d="M32 4v56M8 18l48 28M8 46l48-28"/><path d="M24 8l8 7 8-7M24 56l8-7 8 7M6 27l11 2-3 10M58 37l-11-2 3-10M6 37l11-2-3-10M58 27l-11 2 3 10"/></g>
+  <!-- Regenbogen -->
+  <g transform="translate(352 58)"><path d="M4 50a38 38 0 0 1 76 0"/><path d="M16 50a26 26 0 0 1 52 0"/><path d="M28 50a14 14 0 0 1 28 0"/><path d="M0 62c4-7 14-7 18 0M66 62c4-7 14-7 18 0"/></g>
+  <!-- Kalender -->
+  <g transform="translate(118 176)"><rect x="4" y="12" width="62" height="56" rx="9"/><path d="M4 30h62M20 4v16M50 4v16"/><path d="M18 44h6M32 44h6M46 44h6M18 56h6M32 56h6"/></g>
+  <!-- Blatt -->
+  <g transform="translate(290 178)"><path d="M8 66C8 30 30 8 66 6c0 36-22 60-58 60Z"/><path d="M8 66 46 28M24 50l-2-14M36 38l14 1"/></g>
+  <!-- Sonne -->
+  <g transform="translate(424 196)"><circle cx="0" cy="34" r="14"/><path d="M0 8v-6M0 66v-6M-26 34h-6M26 34h6M-18 16l-5-5M18 52l5 5M18 16l5-5M-18 52l-5 5"/></g>
+  <!-- Apfel -->
+  <g transform="translate(26 318)"><path d="M34 22c-8-6-28-6-28 16 0 18 12 34 22 34 4 0 5-2 8-2s4 2 8 2c10 0 20-16 20-32 0-22-20-24-30-18Z"/><path d="M34 22c0-8 2-14 8-18M36 14c6-6 14-5 16-1-5 4-11 4-16 1Z"/></g>
+  <!-- Regentropfen -->
+  <g transform="translate(176 320)"><path d="M20 4c8 12 16 21 16 30a16 16 0 0 1-32 0c0-9 8-18 16-30Z"/><path d="M50 30c5 7 9 12 9 17a9 9 0 0 1-18 0c0-5 4-10 9-17Z"/></g>
+  <!-- Möhre -->
+  <g transform="translate(270 316)"><path d="M14 74 60 26c6-6 2-16-6-16-4 0-6 2-8 4L4 62c-4 4-2 14 10 12Z"/><path d="M58 12c2-6 8-10 14-8-2 6-8 10-14 8ZM60 14c6-2 12 0 14 6-6 2-12 0-14-6M30 46l6 6M22 54l5 5M40 36l5 5"/></g>
+  <!-- Pilz -->
+  <g transform="translate(386 324)"><path d="M6 36C6 18 22 6 40 6s34 12 34 30Z"/><path d="M28 36v26c0 6 4 10 12 10s12-4 12-10V36"/><circle cx="26" cy="22" r="3"/><circle cx="48" cy="18" r="3"/></g>
+  <!-- Keimling -->
+  <g transform="translate(116 420)"><path d="M30 56V26M30 30c-2-14-14-20-26-18 0 12 10 20 26 18ZM30 26c2-12 12-18 24-16 0 11-10 18-24 16"/><path d="M14 56h32"/></g>
+</svg>

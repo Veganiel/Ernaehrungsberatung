@@ -108,3 +108,7 @@ html{scroll-behavior:smooth}
 .yt-month:hover::after,.yt-month:focus-visible::after{left:8px;right:8px}
 .is-now-col .yt-month{color:inherit}
 @media(prefers-reduced-motion:reduce){.month,.month-link span,.yt-month,.month .season-scene svg{transition:none!important}.month:hover .season-scene svg{transform:none}}
+/* Dezente Saison-Symbole im Hintergrund (Muster wie in der Quizwelt: Ränder sichtbar, Mitte stark ausgeblendet) */
+body.season-symbols::before{content:'';position:fixed;inset:-12vh -12vw;z-index:-1;pointer-events:none;background:url('season-symbols.svg') 0 0/440px 440px repeat;opacity:.11;transform:rotate(-7deg);-webkit-mask-image:linear-gradient(90deg,#000 0 18%,rgba(0,0,0,.18) 40% 60%,#000 82% 100%);mask-image:linear-gradient(90deg,#000 0 18%,rgba(0,0,0,.18) 40% 60%,#000 82% 100%)}
+@media(max-width:700px){body.season-symbols::before{opacity:.08;background-size:320px 320px;-webkit-mask-image:linear-gradient(90deg,#000 0 6%,rgba(0,0,0,.12) 30% 70%,#000 94% 100%);mask-image:linear-gradient(90deg,#000 0 6%,rgba(0,0,0,.12) 30% 70%,#000 94% 100%)}}
+@media print{body.season-symbols::before{display:none}}
