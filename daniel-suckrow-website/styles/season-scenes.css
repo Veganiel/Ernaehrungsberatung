@@ -77,14 +77,15 @@ html{scroll-behavior:smooth}
   .year-table tbody th[scope=row]{min-width:128px;padding-left:16px;font-size:12px}
   .year-table thead th:first-child,.year-table tr.group th{padding-left:16px}
 }
-/* Collapsible year overview */
-.year-collapse{margin-top:6px}
-.year-collapse>summary{display:inline-flex;align-items:center;gap:12px;list-style:none;cursor:pointer;padding:12px 20px;border:1px solid #cfd6c4;border-radius:999px;background:#f8f8f1;color:#214a37;font:600 14px/1.2 "DM Sans",sans-serif;transition:background .2s}
-.year-collapse>summary::-webkit-details-marker{display:none}
-.year-collapse>summary:hover{background:#eef2e6}
-.year-collapse>summary:focus-visible{outline:2px solid #214a37;outline-offset:3px}
+/* Collapsible year overview: month bar always visible */
+.year-collapse{position:relative}
+.year-collapse:not(.is-open) .year-table tbody{display:none}
+.year-collapse:not(.is-open) .year-scroll{border-radius:22px 22px 0 0;border-bottom:0}
+.yc-toggle{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:14px 20px;border:1px solid var(--line,#cfd6c4);border-radius:0 0 22px 22px;background:#f4f5ec;color:#214a37;font:600 14px/1.2 "DM Sans",sans-serif;cursor:pointer;transition:background .2s}
+.yc-toggle:hover{background:#eaeedf}
+.yc-toggle:focus-visible{outline:2px solid #214a37;outline-offset:3px}
+.year-collapse.is-open .yc-toggle{margin-top:14px;border-radius:999px;width:auto;margin-inline:auto}
 .yc-arrow{width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .25s}
-.year-collapse[open] .yc-arrow{transform:translateY(2px) rotate(-135deg)}
-.year-collapse .yc-hide,.year-collapse[open] .yc-show{display:none}
-.year-collapse[open] .yc-hide{display:inline}
-.year-collapse[open]>summary{margin-bottom:18px}
+.is-open .yc-arrow{transform:translateY(2px) rotate(-135deg)}
+.yc-hide,.is-open .yc-show{display:none}
+.is-open .yc-hide{display:inline}
