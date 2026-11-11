@@ -281,3 +281,4 @@ html[lang="en"] .hero-copy h1{font-size:clamp(48px,5.6vw,80px)}
 .journey-plan strong{font:500 30px/1.1 var(--serif)}
 .journey-plan-note{font-size:10px;letter-spacing:.04em;opacity:.8}
 @media(max-width:440px){.journey-plans{grid-template-columns:1fr}}
+.journey-mail{display:inline-block;margin-top:6px;color:var(--forest,#214a37);font-weight:600;text-decoration:underline;text-underline-offset:3px}
