@@ -1,0 +1,255 @@
+/* Home atelier layer: depth, light, material and finer motion.
+   Sits on top of home-studio.css and home-polish.css. Purely additive – it changes
+   no layout, no content and no behaviour. Remove the two home-atelier tags in
+   index.html to return to the previous look. */
+
+/* ── Material: paper grain, selection, scrollbar ──────────────────────────── */
+html{scrollbar-color:#a3b48d #f1efe5}
+body.home-studio::before{content:"";position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.5;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .09 0 0 0 0 .2 0 0 0 0 .14 0 0 0 .5 -.17'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 0/220px 220px}
+
+/* ── Ink: a quiet gradient in the italic accent words ─────────────────────── */
+.home-studio h1 em,
+.home-studio .studio-section h2 em,
+.home-studio .weekly-impulse h2 em,
+.home-studio .longevity-card h3 em{background:linear-gradient(98deg,#44683a 0%,#668a4b 52%,#8cab60 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding-right:.05em}
+.home-studio .closing h2 em,
+.home-studio .health-card h3 em{background:linear-gradient(98deg,#c3dd8a 0%,#e6f4b9 55%,#cfe698 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-right:.05em}
+.home-studio h1 em::selection,.home-studio h2 em::selection,.home-studio h3 em::selection{-webkit-text-fill-color:var(--forest)}
+
+/* ── Header: lighter glass, hairline, calmer links ────────────────────────── */
+.home-studio header{background:#f8f6eed6;border-bottom-color:transparent;-webkit-backdrop-filter:blur(22px) saturate(1.5);backdrop-filter:blur(22px) saturate(1.5)}
+.home-studio header.is-scrolled{background:#f8f6eeeb;box-shadow:0 18px 40px -28px #17332766}
+.home-studio header::before{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,#cfd8c200,#cfd8c2 14%,#cfd8c2 86%,#cfd8c200);pointer-events:none}
+.home-studio .reading-progress{background:linear-gradient(90deg,#b4cc82,#557444)}
+.home-studio .account-nav{transition:background .3s,color .3s,box-shadow .3s,transform .3s var(--ease)}
+.home-studio .account-nav:hover{box-shadow:0 12px 24px -14px #12301fb3;transform:translateY(-1px)}
+@media(min-width:941px){
+  .home-studio .nav>nav>a{position:relative}
+  .home-studio .nav>nav>a::after{content:"";position:absolute;left:0;right:0;bottom:7px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:100% 50%;transition:transform .5s var(--ease)}
+  .home-studio .nav>nav>a:hover::after,.home-studio .nav>nav>a:focus-visible::after{transform:scaleX(1);transform-origin:0 50%}
+  .home-studio .nav-dropdown-menu{background:#fffdf8f2;border-color:#e3e6d8;border-radius:18px;box-shadow:0 1px 0 #fff inset,0 30px 60px -28px #1633275c,0 8px 18px -12px #16332733}
+  .home-studio .nav-dropdown.is-open .nav-dropdown-menu{animation:atl-menu .32s var(--ease)}
+  .home-studio .nav-dropdown-menu a{transition:background .2s,padding-left .3s var(--ease)}
+  .home-studio .nav-dropdown-menu a:hover{padding-left:17px}
+}
+
+/* ── Buttons: depth, sheen, a travelling arrow ────────────────────────────── */
+.home-studio .button{position:relative;overflow:hidden;isolation:isolate;transition:background .35s,transform .5s var(--ease),box-shadow .5s var(--ease),border-color .35s}
+.home-studio .button::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,#fff0 32%,#ffffff38 50%,#fff0 68%);transform:translateX(-130%);transition:transform .95s var(--ease);pointer-events:none}
+.home-studio .button:hover::before{transform:translateX(130%)}
+.home-studio .button-dark{background:linear-gradient(180deg,#22523d,#173c2d);box-shadow:inset 0 1px 0 #ffffff26,0 16px 30px -18px #12301fcc}
+.home-studio .button-dark:hover{background:linear-gradient(180deg,#2b5f47,#1b4533);box-shadow:inset 0 1px 0 #ffffff33,0 26px 40px -20px #12301fd9}
+.home-studio .button-lime{background:linear-gradient(180deg,#e0f0b0,#cfe592);box-shadow:inset 0 1px 0 #ffffff99,0 18px 44px -18px #d5e99b8c}
+.home-studio .button-lime:hover{background:linear-gradient(180deg,#e9f6c4,#d8eb9f);box-shadow:inset 0 1px 0 #ffffffb3,0 26px 56px -18px #d5e99bb3}
+.home-studio .button-outline{transition:background .35s,border-color .35s,transform .5s var(--ease)}
+.home-studio .button-outline:hover{border-color:var(--forest);transform:translateY(-2px)}
+.home-studio .button-dark>span:last-child[aria-hidden],.home-studio .button-lime>span:last-child[aria-hidden]{transition:transform .5s var(--ease)}
+.home-studio .button-dark:hover>span:last-child[aria-hidden],.home-studio .button-lime:hover>span:last-child[aria-hidden]{transform:translate(3px,-3px)}
+.home-studio .quiet-link{transition:text-decoration-color .3s}
+.home-studio .quiet-link:hover{text-decoration-color:currentColor}
+
+/* ── Hero: ambient light, orbit lines, a framed and lit image ─────────────── */
+.home-studio .studio-hero>.wrap{position:relative;z-index:1}
+.home-studio .studio-hero::before,.home-studio .studio-hero::after{content:"";position:absolute;z-index:0;border-radius:50%;pointer-events:none}
+.home-studio .studio-hero::before{width:min(78vw,1150px);aspect-ratio:1;right:-14vw;top:-30%;background:radial-gradient(closest-side,#d9eaa870,#d9eaa81f 55%,#d9eaa800 72%)}
+.home-studio .studio-hero::after{width:min(60vw,820px);aspect-ratio:1;left:-22vw;bottom:-46%;background:radial-gradient(closest-side,#f1e2c480,#f1e2c41a 58%,#f1e2c400 74%)}
+.home-studio .hero-copy>.eyebrow{display:inline-flex;padding:8px 16px 8px 13px;border:1px solid #d3dbc5;border-radius:99px;background:#fffdf899;box-shadow:0 1px 0 #fff inset}
+.home-studio h1 em::after{left:-1%;right:-5%;bottom:-.13em;height:.17em;border:0;border-radius:0;transform:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 24' preserveAspectRatio='none'%3E%3Cpath d='M3 16C60 8 150 3 245 5c60 1 110 4 152 1-44 6-96 6-152 5C150 9 62 13 4 19z' fill='%23a3b872'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat}
+.home-studio .hero-art{isolation:isolate}
+.home-studio .hero-art::before,.home-studio .hero-art::after{content:"";position:absolute;z-index:-1;left:53%;top:47%;aspect-ratio:1;border-radius:50%;translate:-50% -50%;pointer-events:none}
+.home-studio .hero-art::before{width:116%;border:1px solid #a9bb8e59}
+.home-studio .hero-art::after{width:136%;border:1px dashed #a9bb8e52}
+.home-studio .food-frame{outline:1px solid #a9ba9199;outline-offset:11px;box-shadow:0 60px 90px -60px #12301fb3,0 28px 44px -34px #12301f8c}
+.home-studio .food-frame::before{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 1px #ffffff2e,inset 0 1px 0 #ffffff59;background:radial-gradient(44% 44% at calc(68% + var(--tx,0)*30%) calc(20% + var(--ty,0)*30%),#ffffff1a,#fff0 70%)}
+.home-studio .food-frame figcaption{display:flex;align-items:center;gap:13px}
+.home-studio .food-frame figcaption::before{content:"";width:30px;height:1px;background:currentColor;opacity:.75}
+.home-studio .hero-seal{box-shadow:0 4px 0 #f8f6ee,0 26px 34px -18px #173327a6}
+.home-studio .hero-seal::before{content:"";position:absolute;inset:-9px;border:1px dashed #7d985999;border-radius:50%;pointer-events:none}
+.home-studio .hello-card{background:#fffdf8d9;border-color:#ffffffbf;border-radius:18px;-webkit-backdrop-filter:blur(16px) saturate(1.5);backdrop-filter:blur(16px) saturate(1.5);box-shadow:0 1px 0 #fff inset,0 30px 54px -26px #1633278c,0 8px 16px -10px #16332738;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.home-studio .hello-card:hover{box-shadow:0 1px 0 #fff inset,0 40px 64px -26px #163327a6,0 10px 20px -10px #16332740}
+.home-studio .hello-card img{box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px #a9c07c}
+.home-studio .hello-card>span:last-child{transition:transform .5s var(--ease)}
+.home-studio .hello-card:hover>span:last-child{transform:translate(3px,-3px)}
+.home-studio .hero-baseline{border-top-color:transparent;background:linear-gradient(90deg,#d8dccf00,#d8dccf 10%,#d8dccf 90%,#d8dccf00) 0 0/100% 1px no-repeat}
+
+/* ── Values ribbon and weekly impulse ─────────────────────────────────────── */
+.home-studio .approach-strip{position:relative;background:linear-gradient(90deg,#122f22,#1c4735 50%,#122f22)}
+.home-studio .approach-strip::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,#b9d28f00,#b9d28f73,#b9d28f00)}
+.home-studio .approach-strip.is-marquee>.wrap{-webkit-mask-image:linear-gradient(90deg,#0000,#000 9%,#000 91%,#0000);mask-image:linear-gradient(90deg,#0000,#000 9%,#000 91%,#0000)}
+.home-studio .weekly-impulse{background:linear-gradient(180deg,#f5f0e3,#f8f6ee)}
+.home-studio .weekly-impulse-task{border-color:#d5dfc5;border-radius:22px;background:#fdfcf7;box-shadow:0 1px 0 #fff inset,0 34px 60px -38px #29442a61,0 6px 14px -10px #29442a1f;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.home-studio .weekly-impulse-task:hover{transform:translateY(-3px);box-shadow:0 1px 0 #fff inset,0 44px 70px -38px #29442a80,0 8px 18px -10px #29442a29}
+.home-studio .weekly-impulse-task>span{background:linear-gradient(160deg,#2c5a43,#183e2f);box-shadow:0 0 0 5px #e9efd9}
+
+/* ── Sections: outlined chapter numerals and drawn rules ──────────────────── */
+.home-studio .studio-section{position:relative;overflow:clip}
+.home-studio .studio-section>.wrap{position:relative;z-index:1}
+.home-studio .studio-section::before{position:absolute;z-index:0;top:clamp(8px,1.2vw,18px);right:max(20px,calc(50vw - 652px));font:500 clamp(120px,14vw,200px)/.82 var(--serif);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px #183e2f1c;pointer-events:none;user-select:none}
+/* Only where the heading row leaves the top-right corner free. */
+.home-studio .discovery::before{content:"02" / ""}
+.home-studio .journal-home::before{content:"04" / ""}
+.home-studio .section-label .rule{background:linear-gradient(90deg,#b9c8a6,#b9c8a600);transform-origin:0 50%;transition:transform 1.3s var(--ease) .15s}
+html.atl-motion .home-studio .section-label:not(.atl-seen) .rule{transform:scaleX(0)}
+
+/* ── Consultation: the journey as a finer object ──────────────────────────── */
+.home-studio .journey{border-color:#dfe2d3;border-radius:28px;background:linear-gradient(180deg,#f2f2e8,#ebecdf);box-shadow:0 1px 0 #ffffffd9 inset,0 50px 80px -60px #17332799}
+.home-studio .journey-step h3,.home-studio .step-number{transition:color .3s}
+.home-studio .journey-step[open] .step-number{color:var(--forest);font-weight:700}
+.home-studio .step-toggle{transition:background .35s,border-color .35s,transform .5s var(--ease)}
+.home-studio .step-toggle::before,.home-studio .step-toggle::after{transition:transform .35s var(--ease),background .35s}
+.home-studio .journey-step summary:hover .step-toggle{transform:scale(1.14)}
+.home-studio .journey-step[open] .step-toggle{background:var(--forest);border-color:var(--forest)}
+.home-studio .journey-step[open] .step-toggle::before,.home-studio .journey-step[open] .step-toggle::after{background:#eef4dc}
+.home-studio .journey-step[open]>p{animation:atl-open .55s var(--ease)}
+.home-studio .personal-note svg{transition:transform .8s var(--ease)}
+.home-studio .personal-note:hover svg{transform:rotate(-8deg) scale(1.06)}
+
+/* ── Discovery: cards with weight, light and small living details ─────────── */
+.home-studio .discovery{background:radial-gradient(60% 50% at 88% 0%,#f1f4e6,#f1f4e600),linear-gradient(180deg,#e9eddf,#e5eada)}
+.home-studio .discover-card{border-radius:26px;box-shadow:inset 0 0 0 1px #ffffff8c,0 1px 2px #173c2914,0 30px 46px -36px #173c2973;transition:transform .65s var(--ease),box-shadow .65s var(--ease)}
+.home-studio .discover-card:hover{transform:translateY(-7px);box-shadow:inset 0 0 0 1px #ffffffbf,0 2px 4px #173c2917,0 46px 64px -36px #173c29a6}
+.home-studio .health-card{background:radial-gradient(120% 70% at 78% -6%,#2f6149 0%,#1b4433 44%,#12301f 100%);box-shadow:inset 0 0 0 1px #ffffff14,0 1px 2px #173c2914,0 36px 56px -36px #0e251acc}
+.home-studio .health-card:hover{box-shadow:inset 0 0 0 1px #ffffff24,0 2px 4px #173c2917,0 54px 70px -36px #0e251ae6}
+.home-studio .health-art{background:radial-gradient(closest-side at 50% 62%,#c5df962e,#c5df9600)}
+.home-studio .gauge-fill{transition:stroke-dashoffset 2s var(--ease) .25s}
+.home-studio .health-art .gauge-pulse{stroke-dasharray:240;transition:stroke-dashoffset 1.6s var(--ease) 1s}
+html.atl-motion .home-studio .health-card:not(.atl-seen) .gauge-fill{stroke-dashoffset:190}
+html.atl-motion .home-studio .health-card:not(.atl-seen) .gauge-pulse{stroke-dashoffset:240}
+.home-studio .quiz-card{background:linear-gradient(160deg,#e6e1f4,#d8d2ec)}
+.home-studio .quiz-paper,.home-studio .quiz-spark,.home-studio .quiz-mini{transition:transform .8s var(--ease)}
+.home-studio .quiz-card:hover .quiz-paper{transform:rotate(-7deg) translateY(-5px)}
+.home-studio .quiz-card:hover .quiz-spark{transform:rotate(60deg) scale(1.08)}
+.home-studio .quiz-card:hover .quiz-mini{transform:rotate(4deg) translate(3px,-2px)}
+.home-studio .challenge-card{background:linear-gradient(160deg,#f3e6d2,#e8d6bb)}
+.home-studio .challenge-art span{transition:transform .7s var(--ease),opacity .5s,background .4s,border-color .4s,color .4s}
+.home-studio .challenge-art span:nth-child(2){transition-delay:.14s}
+.home-studio .challenge-art span:nth-child(3){transition-delay:.28s}
+html.atl-motion .home-studio .challenge-card:not(.atl-seen) .challenge-art span:nth-child(-n+3){transform:scale(.25);opacity:0}
+.home-studio .challenge-card:hover .challenge-art span:nth-child(4){border-style:solid;border-color:#6c7750;background:#6c775026}
+.home-studio .longevity-card{background:linear-gradient(120deg,#fbfaf2,#f0f2e2)}
+.home-studio .book-art{position:relative;transition:transform .9s var(--ease)}
+.home-studio .book-art img{box-shadow:10px 16px 30px #21392359,2px 3px 6px #21392340;transition:box-shadow .9s var(--ease)}
+.home-studio .book-art::after{content:"";position:absolute;inset:0;border-radius:1px 5px 5px 1px;background:linear-gradient(100deg,#fff0 38%,#ffffff59 50%,#fff0 62%) 130% 0/260% 100% no-repeat;transition:background-position 1.1s var(--ease);pointer-events:none}
+.home-studio .longevity-card:hover .book-art{transform:rotate(2deg) translateY(-7px) scale(1.035)}
+.home-studio .longevity-card:hover .book-art img{box-shadow:16px 26px 44px #21392366,2px 3px 6px #21392340}
+.home-studio .longevity-card:hover .book-art::after{background-position:-30% 0}
+.home-studio .card-link>span{transition:transform .5s var(--ease)}
+.home-studio .discover-card:hover .card-link>span{transform:translate(3px,-3px)}
+.home-studio .calculator-links>a{position:relative;transition:background .35s}
+.home-studio .calculator-links>a::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--forest);transform:scaleX(0);transform-origin:0 50%;transition:transform .6s var(--ease)}
+.home-studio .calculator-links>a:hover{background:#dfe8cf}
+.home-studio .calculator-links>a:hover::after{transform:scaleX(1)}
+.home-studio .calculator-links>a>span:last-child,.home-studio .tool-icon{transition:transform .5s var(--ease),color .3s}
+.home-studio .calculator-links>a:hover>span:last-child{transform:translate(3px,-3px)}
+.home-studio .calculator-links>a:hover .tool-icon{color:var(--forest);transform:scale(1.1)}
+
+/* ── About: a portrait that opens like a page ─────────────────────────────── */
+.home-studio .about-portrait{box-shadow:0 60px 90px -64px #12301fcc,0 24px 40px -34px #12301f80;clip-path:inset(0);transition:clip-path 1.5s var(--ease)}
+.home-studio .portrait-border{transition:inset .8s var(--ease),opacity 1s .5s}
+.home-studio .portrait-caption,.home-studio .about-flower{transition:opacity .9s .7s}
+.home-studio .about-art:hover .portrait-border{inset:-20px 20px 20px -20px}
+html.atl-motion .home-studio .about-art:not(.atl-seen) .about-portrait{clip-path:inset(0 0 100% 0)}
+html.atl-motion .home-studio .about-art:not(.atl-seen) .portrait-border,
+html.atl-motion .home-studio .about-art:not(.atl-seen) .portrait-caption,
+html.atl-motion .home-studio .about-art:not(.atl-seen) .about-flower{opacity:0}
+.home-studio .about-flower{display:grid;place-items:center;width:1em;height:1em}
+.home-studio .about-credentials img{border-radius:50%;box-shadow:0 0 0 4px var(--cream),0 0 0 5px #cdd6bd}
+
+/* ── Journal ──────────────────────────────────────────────────────────────── */
+.home-studio .journal-image{border-radius:20px;box-shadow:0 30px 44px -36px #17332799;transition:box-shadow .6s var(--ease)}
+.home-studio .journal-image::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px #ffffff29;background:linear-gradient(180deg,#12301f00 52%,#12301f66);opacity:0;transition:opacity .6s;pointer-events:none}
+.home-studio .journal-image img{transition:transform 1.2s var(--ease)}
+.home-studio .journal-card:hover .journal-image{box-shadow:0 44px 56px -36px #173327cc}
+.home-studio .journal-card:hover .journal-image::after{opacity:1}
+.home-studio .journal-card:hover .journal-image img{transform:scale(1.06)}
+.home-studio .journal-arrow{z-index:1;box-shadow:0 8px 18px -8px #12301f80}
+.home-studio .journal-card h3{transition:color .3s}
+.home-studio .journal-card:hover h3{color:#2f5e42}
+.home-studio .read-link>span{transition:transform .5s var(--ease)}
+.home-studio .journal-card:hover .read-link>span{transform:translate(3px,-3px)}
+
+/* ── Closing and footer: a deep, lit finale ───────────────────────────────── */
+.home-studio .closing{isolation:isolate;background:radial-gradient(90% 130% at 88% -10%,#27583f 0%,#173c2e 46%,#0e281d 100%)}
+.home-studio .closing::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(560px circle at var(--mx,18%) var(--my,92%),#d5e99b24,#d5e99b00 68%)}
+.home-studio .closing::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.5;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .9 0 0 0 0 1 0 0 0 0 .8 0 0 0 .34 -.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 0/220px 220px}
+.home-studio .closing-flower{color:#4a6f55}
+.home-studio .closing-note{border-left-color:transparent;background:linear-gradient(180deg,#68805900,#688059 18%,#688059 82%,#68805900) 0 0/1px 100% no-repeat}
+.home-studio .closing-note>a>span{transition:transform .5s var(--ease)}
+.home-studio .closing-note>a:hover>span{transform:translate(3px,-3px)}
+.home-studio footer{position:relative;background:linear-gradient(180deg,#0f3024,#0c281e)}
+.home-studio footer::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,#b9d28f00,#b9d28f4d,#b9d28f00)}
+.home-studio .back-top{transition:background .3s,transform .5s var(--ease),border-color .3s}
+.home-studio .back-top:hover{transform:translateY(-4px);border-color:#b9d28f}
+
+/* ── Motion ───────────────────────────────────────────────────────────────── */
+@media(prefers-reduced-motion:no-preference){
+  /* Hero headline arrives line by line, out of soft focus */
+  html.hero-motion:not(.hero-motion-done) .home-studio .studio-hero h1>span,
+  html.hero-motion:not(.hero-motion-done) .home-studio .studio-hero h1>em{animation-name:atl-line;animation-duration:1.15s;transform-origin:0 100%}
+  .home-studio .studio-hero::before{animation:atl-drift-a 19s ease-in-out infinite alternate}
+  .home-studio .studio-hero::after{animation:atl-drift-b 23s ease-in-out infinite alternate}
+  .home-studio .hero-art::after{animation:atl-spin 120s linear infinite}
+  .home-studio .hero-seal::before{animation:atl-spin 46s linear infinite}
+  .home-studio .hero-baseline a>span{animation:atl-nudge 2.6s var(--ease) infinite}
+  .home-studio .about-flower{animation:atl-spin-plain 70s linear infinite}
+  .home-studio .closing-flower{animation:atl-leaf 24s ease-in-out infinite alternate}
+  /* Sections arrive from further away, cards one after another */
+  .home-studio .reveal-pending:not(.is-visible){opacity:0}
+  .home-studio .reveal-pending.is-visible{animation:atl-arrive 1.05s var(--ease) backwards}
+  .home-studio .discovery-grid>.reveal-pending.is-visible:nth-child(2){animation-delay:.1s}
+  .home-studio .discovery-grid>.reveal-pending.is-visible:nth-child(3){animation-delay:.2s}
+  .home-studio .discovery-grid>.reveal-pending.is-visible:nth-child(4){animation-delay:.12s}
+  .home-studio .atl-pending{opacity:0;transform:translateY(30px)}
+  .home-studio .atl-pending.atl-in{opacity:1;transform:none;transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--atl-i,0)*95ms)}
+  .home-studio .journal-grid.is-expanded .journal-extra{animation:atl-arrive .9s var(--ease) backwards}
+  .home-studio .journal-grid.is-expanded .journal-extra:nth-child(3n+2){animation-delay:.09s}
+  .home-studio .journal-grid.is-expanded .journal-extra:nth-child(3n){animation-delay:.18s}
+}
+/* Pointer-led depth in the hero (desktop pointers only; values come from home-atelier.js) */
+@media(hover:hover) and (pointer:fine) and (min-width:941px){
+  .home-studio .hero-art{perspective:1500px}
+  html.hero-motion-done .home-studio .food-frame{transform:rotateX(calc(var(--ty,0)*-2.6deg)) rotateY(calc(var(--tx,0)*3.4deg))}
+  .home-studio .hero-seal{translate:calc(var(--tx,0)*14px) calc(var(--ty,0)*10px)}
+  .home-studio .hello-card{translate:calc(var(--tx,0)*-12px) calc(var(--ty,0)*-8px)}
+}
+@keyframes atl-line{from{opacity:0;transform:translateY(.4em) rotate(1.4deg);filter:blur(12px)}55%{filter:blur(0)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes atl-arrive{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+@keyframes atl-open{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@keyframes atl-menu{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes atl-drift-a{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-5%,6%,0) scale(1.12)}}
+@keyframes atl-drift-b{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(8%,-5%,0) scale(1.1)}}
+@keyframes atl-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes atl-spin-plain{to{rotate:360deg}}
+@keyframes atl-nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+@keyframes atl-leaf{from{transform:rotate(28deg) translate3d(0,0,0)}to{transform:rotate(20deg) translate3d(-18px,14px,0)}}
+
+/* ── Smaller screens ──────────────────────────────────────────────────────── */
+@media(max-width:1190px){
+  .home-studio .hero-art::after{width:128%}
+}
+@media(max-width:940px){
+  .home-studio .discover-card,.home-studio .journey{border-radius:22px}
+}
+@media(max-width:760px){
+  .home-studio .hero-copy>.eyebrow{display:flex;padding:0;border:0;background:none;box-shadow:none}
+  .home-studio .food-frame{outline-offset:7px}
+  .home-studio .hero-art::before,.home-studio .hero-art::after,.home-studio .studio-section::before{display:none}
+  .home-studio .studio-hero::before{width:120vw;right:-50vw;top:-8%}
+  .home-studio .studio-hero::after{width:110vw;left:-60vw;bottom:8%}
+  .home-studio .hero-seal::before{inset:-7px}
+  .home-studio .journal-image{border-radius:15px}
+  .home-studio .weekly-impulse-task{border-radius:18px}
+}
+/* Narrow phones: the header row was 9px wider than the screen (menu button cut off),
+   and the hero eyebrow left a single word on a second line. */
+@media(max-width:400px){
+  .home-studio .nav{gap:10px}
+  .home-studio .account-nav{padding:8px 11px;gap:5px}
+  .home-studio .nav-right .lang{min-width:34px}
+  .home-studio .veganiel-logo-text small{letter-spacing:.15px}
+  .home-studio .hero-copy>.eyebrow{font-size:9.5px;letter-spacing:.03em}
+}
+@media print{
+  body.home-studio::before,.home-studio .studio-hero::before,.home-studio .studio-hero::after,.home-studio .studio-section::before{display:none}
+  .home-studio .reveal-pending,.home-studio .atl-pending{opacity:1!important;transform:none!important}
+}
