@@ -129,3 +129,14 @@ html.hero-motion:not(.hero-motion-done) .studio-hero .hero-seal{animation:vegani
 @media(max-width:640px){.recipe-card{grid-template-columns:1fr}.recipe-strip{min-height:150px;height:150px}}
 @media(max-width:440px){.recipe-card{grid-column:auto}}
 @media(prefers-reduced-motion:reduce){.recipe-strip img,.recipe-card:hover .recipe-strip img{transition:none;transform:none}}
+
+/* Lexikon-Kachel neben der Rezept-Kachel */
+@media(min-width:941px){.recipe-card{grid-column:span 2}}
+.lexikon-card{background:radial-gradient(120% 90% at 80% 0%,#2f6149,#183e2f 60%);color:#eef3e6}
+.lexikon-card h3{color:#fffdf8;font-size:clamp(28px,2.6vw,36px);margin:6px 0 8px}.lexikon-card h3 em{color:#d5e99b}
+.lexikon-card p{color:#cfdcc8;margin:0 0 14px}.lexikon-card .card-topline,.lexikon-card .card-link{color:#d5e99b}
+.lexikon-art{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 6px;max-width:220px}
+.lexikon-art span{display:grid;place-items:center;height:44px;border-radius:12px;background:#ffffff14;border:1px solid #ffffff26;font:600 16px "Playfair Display",Georgia,serif;color:#fffdf8;transition:background .3s}
+.lexikon-card:hover .lexikon-art span:nth-child(odd){background:#d5e99b;color:#183e2f}
+@media(max-width:940px){.lexikon-card{grid-column:1/-1}}
+@media(max-width:440px){.lexikon-card{grid-column:auto}}

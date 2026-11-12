@@ -1,0 +1,56 @@
+/* Nährstoff-Lexikon (baut auf rezepte.css auf) */
+.nx-sym{display:inline-grid;place-items:center;min-width:52px;height:52px;padding:0 10px;border-radius:16px;background:linear-gradient(145deg,#e4efcb,#cfe39c);color:var(--forest);font:600 18px/1 var(--serif);letter-spacing:-.02em}
+.nx-crit{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:50px;background:#f6e6c9;color:#7a5418;font-size:12px;font-weight:600}
+.nx-crit::before{content:"";width:7px;height:7px;border-radius:50%;background:#d9a43a}
+/* Übersicht */
+.nx-panel{background:radial-gradient(120% 140% at 85% 10%,#355f3d 0%,#1d4733 50%,#123326 100%)}
+.nx-orbit{position:relative;z-index:1;width:min(100%,380px);aspect-ratio:1;justify-self:center;border-radius:50%;border:1px dashed #ffffff40}
+.nx-orbit::before{content:"";position:absolute;inset:18%;border-radius:50%;border:1px solid #ffffff26}
+.nx-orbit b{position:absolute;inset:34%;display:grid;place-items:center;border-radius:50%;background:#d5e99b;color:var(--forest);font:600 clamp(15px,1.6vw,19px) var(--serif);text-align:center}
+.nx-orbit span{--a:calc(var(--i) * 45deg);position:absolute;left:50%;top:50%;width:62px;height:62px;margin:-31px;display:grid;place-items:center;border-radius:18px;background:#fffdf8;color:var(--forest);font:600 19px var(--serif);box-shadow:0 14px 28px -12px #0008;transform:rotate(var(--a)) translate(clamp(120px,15vw,160px)) rotate(calc(var(--a) * -1))}
+.nx-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding-bottom:clamp(48px,7vw,90px)}
+.nx-tile{position:relative;display:flex;flex-direction:column;gap:12px;padding:26px;border-radius:22px;background:var(--paper);border:1px solid var(--line);text-decoration:none;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
+.nx-tile:hover{transform:translateY(-4px);box-shadow:0 20px 40px -24px #18392c55;border-color:#bdcbb2}
+.nx-tile h2{font-size:26px;margin-top:4px}
+.nx-tile p{margin:0;font-size:14.5px;color:var(--muted)}
+.nx-tile-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:8px}
+.nx-more{font-size:13px;font-weight:600;color:var(--forest)}
+.nx-tile.is-critical{background:linear-gradient(180deg,#fffdf8,#f7f4e6)}
+/* Detailseite */
+.nx-hero{display:grid;grid-template-columns:1fr auto;gap:clamp(24px,5vw,72px);align-items:center;padding:16px 0 clamp(28px,4vw,48px)}
+.nx-hero h1{font-size:clamp(42px,5.4vw,72px);letter-spacing:-.045em;margin:14px 0 16px}
+.nx-lead{font-size:18px;color:var(--muted);max-width:640px;margin:0 0 18px}
+.nx-symbol{width:clamp(150px,18vw,220px);aspect-ratio:1;border-radius:36% 64% 52% 48%/44% 40% 60% 56%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#2c5a43,#183e2f 70%);box-shadow:0 30px 60px -30px #183e2f;color:#d5e99b;font:600 clamp(44px,5vw,64px)/1 var(--serif)}
+.nx-cards{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
+.nx-card{padding:clamp(22px,3vw,32px);border-radius:22px;background:var(--paper);border:1px solid var(--line)}
+.nx-card h2,.nx-section h2{font-size:clamp(24px,2.4vw,30px);margin-bottom:14px}
+.nx-card p{margin:0;font-size:16px;color:#3d5446}
+.nx-card-accent{background:var(--forest);border-color:var(--forest);color:#eef3e6}
+.nx-card-accent h2{color:#fffdf8}.nx-card-accent p{color:#d7e3cf;font-size:17px}
+.nx-checks{list-style:none;margin:0;padding:0}
+.nx-checks li{position:relative;padding:8px 0 8px 28px;border-top:1px solid var(--line);color:#3d5446}
+.nx-checks li:first-child{border-top:0}
+.nx-checks li::before{content:"✓";position:absolute;left:2px;top:8px;color:#557444;font-weight:700}
+.nx-section{margin-top:clamp(36px,5vw,56px)}
+.nx-sourcelist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.nx-sourcelist li{display:grid;grid-template-columns:minmax(150px,1.1fr) 2fr auto;gap:16px;align-items:center;padding:12px 18px;border-radius:14px;background:var(--paper);border:1px solid var(--line)}
+.nx-food{font-weight:600;color:var(--forest)}
+.nx-bar{height:10px;border-radius:10px;background:var(--sage);overflow:hidden}
+.nx-bar i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,#9ab97a,#557444)}
+.nx-sourcelist strong{font-variant-numeric:tabular-nums;color:#3d5446;font-size:14px;white-space:nowrap}
+.nx-plain li{grid-template-columns:1fr}
+.nx-note{font-size:13px;color:var(--muted);margin:0 0 12px}
+.nx-note a{color:var(--forest);font-weight:600}
+.nx-tips{background:var(--sage);border-radius:22px;padding:clamp(22px,3vw,32px)}
+.nx-tips .nx-checks li{border-color:#d3dcc6}
+.nx-tips .rz-button{margin-top:18px}
+.nx-recipe-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.nx-recipe-grid .rz-card h2{font-size:19px}.nx-recipe-grid .rz-card p{display:none}
+.nx-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.nx-chips a{display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:50px;background:var(--paper);border:1px solid var(--line);text-decoration:none;font-weight:600;font-size:14px;color:var(--forest)}
+.nx-chips .nx-sym{min-width:34px;height:34px;border-radius:50%;font-size:13px;padding:0 6px}
+.nx-chips a:hover{border-color:#8b9c7f}
+@media(max-width:1020px){.nx-recipe-grid{grid-template-columns:repeat(2,1fr)}.nx-tiles{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.nx-hero{grid-template-columns:1fr}.nx-symbol{order:-1;width:120px}.nx-cards{grid-template-columns:1fr}.nx-sourcelist li{grid-template-columns:1fr auto;gap:8px 12px}.nx-bar{grid-column:1/-1;grid-row:2}}
+@media(max-width:640px){.nx-tiles,.nx-recipe-grid{grid-template-columns:1fr}.nx-orbit{width:280px}.nx-orbit span{width:46px;height:46px;margin:-23px;font-size:15px;transform:rotate(var(--a)) translate(110px) rotate(calc(var(--a) * -1))}}
+@media(prefers-reduced-motion:reduce){.nx-tile{transition:none}.nx-tile:hover{transform:none}}
