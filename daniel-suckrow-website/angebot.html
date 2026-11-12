@@ -314,6 +314,35 @@ html{scroll-behavior:smooth}
   
   <meta property="og:url" content="https://veganiel.com/angebot.html">
 <link rel="stylesheet" href="branding.css?v=2"><link rel="icon" type="image/png" sizes="32x32" href="veganiel-logo-32.png"><link rel="apple-touch-icon" sizes="192x192" href="veganiel-logo-192.png"><link rel="stylesheet" href="i18n.css"><script src="i18n.js" defer></script><link rel="stylesheet" href="styles/global-nav.css?v=6"><script src="scripts/global-nav.js?v=11" defer></script><script src="scripts/shop-visibility.js" defer></script><link rel="stylesheet" href="styles/legal-footer.css"><script src="/scripts/analytics.js" defer></script>
+<style id="compact-top">
+.hero{padding:clamp(36px,4.5vw,64px) 0 clamp(44px,5.5vw,76px)}
+.hero h1{font-size:clamp(38px,3.9vw,56px);margin:16px 0 18px}
+.hero-actions{margin-top:26px}
+.hero-facts{margin-top:28px;padding-top:18px;gap:10px 26px}
+.hero-visual{max-width:390px}
+.hero-photo{aspect-ratio:1/1.08}
+.price-badge{bottom:28px;padding:18px 22px}
+.price-badge .amount{font-size:40px}
+.section.compact{padding:clamp(48px,6vw,84px) 0}
+.compact .section-head{max-width:none;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px 64px;align-items:end;margin-bottom:clamp(26px,3.5vw,40px)}
+.compact .section-head .eyebrow{grid-column:1/-1}
+.compact .section-head h2{margin:0;font-size:clamp(30px,3.3vw,44px)}
+.compact .section-head .lead{font-size:17px}
+.compact .principles{gap:0}
+.compact .principle{padding:26px 32px 0 0}
+.compact .principle+.principle{padding-left:32px}
+.compact .principle h3{font-size:22px;margin:8px 0 8px}
+.compact .principle p{font-size:15px}
+.compact .audience-grid{gap:14px}
+.compact .audience-card{padding:22px 22px 24px;transition:transform .3s ease,box-shadow .3s ease}
+.compact .audience-card:hover{transform:translateY(-3px)}
+.compact .audience-dot{margin-bottom:12px}
+.compact .audience-card h3{font-size:18px;margin-bottom:8px}
+.compact .audience-card p{font-size:14.5px}
+.section.compact+.section.compact{padding-top:0}
+@media(max-width:1020px){.compact .section-head{grid-template-columns:1fr}.compact .principle,.compact .principle+.principle{padding:22px 0}}
+@media(prefers-reduced-motion:reduce){.compact .audience-card{transition:none}.compact .audience-card:hover{transform:none}}
+</style>
 </head><body><a class="skip-link" href="#main-content">Zum Inhalt springen</a>
 <header><div class="wrap nav"><a class="brand veganiel-logo-brand" href="index.html"><img class="veganiel-logo-image" src="veganiel-logo-192.png" alt="" width="42" height="42"><span class="veganiel-logo-text"><span>Veganiel</span><small translate="no">Daniels Ernährungsberatung</small></span></a><a class="back" href="index.html">← Zur Startseite</a></div></header>
 <main id="main-content">
@@ -348,7 +377,7 @@ html{scroll-behavior:smooth}
 </section>
 
 <!-- ANSATZ -->
-<section class="section">
+<section class="section compact">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Was mir wichtig ist</span>
@@ -365,7 +394,7 @@ html{scroll-behavior:smooth}
 
 
 <!-- FÜR WEN -->
-<section class="section audience" id="fuer-wen">
+<section class="section audience compact" id="fuer-wen">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Für wen</span>
@@ -373,7 +402,6 @@ html{scroll-behavior:smooth}
       <p class="lead">Ob du gern Fleisch isst, flexibel unterwegs bist oder vegetarisch bzw. vegan lebst: Die Beratung beginnt bei dir – nicht bei einer Ideologie.</p>
     </div>
     <div class="audience-grid"><article class="audience-card"><span class="audience-dot" aria-hidden="true"></span><h3>Du isst gern Fleisch oder Fisch.</h3><p>Wunderbar. Wir schauen, wie du dich damit ausgewogen und abwechslungsreich ernährst – ohne etwas aufzugeben, das dir wichtig ist.</p></article><article class="audience-card"><span class="audience-dot" aria-hidden="true"></span><h3>Du willst gesünder essen, ohne alles umzukrempeln.</h3><p>Kleine, realistische Schritte statt Komplettumstellung: Wir verändern nur, was wirklich in deinen Alltag passt.</p></article><article class="audience-card"><span class="audience-dot" aria-hidden="true"></span><h3>Du lebst vegetarisch oder vegan.</h3><p>Ich helfe dir, kritische Nährstoffe im Blick zu behalten und deine Ernährung sicher und genussvoll zu gestalten.</p></article><article class="audience-card"><span class="audience-dot" aria-hidden="true"></span><h3>Du hast Fragen zu deinen Blutwerten.</h3><p>Wir betrachten deine Ernährung und deine ärztlich erhobenen Blutwerte gemeinsam und leiten daraus verständliche Empfehlungen ab.</p></article></div>
-    <p class="audience-promise"><strong>Mein Versprechen:</strong> Ich möchte niemanden bekehren. Deine Gewohnheiten, deine Vorlieben und dein Alltag haben bei mir oberste Priorität.</p>
   </div>
 </section>
 
