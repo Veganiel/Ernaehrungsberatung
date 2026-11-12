@@ -142,3 +142,15 @@ h1 em,h2 em{color:#557444}
 }
 @media(max-width:940px){.rz-hero-panel{grid-template-columns:1fr}.rz-collage{height:300px;max-width:520px}}
 @media(max-width:640px){.rz-hero-panel{border-radius:26px;padding:28px 20px}.rz-collage{height:230px}.rz-collage img{border-width:4px;border-radius:16px}.rz-overview .rz-filters{top:70px;overflow-x:auto;flex-wrap:nowrap}.rz-overview .rz-filters button{flex:0 0 auto}}
+
+/* Bewertung + Community auf Rezeptseiten */
+.rz-rating{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:18px 0 0}
+.rr-stars{display:inline-flex;gap:2px}
+.rr-star{font-size:26px;line-height:1;padding:4px 2px;min-width:32px;min-height:40px;border:0;background:none;color:#cfd8c4;cursor:pointer;transition:color .15s,transform .15s}
+.rr-star.is-on{color:#d9a43a}
+.rr-star:not(:disabled):hover{transform:scale(1.12)}
+.rr-star:disabled{cursor:default}
+.rr-summary{margin:0;font-size:14px;color:var(--muted)}
+.rr-hint{margin:0;width:100%;font-size:13px;color:var(--muted)}
+.rr-hint a{color:var(--forest);font-weight:600}
+.rz-page #community{margin-top:clamp(36px,5vw,56px);background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:clamp(22px,4vw,36px)}
