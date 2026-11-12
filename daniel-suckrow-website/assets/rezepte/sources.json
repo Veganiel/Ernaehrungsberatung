@@ -1,0 +1,30 @@
+{
+  "license": "https://www.pexels.com/license/",
+  "note": "Fotos der Rezeptseiten. Pexels-Fotos sind frei nutzbar; sie zeigen ähnliche Gerichte, nicht exakt das Rezept.",
+  "photos": [
+    {
+      "file": "gefuellte-suesskartoffel.jpg",
+      "source": "Eigenes Bild (Veganiel)"
+    },
+    {
+      "file": "linsen-dal.jpg",
+      "source": "https://www.pexels.com/photo/20590322/"
+    },
+    {
+      "file": "overnight-oats.jpg",
+      "source": "https://www.pexels.com/photo/27850092/"
+    },
+    {
+      "file": "ofentofu-brokkoli.jpg",
+      "source": "https://www.pexels.com/photo/37303310/"
+    },
+    {
+      "file": "chili-sin-carne.jpg",
+      "source": "https://www.pexels.com/photo/28286173/"
+    },
+    {
+      "file": "wintergemuese-bowl.jpg",
+      "source": "https://www.pexels.com/photo/6066041/"
+    }
+  ]
+}
