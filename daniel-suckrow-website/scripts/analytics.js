@@ -46,8 +46,9 @@
     window.__tcfapi('addEventListener', 2, (tcData, success) => { if (success && allowed(tcData)) loadAnalytics(); });
   }
 
-  // Seiten ohne Anzeigen laden die Einwilligungsmitteilung selbst, damit sie überall gleich funktioniert.
-  if (!window.__tcfapi && !document.querySelector('script[src*="pagead2.googlesyndication.com"],script[src*="fundingchoicesmessages.google.com"]')) {
+  // Die Einwilligungsmitteilung selbst laden – unabhängig davon, ob AdSense schon aktiv ist
+  // und eigene Werbung ausspielt (sonst bleibt Analytics ohne aktives AdSense ohne Einwilligung).
+  if (!window.__tcfapi && !document.querySelector('script[src*="fundingchoicesmessages.google.com"]')) {
     const cmp = document.createElement('script');
     cmp.async = true;
     cmp.src = 'https://fundingchoicesmessages.google.com/i/' + PUBLISHER + '?ers=1';
