@@ -5,7 +5,9 @@
     fasten: 'intervallfasten',
     vegan: 'sieben-tage-vegan',
     abendritual: 'abendroutine',
-    laufen: 'erste-5-km'
+    laufen: 'erste-5-km',
+    'zehn-km': 'zehn-km-laufen',
+    halbmarathon: 'halbmarathon'
   };
   const links = [];
   for (const [id, slug] of Object.entries(files)) {
