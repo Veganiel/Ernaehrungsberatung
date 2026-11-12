@@ -29,7 +29,7 @@ KICKERS = {
     'tools': ('Wissen & Tools', 'Knowledge & tools'), 'season': ('Saisonkalender', 'Seasonal calendar'),
     'consult': ('Ernährungsberatung', 'Nutrition consulting'), 'about': ('Über mich', 'About me'),
     'legal': ('Rechtliches', 'Legal'), 'quiz': ('Quizwelt', 'Quiz world'), 'challenge': ('Challenges', 'Challenges'),
-    'longevity': ('Longevity', 'Longevity'), 'shop': ('Shop', 'Shop'), 'home': ('Online-Ernährungsberatung', 'Online nutrition consulting'),
+    'longevity': ('Longevity', 'Longevity'), 'shop': ('Shop', 'Shop'), 'recipe': ('Pflanzliche Rezepte', 'Plant-based recipes'), 'home': ('Online-Ernährungsberatung', 'Online nutrition consulting'),
 }
 
 # Seite -> (Rubrik, Bildmotiv). Motiv: photo:<datei>, scene:<monat 0-11>, icon:<name>
@@ -54,6 +54,8 @@ PAGES = {
     'herzfrequenz-rechner.html': ('calc', 'icon:heart'),
     'vo2max-rechner.html': ('calc', 'icon:run'),
     'taille-rechner.html': ('calc', 'icon:tape'),
+    'protein-rechner.html': ('calc', 'icon:bowl'),
+    'rezepte.html': ('recipe', 'photo:assets/rezepte/gefuellte-suesskartoffel.jpg'),
     'veganer-naehrstoff-check.html': ('tools', 'photo:naehrstoff-check-hero.jpg'),
     'saisonkalender.html': ('season', 'scene:4'),
     'agb.html': ('legal', 'icon:document'), 'datenschutz.html': ('legal', 'icon:lock'), 'impressum.html': ('legal', 'icon:document'),
@@ -63,7 +65,7 @@ BLOG_ICONS = {
     'antiangiogenese': 'molecule', 'bioaktive-verbindungen': 'molecule', 'telomere': 'dna', 'antioxidantien': 'berries',
     'ballaststoffe': 'grain', 'darmreinigung-sanierung': 'grain', 'diskriminierung': 'hands', 'veganismus-chancen-herausforderungen': 'hands',
     'karottensaft': 'carrot', 'kritische-naehrstoffe': 'capsule', 'kritische-naehrstoffe-vegan': 'capsule', 'supplemente': 'capsule',
-    'vitamin-b12': 'capsule', 'omega-3-6-verhaeltnis': 'drop', 'omega-fettsaeuren': 'drop', 'weniger-salz': 'salt', 'zusatzstoffe-nahrungsmitteln': 'flask',
+    'vitamin-b12': 'capsule', 'vitamin-d-winter': 'sun', 'omega-3-6-verhaeltnis': 'drop', 'omega-fettsaeuren': 'drop', 'weniger-salz': 'salt', 'zusatzstoffe-nahrungsmitteln': 'flask',
 }
 
 ICONS = {  # Linien-Symbole, viewBox 0 0 64 64
@@ -94,6 +96,7 @@ ICONS = {  # Linien-Symbole, viewBox 0 0 64 64
     'moon': '<path d="M40 8a24 24 0 1 0 16 38A20 20 0 0 1 40 8Z"/><path d="M50 10v8M46 14h8M56 26v4M54 28h4"/>',
     'route': '<path d="M6 50 20 30l10 12 12-18 16 26"/><path d="M42 24V8l10 4-10 4"/><circle cx="6" cy="50" r="3"/>',
     'medal': '<circle cx="32" cy="42" r="14"/><path d="M24 29 16 6h10l6 14 6-14h10l-8 23"/><path d="m32 35 2.2 4.4 4.8.7-3.5 3.4.8 4.8-4.3-2.3-4.3 2.3.8-4.8-3.5-3.4 4.8-.7Z"/>',
+    'sun': '<circle cx="32" cy="32" r="11"/><path d="M32 6v8M32 50v8M6 32h8M50 32h8M13.6 13.6l5.7 5.7M44.7 44.7l5.7 5.7M13.6 50.4l5.7-5.7M44.7 19.3l5.7-5.7"/>',
     'lock': '<rect x="14" y="28" width="36" height="28" rx="6"/><path d="M22 28v-8a10 10 0 0 1 20 0v8"/><circle cx="32" cy="41" r="3"/><path d="M32 44v5"/>',
 }
 
@@ -112,6 +115,8 @@ def card_title(title):
 def page_config(rel):
     if rel.startswith('blog/'):
         return 'blog', 'icon:' + BLOG_ICONS.get(rel.split('/')[1], 'leaf')
+    if rel.startswith('rezepte/'):
+        return 'recipe', 'photo:assets/rezepte/' + rel.split('/')[1] + '.jpg'
     match = re.fullmatch(r'saisonkalender-([a-z]+)\.html', rel)
     if match:
         return 'season', f'scene:{MONTHS.index(match.group(1))}'

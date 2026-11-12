@@ -14,6 +14,10 @@
   const grid = document.querySelector(archive ? '.journal-grid' : '#blogCards');
   if (!grid) return;
   const photos = {
+    "vitamin-d-winter": {
+      "theme": "science",
+      "position": "50% 60%"
+    },
     "achtsames-spazieren-im-wald": {
       "theme": "nature",
       "position": "50% 50%"

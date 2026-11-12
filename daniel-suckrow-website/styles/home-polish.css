@@ -111,3 +111,7 @@ html.hero-motion:not(.hero-motion-done) .studio-hero .hero-seal{animation:vegani
   .approach-strip .marquee-track{animation:none}
 }
 @media(max-width:440px){.home-studio .hero-copy>.eyebrow{letter-spacing:.07em}}
+
+/* Rechnerleiste mit sechs Links: 3 × 2 auf Desktop, 2 × 3 auf Tablet */
+@media(min-width:941px){.calculator-links{grid-template-columns:repeat(3,1fr)}.calculator-links>a:nth-child(n+4){border-top:1px solid #bdcbb2}.calculator-links>a:nth-child(4){border-left:0;padding-left:0}}
+@media(max-width:940px) and (min-width:441px){.calculator-links>a:nth-child(n+3){border-top:1px solid #bdcbb2}.calculator-links>a:nth-child(odd){border-left:0}}

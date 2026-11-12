@@ -3,6 +3,14 @@
   "note": "One individual photograph per article. Repeated cards linking to the same article use that article's photo.",
   "photos": [
     {
+      "slug": "vitamin-d-winter",
+      "source": "Eigene Illustration (Veganiel)",
+      "file": "vitamin-d-winter.jpg",
+      "theme": "science",
+      "alt": "Illustration einer tief stehenden Wintersonne über grünen Hügeln",
+      "en": "Illustration of a low winter sun over green hills"
+    },
+    {
       "slug": "achtsames-spazieren-im-wald",
       "id": 27680752,
       "source": "https://www.pexels.com/photo/27680752/",
