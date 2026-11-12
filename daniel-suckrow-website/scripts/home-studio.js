@@ -80,9 +80,9 @@
     if (!text) return;
     const doc = new DOMParser().parseFromString(text, 'text/html');
     const seen = new Set();
-    const posts = [...doc.querySelectorAll('a.card[href^="blog/"]')].map(card => {
+    const posts = [...doc.querySelectorAll('a.card[href^="blog/"], a.card[href^="/blog/"]')].map(card => {
       const href = card.getAttribute('href');
-      const slug = (href.match(/^blog\/([^/]+)\//) || [])[1];
+      const slug = (href.match(/^\/?blog\/([^/]+)\//) || [])[1];
       const num = card.querySelector('.num');
       return slug && !seen.has(slug) && seen.add(slug) ? {href, slug,
         category: num ? num.textContent.split('·').slice(1).join('·').trim() : '',
