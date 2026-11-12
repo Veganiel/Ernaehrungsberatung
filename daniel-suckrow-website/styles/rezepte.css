@@ -103,3 +103,42 @@ h1 em,h2 em{color:#557444}
 @media print{.veganiel-global-header,.rz-more,.rz-footer,.rz-back,.author-box{display:none!important}.rz-ingredients{position:static}}
 .rz-recipe-photo{position:relative}
 .rz-photo-label{position:absolute;left:14px;bottom:12px;font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--muted);background:#fffdf8d9;padding:3px 10px;border-radius:50px}
+
+/* ===== Übersicht: Hingucker-Design ===== */
+.rz-overview .rz-hero{padding:clamp(20px,3vw,36px) 0 clamp(36px,5vw,64px)}
+.rz-hero-panel{position:relative;overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,56px);align-items:center;padding:clamp(32px,5vw,72px);border-radius:36px;background:radial-gradient(120% 140% at 85% 10%,#2c5a43 0%,#183e2f 55%,#123326 100%);color:#eef3e6}
+.rz-hero-panel::before{content:"";position:absolute;width:420px;height:420px;right:-120px;bottom:-160px;border-radius:50%;background:radial-gradient(circle,#d5e99b33,transparent 70%)}
+.rz-hero-copy{position:relative;z-index:1}
+.rz-hero-panel .rz-eyebrow{color:#cfe39c}
+.rz-hero-panel h1{color:#fffdf8;font-size:clamp(42px,5.6vw,78px);margin:16px 0 18px}
+.rz-hero-panel h1 em{color:#d5e99b}
+.rz-hero-panel p{color:#cfdcc8;max-width:520px;margin:0}
+.rz-hero-panel .rz-hero-facts{margin:28px 0 30px;border-color:#ffffff2e}
+.rz-hero-panel .rz-hero-facts div+div{border-color:#ffffff2e}
+.rz-hero-panel .rz-hero-facts strong{color:#fffdf8}
+.rz-hero-panel .rz-hero-facts span{color:#b9cbb3}
+.rz-collage{position:relative;z-index:1;height:clamp(300px,34vw,440px)}
+.rz-collage img{position:absolute;object-fit:cover;border-radius:24px;box-shadow:0 30px 60px -20px #0009;border:6px solid #fffdf8}
+.rz-c1{width:68%;height:62%;left:4%;top:0;transform:rotate(-4deg)}
+.rz-c2{width:52%;height:46%;right:0;top:30%;transform:rotate(5deg)}
+.rz-c3{width:50%;height:44%;left:16%;bottom:0;transform:rotate(-1deg)}
+.rz-spark{position:absolute;right:6%;top:2%;font-size:46px;color:#d5e99b}
+@media(prefers-reduced-motion:no-preference){.rz-collage img{transition:transform .6s cubic-bezier(.2,.7,.2,1)}.rz-hero-panel:hover .rz-c1{transform:rotate(-6deg) translateY(-6px)}.rz-hero-panel:hover .rz-c2{transform:rotate(7deg) translateX(6px)}}
+.rz-list-head{display:flex;flex-direction:column;gap:8px;margin:0 0 18px}
+.rz-list-head h2{font-size:clamp(32px,3.6vw,48px)}
+.rz-overview .rz-filters{position:sticky;top:78px;z-index:5;padding:10px 0;background:linear-gradient(var(--cream) 75%,transparent)}
+.rz-overview .rz-card{position:relative;box-shadow:0 1px 0 #18392c0d}
+.rz-overview .rz-card figure{position:relative}
+.rz-overview .rz-card figure::after{content:"";position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(transparent,#12332633)}
+.rz-overview .rz-card-body .rz-eyebrow{position:absolute;top:14px;left:14px;z-index:2;padding:6px 12px;border-radius:50px;background:#fffdf8eb;backdrop-filter:blur(6px);font-size:10.5px;color:var(--forest)}
+.rz-overview .rz-card h2{font-size:23px}
+.rz-overview .rz-card-body{padding-top:20px}
+@media(min-width:941px){
+  .rz-overview .rz-grid>.rz-card:first-child:not([hidden]){grid-column:span 2;flex-direction:row}
+  .rz-overview .rz-grid>.rz-card:first-child figure{flex:0 0 58%;aspect-ratio:auto;min-height:340px}
+  .rz-overview .rz-grid>.rz-card:first-child .rz-card-body{justify-content:center;padding:36px}
+  .rz-overview .rz-grid>.rz-card:first-child h2{font-size:clamp(28px,2.6vw,36px)}
+  .rz-overview .rz-grid>.rz-card:first-child p{font-size:15.5px}
+}
+@media(max-width:940px){.rz-hero-panel{grid-template-columns:1fr}.rz-collage{height:300px;max-width:520px}}
+@media(max-width:640px){.rz-hero-panel{border-radius:26px;padding:28px 20px}.rz-collage{height:230px}.rz-collage img{border-width:4px;border-radius:16px}.rz-overview .rz-filters{top:70px;overflow-x:auto;flex-wrap:nowrap}.rz-overview .rz-filters button{flex:0 0 auto}}
