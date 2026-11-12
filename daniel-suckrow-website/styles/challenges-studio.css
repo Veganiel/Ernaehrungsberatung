@@ -4,7 +4,9 @@
 .ch-theme-fast  { --ch-bg: #fbf8ee; --ch-tint: #f3e5cc; --ch-accent: #8a5c1f; --ch-ink: #4a3418; }
 .ch-theme-vegan { --ch-bg: #eef3e4; --ch-tint: #dce9bf; --ch-accent: #44702f; --ch-ink: #1f4130; }
 .ch-theme-night { --ch-bg: #f2eff7; --ch-tint: #e4ddf2; --ch-accent: #5f5194; --ch-ink: #2e2747; }
-.ch-theme-run   { --ch-bg: #fbf0ea; --ch-tint: #f5d9cb; --ch-accent: #9c4227; --ch-ink: #4a2216; }
+.ch-theme-run   { --ch-bg: #fbf0ea; --ch-tint: #f5d9cb; --ch-accent: #9c4227; --ch-ink: #4a2216; --goal-a: #c4613f; --goal-b: #6f2a19; }
+.ch-theme-ten   { --ch-bg: #edf5f6; --ch-tint: #cde5ea; --ch-accent: #1d6374; --ch-ink: #12343d; --goal-a: #2b7f90; --goal-b: #103a45; }
+.ch-theme-half  { --ch-bg: #eff0f8; --ch-tint: #d7dcf1; --ch-accent: #36438c; --ch-ink: #1d2552; --goal-a: #4352a3; --goal-b: #1a2150; }
 
 /* ---------- Hero ---------- */
 .challenges-edition .ch-hero .edition-copy p { font-size: 16px; line-height: 1.65; max-width: 52ch; }
@@ -35,6 +37,8 @@
 .challenge-picker a.ch-pick--vegan { background: #e3efc0; color: #1f4130; }
 .challenge-picker a.ch-pick--night { background: #e7e1f4; color: #2e2747; }
 .challenge-picker a.ch-pick--run   { background: #f6dccd; color: #4a2216; }
+.challenge-picker a.ch-pick--ten   { background: #d5ebef; color: #12343d; }
+.challenge-picker a.ch-pick--half  { background: #dde1f5; color: #1d2552; }
 .challenge-picker a.ch-pick:hover { transform: translateY(-3px); box-shadow: 0 20px 34px #06181275; }
 .ch-pick-icon { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 14px; background: #ffffff8f; }
 .ch-pick-icon svg { width: 30px; height: 30px; }
@@ -78,6 +82,8 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
 .ch-tabs a.is-vegan span { background: #dce9bf; color: #1f4130; }
 .ch-tabs a.is-night span { background: #e4ddf2; color: #2e2747; }
 .ch-tabs a.is-run span   { background: #f5d9cb; color: #4a2216; }
+.ch-tabs a.is-ten span   { background: #cde5ea; color: #12343d; }
+.ch-tabs a.is-half span  { background: #d7dcf1; color: #1d2552; }
 .ch-tabs a:hover { border-color: #b8c6b0; }
 .ch-tabs a:is([aria-current="true"], [aria-current="page"]) { background: var(--edition-deep); border-color: var(--edition-deep); color: #fbf8ee; }
 .ch-tabs a:is([aria-current="true"], [aria-current="page"]) span { background: var(--edition-lime); color: var(--edition-deep); }
@@ -182,6 +188,8 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
   color: #f1eef9;
 }
 .challenges-edition .ch-theme-run .challenge .challenge-side { background: linear-gradient(155deg, #c4613f, #6f2a19); color: #fff6f0; }
+.challenges-edition .ch-theme-ten .challenge .challenge-side { background: linear-gradient(155deg, #2b7f90, #103a45); color: #f1fafb; }
+.challenges-edition .ch-theme-half .challenge .challenge-side { background: linear-gradient(155deg, #4352a3, #1a2150); color: #f2f3fc; }
 .challenges-edition .ch-section .challenge-side::after {
   position: absolute;
   z-index: -1;
@@ -211,6 +219,8 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
 .ch-theme-fast .ch-art { color: #f0cf8e; }
 .ch-theme-night .ch-art { color: #d9cffa; }
 .ch-theme-run .ch-art { color: #ffe0cd; }
+.ch-theme-ten .ch-art { color: #c4edf3; }
+.ch-theme-half .ch-art { color: #dfe3ff; }
 .ch-art svg { width: 54px; height: 54px; }
 .challenges-edition .ch-section .challenge-side h3 { margin: 26px 0 12px; font: 500 clamp(28px, 3vw, 36px)/1.1 var(--edition-serif); letter-spacing: -.035em; }
 .challenges-edition .ch-section .challenge-side p { font-size: 15px; line-height: 1.6; opacity: .86; }
@@ -426,15 +436,15 @@ nav.ch-tabs.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
   background: #fffdf8;
   transition: background .25s, border-color .25s;
 }
-.week:has(input:checked) { border-color: #e2a78c; background: #fdf0e8; }
+.week:has(input:checked) { border-color: var(--ch-accent); background: var(--ch-bg); }
 .week-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 12px; }
 .week-label { color: var(--ch-accent); font-size: 11px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
 .week-total { padding: 4px 10px; border-radius: 100px; background: var(--ch-tint); color: var(--ch-ink); font-size: 11px; font-weight: 700; }
 .week > strong { color: var(--edition-ink); font: 500 18px/1.25 var(--edition-serif); letter-spacing: -.01em; }
 .week > p { flex: 1; margin: 8px 0 0; color: #57675c; font-size: 13.5px; line-height: 1.55; }
-.week.week--goal { border: 0; background: linear-gradient(155deg, #c4613f, #6f2a19); color: #fff6f0; }
+.week.week--goal { border: 0; background: linear-gradient(155deg, var(--goal-a, #c4613f), var(--goal-b, #6f2a19)); color: #fff6f0; }
 .week.week--goal .week-label { color: #ffd9c4; }
-.week.week--goal .week-total { background: #fff6f0; color: #6f2a19; }
+.week.week--goal .week-total { background: #fff6f0; color: var(--goal-b, #6f2a19); }
 .week.week--goal > strong { color: #fff; }
 .week.week--goal > p { color: #fde6da; }
 .week.week--goal .day-check { background: #ffffff26; color: #fff; }
@@ -482,6 +492,34 @@ a.ch-card strong { color: var(--edition-ink); font: 500 clamp(24px, 2.6vw, 30px)
 a.ch-card:hover .ch-card-link span { transform: translateX(3px); }
 .ch-more-all { display: inline-block; margin-top: 26px; color: var(--edition-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
 .ch-more-all:hover { text-decoration-thickness: 2px; }
+
+/* ---------- Level switch (10 km, half marathon) ---------- */
+.level-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 26px; }
+.level-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 16px 18px;
+  border: 2px solid #00000014;
+  border-radius: 18px;
+  background: #fffdf8;
+  color: var(--ch-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .2s, background .2s, box-shadow .2s;
+}
+.level-tab strong { font: 500 22px/1.15 var(--edition-serif); letter-spacing: -.02em; }
+.level-tab span { color: #57675c; font-size: 13.5px; line-height: 1.45; }
+.level-tab:hover { border-color: var(--ch-tint); }
+.level-tab[aria-selected="true"] { border-color: var(--ch-accent); background: var(--ch-tint); box-shadow: 0 10px 24px #1b3a2a14; }
+.level-tab[aria-selected="true"] span { color: var(--ch-ink); }
+.level-tab:focus-visible { outline: 3px solid var(--ch-accent); outline-offset: 3px; }
+.level-panel + .level-panel { margin-top: 48px; }
+.level-switch.is-ready ~ .level-panel + .level-panel { margin-top: 0; }
+.level-panel > h4 { margin: 0 0 12px; color: var(--edition-ink); font: 500 clamp(24px, 3vw, 30px)/1.15 var(--edition-serif); letter-spacing: -.03em; }
+.challenges-edition .level-panel .facts { margin-bottom: 14px; }
+.level-panel .plan-note { margin: 0 0 18px; color: #57675c; font-size: 14px; line-height: 1.6; }
 
 /* ---------- Tips ---------- */
 .challenges-edition .tips { gap: 16px; margin-top: 40px; }
@@ -572,6 +610,7 @@ a.ch-card:hover .ch-card-link span { transform: translateX(3px); }
   .challenges-edition .recipe-card:nth-child(n+4) .recipe-photo { width: calc(100% + 36px); height: 200px; margin: 0 -18px 18px; }
   .challenges-edition .supplement-note { border-radius: 20px; }
   .run-weeks { grid-template-columns: 1fr; }
+  .level-switch { grid-template-columns: 1fr; }
   .ch-card-grid { grid-template-columns: 1fr; }
   a.ch-card { padding: 22px; }
 }

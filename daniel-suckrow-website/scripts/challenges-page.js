@@ -37,7 +37,37 @@
     check();
   }
 
-  // Tick-off plans (7-day vegan, 8-week running): progress is kept only in this browser.
+  // Level switch (beginner / advanced): one plan visible at a time; without JavaScript both stay readable.
+  document.querySelectorAll('.level-switch').forEach(group => {
+    const tabs = [...group.querySelectorAll('[role="tab"]')];
+    const key = `veganiel-level-${location.pathname.split('/').pop()}`;
+    const select = (tab, persist) => {
+      tabs.forEach(item => {
+        const active = item === tab;
+        item.setAttribute('aria-selected', String(active));
+        item.tabIndex = active ? 0 : -1;
+        const panel = document.getElementById(item.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !active;
+      });
+      if (persist) { try { localStorage.setItem(key, tab.id); } catch (_) { /* Storage may be disabled. */ } }
+    };
+    let saved = null;
+    try { saved = localStorage.getItem(key); } catch (_) { saved = null; }
+    const fromHash = tabs.find(tab => `#${tab.getAttribute('aria-controls')}` === location.hash);
+    select(fromHash || tabs.find(tab => tab.id === saved) || tabs[0], false);
+    group.classList.add('is-ready');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => select(tab, true));
+      tab.addEventListener('keydown', event => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+        const next = tabs[(tabs.indexOf(tab) + (event.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        next.focus();
+        select(next, true);
+      });
+    });
+  });
+
+  // Tick-off plans (vegan days, running weeks): progress is kept only in this browser.
   document.querySelectorAll('[data-tracker]').forEach(root => {
     const boxes = [...root.querySelectorAll('.day-check input')];
     const count = root.querySelector('.ch-progress-count');

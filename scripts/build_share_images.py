@@ -44,6 +44,8 @@ PAGES = {
     'challenge-7-tage-vegan.html': ('challenge', 'icon:leaf'),
     'challenge-abendroutine.html': ('challenge', 'icon:moon'),
     'challenge-5-km-laufen.html': ('challenge', 'icon:run'),
+    'challenge-10-km-laufen.html': ('challenge', 'icon:route'),
+    'challenge-halbmarathon.html': ('challenge', 'icon:medal'),
     'longevity.html': ('longevity', 'icon:hourglass'),
     'quiz.html': ('quiz', 'icon:question'),
     'shop.html': ('shop', 'photo:assets/shop/make-the-connection-spreadshop.webp'),
@@ -90,6 +92,8 @@ ICONS = {  # Linien-Symbole, viewBox 0 0 64 64
     'checklist': '<rect x="12" y="8" width="40" height="50" rx="6"/><path d="M20 22l4 4 7-8M20 36l4 4 7-8M36 23h10M36 37h10M20 50h26"/>',
     'document': '<path d="M16 6h24l12 12v40H16Z"/><path d="M40 6v12h12M22 30h22M22 38h22M22 46h14"/>',
     'moon': '<path d="M40 8a24 24 0 1 0 16 38A20 20 0 0 1 40 8Z"/><path d="M50 10v8M46 14h8M56 26v4M54 28h4"/>',
+    'route': '<path d="M6 50 20 30l10 12 12-18 16 26"/><path d="M42 24V8l10 4-10 4"/><circle cx="6" cy="50" r="3"/>',
+    'medal': '<circle cx="32" cy="42" r="14"/><path d="M24 29 16 6h10l6 14 6-14h10l-8 23"/><path d="m32 35 2.2 4.4 4.8.7-3.5 3.4.8 4.8-4.3-2.3-4.3 2.3.8-4.8-3.5-3.4 4.8-.7Z"/>',
     'lock': '<rect x="14" y="28" width="36" height="28" rx="6"/><path d="M22 28v-8a10 10 0 0 1 20 0v8"/><circle cx="32" cy="41" r="3"/><path d="M32 44v5"/>',
 }
 

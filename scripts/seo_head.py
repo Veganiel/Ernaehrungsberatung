@@ -21,6 +21,8 @@ STATIC_EN = {
     'challenge-7-tage-vegan.html': 'en/challenge-7-day-vegan.html',
     'challenge-abendroutine.html': 'en/challenge-evening-routine.html',
     'challenge-5-km-laufen.html': 'en/challenge-first-5k.html',
+    'challenge-10-km-laufen.html': 'en/challenge-10k.html',
+    'challenge-halbmarathon.html': 'en/challenge-half-marathon.html',
 }
 STATIC_DE = {en: de for de, en in STATIC_EN.items()}
 
