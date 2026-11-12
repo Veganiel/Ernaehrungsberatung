@@ -54,3 +54,9 @@
 @media(max-width:760px){.nx-hero{grid-template-columns:1fr}.nx-symbol{order:-1;width:120px}.nx-cards{grid-template-columns:1fr}.nx-sourcelist li{grid-template-columns:1fr auto;gap:8px 12px}.nx-bar{grid-column:1/-1;grid-row:2}}
 @media(max-width:640px){.nx-tiles,.nx-recipe-grid{grid-template-columns:1fr}.nx-orbit{width:280px}.nx-orbit span{width:46px;height:46px;margin:-23px;font-size:15px;transform:rotate(var(--a)) translate(110px) rotate(calc(var(--a) * -1))}}
 @media(prefers-reduced-motion:reduce){.nx-tile{transition:none}.nx-tile:hover{transform:none}}
+.nx-omni{background:#e3ebf4;color:#2c4a6b}.nx-omni::before{background:#5b84b1}
+.nx-tags{display:flex;flex-wrap:wrap;gap:6px}
+.nx-hero .nx-crit+.nx-crit{margin-left:6px;margin-top:6px}
+.nx-bad .nx-bar i{background:linear-gradient(90deg,#e5c07b,#c0723d)}
+.rz-hero-panel .rz-hero-facts{grid-template-columns:repeat(3,1fr)}
+.nx-tile>.nx-sym{align-self:flex-start}
