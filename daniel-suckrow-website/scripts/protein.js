@@ -8,7 +8,7 @@
     strength: [1.6, 2.0],
     weightloss: [1.2, 1.6]
   };
-  const VEGAN_FACTOR = 1.1; // geringere Verdaulichkeit pflanzlicher Proteine, ca. +10 %
+  const VEGAN_FACTOR = 1.1; // Protein in ganzen Pflanzen durch Zellstrukturen/Ballaststoffe schwerer zugänglich, ca. +10 %
   const round5 = value => Math.round(value / 5) * 5;
 
   function calculate(input) {
