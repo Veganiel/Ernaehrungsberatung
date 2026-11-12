@@ -75,6 +75,24 @@
     toggle.querySelector('.arrow').textContent = expanded ? '↑' : '↓';
     if (!expanded) document.getElementById('blog').scrollIntoView({block: 'start'});
   });
+  // Neueste Blogbeiträge automatisch aus der Blog-Übersicht übernehmen (statische Karten bleiben als Fallback).
+  fetch('blog-uebersicht.html', {cache: 'no-cache'}).then(r => r.ok ? r.text() : '').then(text => {
+    if (!text) return;
+    const doc = new DOMParser().parseFromString(text, 'text/html');
+    const seen = new Set();
+    const posts = [...doc.querySelectorAll('a.card[href^="blog/"]')].map(card => {
+      const href = card.getAttribute('href');
+      const slug = (href.match(/^blog\/([^/]+)\//) || [])[1];
+      const num = card.querySelector('.num');
+      return slug && !seen.has(slug) && seen.add(slug) ? {href, slug,
+        category: num ? num.textContent.split('·').slice(1).join('·').trim() : '',
+        title: card.querySelector('h3')?.textContent || '', text: card.querySelector('p')?.textContent || ''} : null;
+    }).filter(Boolean);
+    const current = grid.querySelector('.journal-card')?.getAttribute('href');
+    if (!posts.length || current === posts[0].href) return;
+    const esc = value => value.replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+    grid.innerHTML = posts.map((post, index) => `<a class="journal-card${index < 3 ? '' : ' journal-extra'}" href="${esc(post.href)}"><div class="journal-image"><img src="assets/blog/${esc(post.slug)}.jpg" alt="" width="1200" height="800" loading="lazy" decoding="async"><span class="journal-arrow" aria-hidden="true">↗</span></div><div class="journal-copy"><span class="journal-category">${String(posts.length - index).padStart(2, '0')} · ${esc(post.category)}</span><h3>${esc(post.title)}</h3><p>${esc(post.text)}</p><span class="read-link">Beitrag lesen <span aria-hidden="true">↗</span></span></div></a>`).join('');
+  }).catch(() => {});
   const localise = () => {
     const english = document.documentElement.lang === 'en';
     document.querySelector('[data-home-cover]').src = english ? 'longevity-guide-cover-en.png' : 'longevity-guide-cover.png';
