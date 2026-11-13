@@ -23,6 +23,7 @@ STATIC_EN = {
     'challenge-5-km-laufen.html': 'en/challenge-first-5k.html',
     'challenge-10-km-laufen.html': 'en/challenge-10k.html',
     'challenge-halbmarathon.html': 'en/challenge-half-marathon.html',
+    'angebot.html': 'en/nutrition-consulting.html',
 }
 STATIC_DE = {en: de for de, en in STATIC_EN.items()}
 

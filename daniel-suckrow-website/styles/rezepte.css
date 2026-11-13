@@ -154,3 +154,10 @@ h1 em,h2 em{color:#557444}
 .rr-hint{margin:0;width:100%;font-size:13px;color:var(--muted)}
 .rr-hint a{color:var(--forest);font-weight:600}
 .rz-page #community{margin-top:clamp(36px,5vw,56px);background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:clamp(22px,4vw,36px)}
+
+/* Beratungshinweis auf Rezept- und Lexikonseiten */
+.rz-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 28px;margin-top:clamp(36px,5vw,56px);padding:clamp(22px,3vw,32px);border-radius:22px;background:radial-gradient(120% 140% at 90% 0%,#2c5a43,#183e2f 65%);color:#eef3e6}
+.rz-cta .rz-eyebrow{color:#cfe39c}
+.rz-cta-title{margin:8px 0 6px;font:500 clamp(22px,2.4vw,30px)/1.2 var(--serif);color:#fffdf8}
+.rz-cta p{margin:0;color:#cfdcc8;max-width:560px}
+.rz-cta p.rz-cta-title{color:#fffdf8}
