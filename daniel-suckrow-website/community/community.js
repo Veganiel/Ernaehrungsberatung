@@ -18,8 +18,30 @@
       </section>
     </div>
     <div style="display:flex;align-items:center;gap:12px;margin:22px 0 8px"><button id="community-like" class="secondary" aria-pressed="false">♡ Gefällt mir</button><strong id="community-like-count">0 Likes</strong></div>
+    <div class="community-share" id="community-share"><strong class="community-share-title"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.5l6.8-4M8.6 13.5l6.8 4"/></svg> Beitrag teilen</strong>
+      <div class="community-share-links"><button type="button" id="community-share-native" class="secondary" hidden>Teilen</button><a id="community-share-wa" target="_blank" rel="noopener noreferrer">WhatsApp</a><a id="community-share-fb" target="_blank" rel="noopener noreferrer">Facebook</a><a id="community-share-x" target="_blank" rel="noopener noreferrer">X</a><a id="community-share-li" target="_blank" rel="noopener noreferrer">LinkedIn</a><a id="community-share-mail">E-Mail</a><button type="button" id="community-share-copy" class="secondary">Link kopieren</button></div></div>
     <h3 style="margin:20px 0 6px">Kommentare</h3><div id="community-comments"><p class="community-small">Kommentare werden geladen …</p></div>`;
 
+  (() => {
+    const url = (document.querySelector('link[rel="canonical"]')?.href || location.href.split('#')[0]);
+    const title = document.title.replace(/\s*[|–-]\s*(Veganiel|Daniel Suckrow).*$/i, '') || document.title;
+    const u = encodeURIComponent(url), t = encodeURIComponent(title);
+    const set = (id, href) => { const el = $(id); if (el) el.href = href; };
+    set('community-share-wa', 'https://wa.me/?text=' + t + '%20' + u);
+    set('community-share-fb', 'https://www.facebook.com/sharer/sharer.php?u=' + u);
+    set('community-share-x', 'https://twitter.com/intent/tweet?text=' + t + '&url=' + u);
+    set('community-share-li', 'https://www.linkedin.com/sharing/share-offsite/?url=' + u);
+    set('community-share-mail', 'mailto:?subject=' + t + '&body=' + u);
+    const nat = $('community-share-native');
+    if (nat && navigator.share) { nat.hidden = false; nat.addEventListener('click', () => navigator.share({ title, url }).catch(() => {})); }
+    const copy = $('community-share-copy');
+    if (copy) copy.addEventListener('click', async () => {
+      const old = copy.textContent;
+      try { await navigator.clipboard.writeText(url); copy.textContent = '✓ ' + (document.documentElement.lang === 'en' ? 'Copied' : 'Kopiert'); }
+      catch (e) { window.prompt('Link:', url); }
+      setTimeout(() => { copy.textContent = old; }, 2000);
+    });
+  })();
   if (!cfgReady || !window.supabase) { status('Community ist vorbereitet. Für Konten, Likes und Kommentare muss noch ein Supabase-Projekt verbunden werden.'); $('community-send-comment').disabled = true; $('community-like').disabled = true; $('community-comments').innerHTML = '<p class="community-small">Die Community wird nach der technischen Einrichtung verfügbar sein.</p>'; return; }
   const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_PUBLISHABLE_KEY);
   let currentUser = null, profile = null, liked = false, anonymousLiked = false;
