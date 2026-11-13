@@ -16,7 +16,7 @@ export function toEnglish(html, dictionary) {
     const key = normalise(decode(value));
     return dictionary[key] ? encode(dictionary[key]) : value;
   };
-  head = head.replace(/<html([^>]*)\blang="de"/i, '<html$1lang="en"');
+  head = head.replace(/(<html\b[^>]*?\s)lang="de"/i, '$1lang="en"');
   head = head.replace(/<title>([\s\S]*?)<\/title>/i, (_, text) => '<title>' + translate(text) + '</title>');
   head = head.replace(/(<meta (?:name|property)="(?:description|og:title|og:description|twitter:title|twitter:description|og:image:alt|twitter:image:alt)" content=")([^"]*)(")/g,
     (_, start, text, close) => start + translate(text) + close);
@@ -39,7 +39,11 @@ export default async function seoLanguage(request, context) {
   const headers = new Headers(response.headers);
   headers.delete('content-length');
   headers.set('content-language', 'en');
-  return new Response(toEnglish(await response.text(), dictionary), { status: response.status, headers });
+  const html = await response.text();
+  // Seiten mit eigener englischer Datei (hreflang="en" ohne ?lang=en) dauerhaft dorthin weiterleiten.
+  const own = html.match(/<link rel="alternate" hreflang="en" href="([^"]+)">/);
+  if (own && !own[1].includes('lang=en')) return Response.redirect(own[1], 301);
+  return new Response(toEnglish(html, dictionary), { status: response.status, headers });
 }
 
 export const config = {

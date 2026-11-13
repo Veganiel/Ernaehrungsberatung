@@ -1,7 +1,9 @@
 (() => {
   const script = document.currentScript;
   const base = new URL('../', script.src);
-  const page = path => new URL(path, base).href;
+  const english = document.documentElement.dataset.pageLang === 'en';
+  const enPath = path => path === 'angebot.html' ? 'en/nutrition-consulting.html' : (/\.html$/.test(path) && !['konto.html', 'agb.html', 'impressum.html', 'datenschutz.html'].includes(path) ? 'en/' + path : path);
+  const page = path => new URL(english ? enPath(path) : path, base).href;
   [['script','scripts/wellbeing-history.js'],['link','styles/nav-account.css'],['link','styles/nav-profile.css'],['script','scripts/nav-profile.js']].forEach(([tag, href]) => {
     const node = document.createElement(tag);
     if (tag === 'link') { node.rel = 'stylesheet'; node.href = page(href); }

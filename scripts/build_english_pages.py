@@ -67,6 +67,9 @@ def translate_tag(tag, rel_en):
             return f'{name}="{html.escape(html.unescape(translate(value, name)), quote=True)}"'
         if name in URL_ATTRS:
             return f'{name}="{map_url(html.unescape(value), rel_en)}"'
+        if name in ('srcset', 'imagesrcset'):
+            parts = [p.strip().split(' ', 1) for p in html.unescape(value).split(',') if p.strip()]
+            return f'{name}="' + ', '.join(map_url(u[0], rel_en) + (' ' + u[1] if len(u) > 1 else '') for u in parts) + '"'
         return match.group(0)
     return re.sub(r'\b([a-z-]+)="([^"]*)"', attr, tag)
 
@@ -104,7 +107,7 @@ def translate_jsonld(node, key=None):
 def build(rel_de, rel_en):
     document = (ROOT / rel_de).read_text(encoding='utf-8')
     head, sep, body = document.partition('</head>')
-    en_url = f'{seo_head.SITE}/{rel_en}'
+    en_url = seo_head.public_url(rel_en)
     head = head.replace('<html lang="de" data-page-lang="de">', '<html lang="en" data-page-lang="en">', 1)
     if 'data-page-lang="en"' not in head:
         raise SystemExit(f'{rel_de}: <html lang="de" data-page-lang="de"> fehlt')
@@ -121,7 +124,7 @@ def build(rel_de, rel_en):
     title = html.unescape(re.search(r'<title>(.*?)</title>', document, re.S).group(1)).split(' | ')[0].strip()
     document = seo_head.patch(document, rel_en, f'Preview image: {title}')
     target = ROOT / rel_en
-    target.parent.mkdir(exist_ok=True)
+    target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(document, encoding='utf-8')
     return rel_en
 
