@@ -277,3 +277,10 @@ body:has(.shop-lightbox[open]){overflow:hidden}
   .shop-editorial .collection-note{text-align:left}
   .shop-editorial .buy-button{gap:12px;padding-inline:22px;font-size:13.5px;white-space:nowrap}
 }
+/* Teddy „Let’s protect nature together“ (dritte Karte) */
+.teddy-stage{background:#e2e9f1}
+.teddy-stage .product-watermark{color:#2f5fb01f}
+.swatches .frenchnavy{background:#1f2a44}.swatches .anthracite{background:#3d3f43}.swatches .royal{background:#2f5fb0}
+@media(min-width:1001px){.shop-editorial .shop-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.teddy-stage .product-zoom img{transform:scale(1.12)}
+.teddy-stage .product-zoom:hover img{transform:scale(1.16)}
