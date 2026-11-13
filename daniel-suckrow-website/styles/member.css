@@ -184,3 +184,4 @@ footer a{text-decoration:none}footer a:hover{text-decoration:underline}
 @media(max-width:960px){.overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.profile-badges{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:780px){.auth-panel{grid-template-columns:1fr}.member-grid{grid-template-columns:1fr}}
 @media(max-width:560px){main.member-shell,main{width:calc(100% - 32px);margin-top:32px}.grid{grid-template-columns:1fr;gap:0}.panel-heading{display:block}.panel-heading button{margin-bottom:18px}.overview-grid{grid-template-columns:1fr}.overview-top{align-items:flex-start;flex-direction:column}.profile-badges{grid-template-columns:1fr}.section-head{flex-direction:column;align-items:flex-start}.badge-progress{width:100%}}
+.auth-feedback:not(:empty){padding:14px 18px;margin:18px 0 0;background:var(--m-sage-soft);border:1px solid #cfe0c2;border-radius:12px;font-size:14px;scroll-margin:90px}

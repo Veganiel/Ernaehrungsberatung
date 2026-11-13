@@ -12,8 +12,19 @@
   let user = null,
     recovery = false,
     renderVersion = 0;
+  // Meldungen erscheinen beim Anmelden/Registrieren direkt unter den Buttons,
+  // sonst landen sie auf Handy und Tablet oben außerhalb des sichtbaren Bereichs.
   const status = (text) => {
-    $("member-status").textContent = text;
+    const auth = $("member-auth"),
+      inline = $("auth-feedback"),
+      useInline = !!inline && !!auth && !auth.hidden;
+    $("member-status").textContent = useInline ? "" : text;
+    const target = useInline ? inline : $("member-status");
+    if (useInline) inline.textContent = text;
+    if (!text || !target) return;
+    const box = target.getBoundingClientRect();
+    if (box.top < 0 || box.bottom > window.innerHeight)
+      target.scrollIntoView({ block: "center", behavior: "smooth" });
   };
   const registrationError = (error) => {
     const code = error?.code || "";
@@ -542,7 +553,12 @@
   }
   $("login-form").addEventListener("submit", (e) => {
     e.preventDefault();
-    run(e.submitter, async () => {
+    // Im Registrierungsmodus löst „Los“/Enter auf der Tastatur die Registrierung aus, nicht die Anmeldung.
+    if (!$("register-fields").hidden) {
+      $("confirm-register").click();
+      return;
+    }
+    run(e.submitter || $("login-form").querySelector('button[type="submit"]'), async () => {
       const { error } = await sb.auth.signInWithPassword({
         email: $("email").value.trim(),
         password: $("password").value,
