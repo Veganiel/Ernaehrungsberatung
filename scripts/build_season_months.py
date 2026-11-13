@@ -56,7 +56,7 @@ def read_cards():
             line=html.unescape(re.search(r'</p><p>([^<]+)</p>', body).group(1)),
             items=[(html.unescape(text), bool(fruit)) for fruit, text in re.findall(r'<li( class="fruit")?>([^<]+)</li>', body)],
         )
-    footer = re.search(r'<footer>.*?</footer>', source, re.S).group(0)
+    footer = re.search(r'<footer\b.*?</footer>', source, re.S).group(0)
     return cards, footer
 
 
@@ -202,7 +202,7 @@ def page(index, month, card, footer):
   <script>document.documentElement.classList.add('sm-js')</script>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="branding.css?v=2"><link rel="stylesheet" href="styles/global-nav.css?v=6"><link rel="stylesheet" href="styles/legal-footer.css"><script src="scripts/global-nav.js?v=5" defer></script>
-  <link rel="stylesheet" href="styles/season-scenes.css?v=9"><link rel="stylesheet" href="styles/season-month.css?v=4"><link rel="stylesheet" href="i18n.css"><script src="i18n.js?v=journal-20261106" defer></script>
+  <link rel="stylesheet" href="styles/season-scenes.css?v=11"><link rel="stylesheet" href="styles/season-month.css?v=4"><link rel="stylesheet" href="i18n.css"><script src="i18n.js?v=journal-20261106" defer></script>
 <script src="/scripts/analytics.js" defer></script>
 </head>
 <body class="season-month-page season-symbols"><header></header><main class="season-main"><div class="wrap">

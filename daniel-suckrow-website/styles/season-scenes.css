@@ -113,3 +113,8 @@ body.season-symbols::before{content:'';position:fixed;inset:-12vh -12vw;z-index:
 @media(max-width:700px){body.season-symbols::before{opacity:.08;background-size:320px 320px;-webkit-mask-image:linear-gradient(90deg,#000 0 6%,rgba(0,0,0,.12) 30% 70%,#000 94% 100%);mask-image:linear-gradient(90deg,#000 0 6%,rgba(0,0,0,.12) 30% 70%,#000 94% 100%)}}
 @media print{body.season-symbols::before{display:none}}
 .hero h1 .h1-pre{display:block;margin-bottom:14px;font:600 clamp(12px,1.2vw,14px)/1.2 'DM Sans',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#dbeaa8}
+/* Footer wie auf den übrigen Seiten (dunkelgrüne Leiste) */
+.season-footer{position:relative;z-index:1;background:#123326;color:#e4ebdc;padding:26px 0;font-size:12px}
+.season-footer-wrap{width:min(1180px,calc(100% - 48px));margin-inline:auto;display:flex;gap:16px 24px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.season-footer a{color:inherit}
+@media(max-width:760px){.season-footer-wrap{width:calc(100% - 32px)}}
