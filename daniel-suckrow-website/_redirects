@@ -1,2 +1,8 @@
 # Die englische Fassung der Challenges hat eigene Adressen unter /en/ (statt ?lang=en).
 /challenges.html  lang=en  /en/challenges.html  301!
+
+# Zusammengelegte Blogbeiträge (13.11.2026): alte Kurzfassungen -> ausführliche Beiträge
+/blog/kritische-naehrstoffe/*     /blog/kritische-naehrstoffe-vegan/    301!
+/blog/omega-fettsaeuren/*         /blog/omega-3-6-verhaeltnis/          301!
+/en/blog/kritische-naehrstoffe/*  /en/blog/kritische-naehrstoffe-vegan/ 301!
+/en/blog/omega-fettsaeuren/*      /en/blog/omega-3-6-verhaeltnis/       301!

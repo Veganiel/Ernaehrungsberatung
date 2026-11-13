@@ -89,14 +89,6 @@
     "weniger-salz": {
       "theme": "food",
       "position": "50% 50%"
-    },
-    "kritische-naehrstoffe": {
-      "theme": "food",
-      "position": "50% 50%"
-    },
-    "omega-fettsaeuren": {
-      "theme": "food",
-      "position": "50% 50%"
     }
   };
   const cards = [...grid.querySelectorAll('.card')];

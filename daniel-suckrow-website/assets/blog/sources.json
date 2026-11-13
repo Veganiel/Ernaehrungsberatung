@@ -171,24 +171,6 @@
       "theme": "food",
       "alt": "Verschiedene Kräuter und Gewürze mit Salz",
       "en": "A selection of herbs, spices and salt"
-    },
-    {
-      "slug": "kritische-naehrstoffe",
-      "id": 13612369,
-      "source": "https://www.pexels.com/photo/13612369/",
-      "file": "kritische-naehrstoffe.jpg",
-      "theme": "food",
-      "alt": "Hülsenfrüchte und Getreide auf einem Markt",
-      "en": "Legumes and grains at a market"
-    },
-    {
-      "slug": "omega-fettsaeuren",
-      "id": 9013291,
-      "source": "https://www.pexels.com/photo/9013291/",
-      "file": "omega-fettsaeuren.jpg",
-      "theme": "food",
-      "alt": "Walnüsse in einer Schale auf einem Holztisch",
-      "en": "Walnuts in a bowl on a wooden table"
     }
   ]
 }
