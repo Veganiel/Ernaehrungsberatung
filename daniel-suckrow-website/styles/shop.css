@@ -281,6 +281,9 @@ body:has(.shop-lightbox[open]){overflow:hidden}
 .teddy-stage{background:#e2e9f1}
 .teddy-stage .product-watermark{color:#2f5fb01f}
 .swatches .frenchnavy{background:#1f2a44}.swatches .anthracite{background:#3d3f43}.swatches .royal{background:#2f5fb0}
-@media(min-width:1001px){.shop-editorial .shop-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.teddy-stage .product-zoom img{transform:scale(1.12)}
-.teddy-stage .product-zoom:hover img{transform:scale(1.16)}
+.teddy-stage .product-zoom img{transform:scale(.92)}
+.teddy-stage .product-zoom:hover img{transform:scale(.96)}
+/* Hoodie „Not the Same but Equal" */
+.equal-stage{background:#ece5d8}
+.equal-stage .product-watermark{color:#7a5f3a1f}
+.swatches .darkgrey{background:#4a4d50}
